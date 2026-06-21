@@ -75,7 +75,7 @@ html,body{background:#0a0704;min-height:100vh;display:flex;align-items:flex-star
 
 /* ── Page (washi paper) ───────────────────────── */
 .doc-page{
-  position:relative;overflow:hidden;
+  position:relative;overflow-x:hidden;
   background:
     repeating-linear-gradient(180deg,transparent 0,transparent 29px,rgba(152,112,24,.13) 29px,rgba(152,112,24,.13) 30px),
     repeating-linear-gradient(90deg,rgba(152,112,24,.03) 0,rgba(152,112,24,.03) 1px,transparent 1px,transparent 40px),
@@ -144,7 +144,10 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
 .tt-k{font-family:var(--fs);font-size:16px;display:block;line-height:1.1;margin-bottom:1px}
 .trait-count{font-family:var(--fs);font-size:10px;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .trait-count b{font-size:15px;color:var(--vr)}
-.trait-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.trait-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:340px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-right:2px}
+.trait-grid::-webkit-scrollbar{width:4px}
+.trait-grid::-webkit-scrollbar-track{background:rgba(152,112,24,.08);border-radius:2px}
+.trait-grid::-webkit-scrollbar-thumb{background:var(--gd-b);border-radius:2px}
 .trait-card{background:rgba(232,212,160,.45);border:1.5px solid var(--gd-b);border-radius:4px;padding:8px 9px 9px;cursor:pointer;transition:all .13s;user-select:none}
 .trait-card.on{background:var(--vr-a);border-color:var(--vr);box-shadow:0 2px 8px rgba(184,24,32,.16)}
 .t-num{font-family:var(--fs);font-size:7.5px;color:var(--gd);letter-spacing:1px;margin-bottom:1px}
@@ -536,6 +539,7 @@ function goPanel(idx){
   cur=idx;
   el('btn_back').classList.toggle('ghost',idx===0);
   el('btn_next').classList.toggle('ghost',idx===PANELS.length-1);
+  if(PANELS[idx]==='p5')drawTraits();
 }
 el('btn_next').addEventListener('click',function(){goPanel(cur+1);});
 el('btn_back').addEventListener('click',function(){goPanel(cur-1);});
