@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;-webkit-tap-highlight-color:transparent}
+:root{
+  --gold:#c8a84b;--gold2:#e8c870;
+  --acc:#c8a84b;--abg:rgba(200,168,75,.12);--abd:rgba(200,168,75,.4);
+  --green:#40d490;
+  --red:#e05555;--text:#d8ceb0;--text2:#a89878;--text3:#5a4a38;
+  --border:rgba(180,150,80,.2);--border2:rgba(180,150,80,.45);
+  --card-bg:linear-gradient(160deg,#060819 0%,#0b0d22 55%,#07091a 100%);
+  --box-bg:rgba(0,0,0,.22);--scene-bg:rgba(0,0,0,.28);--foot-bg:rgba(0,0,0,.2);
+  --opt-bg:#0d1028;
+  --fh:'Cinzel',serif;--fb:'Crimson Pro',serif;
+}
+.lt{
+  --gold:#8a6820;--gold2:#6a4e10;
+  --green:#1a7a4a;--red:#b03030;
+  --text:#2a2010;--text2:#5a4820;--text3:#9a8860;
+  --border:rgba(120,90,30,.2);--border2:rgba(120,90,30,.45);
+  --card-bg:linear-gradient(160deg,#f5f0e4 0%,#ede8d8 55%,#f0ece0 100%);
+  --box-bg:rgba(255,255,255,.32);--scene-bg:rgba(255,255,255,.35);--foot-bg:rgba(255,255,255,.15);
+  --opt-bg:#f0ebe0;
+}
+.jd{max-width:530px;margin:8px auto;background:var(--card-bg);border:1px solid var(--border2);border-radius:14px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.62),0 0 28px -10px var(--abg);color:var(--text);position:relative;font-family:var(--fb);animation:ccIn .45s cubic-bezier(.34,1.4,.64,1)}
+@keyframes ccIn{from{opacity:0;transform:scale(.97) translateY(6px)}to{opacity:1;transform:none}}
+.jd::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--acc),var(--gold2),var(--acc),transparent);z-index:7}
+/* CORNERS */
+.corn{position:absolute;width:16px;height:16px;border-color:var(--gold);border-style:solid;opacity:.4;pointer-events:none;z-index:5}
+.corn.tl{top:5px;left:5px;border-width:2px 0 0 2px}
+.corn.tr{top:5px;right:5px;border-width:2px 2px 0 0}
+.corn.bl{bottom:5px;left:5px;border-width:0 0 2px 2px}
+.corn.br{bottom:5px;right:5px;border-width:0 2px 2px 0}
+/* SEAL BANNER */
+.seal-bar{background:linear-gradient(90deg,rgba(0,0,0,0),var(--abg),rgba(0,0,0,0));border-bottom:1px solid var(--abd);padding:7px 20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.seal-ln{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--abd),transparent)}
+.seal-t{font-family:var(--fh);font-size:8px;letter-spacing:3px;color:var(--acc);text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 8px var(--acc);animation:dp 2s ease-in-out infinite}
+@keyframes dp{0%,100%{opacity:1}50%{opacity:.35}}
+/* HERO */
+.hero{padding:14px 18px 12px;display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border)}
+.cls-wrap{width:58px;height:58px;background:rgba(0,0,0,.35);border:1px solid var(--border2);border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lt .cls-wrap{background:rgba(255,255,255,.4)}
+.cls-wrap img{width:46px;height:46px;object-fit:contain}
+.cls-txt{font-family:var(--fh);font-size:11px;color:var(--gold);text-align:center;letter-spacing:1px;text-transform:uppercase;line-height:1.3;padding:5px}
+.hero-info{flex:1;min-width:0}
+.hero-tag{font-family:var(--fh);font-size:8px;letter-spacing:3px;color:var(--acc);text-transform:uppercase;margin-bottom:3px}
+.hero-name{font-family:var(--fh);font-size:18px;font-weight:700;color:var(--gold2);line-height:1.2;word-break:break-word}
+.hero-sub{font-size:12px;color:var(--text3);font-style:italic;margin-top:3px;line-height:1.45}
+.mana-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;align-self:flex-start;margin-top:6px;box-shadow:0 0 9px -1px var(--acc)}
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:5px;padding:9px 18px;border-bottom:1px solid var(--border)}
+.pill{background:rgba(0,0,0,.15);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--text2);font-family:var(--fh);letter-spacing:.5px}
+.lt .pill{background:rgba(255,255,255,.3)}
+.pill.hi{border-color:var(--abd);color:var(--acc)}
+.pill.gr{border-color:rgba(64,212,144,.35);color:var(--green)}
+.pill.pu{border-color:rgba(160,128,224,.3);color:#a080e0}
+/* BODY */
+.body{padding:4px 18px 6px}
+/* SECTION HEADERS */
+.sec{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.sec .sk{width:20px;height:20px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:11px;color:var(--acc);background:var(--abg);border:1px solid var(--abd);border-radius:6px}
+.sec .t{font-family:var(--fh);font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--text2)}
+.sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--abd),transparent)}
+/* KV */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kv{margin-bottom:9px}
+.k{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--text3);margin-bottom:3px;font-family:var(--fh)}
+.val{font-size:12.5px;color:var(--text);line-height:1.55;white-space:pre-wrap}
+/* CLASS DISPLAY (in power section) */
+.cls-display{display:flex;align-items:center;gap:10px;padding:9px 12px;background:var(--abg);border:1px solid var(--abd);border-radius:8px;margin-bottom:10px}
+.cls-display img{width:34px;height:34px;object-fit:contain}
+.cls-display .cn{font-family:var(--fh);font-size:12px;color:var(--gold2)}
+.cls-display .ct{font-size:8px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+/* ABILITY BOXES */
+.box{background:var(--box-bg);border:1px solid var(--border);border-radius:9px;padding:10px 12px;margin-bottom:8px}
+.box .bn{font-family:var(--fh);font-size:12px;color:var(--gold);margin-bottom:2px}
+.box .br{font-size:9px;color:var(--acc);font-family:var(--fh);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+.box .bh{font-size:12px;color:var(--text2);line-height:1.5;white-space:pre-wrap;margin-top:4px}
+.box .bl{font-size:11px;color:var(--red);font-style:italic;margin-top:4px}
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.tag{font-size:11px;border-radius:13px;padding:4px 10px;border:1px solid var(--abd);color:var(--text);background:var(--abg);font-family:var(--fh);letter-spacing:.3px}
+.tag.w{color:#f2a3a3;background:rgba(226,54,54,.1);border-color:rgba(226,54,54,.35)}
+/* STAT BARS */
+.st{margin-bottom:10px}
+.sr{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;gap:8px}
+.sl{font-size:11px;color:var(--text2);font-family:var(--fh)}
+.sv{font-family:var(--fh);font-size:12px;font-weight:700;color:var(--acc)}
+.bar{height:5px;background:rgba(0,0,0,.25);border-radius:6px;overflow:hidden}
+.lt .bar{background:rgba(0,0,0,.1)}
+.bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--acc),var(--gold2))}
+/* PROFILE TEXT */
+.ptext{font-size:13px;color:var(--text2);line-height:1.65;white-space:pre-wrap;margin-bottom:9px}
+/* SCENE BOX */
+.scene-box{background:var(--scene-bg);border:1px solid var(--border2);border-radius:8px;padding:11px 14px;font-size:13px;color:var(--text);line-height:1.65;font-style:italic}
+/* FOOTER */
+.foot{background:var(--foot-bg);border-top:1px solid var(--border);padding:8px 18px;display:flex;justify-content:space-between;align-items:center}
+.foot-l{font-size:9px;color:var(--text3);font-family:var(--fh);letter-spacing:1px}
+.foot-r{font-size:9px;color:var(--acc);font-family:var(--fh);letter-spacing:1px}
+</style>
+</head>
+<body>
+<textarea id="raw" style="display:none;position:absolute;left:-9999px;">$1</textarea>
+<div class="jd" id="app">
+ <div class="corn tl"></div><div class="corn tr"></div>
+ <div class="corn bl"></div><div class="corn br"></div>
+ <div class="seal-bar">
+  <div class="seal-ln"></div>
+  <div class="seal-t"><div class="dot"></div><span id="d_seal">—</span><div class="dot"></div></div>
+  <div class="seal-ln"></div>
+ </div>
+ <div class="hero">
+  <div class="cls-wrap" id="d_clswrap"><div class="cls-txt" id="d_clstxt">?</div></div>
+  <div class="hero-info">
+   <div class="hero-tag" id="d_tag">—</div>
+   <div class="hero-name" id="d_name">—</div>
+   <div class="hero-sub" id="d_sub">—</div>
+  </div>
+  <div class="mana-dot" id="d_mana_dot"></div>
+ </div>
+ <div class="pills" id="d_pills"></div>
+ <div class="body" id="d_body"></div>
+ <div class="foot">
+  <span class="foot-l" id="d_foot_l">CHALDEA RECORDS</span>
+  <span class="foot-r" id="d_foot_r">ACTIVE DEPLOYMENT</span>
+ </div>
+</div>
+<script>
+(function(){
+function g(id){return document.getElementById(id);}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rgba(hex,a){hex=String(hex||'#c8a84b').replace('#','');if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];var n=parseInt(hex,16);if(isNaN(n))n=0xc8a84b;var r=(n>>16)&255,gg=(n>>8)&255,b=n&255;return 'rgba('+r+','+gg+','+b+','+a+')';}
+function v(s){return s&&String(s).trim();}
+
+var raw=(g('raw').value||'').replace(/<\/?BTE_CHARCONFIRM>/gi,'').trim();
+var d={};try{d=JSON.parse(raw);}catch(e){}
+
+var TH=d.lang==='th';
+function T(en,th){return TH?(th||en):en;}
+
+/* ── APPLY ACCENT COLOR (mana colour) ── */
+var acc=v(d.mana_colour)||'#c8a84b';
+var jd=g('app');
+jd.style.setProperty('--acc',acc);
+jd.style.setProperty('--abg',rgba(acc,.13));
+jd.style.setProperty('--abd',rgba(acc,.42));
+g('d_mana_dot').style.background=acc;
+g('d_mana_dot').style.boxShadow='0 0 9px -1px '+acc;
+
+/* ── APPLY THEME ── */
+if(d.theme==='light')jd.classList.add('lt');
+
+/* ── SEAL BANNER ── */
+g('d_seal').textContent=T('Character Initialized','ยืนยันตัวละครสำเร็จ');
+
+/* ── CLASS ICON / FALLBACK ── */
+var TYPE_FB={Master:'M',Magus:'Mg','Dead Apostle':'DA','True Ancestor':'TA',Executor:'Ex',Homunculus:'Hm','Divine Spirit':'Dv','Beast Class':'Bst'};
+var isSv=d.character_type==='Servant'||d.character_type==='Demi-Servant'||d.character_type==='Pseudo-Servant';
+if(isSv&&v(d.class_icon)){
+  g('d_clswrap').innerHTML='<img src="'+esc(d.class_icon)+'" alt=""/>';
+}else{
+  g('d_clstxt').textContent=TYPE_FB[d.character_type]||'?';
+}
+
+/* ── HERO ROW ── */
+g('d_tag').textContent=T('Deployment Profile Confirmed','โปรไฟล์ได้รับการยืนยัน');
+g('d_name').textContent=v(d.name)||T('[AI Generated Name]','[AI จะตั้งชื่อ]');
+var sub=[];
+if(v(d.age))sub.push(d.age);
+if(v(d.gender))sub.push(d.gender);
+if(v(d.occupation))sub.push(d.occupation);
+g('d_sub').textContent=sub.length?sub.join(' · '):T('AI will forge the details.','AI จะสร้างรายละเอียด');
+
+/* ── PILLS ── */
+var pbox=g('d_pills');
+function pill(t,cls){var p=document.createElement('div');p.className='pill '+(cls||'');p.textContent=t;pbox.appendChild(p);}
+if(v(d.character_type))pill(d.character_type,'hi');
+if(isSv&&v(d.servant_class))pill((d.servant_tier==='grand'?'Grand ':'')+d.servant_class,'gr');
+if(v(d.universe))pill(d.universe,'');
+if(v(d.era))pill(d.era,'');
+if(v(d.rank))pill(d.rank,'pu');
+
+/* ── CONTENT BUILDER ── */
+var STAT=[
+  ['strength','Strength · STR','ความแข็งแกร่ง · STR'],
+  ['endurance','Endurance · END','ความอดทน · END'],
+  ['agility','Agility · AGI','ความคล่องแคล่ว · AGI'],
+  ['mana','Mana · MGI','พลังมานา · MGI'],
+  ['luck','Luck · LCK','โชคลาภ · LCK'],
+  ['np','Noble Phantasm · NP','พลัง NP'],
+  ['circuits_q','Magic Circuits (Quality)','วงจรมายากล (คุณภาพ)'],
+  ['circuits_n','Magic Circuits (Quantity)','วงจรมายากล (จำนวน)'],
+  ['prana','Prana Reserve','คลังปราณ'],
+];
+
+function sec(kanji,en,th){return '<div class="sec"><span class="sk">'+kanji+'</span><span class="t">'+esc(T(en,th))+'</span><span class="ln"></span></div>';}
+function kv(en,th,val){return '<div class="kv"><div class="k">'+esc(T(en,th))+'</div><div class="val">'+esc(v(val)?val:'—')+'</div></div>';}
+function kvIf(en,th,val){return v(val)?kv(en,th,val):'';}
+
+var h='';
+
+/* ── 名 IDENTITY ── */
+h+=sec('名','Identity','อัตลักษณ์');
+h+='<div class="grid">';
+h+=kvIf('Attribute','ธาตุมายากล',d.attribute);
+h+=kvIf('Being / Nature','สิ่งที่เป็น',d.being);
+h+=kvIf('Allegiance','ฝ่าย / สังกัด',d.faction);
+if(v(d.mystic_eyes)&&d.mystic_eyes!=='none')h+=kv('Mystic Eyes','ตาลึกลับ',d.mystic_eyes);
+h+='</div>';
+
+/* ── 世 WORLD ── */
+h+=sec('世','World','โลก');
+h+='<div class="grid">';
+h+=kvIf('Universe','จักรวาล',d.universe);
+h+=kvIf('Era','ยุค',d.era);
+h+=kvIf('Role','บทบาท',d.role);
+h+=kvIf('Lineage','ตระกูล / สายเลือด',d.lineage);
+h+=kvIf('Rank','อันดับ',d.rank);
+h+='</div>';
+
+/* ── 術 MYSTIC ARTS ── */
+h+=sec('術','Mystic Arts','วิทยาลึกลับ');
+if(v(d.character_type))h+='<div class="kv"><div class="k">'+T('Type','ประเภท')+'</div><div class="val">'+esc(d.character_type)+'</div></div>';
+
+if(isSv&&v(d.servant_class)&&v(d.class_icon)){
+  h+='<div class="cls-display"><img src="'+esc(d.class_icon)+'" alt=""/><div><div class="cn">'+esc((d.servant_tier==='grand'?'Grand ':'')+d.servant_class)+'</div><div class="ct">'+(d.servant_tier==='grand'?'GRAND SERVANT':'SERVANT')+'</div></div></div>';
+}
+
+if(d.abilities&&d.abilities.length){
+  d.abilities.forEach(function(a){
+    h+='<div class="box"><div class="bn">'+esc(v(a.name)||T('[Unnamed]','[ไม่มีชื่อ]'))+(v(a.rank)?' <span style="font-size:9px;color:var(--text3);font-weight:400">'+esc(a.rank)+'</span>':'')+'</div>';
+    if(v(a.type))h+='<div class="br">'+esc(a.type)+'</div>';
+    if(v(a.how))h+='<div class="bh">'+esc(a.how)+'</div>';
+    else h+='<div class="bh" style="color:var(--text3);font-style:italic">'+T('AI will describe this ability.','AI จะอธิบายความสามารถนี้')+'</div>';
+    if(v(a.limits))h+='<div class="bl">'+esc(a.limits)+'</div>';
+    h+='</div>';
+  });
+}
+
+if(d.armaments&&d.armaments.length){
+  h+='<div class="sec" style="margin-top:12px"><span class="sk">具</span><span class="t">'+T('Armaments','อาวุธ')+'</span><span class="ln"></span></div>';
+  d.armaments.forEach(function(a){
+    h+='<div class="box"><div class="bn">'+esc(v(a.name)||'—')+'</div>';
+    if(v(a.detail))h+='<div class="bh">'+esc(a.detail)+'</div>';
+    h+='</div>';
+  });
+}
+
+/* ── 初 START KIT ── */
+if(d.starter_skills&&d.starter_skills.length){
+  h+=sec('初','Starting Skills','สกิลเริ่มต้น');
+  h+='<div class="tags">';
+  d.starter_skills.forEach(function(s){h+='<span class="tag">'+esc(s.name||s.id||'—')+'</span>';});
+  h+='</div>';
+}
+
+/* ── 力 STATS ── */
+var hasStats=false;
+if(d.stats){STAT.forEach(function(s){var n=parseInt(d.stats[s[0]],10);if(!isNaN(n)&&n>0)hasStats=true;});}
+if(hasStats){
+  h+=sec('力','Parameters','ค่าพลัง');
+  var mx=10;
+  STAT.forEach(function(s){var n=parseInt(d.stats[s[0]],10);if(!isNaN(n)&&n>mx)mx=n;});
+  STAT.forEach(function(s){
+    var n=parseInt(d.stats[s[0]],10);if(isNaN(n)||n<=0)return;
+    var p=Math.max(3,Math.min(100,Math.round(n/mx*100)));
+    h+='<div class="st"><div class="sr"><span class="sl">'+esc(T(s[1],s[2]))+'</span><span class="sv">'+n+'</span></div><div class="bar"><i style="width:'+p+'%"></i></div></div>';
+  });
+}
+
+/* ── 己 PROFILE ── */
+h+=sec('己','Profile','โปรไฟล์');
+if(v(d.appearance))h+='<div class="kv"><div class="k">'+T('Appearance','รูปลักษณ์')+'</div><div class="ptext">'+esc(d.appearance)+'</div></div>';
+if(v(d.nature))h+='<div class="kv"><div class="k">'+T('Nature','นิสัย')+'</div><div class="ptext">'+esc(d.nature)+'</div></div>';
+if(v(d.history))h+='<div class="kv"><div class="k">'+T('History','ภูมิหลัง')+'</div><div class="ptext">'+esc(d.history)+'</div></div>';
+
+if(d.weaknesses&&d.weaknesses.length){
+  h+='<div class="k" style="margin-bottom:6px">'+T('Weaknesses','จุดอ่อน')+'</div>';
+  h+='<div class="tags">';
+  d.weaknesses.forEach(function(w){h+='<span class="tag w">'+esc(w)+'</span>';});
+  h+='</div>';
+}
+
+/* ── 開 OPENING SCENE ── */
+if(v(d.opening_scene)){
+  h+=sec('開','Opening Scene','ฉากเริ่มต้น');
+  h+='<div class="scene-box">'+esc(d.opening_scene)+'</div>';
+}
+
+h+='<div style="height:10px"></div>';
+g('d_body').innerHTML=h;
+
+/* ── FOOTER ── */
+g('d_foot_l').textContent='PROFILE — '+(v(d.name)||'UNNAMED').toUpperCase().substring(0,18);
+g('d_foot_r').textContent=T('ACTIVE DEPLOYMENT','ใช้งานแล้ว');
+})();
+</script>
+</body>
+</html>
