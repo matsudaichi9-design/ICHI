@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+.lc{
+ --acc:#c8a84b;--abg:rgba(200,168,75,.11);--abd:rgba(200,168,75,.38);
+ --fb:'Crimson Pro',Georgia,serif;--fh:Cinzel,serif;
+ max-width:420px;margin:8px auto;
+ background:linear-gradient(158deg,#0d1128 0%,#070918 55%,#090b1e 100%);
+ border:1px solid var(--abd);
+ border-radius:10px;overflow:hidden;
+ color:#e4dcc8;font-family:var(--fb);
+ box-shadow:0 12px 32px rgba(0,0,0,.65),0 0 24px -10px var(--acc);
+ position:relative}
+/* corner ornaments — all four */
+.lc::before{content:'';position:absolute;top:5px;left:5px;width:13px;height:13px;
+ border-top:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.55;pointer-events:none}
+.lc::after{content:'';position:absolute;top:5px;right:5px;width:13px;height:13px;
+ border-top:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.55;pointer-events:none}
+/* bottom corners via .lf pseudo */
+.lf::before{content:'';position:absolute;bottom:5px;left:5px;width:13px;height:13px;
+ border-bottom:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.45}
+.lf::after{content:'';position:absolute;bottom:5px;right:5px;width:13px;height:13px;
+ border-bottom:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.45}
+/* header */
+.lh{text-align:center;padding:17px 14px 13px;
+ background:linear-gradient(180deg,var(--abg),transparent);
+ border-bottom:1px solid rgba(200,168,75,.18);position:relative}
+/* horizontal rule lines flanking seal */
+.lrule{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}
+.lrule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--abd));max-width:60px}
+.lrule-line.r{background:linear-gradient(270deg,transparent,var(--abd))}
+/* pulsing seal circle */
+.lseal{
+ width:40px;height:40px;border-radius:50%;flex-shrink:0;
+ border:1.5px solid var(--acc);display:flex;align-items:center;justify-content:center;
+ font-family:var(--fh);font-size:17px;font-weight:700;color:var(--acc);
+ background:radial-gradient(circle,var(--abg),transparent);
+ animation:ringp 2.8s ease-in-out infinite}
+@keyframes ringp{
+ 0%,100%{box-shadow:0 0 8px -3px var(--acc),inset 0 0 5px -3px var(--acc)}
+ 50%{box-shadow:0 0 18px -2px var(--acc),inset 0 0 11px -2px var(--acc)}}
+.lt{font-family:var(--fh);font-size:10.5px;font-weight:700;letter-spacing:3.5px;color:#f0e8cc}
+.lsub{font-size:7.5px;letter-spacing:2.5px;color:var(--acc);margin-top:3px;opacity:.65;font-family:var(--fh)}
+/* body */
+.lb{padding:10px 12px 6px}
+/* skill row — left circuit-trace accent */
+.lrow{
+ display:flex;align-items:center;gap:10px;
+ padding:8px 11px 8px 13px;margin-bottom:6px;
+ background:linear-gradient(90deg,rgba(200,168,75,.07),rgba(200,168,75,.02) 70%,transparent);
+ border:1px solid rgba(200,168,75,.14);
+ border-left:2px solid var(--acc);
+ border-radius:0 8px 8px 0;position:relative}
+.lgem{color:var(--acc);font-size:7px;flex-shrink:0;opacity:.75;line-height:1;padding-top:1px}
+.lrn{flex:1;font-size:12.5px;color:#e0d4b4;font-weight:600;
+ font-family:var(--fh);letter-spacing:.3px;line-height:1.2}
+.lrc{font-size:9.5px;font-weight:700;color:var(--acc);font-family:var(--fh);
+ letter-spacing:.5px;white-space:nowrap;opacity:.88;flex-shrink:0}
+/* footer */
+.lf{padding:10px 14px 14px;border-top:1px solid rgba(200,168,75,.16);
+ background:linear-gradient(180deg,transparent,rgba(7,9,24,.6));
+ position:relative}
+.lfrow{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.lflab{font-size:8.5px;letter-spacing:2px;color:#7a6a4a;font-family:var(--fh);text-transform:uppercase}
+.lfval{display:flex;align-items:baseline;gap:4px}
+.lfnum{font-family:var(--fh);font-size:19px;font-weight:700;color:var(--acc);letter-spacing:1px}
+.lfunit{font-size:8.5px;color:#8a7a5a;font-family:var(--fh);letter-spacing:1.5px}
+/* circuit bar */
+.cbar{height:2px;background:rgba(200,168,75,.1);border-radius:1px;overflow:hidden}
+.cbari{height:100%;background:linear-gradient(90deg,var(--acc),#e8c870 80%,#fff4cc);
+ border-radius:1px;width:0%;transition:width .7s cubic-bezier(.4,0,.2,1)}
+</style>
+</head>
+<body>
+<textarea id="lraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div class="lc" id="lc">
+ <div class="lh">
+  <div class="lrule">
+   <div class="lrule-line"></div>
+   <div class="lseal" id="l_seal">霊</div>
+   <div class="lrule-line r"></div>
+  </div>
+  <div class="lt" id="l_t">SKILL ETCHING</div>
+  <div class="lsub" id="l_sub">術 式 刻 印</div>
+ </div>
+ <div class="lb" id="l_b"></div>
+ <div class="lf">
+  <div class="lfrow">
+   <span class="lflab" id="l_lab">Circuits Inscribed</span>
+   <div class="lfval"><span class="lfnum" id="l_tot">0</span><span class="lfunit" id="l_unit">SP</span></div>
+  </div>
+  <div class="cbar"><div class="cbari" id="l_bar"></div></div>
+ </div>
+</div>
+<script>
+(function(){
+ function g(id){return document.getElementById(id);}
+ function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+ function rgba(hex,a){
+  hex=String(hex||'#c8a84b').replace('#','');
+  if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
+  var n=parseInt(hex,16);if(isNaN(n))n=0xc8a84b;
+  var r=(n>>16)&255,gg=(n>>8)&255,b=n&255;
+  return 'rgba('+r+','+gg+','+b+','+a+')';}
+ var raw=(g('lraw').value||'').replace(/<\/?BTE_SKILLLEARN>/gi,'').trim();
+ var d={};try{d=JSON.parse(raw);}catch(e){}
+ var TH=(d.lang==='th');
+ var acc=d.mana_colour||d.theme||'#c8a84b';
+ var lc=g('lc');
+ lc.style.setProperty('--acc',acc);
+ lc.style.setProperty('--abg',rgba(acc,.11));
+ lc.style.setProperty('--abd',rgba(acc,.38));
+ if(TH){
+  g('l_t').textContent='จารึกทักษะ';
+  g('l_lab').textContent='วงจรที่จารึก';
+  g('l_unit').textContent='แต้ม';}
+ var items=d.etch||d.learn||[];
+ var h='';var tot=0;
+ items.forEach(function(it){
+  var c=parseInt(it.cost,10)||0;tot+=c;
+  h+='<div class="lrow"><span class="lgem">◆</span><span class="lrn">'+esc(it.name||'—')+'</span><span class="lrc">'+c+' '+(TH?'แต้ม':'SP')+'</span></div>';});
+ g('l_b').innerHTML=h||'<div style="font-size:11px;color:#4a5a6a;padding:4px 2px;font-style:italic">—</div>';
+ var total=(d.total_cost!=null?d.total_cost:tot);
+ g('l_tot').textContent=total;
+ setTimeout(function(){g('l_bar').style.width=Math.min(100,Math.round(total/30*100))+'%';},100);
+})();
+</script>
+</body>
+</html>
