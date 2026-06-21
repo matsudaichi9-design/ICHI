@@ -7,9 +7,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Noto+Serif+JP:wght@400;500;600&family=Bai+Jamjuree:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:10px;-webkit-tap-highlight-color:transparent}
+html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:12px;-webkit-tap-highlight-color:transparent}
 
-/* ── Root ─────────────────────────────────────── */
 .doc{
   --ink:#ddd0b8;--ink2:#a89070;
   --paper:#0c0907;--paper2:#120d08;
@@ -19,186 +18,155 @@ html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-star
   --muted:#785028;--rule:rgba(208,24,40,.08);
   --f:'Bai Jamjuree','Noto Sans Thai',sans-serif;
   --fs:'Shippori Mincho','Noto Serif JP',serif;
-  width:100%;max-width:480px;
+  width:100%;max-width:520px;
   background:var(--frame);
   border:1px solid var(--border);
   border-radius:10px;overflow:hidden;
   box-shadow:0 18px 56px rgba(0,0,0,.92),0 0 0 1px rgba(208,24,40,.1);
-  font-family:var(--f);color:var(--ink);
-  position:relative
+  font-family:var(--f);color:var(--ink);position:relative
 }
+
+/* ── Sakura theme ─────────────────────────────── */
+.doc.theme-s{
+  --ink:#1e0810;--ink2:#8a4868;
+  --paper:#fef3f6;--paper2:#fce0ea;
+  --frame:#5a1428;--border:#c07090;
+  --red:#c81830;--red-a:rgba(200,24,48,.1);--red-b:rgba(200,24,48,.32);
+  --gold:#c05878;--gold-a:rgba(192,88,120,.15);--gold-b:rgba(192,88,120,.32);
+  --muted:#8a4868;--rule:rgba(200,24,48,.06);
+  box-shadow:0 18px 56px rgba(90,20,40,.35),0 0 0 1px rgba(200,24,48,.15)
+}
+.doc.theme-s input[type=text],.doc.theme-s input[type=number],.doc.theme-s select{border-bottom-color:#b06080}
+.doc.theme-s textarea{background:rgba(252,224,236,.45);border-color:#b06080}
+.doc.theme-s .dyn-item{background:rgba(252,224,236,.55);border-color:#b06080}
+.doc.theme-s .lang-row,.doc.theme-s .choice{background:#4a0f1e}
+.doc.theme-s .choice{border-color:var(--border)}
+.doc.theme-s .sn{border-color:#a06078}
+.doc.theme-s .sn-k{color:#d0a0b8}
+.doc.theme-s .sn-d{background:#a06078}
+.doc.theme-s .seg{border-color:#b06080}
+.doc.theme-s .seg-b{border-right-color:#b06080;color:#9a5870}
+.doc.theme-s .ft-btn{color:#d0a0b8;border-color:#a06078}
+.doc.theme-s .ft-btn:hover{color:#ecdcc8;border-color:var(--red)}
+.doc.theme-s .head-sub{color:#c090a0}
+.doc.theme-s .ov-s{color:#c090a0}
+.doc.theme-s .sub-lbl{color:#b090a0}
+.doc.theme-s .doc-head::before{color:rgba(200,24,48,.2)}
 
 /* ── Header ───────────────────────────────────── */
-.doc-head{
-  background:var(--frame);
-  padding:11px 13px 0;
-  border-bottom:2px solid var(--red);
-  position:relative
-}
-.doc-head::before{
-  content:'❀  ❀  ❀';
-  position:absolute;bottom:5px;right:13px;
-  font-size:7px;letter-spacing:5px;
-  color:rgba(208,24,40,.18);pointer-events:none
-}
-.head-row{display:flex;align-items:center;gap:9px;padding-bottom:10px}
+.doc-head{background:var(--frame);padding:12px 14px 0;border-bottom:2px solid var(--red);position:relative}
+.doc-head::before{content:'❀  ❀  ❀';position:absolute;bottom:5px;right:14px;font-size:7.5px;letter-spacing:5px;color:rgba(208,24,40,.18);pointer-events:none}
+.head-row{display:flex;align-items:center;gap:9px;padding-bottom:11px}
 
-.logo{
-  width:38px;height:38px;flex-shrink:0;
-  object-fit:contain;
-  filter:drop-shadow(0 0 7px rgba(208,24,40,.45))
-}
+.logo{width:42px;height:42px;flex-shrink:0;object-fit:contain;filter:drop-shadow(0 0 8px rgba(208,24,40,.5))}
 
 .head-info{flex:1;min-width:0}
-.head-title{
-  font-family:var(--fs);font-size:12.5px;font-weight:800;
-  letter-spacing:2px;color:#ecdcc8;text-transform:uppercase;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
-}
-.head-sub{font-size:7.5px;letter-spacing:3px;color:#5a3018;margin-top:2px}
+.head-title{font-family:var(--fs);font-size:13.5px;font-weight:800;letter-spacing:2px;color:#ecdcc8;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.head-sub{font-size:8px;letter-spacing:3px;color:#5a3018;margin-top:2px}
 
-.lang-row{display:flex;gap:2px;background:#0a0704;border:1px solid var(--border);border-radius:3px;padding:2px;flex-shrink:0}
-.lang-row b{cursor:pointer;font-size:9.5px;font-weight:700;letter-spacing:.5px;color:#4a2a14;padding:3px 7px;border-radius:2px;transition:all .12s}
+.head-right{display:flex;align-items:center;gap:5px;flex-shrink:0}
+.lang-row{display:flex;gap:2px;background:#0a0704;border:1px solid var(--border);border-radius:3px;padding:2px}
+.lang-row b{cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.5px;color:#4a2a14;padding:3px 7px;border-radius:2px;transition:all .12s}
 .lang-row b.on{color:#ecdcc8;background:var(--red)}
 
-.head-stamp{
-  font-family:var(--fs);font-size:7.5px;font-weight:700;
-  border:1.5px solid var(--red);border-radius:2px;
-  color:var(--red);padding:3px 5px;letter-spacing:1.5px;
-  flex-shrink:0;white-space:nowrap
-}
+.theme-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color .15s;padding:0}
+.theme-btn:hover{border-color:var(--red)}
 
-/* ── Body layout ──────────────────────────────── */
+.head-stamp{font-family:var(--fs);font-size:7.5px;font-weight:700;border:1.5px solid var(--red);border-radius:2px;color:var(--red);padding:3px 6px;letter-spacing:1.5px;flex-shrink:0;white-space:nowrap}
+
+/* ── Body ─────────────────────────────────────── */
 .doc-body{display:flex}
 
 /* ── Sidebar ──────────────────────────────────── */
-.sidebar{
-  width:42px;flex-shrink:0;background:var(--frame);
-  border-right:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;
-  padding:16px 0;gap:10px;position:relative
-}
-.sidebar::after{
-  content:'';position:absolute;right:0;top:8%;bottom:8%;width:1.5px;
-  background:linear-gradient(180deg,transparent,var(--red) 30%,var(--red) 70%,transparent)
-}
+.sidebar{width:46px;flex-shrink:0;background:var(--frame);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:18px 0;gap:12px;position:relative}
+.sidebar::after{content:'';position:absolute;right:0;top:8%;bottom:8%;width:1.5px;background:linear-gradient(180deg,transparent,var(--red) 30%,var(--red) 70%,transparent)}
 
-.sn{
-  width:30px;height:30px;border-radius:50%;border:1.5px solid #261408;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;gap:2px;flex-shrink:0;transition:all .14s;position:relative
-}
-.sn-k{font-family:var(--fs);font-size:13px;font-weight:700;color:#402810;line-height:1;transition:color .14s}
-.sn-d{width:3px;height:3px;border-radius:50%;background:#261408;transition:background .14s}
+.sn{width:34px;height:34px;border-radius:50%;border:1.5px solid #261408;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;gap:2px;flex-shrink:0;transition:all .14s}
+.sn-k{font-family:var(--fs);font-size:14px;font-weight:700;color:#402810;line-height:1;transition:color .14s}
+.sn-d{width:4px;height:4px;border-radius:50%;background:#261408;transition:background .14s}
 .sn.on{background:var(--red);border-color:var(--red);box-shadow:0 0 10px -2px rgba(208,24,40,.75)}
 .sn.on .sn-k{color:#ecdcc8}
 .sn.on .sn-d{background:#ecdcc8}
 .sn.been .sn-k{color:var(--gold)}
 .sn.been .sn-d{background:var(--gold)}
 
-/* ── Page (dark paper) ────────────────────────── */
+/* ── Page ─────────────────────────────────────── */
 .doc-page{
   flex:1;min-width:0;
-  background:
-    repeating-linear-gradient(to bottom,transparent 0,transparent 30px,var(--rule) 30px,var(--rule) 31px),
-    var(--paper);
-  padding:14px 15px 11px 12px
+  background:repeating-linear-gradient(to bottom,transparent 0,transparent 30px,var(--rule) 30px,var(--rule) 31px),var(--paper);
+  padding:16px 17px 14px 14px
 }
-
 .panel{display:none}
 .panel.on{display:block;animation:arrive .17s ease}
 @keyframes arrive{from{opacity:0;transform:translateX(5px)}to{opacity:1;transform:none}}
 
 /* ── Section heading ──────────────────────────── */
-.s-head{
-  display:flex;align-items:baseline;gap:8px;
-  border-bottom:2px solid var(--red);padding-bottom:6px;margin-bottom:12px
-}
-.s-num{font-family:var(--fs);font-size:22px;font-weight:800;color:var(--red);line-height:1;flex-shrink:0}
-.s-title{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
-.s-jp{font-family:var(--fs);font-size:9px;color:var(--muted);letter-spacing:2px;margin-left:auto;flex-shrink:0}
+.s-head{display:flex;align-items:baseline;gap:8px;border-bottom:2px solid var(--red);padding-bottom:6px;margin-bottom:14px}
+.s-num{font-family:var(--fs);font-size:24px;font-weight:800;color:var(--red);line-height:1;flex-shrink:0}
+.s-title{font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
+.s-jp{font-family:var(--fs);font-size:9.5px;color:var(--muted);letter-spacing:2px;margin-left:auto;flex-shrink:0}
 
 /* ── Field ────────────────────────────────────── */
-.f{margin-bottom:11px}
+.f{margin-bottom:12px}
 .f-top{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
-.f-lbl{font-family:var(--fs);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.f-lbl{font-family:var(--fs);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
 .f-jp{font-size:9px;color:var(--gold);letter-spacing:1px}
 .f-right{margin-left:auto}
-.f-hint{font-size:9px;color:var(--muted);margin-top:2px;margin-bottom:7px;line-height:1.5;padding-left:7px;border-left:2px solid var(--red-a)}
+.f-hint{font-size:9.5px;color:var(--muted);margin-top:2px;margin-bottom:7px;line-height:1.5;padding-left:7px;border-left:2px solid var(--red-a)}
 
 /* ── Inputs ───────────────────────────────────── */
-input[type=text],input[type=number],select{
-  width:100%;background:transparent;border:none;
-  border-bottom:1.5px solid #301808;border-radius:0;
-  color:var(--ink);font-family:var(--f);font-size:12.5px;
-  padding:5px 2px;outline:none;transition:border-color .14s
-}
-input[type=text]:focus,input[type=number]:focus,select:focus{
-  border-bottom-color:var(--red);
-}
-textarea{
-  width:100%;background:rgba(8,5,3,.65);border:1px solid #281608;
-  border-radius:3px;color:var(--ink);font-family:var(--f);font-size:12.5px;
-  padding:7px 9px;outline:none;resize:vertical;min-height:50px;line-height:1.55;
-  transition:border-color .14s
-}
+input[type=text],input[type=number],select{width:100%;background:transparent;border:none;border-bottom:1.5px solid #301808;border-radius:0;color:var(--ink);font-family:var(--f);font-size:13px;padding:5px 2px;outline:none;transition:border-color .14s}
+input[type=text]:focus,input[type=number]:focus,select:focus{border-bottom-color:var(--red)}
+textarea{width:100%;background:rgba(8,5,3,.65);border:1px solid #281608;border-radius:3px;color:var(--ink);font-family:var(--f);font-size:13px;padding:7px 9px;outline:none;resize:vertical;min-height:55px;line-height:1.55;transition:border-color .14s}
 textarea:focus{border-color:var(--red)}
 select{appearance:none;-webkit-appearance:none;cursor:pointer}
 .sel-wrap{position:relative}
 .sel-wrap::after{content:'▾';position:absolute;right:2px;bottom:6px;font-size:10px;color:var(--gold);pointer-events:none}
 .hidden{display:none!important}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 11px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 12px}
 
 /* ── Choice toggle ───────────────────────────── */
 .choice{display:flex;gap:2px;background:#0a0704;border:1px solid var(--border);border-radius:3px;padding:2px;flex-shrink:0}
 .choice-b{cursor:pointer;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);padding:3px 7px;border-radius:2px;transition:all .1s}
 .choice-b.on{color:#ecdcc8;background:var(--red)}
 
-/* ── Segment control ──────────────────────────── */
+/* ── Segment ──────────────────────────────────── */
 .seg{display:flex;border:1.5px solid #281608;border-radius:3px;overflow:hidden}
-.seg-b{flex:1;text-align:center;cursor:pointer;font-family:var(--f);font-size:10px;font-weight:600;color:var(--muted);padding:6px 4px;border-right:1px solid #281608;background:transparent;transition:all .12s}
+.seg-b{flex:1;text-align:center;cursor:pointer;font-family:var(--f);font-size:10px;font-weight:600;color:var(--muted);padding:7px 4px;border-right:1px solid #281608;background:transparent;transition:all .12s}
 .seg-b:last-child{border-right:none}
 .seg-b.on{background:var(--red);color:#ecdcc8;border-right-color:transparent}
 
 /* ── Dynamic list ─────────────────────────────── */
 .dyn-list{display:flex;flex-direction:column;gap:7px;margin-bottom:7px}
-.dyn-item{background:rgba(8,5,3,.7);border:1px solid #281608;border-radius:3px;padding:8px 8px 3px;position:relative}
+.dyn-item{background:rgba(8,5,3,.7);border:1px solid #281608;border-radius:3px;padding:9px 9px 3px;position:relative}
 .dyn-item input,.dyn-item textarea{margin-bottom:6px}
 .dyn-item *:last-child{margin-bottom:0}
-.dyn-rm{position:absolute;top:7px;right:8px;font-size:14px;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .1s;line-height:1}
+.dyn-rm{position:absolute;top:7px;right:8px;font-size:15px;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .1s;line-height:1}
 .dyn-rm:hover{color:var(--red)}
-.dyn-add{display:flex;align-items:center;gap:7px;font-family:var(--f);font-size:11px;font-weight:600;color:var(--red);cursor:pointer;background:none;border:none;padding:4px 0;letter-spacing:.2px}
-.dyn-add::before{content:'+';width:17px;height:17px;border-radius:50%;border:1.5px dashed var(--red-b);background:var(--red-a);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.dyn-add{display:flex;align-items:center;gap:7px;font-family:var(--f);font-size:11.5px;font-weight:600;color:var(--red);cursor:pointer;background:none;border:none;padding:4px 0;letter-spacing:.2px}
+.dyn-add::before{content:'+';width:18px;height:18px;border-radius:50%;border:1.5px dashed var(--red-b);background:var(--red-a);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
 
 /* ── Footer ───────────────────────────────────── */
-.doc-foot{
-  background:var(--frame);border-top:1px solid var(--border);
-  padding:9px 13px;display:flex;align-items:center;gap:9px
-}
+.doc-foot{background:var(--frame);border-top:1px solid var(--border);padding:10px 14px;display:flex;align-items:center;gap:9px}
 .foot-nav{display:flex;gap:6px;flex:1}
-.ft-btn{cursor:pointer;font-family:var(--f);font-size:11px;font-weight:600;color:#5a3818;background:transparent;border:1px solid #281608;border-radius:3px;padding:6px 12px;transition:all .12s}
+.ft-btn{cursor:pointer;font-family:var(--f);font-size:11.5px;font-weight:600;color:#5a3818;background:transparent;border:1px solid #281608;border-radius:3px;padding:7px 13px;transition:all .12s}
 .ft-btn:hover{border-color:var(--gold);color:var(--gold)}
 .ft-btn.ghost{visibility:hidden}
 .foot-mid{text-align:center;flex-shrink:0}
-.foot-mid-lbl{font-family:var(--fs);font-size:7.5px;color:var(--muted);letter-spacing:1.5px;display:block;margin-bottom:2px}
+.foot-mid-lbl{font-family:var(--fs);font-size:8px;color:var(--muted);letter-spacing:1.5px;display:block;margin-bottom:2px}
+.sub-lbl{font-size:8.5px;color:#4a2810;letter-spacing:1px;font-family:var(--fs)}
 
-.seal{
-  width:48px;height:48px;border-radius:50%;flex-shrink:0;
-  background:radial-gradient(circle at 40% 38%,#d42038,#780f1a);
-  border:none;cursor:pointer;position:relative;
-  box-shadow:0 4px 16px -4px rgba(208,24,40,.9),0 0 0 3px rgba(208,24,40,.2),0 0 0 6px rgba(208,24,40,.07);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .12s,box-shadow .12s
-}
+.seal{width:52px;height:52px;border-radius:50%;flex-shrink:0;background:radial-gradient(circle at 40% 38%,#d42038,#780f1a);border:none;cursor:pointer;position:relative;box-shadow:0 4px 16px -4px rgba(208,24,40,.9),0 0 0 3px rgba(208,24,40,.2),0 0 0 6px rgba(208,24,40,.07);display:flex;align-items:center;justify-content:center;transition:transform .12s,box-shadow .12s}
 .seal::before{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(236,220,200,.28)}
 .seal:hover{transform:scale(1.07);box-shadow:0 6px 22px -4px rgba(208,24,40,.95),0 0 0 3px rgba(208,24,40,.3),0 0 0 8px rgba(208,24,40,.1)}
 .seal:active{transform:scale(.95)}
-.seal-k{font-family:var(--fs);font-size:18px;font-weight:800;color:#f0dcc8;position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+.seal-k{font-family:var(--fs);font-size:19px;font-weight:800;color:#f0dcc8;position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.5)}
 
 /* ── Overlay ──────────────────────────────────── */
 .overlay{position:absolute;inset:0;background:rgba(7,5,3,.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:30}
+.doc.theme-s .overlay{background:rgba(90,20,40,.97)}
 .overlay.on{display:flex}
-.ov-k{font-family:var(--fs);font-size:54px;color:var(--red);text-shadow:0 0 32px rgba(208,24,40,.9)}
+.ov-k{font-family:var(--fs);font-size:56px;color:var(--red);text-shadow:0 0 32px rgba(208,24,40,.9)}
 .ov-t{font-family:var(--fs);font-size:11px;letter-spacing:3px;color:#ecdcc8;text-transform:uppercase}
 .ov-s{font-size:9px;letter-spacing:2px;color:#5a3018}
 </style>
@@ -211,18 +179,20 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
   <div class="head-row">
     <img class="logo" src="https://files.catbox.moe/vciqmx.png" alt="鬼殺隊"/>
     <div class="head-info">
-      <div class="head-title" data-en="DEMON SLAYER CORPS" data-th="กองทัพนักล่าปีศาจ">DEMON SLAYER CORPS</div>
+      <div class="head-title" data-en="DEMON SLAYER CORPS" data-th="กองทัพผู้พิฆาตอสูร">DEMON SLAYER CORPS</div>
       <div class="head-sub">鬼 殺 隊  公 式 登 録 書</div>
     </div>
-    <div class="lang-row"><b id="lg_en" class="on">EN</b><b id="lg_th">ไทย</b></div>
-    <div class="head-stamp" data-en="CONFIDENTIAL" data-th="ลับ">CONFIDENTIAL</div>
+    <div class="head-right">
+      <div class="lang-row"><b id="lg_en" class="on">EN</b><b id="lg_th">ไทย</b></div>
+      <button class="theme-btn" id="btn_theme" title="Toggle sakura theme">🌸</button>
+      <div class="head-stamp" data-en="CONFIDENTIAL" data-th="ลับ">CONFIDENTIAL</div>
+    </div>
   </div>
 </div>
 
 <!-- ── BODY ────────────────────────────────────── -->
 <div class="doc-body">
 
-  <!-- Sidebar navigation -->
   <div class="sidebar">
     <div class="sn on" data-to="p1"><span class="sn-k">一</span><span class="sn-d"></span></div>
     <div class="sn"    data-to="p2"><span class="sn-k">二</span><span class="sn-d"></span></div>
@@ -230,22 +200,19 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
     <div class="sn"    data-to="p4"><span class="sn-k">四</span><span class="sn-d"></span></div>
   </div>
 
-  <!-- Page content -->
   <div class="doc-page">
 
     <!-- ① Identity -->
     <div class="panel on" data-panel="p1">
       <div class="s-head">
         <span class="s-num">一</span>
-        <span class="s-title" data-en="Identity" data-th="อัตลักษณ์">Identity</span>
+        <span class="s-title" data-en="Identity" data-th="ตัวตน">Identity</span>
         <span class="s-jp">身元</span>
       </div>
-
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Full Name" data-th="ชื่อ-นามสกุล">Full Name</span><span class="f-jp">氏 名</span></div>
-        <input type="text" id="f_name" data-pen="The name the Corps will inscribe" data-pth="ชื่อที่กองทัพจะจารึก"/>
+        <div class="f-top"><span class="f-lbl" data-en="Full Name" data-th="ชื่อ">Full Name</span><span class="f-jp">氏 名</span></div>
+        <input type="text" id="f_name" data-pen="The name the Corps will inscribe" data-pth="ชื่อที่จะถูกจารึกในทะเบียน"/>
       </div>
-
       <div class="g3">
         <div class="f">
           <div class="f-top"><span class="f-lbl" data-en="Age (18+)" data-th="อายุ (18+)">Age (18+)</span></div>
@@ -266,53 +233,48 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
     <div class="panel" data-panel="p2">
       <div class="s-head">
         <span class="s-num">二</span>
-        <span class="s-title" data-en="Path &amp; Standing" data-th="เส้นทาง &amp; ฐานะ">Path &amp; Standing</span>
+        <span class="s-title" data-en="Path &amp; Standing" data-th="เส้นทาง &amp; ยศ">Path &amp; Standing</span>
         <span class="s-jp">立場</span>
       </div>
-
       <div class="f">
         <div class="f-top">
           <span class="f-lbl" data-en="Character Type" data-th="ประเภทตัวละคร">Character Type</span><span class="f-jp">種別</span>
           <span class="f-right"><span class="choice" data-f="ctype"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="ctype_sel"></select></div>
-        <input type="text" id="ctype_cus" class="hidden" data-pen="Type your character type…" data-pth="พิมพ์ประเภทของคุณเอง…"/>
+        <input type="text" id="ctype_cus" class="hidden" data-pen="Type your character type…" data-pth="ระบุประเภทตัวละครของคุณ…"/>
       </div>
-
       <div class="f">
         <div class="f-top">
-          <span class="f-lbl" data-en="Era / Setting" data-th="ยุค / ฉาก">Era / Setting</span><span class="f-jp">時代</span>
+          <span class="f-lbl" data-en="Era / Setting" data-th="ยุคสมัย / บริบท">Era / Setting</span><span class="f-jp">時代</span>
           <span class="f-right"><span class="choice" data-f="era"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="era_sel"></select></div>
-        <input type="text" id="era_cus" class="hidden" data-pen="Type your era…" data-pth="พิมพ์ยุคของคุณเอง…"/>
+        <input type="text" id="era_cus" class="hidden" data-pen="Type your era…" data-pth="ระบุยุคสมัยของคุณ…"/>
       </div>
-
       <div class="f">
         <div class="f-top">
-          <span class="f-lbl" data-en="Rank / Grade" data-th="ยศ / เกรด">Rank / Grade</span><span class="f-jp">階級</span>
+          <span class="f-lbl" data-en="Rank / Grade" data-th="ยศ / ระดับ">Rank / Grade</span><span class="f-jp">階級</span>
           <span class="f-right"><span class="choice" data-f="rank"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="rank_sel"></select></div>
-        <input type="text" id="rank_cus" class="hidden" data-pen="Type your rank…" data-pth="พิมพ์ยศของคุณเอง…"/>
+        <input type="text" id="rank_cus" class="hidden" data-pen="Type your rank…" data-pth="ระบุยศของคุณ…"/>
       </div>
-
       <div class="f">
         <div class="f-top">
-          <span class="f-lbl" data-en="Affiliation / Origin" data-th="สังกัด / ต้นกำเนิด">Affiliation / Origin</span><span class="f-jp">出自</span>
+          <span class="f-lbl" data-en="Affiliation / Origin" data-th="สังกัด / กำเนิด">Affiliation / Origin</span><span class="f-jp">出自</span>
           <span class="f-right"><span class="choice" data-f="affil"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="affil_sel"></select></div>
-        <input type="text" id="affil_cus" class="hidden" data-pen="Type your affiliation…" data-pth="พิมพ์สังกัดของคุณเอง…"/>
+        <input type="text" id="affil_cus" class="hidden" data-pen="Type your affiliation…" data-pth="ระบุสังกัดของคุณ…"/>
       </div>
-
       <div class="f">
         <div class="f-top">
-          <span class="f-lbl" data-en="Opening Scene" data-th="ฉากเริ่มต้น">Opening Scene</span><span class="f-jp">開幕</span>
+          <span class="f-lbl" data-en="Opening Scene" data-th="ฉากเปิดเรื่อง">Opening Scene</span><span class="f-jp">開幕</span>
           <span class="f-right"><span class="choice" data-f="scene"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="scene_sel"></select></div>
-        <textarea id="scene_cus" class="hidden" data-pen="Describe where and how your story begins…" data-pth="บรรยายว่าเรื่องเริ่มที่ไหน อย่างไร…"></textarea>
+        <textarea id="scene_cus" class="hidden" data-pen="Describe where and how your story begins…" data-pth="บรรยายจุดเริ่มต้นของเรื่องราวคุณ…"></textarea>
       </div>
     </div>
 
@@ -323,40 +285,35 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
         <span class="s-title" data-en="Power" data-th="พลัง">Power</span>
         <span class="s-jp">術と力</span>
       </div>
-
       <div class="f">
         <div class="f-top">
-          <span class="f-lbl" data-en="Breathing Style" data-th="รูปแบบการหายใจ">Breathing Style</span><span class="f-jp">呼吸の流派</span>
+          <span class="f-lbl" data-en="Breathing Style" data-th="สายลมหายใจ">Breathing Style</span><span class="f-jp">呼吸の流派</span>
           <span class="f-right"><span class="choice" data-f="breath"><span class="choice-b on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="choice-b" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span></span>
         </div>
         <div class="sel-wrap"><select id="breath_sel"></select></div>
-        <input type="text" id="breath_cus" class="hidden" data-pen="Name your original breathing style…" data-pth="ตั้งชื่อรูปแบบการหายใจต้นฉบับ…"/>
+        <input type="text" id="breath_cus" class="hidden" data-pen="Name your original breathing style…" data-pth="ตั้งชื่อสายลมหายใจต้นฉบับของคุณ…"/>
       </div>
-
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Known Forms &amp; Notes" data-th="ท่าที่รู้จัก &amp; หมายเหตุ">Known Forms &amp; Notes</span></div>
-        <textarea id="f_bdetail" data-pen="Forms, special variations, Binding Vows…" data-pth="ท่าที่รู้จัก รูปแบบพิเศษ คำสาบานผูกมัด…"></textarea>
+        <div class="f-top"><span class="f-lbl" data-en="Known Forms &amp; Notes" data-th="ท่วงท่า &amp; บันทึก">Known Forms &amp; Notes</span></div>
+        <textarea id="f_bdetail" data-pen="Forms, special variations, Binding Vows…" data-pth="ท่วงท่า รูปแบบพิเศษ คำสาบานผูกพัน…"></textarea>
       </div>
-
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Demon Slayer Mark" data-th="รอยสังหารปีศาจ">Demon Slayer Mark</span><span class="f-jp">痣</span></div>
+        <div class="f-top"><span class="f-lbl" data-en="Demon Slayer Mark" data-th="รอยสังหารอสูร">Demon Slayer Mark</span><span class="f-jp">痣</span></div>
         <div class="seg" id="mark_seg">
           <span class="seg-b on" data-v="none"        data-en="Not Yet"           data-th="ยังไม่มี">Not Yet</span>
           <span class="seg-b"    data-v="awakened"    data-en="Awakened"          data-th="ตื่นแล้ว">Awakened</span>
           <span class="seg-b"    data-v="transparent" data-en="Transparent World" data-th="โลกโปร่งใส">Transparent World</span>
         </div>
       </div>
-
-      <div class="f" style="margin-top:14px">
-        <div class="f-top"><span class="f-lbl" data-en="Blood Demon Art" data-th="ศิลปะโลหิตปีศาจ">Blood Demon Art</span><span class="f-jp">血鬼術</span></div>
-        <p class="f-hint" data-en="Demon characters only — leave blank if you are a Slayer." data-th="สำหรับตัวละครปีศาจเท่านั้น — เว้นว่างหากเป็นนักล่า">Demon characters only — leave blank if you are a Slayer.</p>
+      <div class="f" style="margin-top:15px">
+        <div class="f-top"><span class="f-lbl" data-en="Blood Demon Art" data-th="ศิลปะเลือดอสูร">Blood Demon Art</span><span class="f-jp">血鬼術</span></div>
+        <p class="f-hint" data-en="Demon characters only — leave blank if you are a Slayer." data-th="สำหรับตัวละครอสูรเท่านั้น — เว้นว่างหากเป็นผู้พิฆาต">Demon characters only — leave blank if you are a Slayer.</p>
         <input type="text" id="f_bda" data-pen="Art name…" data-pth="ชื่อศิลปะ…"/>
       </div>
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="How it works &amp; Limits" data-th="วิธีทำงาน &amp; ข้อจำกัด">How it works &amp; Limits</span></div>
-        <textarea id="f_bdad" data-pen="What it does, rules, weaknesses…" data-pth="ทำอะไรได้ กฎของมัน จุดอ่อน…"></textarea>
+        <div class="f-top"><span class="f-lbl" data-en="How it works &amp; Limits" data-th="การทำงาน &amp; ข้อจำกัด">How it works &amp; Limits</span></div>
+        <textarea id="f_bdad" data-pen="What it does, rules, weaknesses…" data-pth="สิ่งที่มันทำได้ กฎ ข้อจำกัด…"></textarea>
       </div>
-
       <div class="f">
         <div class="f-top"><span class="f-lbl" data-en="Special Abilities" data-th="ความสามารถพิเศษ">Special Abilities</span></div>
         <div class="dyn-list" id="ab_list"></div>
@@ -371,29 +328,27 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
         <span class="s-title" data-en="Profile" data-th="โปรไฟล์">Profile</span>
         <span class="s-jp">人物像</span>
       </div>
-
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Appearance" data-th="รูปลักษณ์">Appearance</span><span class="f-jp">容姿</span></div>
+        <div class="f-top"><span class="f-lbl" data-en="Appearance" data-th="ลักษณะ">Appearance</span><span class="f-jp">容姿</span></div>
         <textarea id="f_app" data-pen="What walks into the village" data-pth="สิ่งที่เดินเข้ามาในหมู่บ้าน"></textarea>
       </div>
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Nature" data-th="นิสัย">Nature</span><span class="f-jp">性格</span></div>
+        <div class="f-top"><span class="f-lbl" data-en="Nature" data-th="บุคลิก">Nature</span><span class="f-jp">性格</span></div>
         <textarea id="f_nat" data-pen="Temperament; the conviction that drives you" data-pth="อุปนิสัย ความเชื่อที่ขับเคลื่อนคุณ"></textarea>
       </div>
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Ties &amp; History" data-th="ความสัมพันธ์ &amp; ภูมิหลัง">Ties &amp; History</span><span class="f-jp">経歴</span></div>
-        <textarea id="f_hist" data-pen="The wound that set you on this path; those you fight for" data-pth="บาดแผลที่พาคุณมาบนเส้นทางนี้ คนที่คุณต่อสู้เพื่อ"></textarea>
+        <div class="f-top"><span class="f-lbl" data-en="Ties &amp; History" data-th="สายสัมพันธ์ &amp; ประวัติ">Ties &amp; History</span><span class="f-jp">経歴</span></div>
+        <textarea id="f_hist" data-pen="The wound that set you on this path; those you fight for" data-pth="บาดแผลที่นำคุณสู่เส้นทางนี้ ผู้ที่คุณต่อสู้เพื่อ"></textarea>
       </div>
-
       <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Weaknesses" data-th="จุดอ่อน">Weaknesses</span><span class="f-jp">弱点</span></div>
+        <div class="f-top"><span class="f-lbl" data-en="Weaknesses" data-th="ข้อด้อย">Weaknesses</span><span class="f-jp">弱点</span></div>
         <div class="dyn-list" id="wk_list"></div>
-        <button class="dyn-add" id="wk_add" data-en="Add weakness" data-th="เพิ่มจุดอ่อน">Add weakness</button>
+        <button class="dyn-add" id="wk_add" data-en="Add weakness" data-th="เพิ่มข้อด้อย">Add weakness</button>
       </div>
     </div>
 
-  </div><!-- /doc-page -->
-</div><!-- /doc-body -->
+  </div>
+</div>
 
 <!-- ── FOOTER ──────────────────────────────────── -->
 <div class="doc-foot">
@@ -402,8 +357,8 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
     <button class="ft-btn" id="btn_next" data-en="Next ›" data-th="ถัดไป ›">Next ›</button>
   </div>
   <div class="foot-mid">
-    <span class="foot-mid-lbl" data-en="SUBMIT REGISTRY" data-th="ยืนยันทะเบียน">SUBMIT REGISTRY</span>
-    <div style="font-size:8.5px;color:#4a2810;letter-spacing:1px;font-family:var(--fs)">鬼殺隊 公印</div>
+    <span class="foot-mid-lbl" data-en="SUBMIT REGISTRY" data-th="ส่งบันทึกทะเบียน">SUBMIT REGISTRY</span>
+    <div class="sub-lbl">鬼殺隊 公印</div>
   </div>
   <button class="seal" id="btn_seal"><span class="seal-k">滅</span></button>
 </div>
@@ -415,86 +370,84 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
   <div class="ov-s">鬼殺隊 公印</div>
 </div>
 
-</div><!-- /doc -->
+</div>
 <script>
 (function(){
 var L='en';
 var PANELS=['p1','p2','p3','p4'];
 var cur=0;
-
 function el(id){return document.getElementById(id);}
 function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
 
-/* ── Data ─────────────────────────────────────── */
 var P={
   ctype:[
-    {en:"Demon Slayer Corps Member",              th:"สมาชิกกองทัพนักล่าปีศาจ"},
-    {en:"Hashira (Pillar)",                        th:"ฮาชิระ (เสาหลัก)"},
-    {en:"Trainer / Cultivator Master (育手)",       th:"ผู้ฝึก / อาจารย์เพาะบ่ม"},
-    {en:"Demon",                                   th:"ปีศาจ"},
-    {en:"Upper Moon Demon (上弦)",                  th:"ปีศาจพระจันทร์บน (上弦)"},
-    {en:"Lower Moon Demon (下弦)",                  th:"ปีศาจพระจันทร์ล่าง (下弦)"},
-    {en:"Demon with Accumulated Power",            th:"ปีศาจผู้มีพลังสะสม"},
-    {en:"Civilian (dragged in)",                   th:"พลเรือน (ถูกดึงเข้ามา)"},
+    {en:"Demon Slayer Corps Member",              th:"สมาชิกกองทัพผู้พิฆาตอสูร"},
+    {en:"Hashira (Pillar)",                        th:"ฮาชิระ 柱 (เสาหลัก)"},
+    {en:"Trainer / Cultivator Master (育手)",       th:"อาจารย์เพาะบ่ม (育手)"},
+    {en:"Demon",                                   th:"อสูร"},
+    {en:"Upper Moon Demon (上弦)",                  th:"อสูรจันทร์บน (上弦)"},
+    {en:"Lower Moon Demon (下弦)",                  th:"อสูรจันทร์ล่าง (下弦)"},
+    {en:"Demon with Accumulated Power",            th:"อสูรพลังสะสม"},
+    {en:"Civilian (dragged in)",                   th:"พลเรือน (ถูกพัวพัน)"},
     {en:"Hybrid / Other",                          th:"ลูกผสม / อื่นๆ"}
   ],
   era:[
-    {en:"Taisho Era — main story timeline",        th:"ยุคไทโช — ไทม์ไลน์เรื่องหลัก"},
-    {en:"Sengoku Era — Age of Yoriichi",           th:"ยุคเซ็นโกคุ — ยุคของโยริอิจิ"},
-    {en:"Edo Period — quiet years between hunts",  th:"ยุคเอโดะ — ช่วงเงียบระหว่างการล่า"},
-    {en:"Near-future alternate Japan",             th:"ญี่ปุ่นยุคอนาคตอันใกล้สมมุติ"},
-    {en:"Unknown / let the AI decide",             th:"ไม่ทราบ / ให้ AI ตัดสิน"}
+    {en:"Taisho Era — main story timeline",        th:"ยุคไทโช — เรื่องราวหลัก"},
+    {en:"Sengoku Era — Age of Yoriichi",           th:"ยุคเซ็นโงะกุ — ยุคโยริอิจิ"},
+    {en:"Edo Period — quiet years between hunts",  th:"ยุคเอโดะ — ช่วงสงบระหว่างการล่า"},
+    {en:"Near-future alternate Japan",             th:"ญี่ปุ่นอนาคตสมมุติ"},
+    {en:"Unknown / let the AI decide",             th:"ไม่กำหนด / ให้ AI เลือก"}
   ],
   rank:[
-    {en:"Mizunoto 壬 — 10th rank (Lowest)",        th:"มิซุโนะโตะ 壬 — ลำดับ 10 (ต่ำสุด)"},
-    {en:"Kanoe 庚 — Mid-lower ranks",              th:"คาโนะเอะ 庚 — ลำดับกลาง-ล่าง"},
-    {en:"Hinoe 丙 — Mid-upper ranks",              th:"ฮิโนะเอะ 丙 — ลำดับกลาง-บน"},
-    {en:"Kinoe 甲 — 1st rank (Highest Regular)",   th:"คิโนะเอะ 甲 — ลำดับ 1 (สูงสุดแบบปกติ)"},
+    {en:"Mizunoto 壬 — 10th rank (Lowest)",        th:"มิซึโนะโตะ 壬 — อันดับ 10 (ต่ำสุด)"},
+    {en:"Kanoe 庚 — Mid-lower ranks",              th:"คาโนะเอะ 庚 — อันดับกลาง-ล่าง"},
+    {en:"Hinoe 丙 — Mid-upper ranks",              th:"ฮิโนะเอะ 丙 — อันดับกลาง-บน"},
+    {en:"Kinoe 甲 — 1st rank (Highest Regular)",   th:"คิโนะเอะ 甲 — อันดับ 1 (สูงสุดปกติ)"},
     {en:"Hashira 柱 — Special rank",               th:"ฮาชิระ 柱 — ยศพิเศษ"},
-    {en:"Lower Moon 下弦",                          th:"พระจันทร์ล่าง 下弦"},
-    {en:"Upper Moon 上弦",                          th:"พระจันทร์บน 上弦"},
-    {en:"Muzan's direct servant",                  th:"ผู้รับใช้ตรงของมูซัน"},
+    {en:"Lower Moon 下弦",                          th:"จันทร์ล่าง 下弦"},
+    {en:"Upper Moon 上弦",                          th:"จันทร์บน 上弦"},
+    {en:"Muzan's direct servant",                  th:"ผู้รับใช้โดยตรงของมูซัน"},
     {en:"Unranked / Civilian",                     th:"ไม่มียศ / พลเรือน"}
   ],
   affil:[
-    {en:"Demon Slayer Corps (鬼殺隊)",              th:"กองทัพนักล่าปีศาจ (鬼殺隊)"},
-    {en:"Ubuyashiki Estate",                       th:"คฤหาสน์อูบูยาชิกิ"},
-    {en:"Flame Hashira lineage",                   th:"สายตระกูลเสาหลักแห่งเปลวไฟ"},
-    {en:"Water Breathing school",                  th:"โรงเรียนสายน้ำ"},
-    {en:"Under Muzan's control",                   th:"อยู่ใต้การควบคุมของมูซัน"},
+    {en:"Demon Slayer Corps (鬼殺隊)",              th:"กองทัพผู้พิฆาตอสูร (鬼殺隊)"},
+    {en:"Ubuyashiki Estate",                       th:"คฤหาสน์ตระกูลอูบูยาชิกิ"},
+    {en:"Flame Hashira lineage",                   th:"สายตระกูลฮาชิระเปลวไฟ"},
+    {en:"Water Breathing school",                  th:"สำนักลมหายใจสายน้ำ"},
+    {en:"Under Muzan's control",                   th:"ภายใต้คำสั่งมูซัน"},
     {en:"Rogue / Independent",                     th:"อิสระ / ไม่สังกัด"},
-    {en:"Wisteria Village (藤の里)",                 th:"หมู่บ้านฟูจิ (藤の里)"},
-    {en:"Civilian origin",                         th:"ต้นกำเนิดพลเรือน"},
-    {en:"Unknown lineage",                         th:"สายเลือดที่ไม่ทราบ"}
+    {en:"Wisteria Village (藤の里)",                 th:"หมู่บ้านวิสทีเรีย (藤の里)"},
+    {en:"Civilian origin",                         th:"พื้นเพพลเรือน"},
+    {en:"Unknown lineage",                         th:"เชื้อสายไม่ปรากฏ"}
   ],
   breath:[
-    {en:"Water Breathing (水の呼吸)",                th:"สายน้ำ (水の呼吸)"},
-    {en:"Flame Breathing (炎の呼吸)",               th:"สายเปลวไฟ (炎の呼吸)"},
-    {en:"Thunder Breathing (雷の呼吸)",              th:"สายฟ้า (雷の呼吸)"},
-    {en:"Wind Breathing (風の呼吸)",                 th:"สายลม (風の呼吸)"},
-    {en:"Stone Breathing (岩の呼吸)",               th:"สายหิน (岩の呼吸)"},
-    {en:"Mist Breathing (霞の呼吸)",                th:"สายหมอก (霞の呼吸)"},
-    {en:"Insect Breathing (蟲の呼吸)",              th:"สายแมลง (蟲の呼吸)"},
-    {en:"Sound Breathing (音の呼吸)",               th:"สายเสียง (音の呼吸)"},
-    {en:"Love Breathing (恋の呼吸)",                th:"สายความรัก (恋の呼吸)"},
-    {en:"Serpent Breathing (蛇の呼吸)",             th:"สายงู (蛇の呼吸)"},
-    {en:"Moon Breathing (月の呼吸)",                th:"สายจันทรา (月の呼吸)"},
-    {en:"Flower Breathing (花の呼吸)",              th:"สายดอกไม้ (花の呼吸)"},
-    {en:"Beast Breathing (獣の呼吸)",               th:"สายสัตว์ร้าย (獣の呼吸)"},
-    {en:"Sun Breathing / Hinokami Kagura (日の呼吸)", th:"สายพระอาทิตย์ / ฮิโนะคามิ คากุระ"},
-    {en:"Custom original style",                   th:"รูปแบบต้นฉบับที่สร้างเอง"},
-    {en:"None (no breathing style)",               th:"ไม่มี"}
+    {en:"Water Breathing (水の呼吸)",                th:"ลมหายใจสายน้ำ (水の呼吸)"},
+    {en:"Flame Breathing (炎の呼吸)",               th:"ลมหายใจสายเปลวไฟ (炎の呼吸)"},
+    {en:"Thunder Breathing (雷の呼吸)",              th:"ลมหายใจสายสายฟ้า (雷の呼吸)"},
+    {en:"Wind Breathing (風の呼吸)",                 th:"ลมหายใจสายลม (風の呼吸)"},
+    {en:"Stone Breathing (岩の呼吸)",               th:"ลมหายใจสายหิน (岩の呼吸)"},
+    {en:"Mist Breathing (霞の呼吸)",                th:"ลมหายใจสายหมอก (霞の呼吸)"},
+    {en:"Insect Breathing (蟲の呼吸)",              th:"ลมหายใจสายแมลง (蟲の呼吸)"},
+    {en:"Sound Breathing (音の呼吸)",               th:"ลมหายใจสายเสียง (音の呼吸)"},
+    {en:"Love Breathing (恋の呼吸)",                th:"ลมหายใจสายความรัก (恋の呼吸)"},
+    {en:"Serpent Breathing (蛇の呼吸)",             th:"ลมหายใจสายงู (蛇の呼吸)"},
+    {en:"Moon Breathing (月の呼吸)",                th:"ลมหายใจสายจันทรา (月の呼吸)"},
+    {en:"Flower Breathing (花の呼吸)",              th:"ลมหายใจสายดอกไม้ (花の呼吸)"},
+    {en:"Beast Breathing (獣の呼吸)",               th:"ลมหายใจสายสัตว์ร้าย (獣の呼吸)"},
+    {en:"Sun Breathing / Hinokami Kagura (日の呼吸)", th:"ลมหายใจสายพระอาทิตย์ / ฮิโนะคามิ คางุระ"},
+    {en:"Custom original style",                   th:"สายลมหายใจต้นฉบับที่สร้างเอง"},
+    {en:"None (no breathing style)",               th:"ไม่มีสายลมหายใจ"}
   ],
   scene:[
-    {en:"A moonlit road the night after Final Selection",     th:"ถนนแสงจันทร์คืนหลังผ่านการคัดเลือกขั้นสุดท้าย"},
-    {en:"A village already burning — the demon still inside", th:"หมู่บ้านที่กำลังลุกไหม้ — ปีศาจยังอยู่ข้างใน"},
-    {en:"The threshold of a Hashira's dojo",                  th:"ขอบประตูโดโจของฮาชิระ"},
+    {en:"A moonlit road the night after Final Selection",     th:"ถนนแสงจันทร์ คืนถัดจากการคัดเลือกขั้นสุดท้าย"},
+    {en:"A village already burning — the demon still inside", th:"หมู่บ้านกำลังลุกไหม้ — อสูรยังอยู่ข้างใน"},
+    {en:"The threshold of a Hashira's dojo",                  th:"หน้าประตูโดโจของฮาชิระ"},
     {en:"Waking to find everyone in your family gone",        th:"ตื่นขึ้นมาพบว่าทุกคนในครอบครัวหายไป"},
-    {en:"Newly turned — dawn is still hours away",            th:"เพิ่งกลายเป็นปีศาจ — รุ่งอรุณยังอีกหลายชั่วโมง"}
+    {en:"Newly turned — dawn is still hours away",            th:"เพิ่งกลายเป็นอสูร — รุ่งอรุณยังอีกหลายชั่วโมง"}
   ]
 };
 
-/* ── Language ──────────────────────────────────── */
+/* Language */
 function applyLang(){
   qa('[data-en]').forEach(function(e){
     var v=L==='th'?(e.getAttribute('data-th')||e.getAttribute('data-en')):e.getAttribute('data-en');
@@ -516,7 +469,13 @@ function fillSel(id,arr){
 el('lg_en').addEventListener('click',function(){L='en';el('lg_en').classList.add('on');el('lg_th').classList.remove('on');applyLang();});
 el('lg_th').addEventListener('click',function(){L='th';el('lg_th').classList.add('on');el('lg_en').classList.remove('on');applyLang();});
 
-/* ── Panel navigation ──────────────────────────── */
+/* Theme toggle */
+el('btn_theme').addEventListener('click',function(){
+  var s=el('app').classList.toggle('theme-s');
+  this.textContent=s?'🌑':'🌸';
+});
+
+/* Panel navigation */
 function goPanel(idx){
   if(idx<0||idx>=PANELS.length)return;
   PANELS.forEach(function(id,i){
@@ -532,13 +491,12 @@ el('btn_next').addEventListener('click',function(){goPanel(cur+1);});
 el('btn_back').addEventListener('click',function(){goPanel(cur-1);});
 qa('.sn').forEach(function(sn){
   sn.addEventListener('click',function(){
-    var id=sn.getAttribute('data-to');
-    var idx=PANELS.indexOf(id);
+    var idx=PANELS.indexOf(sn.getAttribute('data-to'));
     if(idx>=0)goPanel(idx);
   });
 });
 
-/* ── Choice toggles ────────────────────────────── */
+/* Choice toggles */
 qa('.choice').forEach(function(c){
   qa('.choice-b',c).forEach(function(b){
     b.addEventListener('click',function(){
@@ -552,36 +510,34 @@ qa('.choice').forEach(function(c){
   });
 });
 function getPC(f){
-  var c=document.querySelector('.choice[data-f="'+f+'"]');
-  if(!c)return'';
+  var c=document.querySelector('.choice[data-f="'+f+'"]');if(!c)return'';
   var m=c.querySelector('.choice-b.on').getAttribute('data-m');
   if(m==='p'){var s=el(f+'_sel');return s?s.value:'';}
   var cu=el(f+'_cus');return cu?(cu.value||'').trim():'';
 }
 
-/* ── Segment ───────────────────────────────────── */
+/* Segment */
 qa('.seg').forEach(function(sg){
   qa('.seg-b',sg).forEach(function(b){
     b.addEventListener('click',function(){
-      qa('.seg-b',sg).forEach(function(x){x.classList.remove('on');});
-      b.classList.add('on');
+      qa('.seg-b',sg).forEach(function(x){x.classList.remove('on');});b.classList.add('on');
     });
   });
 });
 function segVal(id){var on=el(id)&&el(id).querySelector('.seg-b.on');return on?on.getAttribute('data-v'):'none';}
 
-/* ── Dynamic lists ─────────────────────────────── */
+/* Dynamic lists */
 function rmItem(btn){btn.parentNode.parentNode.removeChild(btn.parentNode);}
 function addAbility(){
   var it=document.createElement('div');it.className='dyn-item';
-  it.innerHTML='<button class="dyn-rm">×</button><input type="text" class="ab_n" data-pen="Ability name" data-pth="ชื่อความสามารถ"/><textarea class="ab_h" data-pen="How it works" data-pth="วิธีการทำงาน"></textarea><input type="text" class="ab_l" data-pen="Limits — conditions / how many times" data-pth="ข้อจำกัด — เงื่อนไข / กี่ครั้ง"/>';
+  it.innerHTML='<button class="dyn-rm">×</button><input type="text" class="ab_n" data-pen="Ability name" data-pth="ชื่อความสามารถ"/><textarea class="ab_h" data-pen="How it works" data-pth="วิธีการทำงาน"></textarea><input type="text" class="ab_l" data-pen="Limits — conditions / how many times" data-pth="ข้อจำกัด — เงื่อนไข / จำนวนครั้ง"/>';
   el('ab_list').appendChild(it);
   it.querySelector('.dyn-rm').addEventListener('click',function(){rmItem(this);});
   applyLang();
 }
 function addWeakness(){
   var it=document.createElement('div');it.className='dyn-item';
-  it.innerHTML='<button class="dyn-rm">×</button><input type="text" class="wk_t" data-pen="A weakness, limit, or vulnerability" data-pth="จุดอ่อน ข้อจำกัด หรือจุดเปราะบาง"/>';
+  it.innerHTML='<button class="dyn-rm">×</button><input type="text" class="wk_t" data-pen="A weakness, limit, or vulnerability" data-pth="จุดอ่อน ข้อจำกัด หรือช่องโหว่"/>';
   el('wk_list').appendChild(it);
   it.querySelector('.dyn-rm').addEventListener('click',function(){rmItem(this);});
   applyLang();
@@ -590,7 +546,7 @@ el('ab_add').addEventListener('click',addAbility);
 el('wk_add').addEventListener('click',addWeakness);
 addAbility();addWeakness();
 
-/* ── Submit ────────────────────────────────────── */
+/* Submit */
 el('btn_seal').addEventListener('click',function(){
   function v(id){var e=el(id);return e?(e.value||'').trim():'';}
   var abilities=[];
@@ -602,10 +558,8 @@ el('btn_seal').addEventListener('click',function(){
   });
   var weaknesses=[];
   qa('#wk_list .dyn-item').forEach(function(it){
-    var t=(it.querySelector('.wk_t').value||'').trim();
-    if(t)weaknesses.push(t);
+    var t=(it.querySelector('.wk_t').value||'').trim();if(t)weaknesses.push(t);
   });
-
   var data={
     lang:L,
     name:v('f_name'),age:v('f_age'),gender:v('f_gender'),blood_type:v('f_blood'),
@@ -617,10 +571,8 @@ el('btn_seal').addEventListener('click',function(){
     abilities:abilities,
     appearance:v('f_app'),nature:v('f_nat'),history:v('f_hist'),weaknesses:weaknesses
   };
-
   el('overlay').classList.add('on');
   var payload='<'+'KNY_CONFIRM'+'>\n'+JSON.stringify(data,null,2)+'\n<'+'/KNY_CONFIRM'+'>';
-
   setTimeout(function(){
     try{
       var w=window.parent||window;
@@ -637,9 +589,7 @@ el('btn_seal').addEventListener('click',function(){
   },450);
 });
 
-/* ── Init ──────────────────────────────────────── */
-goPanel(0);
-applyLang();
+goPanel(0);applyLang();
 })();
 </script>
 </body>
