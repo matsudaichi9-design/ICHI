@@ -1,0 +1,10 @@
+{
+    "display_name": "Frieren RPG Character Creator",
+    "version": "1.0.0",
+    "author": "ICHI",
+    "description": "ระบบสร้างตัวละคร RPG สำหรับโลกของ Sousou no Frieren — ครอบคลุมชื่อ เพศ เผ่าพันธุ์ คลาส เวทมนตร์ ค่าสถานะ ประวัติ และความสัมพันธ์",
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css"
+}
