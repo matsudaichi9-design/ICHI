@@ -7,22 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700;800&family=Noto+Serif+JP:wght@400;500;600&family=Bai+Jamjuree:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:18px;-webkit-tap-highlight-color:transparent}
+html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:10px;-webkit-tap-highlight-color:transparent}
 
 /* ── Root ─────────────────────────────────────── */
 .doc{
-  --ink:#1a1006;--paper:#f2e8d0;--paper2:#e8dcbf;
-  --frame:#100c08;--border:#2c1a0a;
-  --red:#c21528;--red-a:rgba(194,21,40,.13);--red-b:rgba(194,21,40,.38);
-  --gold:#a87830;--gold-a:rgba(168,120,48,.22);--gold-b:rgba(168,120,48,.5);
-  --muted:#7a5830;--rule:rgba(140,100,30,.20);
+  --ink:#ddd0b8;--ink2:#a89070;
+  --paper:#0c0907;--paper2:#120d08;
+  --frame:#070503;--border:#281608;
+  --red:#d01828;--red-a:rgba(208,24,40,.14);--red-b:rgba(208,24,40,.42);
+  --gold:#a07828;--gold-a:rgba(160,120,40,.18);--gold-b:rgba(160,120,40,.38);
+  --muted:#785028;--rule:rgba(208,24,40,.08);
   --f:'Bai Jamjuree','Noto Sans Thai',sans-serif;
   --fs:'Shippori Mincho','Noto Serif JP',serif;
-  width:100%;max-width:540px;
+  width:100%;max-width:480px;
   background:var(--frame);
   border:1px solid var(--border);
   border-radius:10px;overflow:hidden;
-  box-shadow:0 20px 60px rgba(0,0,0,.85),0 0 0 1px rgba(168,120,48,.12);
+  box-shadow:0 18px 56px rgba(0,0,0,.92),0 0 0 1px rgba(208,24,40,.1);
   font-family:var(--f);color:var(--ink);
   position:relative
 }
@@ -30,45 +31,40 @@ html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-star
 /* ── Header ───────────────────────────────────── */
 .doc-head{
   background:var(--frame);
-  padding:14px 16px 0;
+  padding:11px 13px 0;
   border-bottom:2px solid var(--red);
   position:relative
 }
 .doc-head::before{
   content:'❀  ❀  ❀';
-  position:absolute;bottom:6px;right:16px;
-  font-size:8px;letter-spacing:5px;
-  color:rgba(168,120,48,.28);pointer-events:none
+  position:absolute;bottom:5px;right:13px;
+  font-size:7px;letter-spacing:5px;
+  color:rgba(208,24,40,.18);pointer-events:none
 }
-.head-row{display:flex;align-items:center;gap:12px;padding-bottom:12px}
+.head-row{display:flex;align-items:center;gap:9px;padding-bottom:10px}
 
-.moon{
-  width:42px;height:42px;flex-shrink:0;border-radius:50%;
-  background:radial-gradient(circle at 38% 36%,#e8dfc6 0%,#c8a85a 52%,#7a5018 100%);
-  box-shadow:0 0 18px -4px rgba(200,168,80,.55),inset 0 2px 3px rgba(0,0,0,.25);
-  position:relative
-}
-.moon::after{
-  content:'';position:absolute;width:9px;height:9px;border-radius:50%;
-  top:11px;left:22px;background:rgba(0,0,0,.12);
-  box-shadow:inset 0 1px 2px rgba(0,0,0,.18)
+.logo{
+  width:38px;height:38px;flex-shrink:0;
+  object-fit:contain;
+  filter:drop-shadow(0 0 7px rgba(208,24,40,.45))
 }
 
 .head-info{flex:1;min-width:0}
 .head-title{
-  font-family:var(--fs);font-size:13.5px;font-weight:800;
-  letter-spacing:2px;color:#f0e8d0;text-transform:uppercase
+  font-family:var(--fs);font-size:12.5px;font-weight:800;
+  letter-spacing:2px;color:#ecdcc8;text-transform:uppercase;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
 }
-.head-sub{font-size:8px;letter-spacing:4px;color:#7a5830;margin-top:2px}
+.head-sub{font-size:7.5px;letter-spacing:3px;color:#5a3018;margin-top:2px}
 
-.lang-row{display:flex;gap:2px;background:#1a1006;border:1px solid var(--border);border-radius:3px;padding:2px;flex-shrink:0}
-.lang-row b{cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.5px;color:#5a3a18;padding:3px 8px;border-radius:2px;transition:all .12s}
-.lang-row b.on{color:#f0e8d0;background:var(--red)}
+.lang-row{display:flex;gap:2px;background:#0a0704;border:1px solid var(--border);border-radius:3px;padding:2px;flex-shrink:0}
+.lang-row b{cursor:pointer;font-size:9.5px;font-weight:700;letter-spacing:.5px;color:#4a2a14;padding:3px 7px;border-radius:2px;transition:all .12s}
+.lang-row b.on{color:#ecdcc8;background:var(--red)}
 
 .head-stamp{
-  font-family:var(--fs);font-size:8.5px;font-weight:700;
+  font-family:var(--fs);font-size:7.5px;font-weight:700;
   border:1.5px solid var(--red);border-radius:2px;
-  color:var(--red);padding:3px 7px;letter-spacing:1.5px;
+  color:var(--red);padding:3px 5px;letter-spacing:1.5px;
   flex-shrink:0;white-space:nowrap
 }
 
@@ -77,73 +73,73 @@ html,body{background:#0d0a06;min-height:100vh;display:flex;align-items:flex-star
 
 /* ── Sidebar ──────────────────────────────────── */
 .sidebar{
-  width:46px;flex-shrink:0;background:var(--frame);
+  width:42px;flex-shrink:0;background:var(--frame);
   border-right:1px solid var(--border);
   display:flex;flex-direction:column;align-items:center;
-  padding:14px 0 14px;gap:6px;position:relative
+  padding:16px 0;gap:10px;position:relative
 }
 .sidebar::after{
-  content:'';position:absolute;right:0;top:12%;bottom:12%;width:1.5px;
-  background:linear-gradient(180deg,transparent,var(--red) 25%,var(--red) 75%,transparent)
+  content:'';position:absolute;right:0;top:8%;bottom:8%;width:1.5px;
+  background:linear-gradient(180deg,transparent,var(--red) 30%,var(--red) 70%,transparent)
 }
 
 .sn{
-  width:34px;height:34px;border-radius:50%;border:1.5px solid #3a2010;
+  width:30px;height:30px;border-radius:50%;border:1.5px solid #261408;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   cursor:pointer;gap:2px;flex-shrink:0;transition:all .14s;position:relative
 }
-.sn-k{font-family:var(--fs);font-size:14px;font-weight:700;color:#5a3a18;line-height:1;transition:color .14s}
-.sn-d{width:4px;height:4px;border-radius:50%;background:#3a2010;transition:background .14s}
-.sn.on{background:var(--red);border-color:var(--red);box-shadow:0 0 10px -3px rgba(194,21,40,.7)}
-.sn.on .sn-k{color:#f2e8d0}
-.sn.on .sn-d{background:#f2e8d0}
+.sn-k{font-family:var(--fs);font-size:13px;font-weight:700;color:#402810;line-height:1;transition:color .14s}
+.sn-d{width:3px;height:3px;border-radius:50%;background:#261408;transition:background .14s}
+.sn.on{background:var(--red);border-color:var(--red);box-shadow:0 0 10px -2px rgba(208,24,40,.75)}
+.sn.on .sn-k{color:#ecdcc8}
+.sn.on .sn-d{background:#ecdcc8}
 .sn.been .sn-k{color:var(--gold)}
 .sn.been .sn-d{background:var(--gold)}
 
-/* ── Page (paper) ─────────────────────────────── */
+/* ── Page (dark paper) ────────────────────────── */
 .doc-page{
   flex:1;min-width:0;
   background:
-    repeating-linear-gradient(to bottom,transparent 0,transparent 31px,var(--rule) 31px,var(--rule) 32px),
+    repeating-linear-gradient(to bottom,transparent 0,transparent 30px,var(--rule) 30px,var(--rule) 31px),
     var(--paper);
-  padding:16px 18px 12px 15px
+  padding:14px 15px 11px 12px
 }
 
 .panel{display:none}
-.panel.on{display:block;animation:arrive .18s ease}
-@keyframes arrive{from{opacity:0;transform:translateX(6px)}to{opacity:1;transform:none}}
+.panel.on{display:block;animation:arrive .17s ease}
+@keyframes arrive{from{opacity:0;transform:translateX(5px)}to{opacity:1;transform:none}}
 
 /* ── Section heading ──────────────────────────── */
 .s-head{
-  display:flex;align-items:baseline;gap:10px;
-  border-bottom:2px solid var(--red);padding-bottom:7px;margin-bottom:15px
+  display:flex;align-items:baseline;gap:8px;
+  border-bottom:2px solid var(--red);padding-bottom:6px;margin-bottom:12px
 }
-.s-num{font-family:var(--fs);font-size:26px;font-weight:800;color:var(--red);line-height:1;flex-shrink:0}
-.s-title{font-family:var(--fs);font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
-.s-jp{font-family:var(--fs);font-size:10px;color:var(--muted);letter-spacing:2px;margin-left:auto;flex-shrink:0}
+.s-num{font-family:var(--fs);font-size:22px;font-weight:800;color:var(--red);line-height:1;flex-shrink:0}
+.s-title{font-family:var(--fs);font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink)}
+.s-jp{font-family:var(--fs);font-size:9px;color:var(--muted);letter-spacing:2px;margin-left:auto;flex-shrink:0}
 
 /* ── Field ────────────────────────────────────── */
-.f{margin-bottom:13px}
+.f{margin-bottom:11px}
 .f-top{display:flex;align-items:baseline;gap:6px;margin-bottom:4px}
-.f-lbl{font-family:var(--fs);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
-.f-jp{font-size:9.5px;color:var(--gold);letter-spacing:1px}
+.f-lbl{font-family:var(--fs);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted)}
+.f-jp{font-size:9px;color:var(--gold);letter-spacing:1px}
 .f-right{margin-left:auto}
-.f-hint{font-size:9.5px;color:var(--muted);margin-top:3px;margin-bottom:8px;line-height:1.5;padding-left:8px;border-left:2px solid var(--gold-a)}
+.f-hint{font-size:9px;color:var(--muted);margin-top:2px;margin-bottom:7px;line-height:1.5;padding-left:7px;border-left:2px solid var(--red-a)}
 
 /* ── Inputs ───────────────────────────────────── */
 input[type=text],input[type=number],select{
   width:100%;background:transparent;border:none;
-  border-bottom:1.5px solid var(--gold);border-radius:0;
-  color:var(--ink);font-family:var(--f);font-size:13px;
+  border-bottom:1.5px solid #301808;border-radius:0;
+  color:var(--ink);font-family:var(--f);font-size:12.5px;
   padding:5px 2px;outline:none;transition:border-color .14s
 }
 input[type=text]:focus,input[type=number]:focus,select:focus{
   border-bottom-color:var(--red);
 }
 textarea{
-  width:100%;background:rgba(232,220,191,.45);border:1px solid var(--gold-b);
-  border-radius:3px;color:var(--ink);font-family:var(--f);font-size:13px;
-  padding:7px 9px;outline:none;resize:vertical;min-height:54px;line-height:1.55;
+  width:100%;background:rgba(8,5,3,.65);border:1px solid #281608;
+  border-radius:3px;color:var(--ink);font-family:var(--f);font-size:12.5px;
+  padding:7px 9px;outline:none;resize:vertical;min-height:50px;line-height:1.55;
   transition:border-color .14s
 }
 textarea:focus{border-color:var(--red)}
@@ -151,95 +147,60 @@ select{appearance:none;-webkit-appearance:none;cursor:pointer}
 .sel-wrap{position:relative}
 .sel-wrap::after{content:'▾';position:absolute;right:2px;bottom:6px;font-size:10px;color:var(--gold);pointer-events:none}
 .hidden{display:none!important}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 11px}
 
-/* ── Choice toggle (preset/custom) ───────────── */
-.choice{display:flex;gap:2px;background:var(--paper2);border:1px solid var(--gold-b);border-radius:3px;padding:2px;flex-shrink:0}
-.choice-b{cursor:pointer;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);padding:3px 8px;border-radius:2px;transition:all .1s}
-.choice-b.on{color:#f2e8d0;background:var(--red)}
+/* ── Choice toggle ───────────────────────────── */
+.choice{display:flex;gap:2px;background:#0a0704;border:1px solid var(--border);border-radius:3px;padding:2px;flex-shrink:0}
+.choice-b{cursor:pointer;font-size:9px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--muted);padding:3px 7px;border-radius:2px;transition:all .1s}
+.choice-b.on{color:#ecdcc8;background:var(--red)}
 
 /* ── Segment control ──────────────────────────── */
-.seg{display:flex;border:1.5px solid var(--gold-b);border-radius:3px;overflow:hidden}
-.seg-b{flex:1;text-align:center;cursor:pointer;font-family:var(--f);font-size:10.5px;font-weight:600;color:var(--muted);padding:7px 4px;border-right:1px solid var(--gold-b);background:transparent;transition:all .12s}
+.seg{display:flex;border:1.5px solid #281608;border-radius:3px;overflow:hidden}
+.seg-b{flex:1;text-align:center;cursor:pointer;font-family:var(--f);font-size:10px;font-weight:600;color:var(--muted);padding:6px 4px;border-right:1px solid #281608;background:transparent;transition:all .12s}
 .seg-b:last-child{border-right:none}
-.seg-b.on{background:var(--red);color:#f2e8d0;border-right-color:transparent}
-
-/* ── Colour picker ────────────────────────────── */
-.color-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px solid var(--gold-b);border-radius:3px;background:transparent}
-.hex-in{width:96px!important}
-.dots{display:flex;gap:5px;flex-wrap:wrap}
-.dot{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;box-shadow:0 0 0 1px rgba(140,100,30,.4);transition:border-color .1s}
-.dot.on{border-color:var(--ink)}
-
-/* ── Stats ────────────────────────────────────── */
-.stat-row{display:flex;align-items:center;gap:10px;padding-bottom:10px;margin-bottom:10px;border-bottom:1px dashed var(--rule)}
-.stat-lbl{font-family:var(--fs);font-size:11px;color:var(--ink);flex:1}
-.stat-n{width:72px!important;flex-shrink:0;text-align:center;color:var(--red)!important;font-weight:700;font-size:15px!important;border-bottom-color:var(--red)!important}
-
-/* ── Skill stamps ─────────────────────────────── */
-.skill-sec{margin-bottom:14px}
-.skill-sec-name{
-  font-family:var(--fs);font-size:9.5px;font-weight:700;
-  text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);
-  margin-bottom:7px;display:flex;align-items:center;gap:7px;cursor:pointer
-}
-.skill-sec-name::after{content:'';flex:1;height:1px;background:var(--gold-a)}
-.skill-sec-name .chev{color:var(--gold);font-size:10px;transition:transform .13s;flex-shrink:0}
-.skill-sec.col .chev{transform:rotate(-90deg)}
-.skill-sec.col .stamp-row{display:none}
-.stamp-row{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:2px}
-.stamp{
-  font-family:var(--f);font-size:10.5px;color:var(--muted);
-  border:1px solid var(--gold-b);padding:4px 10px;border-radius:2px;
-  cursor:pointer;background:rgba(242,232,208,.4);transition:all .11s;line-height:1.35
-}
-.stamp.on{background:var(--red);color:#f2e8d0;border-color:var(--red);box-shadow:1px 1px 0 rgba(0,0,0,.18)}
-.kit-count{font-family:var(--fs);font-size:10px;color:var(--muted);margin-bottom:9px;display:flex;align-items:center;gap:6px}
-.kit-count b{font-size:15px;color:var(--red)}
+.seg-b.on{background:var(--red);color:#ecdcc8;border-right-color:transparent}
 
 /* ── Dynamic list ─────────────────────────────── */
-.dyn-list{display:flex;flex-direction:column;gap:8px;margin-bottom:8px}
-.dyn-item{background:rgba(232,220,191,.5);border:1px solid var(--gold-b);border-radius:3px;padding:10px 10px 4px;position:relative}
-.dyn-item input,.dyn-item textarea{margin-bottom:7px}
+.dyn-list{display:flex;flex-direction:column;gap:7px;margin-bottom:7px}
+.dyn-item{background:rgba(8,5,3,.7);border:1px solid #281608;border-radius:3px;padding:8px 8px 3px;position:relative}
+.dyn-item input,.dyn-item textarea{margin-bottom:6px}
 .dyn-item *:last-child{margin-bottom:0}
-.dyn-rm{position:absolute;top:8px;right:9px;font-size:14px;color:var(--gold);cursor:pointer;background:none;border:none;transition:color .1s;line-height:1}
+.dyn-rm{position:absolute;top:7px;right:8px;font-size:14px;color:var(--muted);cursor:pointer;background:none;border:none;transition:color .1s;line-height:1}
 .dyn-rm:hover{color:var(--red)}
 .dyn-add{display:flex;align-items:center;gap:7px;font-family:var(--f);font-size:11px;font-weight:600;color:var(--red);cursor:pointer;background:none;border:none;padding:4px 0;letter-spacing:.2px}
-.dyn-add::before{content:'+';width:18px;height:18px;border-radius:50%;border:1.5px dashed var(--red-b);background:var(--red-a);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.dyn-add::before{content:'+';width:17px;height:17px;border-radius:50%;border:1.5px dashed var(--red-b);background:var(--red-a);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
 
 /* ── Footer ───────────────────────────────────── */
 .doc-foot{
   background:var(--frame);border-top:1px solid var(--border);
-  padding:11px 16px;display:flex;align-items:center;gap:12px
+  padding:9px 13px;display:flex;align-items:center;gap:9px
 }
-.foot-nav{display:flex;gap:7px;flex:1}
-.ft-btn{cursor:pointer;font-family:var(--f);font-size:11px;font-weight:600;color:#7a5830;background:transparent;border:1px solid #3a2010;border-radius:3px;padding:7px 13px;transition:all .12s}
-.ft-btn:hover{border-color:var(--gold);color:#d4a050}
+.foot-nav{display:flex;gap:6px;flex:1}
+.ft-btn{cursor:pointer;font-family:var(--f);font-size:11px;font-weight:600;color:#5a3818;background:transparent;border:1px solid #281608;border-radius:3px;padding:6px 12px;transition:all .12s}
+.ft-btn:hover{border-color:var(--gold);color:var(--gold)}
 .ft-btn.ghost{visibility:hidden}
 .foot-mid{text-align:center;flex-shrink:0}
-.foot-mid-lbl{font-family:var(--fs);font-size:8.5px;color:var(--muted);letter-spacing:1.5px;display:block;margin-bottom:2px}
+.foot-mid-lbl{font-family:var(--fs);font-size:7.5px;color:var(--muted);letter-spacing:1.5px;display:block;margin-bottom:2px}
 
 .seal{
-  width:52px;height:52px;border-radius:50%;flex-shrink:0;
-  background:radial-gradient(circle at 40% 38%,#d42038,#8a0f1e);
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  background:radial-gradient(circle at 40% 38%,#d42038,#780f1a);
   border:none;cursor:pointer;position:relative;
-  box-shadow:0 4px 16px -4px rgba(194,21,40,.8),0 0 0 3px rgba(194,21,40,.18),0 0 0 6px rgba(194,21,40,.07);
+  box-shadow:0 4px 16px -4px rgba(208,24,40,.9),0 0 0 3px rgba(208,24,40,.2),0 0 0 6px rgba(208,24,40,.07);
   display:flex;align-items:center;justify-content:center;
   transition:transform .12s,box-shadow .12s
 }
-.seal::before{content:'';position:absolute;inset:5px;border-radius:50%;border:1px solid rgba(242,232,208,.35)}
-.seal:hover{transform:scale(1.06);box-shadow:0 6px 20px -4px rgba(194,21,40,.9),0 0 0 3px rgba(194,21,40,.25),0 0 0 7px rgba(194,21,40,.09)}
-.seal:active{transform:scale(.96)}
-.seal-k{font-family:var(--fs);font-size:19px;font-weight:800;color:#f2e8d0;position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.4)}
+.seal::before{content:'';position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(236,220,200,.28)}
+.seal:hover{transform:scale(1.07);box-shadow:0 6px 22px -4px rgba(208,24,40,.95),0 0 0 3px rgba(208,24,40,.3),0 0 0 8px rgba(208,24,40,.1)}
+.seal:active{transform:scale(.95)}
+.seal-k{font-family:var(--fs);font-size:18px;font-weight:800;color:#f0dcc8;position:relative;z-index:1;text-shadow:0 1px 4px rgba(0,0,0,.5)}
 
 /* ── Overlay ──────────────────────────────────── */
-.overlay{position:absolute;inset:0;background:rgba(16,12,8,.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:30}
+.overlay{position:absolute;inset:0;background:rgba(7,5,3,.97);display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:30}
 .overlay.on{display:flex}
-.ov-k{font-family:var(--fs);font-size:56px;color:var(--red);text-shadow:0 0 32px rgba(194,21,40,.85)}
-.ov-t{font-family:var(--fs);font-size:11px;letter-spacing:3px;color:#f0e8d0;text-transform:uppercase}
-.ov-s{font-size:9.5px;letter-spacing:2px;color:#7a5830}
+.ov-k{font-family:var(--fs);font-size:54px;color:var(--red);text-shadow:0 0 32px rgba(208,24,40,.9)}
+.ov-t{font-family:var(--fs);font-size:11px;letter-spacing:3px;color:#ecdcc8;text-transform:uppercase}
+.ov-s{font-size:9px;letter-spacing:2px;color:#5a3018}
 </style>
 </head>
 <body>
@@ -248,7 +209,7 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
 <!-- ── HEADER ──────────────────────────────────── -->
 <div class="doc-head">
   <div class="head-row">
-    <div class="moon"></div>
+    <img class="logo" src="https://files.catbox.moe/vciqmx.png" alt="鬼殺隊"/>
     <div class="head-info">
       <div class="head-title" data-en="DEMON SLAYER CORPS" data-th="กองทัพนักล่าปีศาจ">DEMON SLAYER CORPS</div>
       <div class="head-sub">鬼 殺 隊  公 式 登 録 書</div>
@@ -267,8 +228,6 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
     <div class="sn"    data-to="p2"><span class="sn-k">二</span><span class="sn-d"></span></div>
     <div class="sn"    data-to="p3"><span class="sn-k">三</span><span class="sn-d"></span></div>
     <div class="sn"    data-to="p4"><span class="sn-k">四</span><span class="sn-d"></span></div>
-    <div class="sn"    data-to="p5"><span class="sn-k">五</span><span class="sn-d"></span></div>
-    <div class="sn"    data-to="p6"><span class="sn-k">六</span><span class="sn-d"></span></div>
   </div>
 
   <!-- Page content -->
@@ -301,19 +260,9 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
           <input type="text" id="f_blood" data-pen="A / B / O / AB" data-pth="A / B / O / AB"/>
         </div>
       </div>
-
-      <div class="f">
-        <div class="f-top"><span class="f-lbl" data-en="Breathing / Power Colour" data-th="สีพลังการหายใจ">Breathing / Power Colour</span><span class="f-jp">呼吸の色</span></div>
-        <div class="color-row">
-          <input type="color" id="f_cpick" value="#5ba8d4"/>
-          <input type="text" id="f_chex" class="hex-in" value="#5BA8D4" spellcheck="false"/>
-          <div class="dots" id="dot-row"></div>
-        </div>
-        <p class="f-hint" data-en="Sets the colour theme of your Status card during play." data-th="กำหนดสีธีมของ Status card ตอนเล่น">Sets the colour theme of your Status card during play.</p>
-      </div>
     </div>
 
-    <!-- ② Path -->
+    <!-- ② Path & Standing -->
     <div class="panel" data-panel="p2">
       <div class="s-head">
         <span class="s-num">二</span>
@@ -392,13 +341,13 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
       <div class="f">
         <div class="f-top"><span class="f-lbl" data-en="Demon Slayer Mark" data-th="รอยสังหารปีศาจ">Demon Slayer Mark</span><span class="f-jp">痣</span></div>
         <div class="seg" id="mark_seg">
-          <span class="seg-b on" data-v="none"        data-en="Not Yet"          data-th="ยังไม่มี">Not Yet</span>
-          <span class="seg-b"    data-v="awakened"    data-en="Awakened"         data-th="ตื่นแล้ว">Awakened</span>
+          <span class="seg-b on" data-v="none"        data-en="Not Yet"           data-th="ยังไม่มี">Not Yet</span>
+          <span class="seg-b"    data-v="awakened"    data-en="Awakened"          data-th="ตื่นแล้ว">Awakened</span>
           <span class="seg-b"    data-v="transparent" data-en="Transparent World" data-th="โลกโปร่งใส">Transparent World</span>
         </div>
       </div>
 
-      <div class="f" style="margin-top:16px">
+      <div class="f" style="margin-top:14px">
         <div class="f-top"><span class="f-lbl" data-en="Blood Demon Art" data-th="ศิลปะโลหิตปีศาจ">Blood Demon Art</span><span class="f-jp">血鬼術</span></div>
         <p class="f-hint" data-en="Demon characters only — leave blank if you are a Slayer." data-th="สำหรับตัวละครปีศาจเท่านั้น — เว้นว่างหากเป็นนักล่า">Demon characters only — leave blank if you are a Slayer.</p>
         <input type="text" id="f_bda" data-pen="Art name…" data-pth="ชื่อศิลปะ…"/>
@@ -415,33 +364,10 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
       </div>
     </div>
 
-    <!-- ④ Start Kit -->
+    <!-- ④ Profile -->
     <div class="panel" data-panel="p4">
       <div class="s-head">
         <span class="s-num">四</span>
-        <span class="s-title" data-en="Starting Skills" data-th="สกิลเริ่มต้น">Starting Skills</span>
-        <span class="s-jp">初期技能</span>
-      </div>
-      <p class="f-hint" data-en="Tap any skill to start the story already knowing it. Leave empty to begin from scratch." data-th="แตะสกิลที่ต้องการเริ่มเรื่องโดยมีติดตัวแล้ว เว้นว่างเพื่อเริ่มจากศูนย์">Tap any skill to start the story already knowing it.</p>
-      <div class="kit-count" data-en="Selected:" data-th="เลือกแล้ว:">Selected: <b id="kit_n">0</b></div>
-      <div id="kit_box"></div>
-    </div>
-
-    <!-- ⑤ Stats -->
-    <div class="panel" data-panel="p5">
-      <div class="s-head">
-        <span class="s-num">五</span>
-        <span class="s-title" data-en="Stats" data-th="ค่าพลัง">Stats</span>
-        <span class="s-jp">戦闘能力</span>
-      </div>
-      <p class="f-hint" data-en="Any number up to 1,000,000 (blank = 10).  10 = ordinary human · 50–70 = skilled slayer · 100+ = Hashira-class · 500+ = Upper Moon." data-th="ตัวเลขถึง 1,000,000 (เว้น = 10) · 10 = มนุษย์ทั่วไป · 50–70 = นักล่าฝีมือดี · 100+ = ระดับเสาหลัก · 500+ = พระจันทร์บน">Blank = 10.  Hashira-class ≈ 100+.</p>
-      <div id="stats_box"></div>
-    </div>
-
-    <!-- ⑥ Profile -->
-    <div class="panel" data-panel="p6">
-      <div class="s-head">
-        <span class="s-num">六</span>
         <span class="s-title" data-en="Profile" data-th="โปรไฟล์">Profile</span>
         <span class="s-jp">人物像</span>
       </div>
@@ -477,7 +403,7 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
   </div>
   <div class="foot-mid">
     <span class="foot-mid-lbl" data-en="SUBMIT REGISTRY" data-th="ยืนยันทะเบียน">SUBMIT REGISTRY</span>
-    <div style="font-size:9px;color:#5a3a18;letter-spacing:1px;font-family:var(--fs)">鬼殺隊 公印</div>
+    <div style="font-size:8.5px;color:#4a2810;letter-spacing:1px;font-family:var(--fs)">鬼殺隊 公印</div>
   </div>
   <button class="seal" id="btn_seal"><span class="seal-k">滅</span></button>
 </div>
@@ -493,15 +419,13 @@ input[type=color]{width:38px;height:32px;padding:2px;cursor:pointer;border:1.5px
 <script>
 (function(){
 var L='en';
-var PANELS=['p1','p2','p3','p4','p5','p6'];
+var PANELS=['p1','p2','p3','p4'];
 var cur=0;
 
 function el(id){return document.getElementById(id);}
 function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s));}
 
 /* ── Data ─────────────────────────────────────── */
-var DOTS=['#5ba8d4','#e05a18','#e8d030','#78c870','#c070c8','#b0d8e8','#b08030','#e87070'];
-
 var P={
   ctype:[
     {en:"Demon Slayer Corps Member",              th:"สมาชิกกองทัพนักล่าปีศาจ"},
@@ -570,60 +494,6 @@ var P={
   ]
 };
 
-var SKILLS=[
-  {cat:"Breathing Fundamentals",ct:"พื้นฐานการหายใจ",list:[
-    {id:"bf_rhythm",   name:"Breathing Rhythm",             desc:"Control breath to maintain heightened focus.",                    dt:"ควบคุมจังหวะหายใจเพื่อรักษาสมาธิ"},
-    {id:"bf_sustain",  name:"Sustained Breathing",          desc:"Hold a breathing technique for longer.",                          dt:"ยืดเวลาการใช้เทคนิคการหายใจ"},
-    {id:"bf_sense",    name:"Demon Aura Detection",         desc:"Perceive a demon's presence through scent and energy.",          dt:"ตรวจจับปีศาจผ่านกลิ่นและพลังงาน"},
-    {id:"bf_total",    name:"Total Concentration Breathing",desc:"Maximise oxygen intake for a power surge.",                      dt:"เพิ่มออกซิเจนสูงสุดเพื่อพลังที่พุ่งขึ้น"},
-    {id:"bf_constant", name:"Total Concentration: Constant",desc:"Sustain Total Concentration even while asleep.",                 dt:"รักษาสมาธิรวมแม้ขณะหลับ"},
-    {id:"bf_wisteria", name:"Wisteria Craft",               desc:"Work with wisteria to repel or trap demons.",                    dt:"ใช้ต้นฟูจิขับไล่หรือดักจับปีศาจ"}
-  ]},
-  {cat:"Swordsmanship & Combat",ct:"วิชาดาบ & การต่อสู้",list:[
-    {id:"sw_forms",   name:"Sword Forms — Basic",           desc:"Standard strikes, footwork, and guards.",                        dt:"การฟัน เตะ และท่ารับพื้นฐาน"},
-    {id:"sw_draw",    name:"Swift Draw",                    desc:"Draw and strike in one explosive motion.",                        dt:"ดึงและฟันในท่วงท่าระเบิดเดียว"},
-    {id:"sw_neck",    name:"Neck Targeting",                desc:"Precision strikes aimed at the demon's neck.",                   dt:"การฟันแม่นยำที่มุ่งตรงคอปีศาจ"},
-    {id:"sw_counter", name:"Counter Instinct",              desc:"Read an opponent's blade and redirect it.",                      dt:"อ่านใบมีดคู่ต่อสู้และเบนออก"},
-    {id:"sw_dual",    name:"Dual Blade",                    desc:"Wield two swords simultaneously.",                               dt:"ใช้ดาบสองเล่มพร้อมกัน"},
-    {id:"sw_battle",  name:"Battle Reading",                desc:"Anticipate rhythm and intent mid-fight.",                        dt:"คาดเดาจังหวะและเจตนาระหว่างต่อสู้"},
-    {id:"sw_end",     name:"Decapitation Strike",           desc:"A committed, fight-ending blow to the neck.",                   dt:"การฟันคอเพื่อปิดเกม"}
-  ]},
-  {cat:"Demon Slayer Mark",ct:"รอยสังหารปีศาจ",list:[
-    {id:"mk_int",    name:"Heightened Battle Instinct",     desc:"Sharpened reflexes that hint at the Mark's emergence.",         dt:"ปฏิกิริยาที่คมชัดขึ้น บ่งบอกถึงการตื่นของรอย"},
-    {id:"mk_awk",    name:"Mark: Awakening",                desc:"Manifest the Demon Slayer Mark under extreme duress.",          dt:"แสดงรอยสังหารปีศาจในสภาวะสุดขีด"},
-    {id:"mk_shr",    name:"Mark: Synchrony",                desc:"Extend the Mark's boon to nearby allies.",                      dt:"ส่งผลของรอยให้พันธมิตรใกล้เคียง"},
-    {id:"mk_trn",    name:"Transparent World",              desc:"See muscle, blood flow, joints — read any attack.",             dt:"มองเห็นกล้ามเนื้อ เลือด ข้อต่อ อ่านทุกการโจมตี"}
-  ]},
-  {cat:"Demon Arts",ct:"ศิลปะปีศาจ",list:[
-    {id:"da_reg",    name:"Regeneration",                   desc:"Heal wounds far faster than any human.",                        dt:"รักษาบาดแผลเร็วกว่ามนุษย์มาก"},
-    {id:"da_rap",    name:"Rapid Regeneration",             desc:"Regrow lost limbs in moments.",                                 dt:"งอกแขนขาขึ้นมาใหม่ชั่วพริบตา"},
-    {id:"da_inf",    name:"Nigh-Infinite Regeneration",     desc:"Survive almost any wound except decapitation.",                 dt:"รอดจากแทบทุกบาดแผลยกเว้นการตัดคอ"},
-    {id:"da_abs",    name:"Accumulated Soul",               desc:"Absorb the abilities of those you consume.",                    dt:"ดูดซับความสามารถจากผู้ที่กลืนกิน"},
-    {id:"da_vel",    name:"Aura Suppression",               desc:"Mask your demon presence to avoid detection.",                  dt:"กดพลังปีศาจเพื่อหลีกเลี่ยงการตรวจจับ"},
-    {id:"da_ter",    name:"Territory Curse",                desc:"Bind a rule to your domain; those who break it are cursed.",   dt:"ผูกกฎกับอาณาเขต ผู้ฝ่าฝืนถูกสาปแช่ง"}
-  ]},
-  {cat:"Support & Utility",ct:"สนับสนุน & อรรถประโยชน์",list:[
-    {id:"su_trk",    name:"Tracking",                       desc:"Follow a demon's trail by scent or disturbed ground.",          dt:"ติดตามรอยปีศาจด้วยกลิ่นหรือภูมิประเทศ"},
-    {id:"su_ngt",    name:"Night Vision",                   desc:"See clearly in near-total darkness.",                           dt:"มองเห็นชัดเจนในความมืดสนิท"},
-    {id:"su_aid",    name:"Field First-Aid",                desc:"Stabilise wounds without medicine.",                            dt:"ปฐมพยาบาลบาดแผลโดยไม่ใช้ยา"},
-    {id:"su_crw",    name:"Crow Communication",             desc:"Understand and direct your Kasugai Crow.",                     dt:"เข้าใจและสั่งการกาคาซูไกของคุณ"},
-    {id:"su_trp",    name:"Trap Craft",                     desc:"Build wisteria-laced traps and snares.",                       dt:"สร้างกับดักฟูจิและกับดักทั่วไป"},
-    {id:"su_sth",    name:"Stealth Movement",               desc:"Move unseen and unheard through the night.",                   dt:"เคลื่อนที่อย่างเงียบเชียบในยามราตรี"},
-    {id:"su_sqd",    name:"Squad Tactics",                  desc:"Coordinate attacks effectively as a unit.",                    dt:"ประสานการโจมตีอย่างมีประสิทธิภาพ"}
-  ]}
-];
-
-var STATS=[
-  ['concentration','Total Concentration','สมาธิรวม'],
-  ['strength',     'Physical Strength',  'พลังกาย'],
-  ['speed',        'Speed',              'ความเร็ว'],
-  ['technique',    'Technique Mastery',  'ความชำนาญเทคนิค'],
-  ['stamina',      'Stamina / Endurance','ความอึด / ทนทาน'],
-  ['instinct',     'Battle Instinct',    'สัญชาตญาณการต่อสู้'],
-  ['durability',   'Durability',         'ความทนทาน'],
-  ['will',         'Willpower',          'ความตั้งใจ']
-];
-
 /* ── Language ──────────────────────────────────── */
 function applyLang(){
   qa('[data-en]').forEach(function(e){
@@ -635,8 +505,6 @@ function applyLang(){
     if(v!=null)e.setAttribute('placeholder',v);
   });
   for(var k in P)fillSel(k+'_sel',P[k]);
-  redrawKit();
-  syncStats();
 }
 function fillSel(id,arr){
   var s=el(id);if(!s)return;
@@ -652,7 +520,6 @@ el('lg_th').addEventListener('click',function(){L='th';el('lg_th').classList.add
 function goPanel(idx){
   if(idx<0||idx>=PANELS.length)return;
   PANELS.forEach(function(id,i){
-    el(id)||qa('[data-panel="'+id+'"]').forEach(function(p){p.classList.toggle('on',i===idx);});
     qa('[data-panel="'+PANELS[i]+'"]').forEach(function(p){p.classList.toggle('on',i===idx);});
     var sn=document.querySelector('.sn[data-to="'+PANELS[i]+'"]');
     if(sn){sn.classList.toggle('on',i===idx);sn.classList.toggle('been',i<idx);}
@@ -660,9 +527,6 @@ function goPanel(idx){
   cur=idx;
   el('btn_back').classList.toggle('ghost',idx===0);
   el('btn_next').classList.toggle('ghost',idx===PANELS.length-1);
-  // update button text for last panel
-  var nb=el('btn_next');
-  nb.setAttribute('data-en',idx===PANELS.length-2?'Next ›':'Next ›');
 }
 el('btn_next').addEventListener('click',function(){goPanel(cur+1);});
 el('btn_back').addEventListener('click',function(){goPanel(cur-1);});
@@ -673,26 +537,6 @@ qa('.sn').forEach(function(sn){
     if(idx>=0)goPanel(idx);
   });
 });
-
-/* ── Colour picker ─────────────────────────────── */
-(function(){
-  var row=el('dot-row');
-  DOTS.forEach(function(hex){
-    var d=document.createElement('span');
-    d.className='dot';d.style.background=hex;d.setAttribute('data-c',hex);
-    d.addEventListener('click',function(){setColor(hex);});
-    row.appendChild(d);
-  });
-})();
-function validHex(v){v=v.replace('#','');if(v.length!==6)return false;for(var i=0;i<6;i++)if('0123456789abcdef'.indexOf(v[i].toLowerCase())<0)return false;return true;}
-function setColor(hex){
-  el('f_cpick').value=hex;
-  el('f_chex').value=hex.toUpperCase();
-  qa('.dot').forEach(function(d){d.classList.toggle('on',d.getAttribute('data-c').toLowerCase()===hex.toLowerCase());});
-}
-el('f_cpick').addEventListener('input',function(){setColor(this.value);});
-el('f_chex').addEventListener('input',function(){var v=this.value.trim();if(validHex(v)){if(v[0]!=='#')v='#'+v;el('f_cpick').value=v;}});
-setColor('#5ba8d4');
 
 /* ── Choice toggles ────────────────────────────── */
 qa('.choice').forEach(function(c){
@@ -725,50 +569,6 @@ qa('.seg').forEach(function(sg){
   });
 });
 function segVal(id){var on=el(id)&&el(id).querySelector('.seg-b.on');return on?on.getAttribute('data-v'):'none';}
-
-/* ── Stats ─────────────────────────────────────── */
-function syncStats(){
-  var box=el('stats_box');if(!box)return;
-  if(box.children.length>0){
-    qa('.stat-lbl',box).forEach(function(lbl,i){
-      if(STATS[i])lbl.textContent=L==='th'?STATS[i][2]:STATS[i][1];
-    });
-    return;
-  }
-  STATS.forEach(function(s){
-    var row=document.createElement('div');row.className='stat-row';
-    row.innerHTML='<span class="stat-lbl">'+(L==='th'?s[2]:s[1])+'</span><input class="stat-n" id="st_'+s[0]+'" type="number" min="0" max="1000000" value="10"/>';
-    box.appendChild(row);
-  });
-}
-
-/* ── Skill kit ─────────────────────────────────── */
-var KIT={};
-function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function redrawKit(){
-  var box=el('kit_box');if(!box)return;
-  var open={};qa('.skill-sec').forEach(function(s,i){open[i]=s.classList.contains('col');});
-  var h='';
-  SKILLS.forEach(function(cat,ci){
-    var label=L==='th'?(cat.ct||cat.cat):cat.cat;
-    h+='<div class="skill-sec'+(open[ci]?' col':'')+'"><div class="skill-sec-name"><span class="chev">▾</span>'+esc(label)+'</div><div class="stamp-row">';
-    cat.list.forEach(function(sk){
-      h+='<span class="stamp'+(KIT[sk.id]?' on':'')+'" data-id="'+esc(sk.id)+'" data-name="'+esc(sk.name)+'" title="'+(L==='th'?(sk.dt||sk.desc):sk.desc)+'">'+esc(sk.name)+'</span>';
-    });
-    h+='</div></div>';
-  });
-  box.innerHTML=h;
-  qa('.skill-sec-name').forEach(function(h){h.addEventListener('click',function(){h.parentNode.classList.toggle('col');});});
-  qa('.stamp').forEach(function(s){
-    s.addEventListener('click',function(){
-      var id=s.getAttribute('data-id');
-      if(KIT[id]){delete KIT[id];s.classList.remove('on');}
-      else{KIT[id]=s.getAttribute('data-name');s.classList.add('on');}
-      var n=0;for(var k in KIT)n++;
-      el('kit_n').textContent=n;
-    });
-  });
-}
 
 /* ── Dynamic lists ─────────────────────────────── */
 function rmItem(btn){btn.parentNode.parentNode.removeChild(btn.parentNode);}
@@ -805,19 +605,16 @@ el('btn_seal').addEventListener('click',function(){
     var t=(it.querySelector('.wk_t').value||'').trim();
     if(t)weaknesses.push(t);
   });
-  var stats={};
-  STATS.forEach(function(s){var n=parseInt(el('st_'+s[0]).value,10);stats[s[0]]=isNaN(n)?10:n;});
-  var starter=[];for(var k in KIT)starter.push({id:k,name:KIT[k]});
 
   var data={
-    lang:L,theme:v('f_chex'),
+    lang:L,
     name:v('f_name'),age:v('f_age'),gender:v('f_gender'),blood_type:v('f_blood'),
     character_type:getPC('ctype'),era:getPC('era'),rank:getPC('rank'),
     affiliation:getPC('affil'),opening_scene:getPC('scene'),
     breathing_style:getPC('breath'),breathing_detail:v('f_bdetail'),
     mark_status:segVal('mark_seg'),
     blood_demon_art:v('f_bda'),blood_demon_detail:v('f_bdad'),
-    abilities:abilities,starter_skills:starter,stats:stats,
+    abilities:abilities,
     appearance:v('f_app'),nature:v('f_nat'),history:v('f_hist'),weaknesses:weaknesses
   };
 
@@ -843,7 +640,6 @@ el('btn_seal').addEventListener('click',function(){
 /* ── Init ──────────────────────────────────────── */
 goPanel(0);
 applyLang();
-syncStats();
 })();
 </script>
 </body>
