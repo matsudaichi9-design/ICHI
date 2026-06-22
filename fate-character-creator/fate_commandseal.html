@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+
+.cs{
+ --acc:#c8a84b;--abg:rgba(200,168,75,.11);--abd:rgba(200,168,75,.38);
+ --fb:'Crimson Pro',Georgia,serif;--fh:Cinzel,serif;
+ max-width:440px;margin:8px auto;
+ background:linear-gradient(158deg,#07091a 0%,#040610 55%,#05070f 100%);
+ border:1px solid var(--abd);border-radius:10px;overflow:hidden;
+ color:#e4dcc8;font-family:var(--fb);
+ box-shadow:0 14px 36px rgba(0,0,0,.72),0 0 40px -14px var(--acc);
+ position:relative;
+ animation:csappear .45s cubic-bezier(.22,.68,0,1.2) both}
+@keyframes csappear{from{opacity:0;transform:scale(.96) translateY(-4px)}to{opacity:1;transform:scale(1) translateY(0)}}
+
+/* Corner ornaments */
+.cs::before{content:'';position:absolute;top:6px;left:6px;width:14px;height:14px;
+ border-top:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.5;pointer-events:none;z-index:2}
+.cs::after{content:'';position:absolute;top:6px;right:6px;width:14px;height:14px;
+ border-top:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.5;pointer-events:none;z-index:2}
+.csf::before{content:'';position:absolute;bottom:6px;left:6px;width:14px;height:14px;
+ border-bottom:1px solid var(--acc);border-left:1px solid var(--acc);opacity:.4}
+.csf::after{content:'';position:absolute;bottom:6px;right:6px;width:14px;height:14px;
+ border-bottom:1px solid var(--acc);border-right:1px solid var(--acc);opacity:.4}
+
+/* ═══ HEADER ═══ */
+.csh{
+ text-align:center;padding:18px 20px 14px;
+ background:linear-gradient(180deg,rgba(200,168,75,.08),transparent);
+ border-bottom:1px solid rgba(200,168,75,.12);position:relative}
+
+/* 3-star row with central pulsing star */
+.star-row{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:14px;position:relative}
+.star-side{opacity:.55;animation:sidepulse 3s ease-in-out infinite}
+.star-main{animation:mainpulse 2.2s ease-in-out infinite;z-index:1}
+.star-side.r{animation-delay:.6s}
+@keyframes mainpulse{
+ 0%,100%{filter:drop-shadow(0 0 6px var(--acc)) drop-shadow(0 0 12px var(--acc))}
+ 50%{filter:drop-shadow(0 0 14px var(--acc)) drop-shadow(0 0 28px var(--acc))}}
+@keyframes sidepulse{
+ 0%,100%{filter:drop-shadow(0 0 3px var(--acc))}
+ 50%{filter:drop-shadow(0 0 8px var(--acc))}}
+
+/* Separator lines */
+.starline{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--abd));max-width:50px}
+.starline.r{background:linear-gradient(270deg,transparent,var(--abd))}
+
+.cstag{font-size:7.5px;letter-spacing:3.5px;color:var(--acc);font-family:var(--fh);opacity:.65;margin-bottom:5px}
+.cstitle{font-family:var(--fh);font-size:13px;font-weight:700;letter-spacing:4px;color:#f2e8d0;text-transform:uppercase}
+.csjp{font-size:11px;letter-spacing:3px;color:var(--acc);opacity:.55;font-family:var(--fh);margin-top:3px}
+.csmode{
+ display:inline-block;margin-top:9px;
+ font-size:8px;letter-spacing:2px;font-family:var(--fh);
+ color:var(--acc);border:1px solid var(--abd);
+ border-radius:20px;padding:2px 12px;background:var(--abg)}
+
+/* ═══ BODY ═══ */
+.csb{padding:14px 18px 12px}
+
+/* Command decree box */
+.decbox{
+ padding:14px 16px;margin-bottom:10px;
+ border:1px solid var(--abd);border-radius:8px;
+ background:rgba(200,168,75,.04);
+ text-align:center;position:relative}
+/* Circuit trace on top edge */
+.decbox::before{content:'';position:absolute;top:-1px;left:50%;transform:translateX(-50%);
+ width:40px;height:1px;background:var(--acc);opacity:.7}
+.declbl{font-size:7.5px;letter-spacing:2px;color:#7a6a4a;font-family:var(--fh);text-transform:uppercase;margin-bottom:8px}
+.dectext{font-family:'Crimson Pro',Georgia,serif;font-size:18px;font-weight:600;
+ color:#f4ecd4;line-height:1.45;font-style:italic}
+
+/* Effect row (custom mode) */
+.effrow{
+ display:flex;align-items:flex-start;gap:10px;
+ padding:10px 12px;margin-bottom:10px;
+ background:linear-gradient(90deg,rgba(200,168,75,.07),rgba(200,168,75,.02) 70%,transparent);
+ border:1px solid rgba(200,168,75,.12);
+ border-left:2px solid var(--acc);
+ border-radius:0 7px 7px 0}
+.efflbl{font-size:7.5px;letter-spacing:1.5px;color:#7a6a4a;font-family:var(--fh);
+ text-transform:uppercase;min-width:52px;padding-top:2px;flex-shrink:0}
+.efftext{font-size:13px;color:#b8a890;line-height:1.55;font-style:italic;flex:1}
+
+/* Narration block */
+.narrwrap{
+ padding:10px 13px;
+ background:rgba(0,0,0,.22);
+ border:1px solid rgba(200,168,75,.08);border-radius:7px;
+ margin-bottom:4px}
+.narrtext{font-size:13px;color:#a09080;font-style:italic;line-height:1.6}
+
+/* ═══ FOOTER ═══ */
+.csf{
+ padding:8px 18px;
+ border-top:1px solid rgba(200,168,75,.10);
+ background:rgba(0,0,0,.28);
+ display:flex;align-items:center;justify-content:space-between;
+ position:relative}
+.csflt{font-size:7.5px;letter-spacing:1.5px;color:#5a4a2a;font-family:var(--fh);text-transform:uppercase}
+.csfrt{font-family:var(--fh);font-size:9px;color:var(--acc);opacity:.4;letter-spacing:5px}
+
+.hide{display:none!important}
+</style>
+</head>
+<body>
+<textarea id="raw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+
+<div class="cs" id="cs">
+
+ <!-- HEADER -->
+ <div class="csh">
+  <div class="star-row">
+   <div class="starline"></div>
+   <svg class="star-side" width="20" height="20" viewBox="0 0 40 40">
+    <path d="M20 5 L22.5 13.5 L31.5 13.5 L24.5 18.8 L27 27.5 L20 22 L13 27.5 L15.5 18.8 L8.5 13.5 L17.5 13.5 Z" fill="var(--acc)"/>
+   </svg>
+   <svg class="star-main" width="36" height="36" viewBox="0 0 40 40" style="margin:0 10px">
+    <path d="M20 4 L23.1 14.2 L34 14.2 L25.5 20.5 L28.5 30.8 L20 24.4 L11.5 30.8 L14.5 20.5 L6 14.2 L16.9 14.2 Z" fill="var(--acc)"/>
+   </svg>
+   <svg class="star-side r" width="20" height="20" viewBox="0 0 40 40">
+    <path d="M20 5 L22.5 13.5 L31.5 13.5 L24.5 18.8 L27 27.5 L20 22 L13 27.5 L15.5 18.8 L8.5 13.5 L17.5 13.5 Z" fill="var(--acc)"/>
+   </svg>
+   <div class="starline r"></div>
+  </div>
+  <div class="cstag" id="cs_tag">COMMAND SEAL</div>
+  <div class="cstitle" id="cs_title">INVOKED</div>
+  <div class="csjp">令 呪 発 動</div>
+  <span class="csmode" id="cs_mode">PRESET</span>
+ </div>
+
+ <!-- BODY -->
+ <div class="csb">
+  <div class="decbox">
+   <div class="declbl" id="dec_lbl">Command Issued</div>
+   <div class="dectext" id="dec_text">—</div>
+  </div>
+  <div class="effrow hide" id="eff_row">
+   <span class="efflbl" id="eff_lbl">Effect</span>
+   <span class="efftext" id="eff_text"></span>
+  </div>
+  <div class="narrwrap hide" id="narr_wrap">
+   <div class="narrtext" id="narr_text"></div>
+  </div>
+ </div>
+
+ <!-- FOOTER -->
+ <div class="csf">
+  <span class="csflt" id="cs_foot">Seal Deducted · Absolute Compulsion</span>
+  <span class="csfrt">令 · 令 · 令</span>
+ </div>
+
+</div>
+
+<script>
+(function(){
+ function g(id){return document.getElementById(id);}
+ function rgba(hex,a){
+  hex=String(hex||'#c8a84b').replace('#','');
+  if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
+  var n=parseInt(hex,16);if(isNaN(n))n=0xc8a84b;
+  var r=(n>>16)&255,gg=(n>>8)&255,b=n&255;
+  return 'rgba('+r+','+gg+','+b+','+a+')';}
+
+ var raw=(g('raw').value||'').replace(/<\/?BTE_COMMANDSEAL>/gi,'').trim();
+ var d={};try{d=JSON.parse(raw);}catch(e){}
+ var TH=(d.lang==='th');
+ var cs=g('cs');
+
+ var acc=d.theme||'#c8a84b';
+ cs.style.setProperty('--acc',acc);
+ cs.style.setProperty('--abg',rgba(acc,.11));
+ cs.style.setProperty('--abd',rgba(acc,.38));
+
+ /* Language */
+ if(TH){
+  g('cs_tag').textContent='ตราประทับบัญชาการ';
+  g('cs_title').textContent='INVOKED';
+  g('dec_lbl').textContent='คำสั่ง';
+  g('eff_lbl').textContent='ผลที่คาดหวัง';
+  g('cs_foot').textContent='ตราถูกหักลบ · การบังคับสัมบูรณ์';}
+
+ /* Mode */
+ var mode=(d.mode||'preset').toLowerCase();
+ g('cs_mode').textContent=mode==='custom'?(TH?'กำหนดเอง':'CUSTOM'):(TH?'พรีเซ็ต':'PRESET');
+
+ /* Command text */
+ var cmd='';
+ if(mode==='custom'){
+  cmd=d.action||d.command||'—';
+  var ef=d.effect||'';
+  if(ef.trim()){g('eff_row').classList.remove('hide');g('eff_text').textContent=ef;}
+ }else{
+  cmd=d.command||'—';}
+ g('dec_text').textContent=cmd;
+
+ /* Narration */
+ var narr=(d.narration||'').trim();
+ if(narr){g('narr_wrap').classList.remove('hide');g('narr_text').textContent=narr;}
+
+})();
+</script>
+</body>
+</html>
