@@ -47,12 +47,33 @@ Render the status window as the VERY LAST thing in EVERY response: a single <BTE
   "missions":[ {"name":"","rank":"","status":"ongoing|success|failed","objective":"","info":""} ],
   "technique_info":[ {"name":"","detail":""} ],
   "learned_ids":["skill_id","..."],
-  "skill_tree":[ {"cat":"","ct":"(thai category name)","skills":[ {"id":"unique_id","name":"","cost":<int>,"desc":"","dt":"(thai desc)","req":"","learned":false} ]} ]
+  "skill_tree":[ {"cat":"","ct":"(thai category name)","skills":[ {"id":"unique_id","name":"","cost":<int>,"desc":"","dt":"(thai desc)","req":"","learned":false} ]} ],
+
+  "outfit":{                   // 装 Wardrobe tab — auto-shows when this key is present
+    "overall":"pristine|normal|worn|dirty|torn|damaged|tattered",
+    "slots":[
+      {"slot":"Head|Upper|Lower|Feet|Hands|Outer|Armor|Accessory","name":"","condition":"pristine|normal|worn|dirty|torn|damaged|missing","note":""}
+    ],
+    "marks":["bloodstain on left sleeve","scorch mark on coat"],  // visible stains/damage; omit array if none
+    "notes":""
+  },
+
+  "inventory":[                // 物 Inventory tab — auto-shows when array is non-empty
+    {"name":"","qty":1,"type":"Weapon|Tool|Mystic|Consumable|Key|Catalyst|Other","desc":"","note":""}
+  ],
+
+  "cash":{                     // 財 Treasury tab — auto-shows when this key is present
+    "label":"¥",               // currency symbol: ¥ / £ / € / GP / RM / etc.
+    "amount":0,                // total liquid wealth
+    "breakdown":[ {"name":"","amount":0} ],   // optional line items
+    "assets":["Apartment in Shinto","Workshop equipment"],  // non-liquid holdings; omit if none
+    "notes":""
+  }
 }
 </BTE_FATESTATUS>
 
 ## RULES
-- Pages: Profile (vitals, wounds, conditions, basics), Parameters (stats + stat points), Abilities (all usable magecraft and techniques), Skill Tree, Spirit Origin (Servant block), Noble Phantasm, Command Seals, Extensions (conditional), Missions, Records. A page/tab auto-hides when its data is empty.
+- Tabs: Profile (vitals, wounds, conditions, basics), Parameters (stats + stat points), Abilities (all usable magecraft and techniques), Skill Tree, Spirit Origin (Servant block), Noble Phantasm, Command Seals, Extensions (conditional), Missions, Records, **Wardrobe** (outfit slots), **Inventory** (carried items), **Treasury** (wealth). Each tab auto-hides when its data is absent/empty.
 - THEME: set "mana_colour" to {{user}}'s Od/prana colour in hex and keep it constant; the panel, bars and accents all follow it.
 - SKILL TREE: the UI ALREADY contains a large built-in catalogue of general magecraft skills (Magecraft Fundamentals, Combat & Arms, Noble Phantasm, Mystic Eyes, Reality Marble & Territory, True Magic & Conceptual, Divinity & Authority, Support & Utility) — you do NOT output it. To add {{user}}'s UNIQUE magecraft branches or bloodline circuits, you MAY include extra categories in "skill_tree" (a stable preset: build once, reuse, do not reword). Track everything learned in "learned_ids"; the UI marks both built-in and custom skills learned by id.
 - Mark a skill "learned":true once acquired; it also appears under "skills".
@@ -62,6 +83,45 @@ Besides prana and hp, the Profile page also shows three optional bars — includ
   "od":{"cur":<int>,"max":<int>},         // Overcharge reserve — extra Od beyond baseline; fuels rank-up for NP or sustained bounded fields. Depletes fast under heavy use.
   "stamina":{"cur":<int>,"max":<int>},    // physical stamina; gates hard exertion independent of Od
   "focus":{"cur":<int>,"max":<int>},      // concentration / Aria depth — drains with complex multi-layered casting; at low Focus, incantations shorten but power drops, and a full Aria becomes impossible until recovered.
+
+## WARDROBE — mechanics (tab 装)
+- Include `"outfit"` from the start of the session and keep it live every response.
+- `"slots"` lists every layer the character is wearing, one object per slot. Common slots: Head, Upper, Lower, Feet, Hands, Outer, Armor, Accessory. Omit slots that have nothing.
+- `"condition"` tracks the state of each piece — escalate it as events unfold:
+  - `pristine` → unused, perfect condition
+  - `normal` → everyday wear, no visible damage
+  - `worn` → visible use, slight fading or fraying
+  - `dirty` → mud, blood, smoke, sweat — still functional
+  - `torn` → fabric ripped, integrity compromised
+  - `damaged` → significant structural damage, barely usable
+  - `missing` → lost, destroyed, or removed entirely
+- `"overall"` is a coarse summary of the character's visual state — set it to the worst single slot condition or your own judgement. The UI shows it as a coloured badge at the top of the tab.
+- `"marks"` is a free-form array of visible stains, burns, or notable markings — add new entries as scenes happen; do NOT clear them unless the character washes/changes.
+- When the character changes their entire outfit, replace `slots` with the new clothing and clear `marks`. When they patch or clean, update the relevant slot and mark accordingly.
+
+## INVENTORY — mechanics (tab 物)
+- Include `"inventory"` as a persistent array; update it every scene items are gained, used, or lost.
+- `"type"` controls the colour-coded category header in the UI — choose the most fitting:
+  - `Weapon` — swords, knives, firearms, projected arms
+  - `Tool` — rope, lantern, lockpicks, generic equipment
+  - `Mystic` — bounded field paper, spirit vessel, Mystic Code components, grimoires
+  - `Consumable` — healing items, mana vials, food, limited-use reagents
+  - `Key` — literal keys, passes, contracts, letters of introduction
+  - `Catalyst` — summoning relics, spiritual residue, saint graphs
+  - `Other` — anything that doesn't fit above
+- `"qty"` defaults to 1 — you may omit it for single items; include it when the player carries multiples.
+- `"note"` is for conditional states: `"cracked"`, `"half-consumed"`, `"borrowed from Rin"`, `"sealed — do not open"`.
+- Weapons that are Traced/Projected on the fly are NOT inventory items unless the character physically carries them pre-made.
+- When an item is consumed, given away, or destroyed: REMOVE it from the array. Do not leave it with qty 0.
+
+## TREASURY — mechanics (tab 財)
+- Include `"cash"` from the start and keep `"amount"` accurate every time money changes hands in-scene.
+- `"label"` sets the currency symbol displayed in the UI — use the setting-appropriate symbol (¥, £, €, GP, RM, coin, etc.).
+- `"amount"` is the total liquid funds {{user}} can immediately access.
+- `"breakdown"` is optional — use it when money comes from distinct sources (church stipend, war chest, personal savings, guild payment) to make the split visible.
+- `"assets"` lists non-liquid holdings: property, a registered workshop, valuable artifacts, a retainer's salary rights. These don't subtract from `amount`.
+- Deduct from `amount` whenever {{user}} spends money in-scene (purchasing items, bribing contacts, workshop maintenance, paying a collaborator). Add when they receive payment, loot, or a stipend.
+- If {{user}} is broke (`amount` ≤ 0), reflect that in narration — lack of funds has real consequences in the Mage's Association world.
 
 ## SERVANT & SPIRIT ORIGIN
 - The "servant" block holds the Servant's OWN parameters (STR/END/AGI/MANA/LCK/NP as letter grades) and their Class Skills + Personal Skills, separate from {{user}}'s numeric stats.
