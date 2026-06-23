@@ -364,49 +364,52 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     qa('.lolst-panel').forEach(function(el,i){el.classList.toggle('active',i===n);});
   }
 
+  function safeQ(cls){var el=R.querySelector('.'+cls);return el;}
+
   function init(){
-    var raw=q('lolst-data')||R.querySelector('.lolst-data');
+    var raw=R.querySelector('.lolst-data');
     if(raw&&raw.value&&raw.value.trim()&&raw.value.trim()!=='$1'){
-      try{S.data=JSON.parse(raw.value.trim());if(S.data.lang)S.lang=S.data.lang;}catch(e){S.data={};}
+      try{S.data=JSON.parse(raw.value.trim());if(S.data&&S.data.lang)S.lang=S.data.lang;}catch(e){S.data={};}
     }
-    renderAll();
+    try{renderAll();}catch(e){console.warn('[LOL]',e);}
 
     // Header toggle
-    q('lolst-wh').addEventListener('click',function(){q('lolst-win').classList.toggle('closed');});
+    var wh=safeQ('lolst-wh');if(wh)wh.addEventListener('click',function(){var w=safeQ('lolst-win');if(w)w.classList.toggle('closed');});
 
     // Lang toggle
-    q('lolst-ln-btn').addEventListener('click',function(e){
-      e.stopPropagation();
-      S.lang=S.lang==='en'?'th':'en';
-      renderAll();
-    });
+    var ln=safeQ('lolst-ln-btn');
+    if(ln)ln.addEventListener('click',function(e){e.stopPropagation();S.lang=S.lang==='en'?'th':'en';try{renderAll();}catch(e2){}});
 
     // Tabs
     qa('.lolst-tab').forEach(function(el,i){el.addEventListener('click',function(){doTab(i);});});
 
     // Craft button
-    q('lolst-btn-craft').addEventListener('click',function(){
+    var cb=safeQ('lolst-btn-craft');
+    if(cb)cb.addEventListener('click',function(){
       var inv=S.data.inventory||[];
       if(!S.sel.length){alert(S.lang==='th'?'เลือกวัตถุดิบก่อน':'Select ingredients first.');return;}
-      var intent=q('lolst-craft-intent').value.trim();
+      var ci=safeQ('lolst-craft-intent');
+      var intent=ci?ci.value.trim():'';
       if(!intent){alert(S.lang==='th'?'ระบุสิ่งที่ต้องการคราฟ':'Describe what you want to craft.');return;}
       var ingr=S.sel.map(function(i){var it=inv[i];return it?it.name+' ×'+(it.qty||1):'?';});
       sendToChat('<'+'LOL_CRAFT>'+JSON.stringify({ingredients:ingr,intent:intent})+'<'+'/LOL_CRAFT>');
-      S.sel=[];q('lolst-craft-intent').value='';renderCraft();
+      S.sel=[];if(ci)ci.value='';try{renderCraft();}catch(e2){}
     });
 
     // Craft pill click (event delegation)
-    q('lolst-craft-pills').addEventListener('click',function(e){
+    var cp=safeQ('lolst-craft-pills');
+    if(cp)cp.addEventListener('click',function(e){
       var pill=e.target.closest('.craft-pill');
       if(!pill)return;
       var idx=parseInt(pill.getAttribute('data-idx'));
       var pos=S.sel.indexOf(idx);
       if(pos>=0)S.sel.splice(pos,1);else S.sel.push(idx);
-      renderCraft();
+      try{renderCraft();}catch(e2){}
     });
 
     // Delete recipe (event delegation)
-    q('lolst-recipes-list').addEventListener('click',function(e){
+    var rl=safeQ('lolst-recipes-list');
+    if(rl)rl.addEventListener('click',function(e){
       var btn=e.target.closest('.btn-del');
       if(!btn)return;
       var rid=parseInt(btn.getAttribute('data-rid'));
@@ -415,7 +418,7 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     });
   }
 
-  init();
+  setTimeout(init,0);
 })();
 </script>
 </body>

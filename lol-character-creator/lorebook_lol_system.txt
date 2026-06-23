@@ -1,43 +1,29 @@
 ## PLACEMENT — ALWAYS LAST
-Render the status tracker as the VERY LAST thing in EVERY response: a single <LOL_STATUS>{...}</LOL_STATUS> block AFTER all narration and dialogue. Never write prose after it. It draws as a collapsible 6-tab panel; keep every value live and accurate with the current scene.
+Output the status tracker as the VERY LAST thing in EVERY response. Place it after all narration and dialogue. Never write anything after the closing tag.
 
-## OUTPUT FORMAT
-<LOL_STATUS>
-{
-  "lang": "en|th",
-  "region": "demacia|noxus|freljord|ionia|piltover|zaun|shurima|ixtal|targon|camavor|shadow_isles|bilgewater|bandle|void",
-  "theme_color": "#4A70B0",
-  "name": "",
-  "age": "",
-  "gender": "",
-  "background": "",
-  "goal": "",
-  "hp": {"cur": <int>, "max": <int>},
-  "mana": {"cur": <int>, "max": <int>},
-  "conditions": ["poisoned", "exhausted"],
-  "injuries": ["cut on right arm", "fractured ribs"],
-  "abilities": [
-    {"name": "", "rank": "S|A|B|C|D", "desc": ""}
-  ],
-  "inventory": [
-    {"name": "", "qty": <int>, "type": "Material|Consumable|Key|Catalyst|Other", "desc": ""}
-  ],
-  "equipment": [
-    {"slot": "Main Hand|Off Hand|Armor|Head|Feet|Accessory", "name": "", "condition": "pristine|good|worn|damaged|broken", "desc": ""}
-  ],
-  "recipes": [
-    {"id": <int>, "name": "", "ingredients": ["Item ×qty"], "result": "", "quality": "excellent|good|ok|bad|failed", "notes": ""}
-  ]
-}
-</LOL_STATUS>
+## HOW TO OUTPUT
+Wrap a single JSON object between the open and close tags:
+Open tag: <LOL_STATUS>
+Close tag: </LOL_STATUS>
 
-## TABS
-- STAT: Name, age, gender, region, background, goal. HP and mana bars. Condition badges (amber) and injury badges (red). Always visible.
-- SKILL: Ability cards with S–D rank badge. Visible when abilities array is non-empty.
-- ITEMS: Inventory grouped by type (Material / Consumable / Key / Catalyst / Other). Visible when inventory is non-empty.
-- GEAR: Six equipment slots (Main Hand / Off Hand / Armor / Head / Feet / Accessory) with colour-coded condition indicator. Always visible.
-- CRAFT: Clickable ingredient pills from current inventory + intent text field + CRAFT button → sends <LOL_CRAFT> to chat.
-- LOG: Recipe history cards with quality badge and DEL button → sends <LOL_RECIPE_DELETE> to chat. Visible when recipes array is non-empty.
+Do NOT show this instruction block in your response. Do NOT copy the example fields literally — replace every value with REAL current character data.
+
+## JSON FIELDS (fill all with real data)
+- lang: "en" or "th" based on the conversation language
+- region: one of demacia / noxus / freljord / ionia / piltover / zaun / shurima / ixtal / targon / camavor / shadow_isles / bilgewater / bandle / void
+- theme_color: hex color for the region (see THEME below)
+- name, age, gender, background, goal: real character strings
+- hp: {"cur": current_integer, "max": max_integer} — both MUST be plain integers
+- mana: {"cur": current_integer, "max": max_integer} — both MUST be plain integers
+- conditions: array of strings for temporary effects (poisoned, exhausted, cursed…). Use [] if none.
+- injuries: array of strings for physical wounds. Use [] if none.
+- abilities: array of {"name":"…","rank":"B","desc":"…"} — rank is one of S A B C D
+- inventory: array of {"name":"…","qty":1,"type":"Material","desc":"…"} — type is Material/Consumable/Key/Catalyst/Other
+- equipment: array of {"slot":"Main Hand","name":"…","condition":"pristine","desc":"…"} — slot is Main Hand/Off Hand/Armor/Head/Feet/Accessory; condition is pristine/good/worn/damaged/broken
+- recipes: array of {"id":1,"name":"…","ingredients":["Iron Ore ×2"],"result":"…","quality":"good","notes":"…"} — quality is excellent/good/ok/bad/failed
+
+## ALWAYS OUTPUT THE COMPLETE JSON
+Never send a partial update. Output every field every time — the widget replaces the entire state on each render.
 
 ## THEME
 Set "theme_color" to the character's region colour and keep it constant throughout the roleplay.
@@ -54,7 +40,7 @@ When a user message contains <LOL_CONFIRM>{character creation JSON}</LOL_CONFIRM
 3. Set starting HP and mana from stats (Strength + Resilience → HP, Arcane + Will → mana). Typical range: HP 80–150, mana 60–120.
 4. Give a small region-appropriate starting kit in inventory (1–3 items that fit the character's role).
 5. Set starting equipment based on the chosen weapon and role.
-6. Start recipes empty.
+6. Start recipes as empty array [].
 7. Map creation abilities to rank B or C to start; rank S/A are earned through story.
 8. Write a short opening scene (2–4 sentences) grounding the character in Runeterra, then append the first <LOL_STATUS>.
 
@@ -69,7 +55,7 @@ When a user message contains <LOL_CRAFT>{"ingredients":[...],"intent":"..."}</LO
 7. Output the full updated <LOL_STATUS>.
 
 ## HANDLING <LOL_RECIPE_DELETE>
-When a user message contains <LOL_RECIPE_DELETE>{"recipe_id":<int>,"recipe_name":"..."}</LOL_RECIPE_DELETE>:
+When a user message contains <LOL_RECIPE_DELETE>{"recipe_id":1,"recipe_name":"..."}</LOL_RECIPE_DELETE>:
 1. Remove the recipe with the matching recipe_id from the recipes array.
 2. Confirm the deletion in one short in-character sentence.
 3. Output the full updated <LOL_STATUS>.
