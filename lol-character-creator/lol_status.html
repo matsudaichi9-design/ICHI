@@ -568,14 +568,14 @@ var W=(function(){
       if(!intent){alert(S.lang==='th'?'ระบุสิ่งที่ต้องการคราฟ':'Describe what you want to craft.');return;}
       var ingr=S.craftSel.map(function(i){var it=inv[i];return it?it.name+' ×'+(it.qty||1):'?';});
       var payload=JSON.stringify({ingredients:ingr,intent:intent});
-      sendToChat('<LOL_CRAFT>'+payload+'</LOL_CRAFT>');
+      sendToChat('<'+'LOL_CRAFT>'+payload+'<'+'/LOL_CRAFT>');
       S.craftSel=[];
       document.getElementById('craft-intent').value='';
       renderCraft();
     },
     deleteRecipe:function(rid,rname){
       var payload=JSON.stringify({recipe_id:rid,recipe_name:rname});
-      sendToChat('<LOL_RECIPE_DELETE>'+payload+'</LOL_RECIPE_DELETE>');
+      sendToChat('<'+'LOL_RECIPE_DELETE>'+payload+'<'+'/LOL_RECIPE_DELETE>');
     },
     init:init
   };

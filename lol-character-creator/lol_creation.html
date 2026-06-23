@@ -976,7 +976,7 @@ function send(){
   stats:S.stats
  };
 
- var txt='<LOL_CONFIRM>'+JSON.stringify(out,null,2)+'</LOL_CONFIRM>';
+ var txt='<'+'LOL_CONFIRM>'+JSON.stringify(out,null,2)+'<'+'/LOL_CONFIRM>';
  setTimeout(function(){
   try{
    var w=window.parent||window;
