@@ -977,16 +977,26 @@ function send(){
  };
 
  var txt='<LOL_CONFIRM>'+JSON.stringify(out,null,2)+'</LOL_CONFIRM>';
- var ta=document.querySelector('#send_textarea');
- if(ta){
-  var ns=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value').set;
-  ns.call(ta,txt);
-  ta.dispatchEvent(new Event('input',{bubbles:true}));
-  setTimeout(function(){
-   var btn=document.querySelector('[data-testid="send-button"],button[aria-label="Send message"],form button[type="submit"]');
-   if(btn&&!btn.disabled)btn.click();
-  },100);
- }
+ setTimeout(function(){
+  try{
+   var w=window.parent||window;
+   var ta=w.document.getElementById('send_textarea')||w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+   if(ta){
+    var d=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
+    if(d&&d.set)d.set.call(ta,txt);else ta.value=txt;
+    ta.dispatchEvent(new Event('input',{bubbles:true}));
+    setTimeout(function(){
+     try{
+      var sb=w.document.getElementById('send_but');
+      if(sb)sb.click();
+      else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
+     }catch(e){}
+    },150);
+    return;
+   }
+  }catch(e){}
+  try{navigator.clipboard.writeText(txt);}catch(e){}
+ },450);
 }
 
 return{init:init,th:th,ln:ln,tb:tb,tc:tc,add:add,send:send,reset:reset,onRegion:onRegion,onRole:onRole};
