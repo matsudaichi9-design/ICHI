@@ -3,115 +3,329 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
 <title>LoL Status Tracker</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
-#lolstwin{--acc:#C89B3C;--abg:rgba(200,155,60,.13);--abd:rgba(200,155,60,.28);--bg:#0d0e10;--bg2:#14161a;--bg3:#1c1f25;--bg4:#242830;--tx:#d8c9a8;--tx2:#9a8f7a;--tx3:#5a5548;--bd:rgba(200,155,60,.30);--r:6px;--r2:3px;background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);max-width:520px;margin:0 auto;overflow:hidden;box-shadow:0 4px 32px rgba(0,0,0,.7);color:var(--tx)}
-#lolstwin #lolstwhead{display:flex;align-items:center;gap:8px;padding:10px 14px;background:linear-gradient(135deg,var(--bg2),var(--bg3));border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
-#lolstwin #lolstsigil{width:28px;height:28px;flex-shrink:0}
+#lolstwin{
+  --acc:#C89B3C;--abg:rgba(200,155,60,.12);--abd:rgba(200,155,60,.30);
+  --bg:#07090d;--bg2:#0c0f16;--bg3:#12151e;--bg4:#1a1e28;--bg5:#222638;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#505048;
+  --bd:rgba(200,155,60,.25);--r:8px;--r2:4px;
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:var(--r);
+  max-width:520px;margin:0 auto;overflow:hidden;
+  box-shadow:0 8px 48px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.04);
+  color:var(--tx)
+}
+
+/* ─── HEADER ─── */
+#lolstwin #lolstwhead{
+  display:flex;align-items:center;gap:10px;padding:11px 14px;
+  background:linear-gradient(160deg,#0f1220 0%,#0a0d14 55%,#0d1018 100%);
+  border-bottom:1px solid var(--bd);cursor:pointer;user-select:none;position:relative;
+}
+#lolstwin #lolstwhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.35;
+}
+#lolstwin #lolstsigil{
+  width:38px;height:38px;flex-shrink:0;
+  filter:drop-shadow(0 0 7px var(--acc));
+}
 #lolstwin #lolsthdtxt{flex:1;min-width:0}
-#lolstwin #lolsttitle{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--acc)}
-#lolstwin #lolstnm{font-size:14px;font-weight:700;color:var(--tx);letter-spacing:.5px}
-#lolstwin #lolstlnbtn{font-size:9px;padding:2px 7px;border-radius:99px;cursor:pointer;background:var(--bg4);border:1px solid var(--bd);color:var(--tx3);letter-spacing:1px;user-select:none;flex-shrink:0}
-#lolstwin #lolstlnbtn:hover{color:var(--acc);border-color:var(--acc)}
-#lolstwin #lolstchev{font-size:16px;color:var(--tx3);transition:transform .3s;flex-shrink:0}
+#lolstwin #lolsttitle{
+  font-family:var(--fh);font-size:8px;letter-spacing:3px;text-transform:uppercase;
+  color:var(--acc);opacity:.75;margin-bottom:2px;
+}
+#lolstwin #lolstnm{
+  font-family:var(--fh);font-size:15px;font-weight:600;color:#f0e8d4;letter-spacing:.5px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#lolstwin #lolsthdvit{display:flex;flex-direction:column;gap:4px;min-width:130px;flex-shrink:0}
+#lolstwin .hbar-row{display:flex;align-items:center;gap:5px}
+#lolstwin .hbar-lbl{font-size:8px;font-family:var(--fh);color:var(--tx3);width:18px;text-align:right;flex-shrink:0;letter-spacing:.5px}
+#lolstwin .hbar-track{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+#lolstwin .hbar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+#lolstwin .hbar-hp{background:linear-gradient(90deg,#a83030,#e06060);box-shadow:0 0 5px rgba(200,70,70,.6)}
+#lolstwin .hbar-mp{background:linear-gradient(90deg,#2a4890,#5a8cd8);box-shadow:0 0 5px rgba(70,120,220,.55)}
+#lolstwin .hbar-val{font-size:8px;color:var(--tx3);min-width:48px;text-align:right;flex-shrink:0}
+#lolstwin #lolstlnbtn{
+  font-family:var(--fh);font-size:8px;padding:3px 8px;border-radius:99px;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd);color:var(--tx3);
+  letter-spacing:1.5px;user-select:none;flex-shrink:0;transition:all .2s;
+}
+#lolstwin #lolstlnbtn:hover{color:var(--acc);border-color:var(--acc);background:var(--abg)}
+#lolstwin #lolstchev{font-size:14px;color:var(--tx3);transition:transform .3s;flex-shrink:0}
 #lolstwin.closed #lolstchev{transform:rotate(180deg)}
-#lolstwin #lolstbody{max-height:2000px;overflow:hidden;transition:max-height .35s ease}
+
+/* ─── BODY COLLAPSE ─── */
+#lolstwin #lolstbody{max-height:2000px;overflow:hidden;transition:max-height .4s ease}
 #lolstwin.closed #lolstbody{max-height:0}
-#lolstwin #lolsttabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bd)}
-#lolstwin .lolst-tab{flex:1;padding:10px 2px;text-align:center;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s}
-#lolstwin .lolst-tab:hover{color:var(--tx2)}
-#lolstwin .lolst-tab.active{color:var(--acc);border-bottom-color:var(--acc);background:var(--abg)}
-#lolstwin .lolst-panel{display:none;padding:14px}
+
+/* ─── TABS ─── */
+#lolstwin #lolsttabs{
+  display:flex;background:var(--bg2);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  overflow-x:auto;scrollbar-width:none;
+}
+#lolstwin #lolsttabs::-webkit-scrollbar{display:none}
+#lolstwin .lolst-tab{
+  flex:1;padding:9px 2px;text-align:center;
+  font-family:var(--fh);font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .2s;white-space:nowrap;
+}
+#lolstwin .lolst-tab:hover{color:var(--tx2);background:rgba(255,255,255,.025)}
+#lolstwin .lolst-tab.active{
+  color:var(--acc);border-bottom-color:var(--acc);
+  background:linear-gradient(180deg,transparent,var(--abg));
+}
+
+/* ─── PANELS ─── */
+#lolstwin .lolst-panel{display:none;padding:14px 15px}
 #lolstwin .lolst-panel.active{display:block}
-#lolstwin .sec{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
-#lolstwin .sec::before,#lolstwin .sec::after{content:'';flex:1;height:1px;background:var(--abd)}
-#lolstwin .igrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
-#lolstwin .icard{background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);padding:7px 10px}
-#lolstwin .icard-l{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:2px}
+
+/* Custom scrollbar */
+#lolstwin ::-webkit-scrollbar{width:4px}
+#lolstwin ::-webkit-scrollbar-track{background:transparent}
+#lolstwin ::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+/* ─── SECTION HEADERS ─── */
+#lolstwin .sec{
+  display:flex;align-items:center;gap:8px;margin-bottom:10px;margin-top:4px;
+  font-family:var(--fh);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);
+}
+#lolstwin .sec::before,#lolstwin .sec::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--abd));
+}
+#lolstwin .sec::before{background:linear-gradient(90deg,transparent,var(--abd))}
+#lolstwin .sec::after{background:linear-gradient(90deg,var(--abd),transparent)}
+#lolstwin .sec-ico{font-style:normal;opacity:.6}
+
+/* ─── INFO GRID (STAT tab) ─── */
+#lolstwin .igrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px}
+#lolstwin .icard{
+  background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);
+  padding:7px 10px;border-left:2px solid var(--abd);
+  transition:border-left-color .2s;
+}
+#lolstwin .icard:hover{border-left-color:var(--acc)}
+#lolstwin .icard-l{font-family:var(--fh);font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);margin-bottom:3px}
 #lolstwin .icard-v{font-size:12px;color:var(--tx);font-weight:600}
 #lolstwin .icard.full{grid-column:1/-1}
-#lolstwin .bars{margin-bottom:12px}
-#lolstwin .bar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-#lolstwin .bar-label{font-size:9px;letter-spacing:1px;color:var(--tx3);width:32px;text-align:right;flex-shrink:0}
-#lolstwin .bar-track{flex:1;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
-#lolstwin .bar-fill{height:100%;border-radius:4px}
-#lolstwin .bar-hp{background:linear-gradient(90deg,#c85050,#e87070)}
-#lolstwin .bar-mp{background:linear-gradient(90deg,#3a5a9b,#5a88d8)}
-#lolstwin .bar-val{font-size:10px;color:var(--tx2);width:60px;text-align:right;flex-shrink:0}
-#lolstwin .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-#lolstwin .badge{padding:3px 8px;border-radius:99px;font-size:10px;background:var(--bg4);border:1px solid var(--bg3);color:var(--tx2)}
-#lolstwin .badge.condition{border-color:rgba(200,130,40,.4);color:#d4903a;background:rgba(200,130,40,.1)}
-#lolstwin .badge.injury{border-color:rgba(200,50,50,.4);color:#e07070;background:rgba(200,50,50,.1)}
-#lolstwin .badge.empty{color:var(--tx3);font-style:italic}
-#lolstwin .ab-card{background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);padding:10px;margin-bottom:7px;display:flex;gap:10px;align-items:flex-start}
-#lolstwin .rank-badge{width:28px;height:28px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;flex-shrink:0;border:1px solid currentColor}
-#lolstwin .rank-S{color:#d4af37;background:rgba(212,175,55,.15)}
-#lolstwin .rank-A{color:#c870a0;background:rgba(200,112,160,.15)}
-#lolstwin .rank-B{color:#6090d0;background:rgba(96,144,208,.15)}
-#lolstwin .rank-C{color:#60a870;background:rgba(96,168,112,.15)}
-#lolstwin .rank-D{color:#8a8a8a;background:rgba(138,138,138,.15)}
-#lolstwin .ab-name{font-size:12px;font-weight:700;color:var(--tx);margin-bottom:3px}
-#lolstwin .ab-desc{font-size:11px;color:var(--tx2);line-height:1.5}
-#lolstwin .inv-group{margin-bottom:10px}
-#lolstwin .inv-type-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);padding:3px 0;border-bottom:1px solid var(--abd);margin-bottom:6px}
-#lolstwin .inv-item{display:flex;align-items:flex-start;gap:8px;padding:5px 8px;background:var(--bg3);border-radius:var(--r2);margin-bottom:4px}
-#lolstwin .inv-qty{font-size:11px;font-weight:700;color:var(--acc);min-width:24px;text-align:center;padding-top:1px}
+
+/* ─── VITALS BARS ─── */
+#lolstwin .bars{margin-bottom:14px}
+#lolstwin .bar-row{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+#lolstwin .bar-label{
+  font-family:var(--fh);font-size:8.5px;letter-spacing:1px;color:var(--tx3);
+  width:20px;text-align:right;flex-shrink:0;
+}
+#lolstwin .bar-wrap{flex:1;display:flex;flex-direction:column;gap:3px}
+#lolstwin .bar-track{
+  flex:1;height:10px;background:rgba(255,255,255,.05);
+  border-radius:5px;overflow:hidden;position:relative;
+}
+#lolstwin .bar-fill{height:100%;border-radius:5px;transition:width .6s ease}
+#lolstwin .bar-hp{
+  background:linear-gradient(90deg,#9a2828,#d85858,#f07878);
+  box-shadow:0 0 8px rgba(200,60,60,.55),0 0 2px rgba(200,60,60,.8);
+}
+#lolstwin .bar-mp{
+  background:linear-gradient(90deg,#1e3878,#4870c0,#7098e0);
+  box-shadow:0 0 8px rgba(60,100,220,.5),0 0 2px rgba(80,120,230,.75);
+}
+#lolstwin .bar-nums{display:flex;justify-content:flex-end}
+#lolstwin .bar-val{font-size:10px;color:var(--tx2);font-weight:600}
+
+/* ─── BADGES (conditions / injuries) ─── */
+#lolstwin .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+#lolstwin .badge{
+  padding:3px 9px;border-radius:99px;font-size:10px;
+  background:var(--bg4);border:1px solid var(--bg5);color:var(--tx2);
+}
+#lolstwin .badge.condition{
+  border-color:rgba(200,140,40,.45);color:#e0a040;
+  background:rgba(200,140,40,.1);
+}
+#lolstwin .badge.injury{
+  border-color:rgba(210,60,60,.45);color:#e07878;
+  background:rgba(210,60,60,.1);
+}
+#lolstwin .badge.empty{color:var(--tx3);font-style:italic;border-color:transparent;background:transparent}
+
+/* ─── ABILITY CARDS ─── */
+#lolstwin .ab-card{
+  background:var(--bg3);border:1px solid var(--bg4);
+  border-radius:var(--r2);padding:11px 12px;margin-bottom:8px;
+  display:flex;gap:12px;align-items:flex-start;
+  border-left:3px solid transparent;transition:border-left-color .2s,background .2s;
+}
+#lolstwin .ab-card:hover{background:var(--bg4)}
+#lolstwin .ab-card.r-S{border-left-color:#ffd700}
+#lolstwin .ab-card.r-A{border-left-color:#d870c8}
+#lolstwin .ab-card.r-B{border-left-color:#5088d8}
+#lolstwin .ab-card.r-C{border-left-color:#50b870}
+#lolstwin .ab-card.r-D{border-left-color:#707070}
+#lolstwin .rank-badge{
+  width:30px;height:30px;border-radius:5px;display:flex;align-items:center;
+  justify-content:center;font-family:var(--fh);font-weight:700;font-size:13px;
+  flex-shrink:0;border:1px solid currentColor;letter-spacing:0;
+}
+#lolstwin .rank-S{color:#ffd700;background:rgba(255,215,0,.12);box-shadow:0 0 8px rgba(255,215,0,.25)}
+#lolstwin .rank-A{color:#d870c8;background:rgba(216,112,200,.12);box-shadow:0 0 8px rgba(216,112,200,.2)}
+#lolstwin .rank-B{color:#5088d8;background:rgba(80,136,216,.12)}
+#lolstwin .rank-C{color:#50b870;background:rgba(80,184,112,.12)}
+#lolstwin .rank-D{color:#707070;background:rgba(112,112,112,.1)}
+#lolstwin .ab-body{flex:1;min-width:0}
+#lolstwin .ab-name{font-size:12.5px;font-weight:700;color:var(--tx);margin-bottom:4px;font-family:var(--fh);letter-spacing:.3px}
+#lolstwin .ab-desc{font-size:11px;color:var(--tx2);line-height:1.55}
+
+/* ─── INVENTORY ─── */
+#lolstwin .inv-group{margin-bottom:12px}
+#lolstwin .inv-type-label{
+  font-family:var(--fh);font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:var(--acc);padding:4px 0;
+  border-bottom:1px solid var(--abd);margin-bottom:7px;opacity:.8;
+}
+#lolstwin .inv-item{
+  display:flex;align-items:flex-start;gap:10px;padding:7px 10px;
+  background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);
+  margin-bottom:4px;transition:background .15s,border-color .15s;
+}
+#lolstwin .inv-item:hover{background:var(--bg4);border-color:var(--bg5)}
+#lolstwin .inv-qty{
+  font-family:var(--fh);font-size:11px;font-weight:700;color:var(--acc);
+  min-width:26px;text-align:center;padding-top:1px;
+  background:var(--abg);border-radius:3px;
+}
 #lolstwin .inv-info{flex:1;min-width:0}
 #lolstwin .inv-name{font-size:12px;color:var(--tx);font-weight:600}
-#lolstwin .inv-desc{font-size:10px;color:var(--tx3);margin-top:1px}
-#lolstwin .eq-slot{display:flex;gap:10px;align-items:center;padding:8px 10px;background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);margin-bottom:6px}
-#lolstwin .eq-slot-label{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);width:68px;flex-shrink:0;text-align:right}
-#lolstwin .eq-slot-line{width:1px;height:28px;background:var(--bd);flex-shrink:0}
+#lolstwin .inv-desc{font-size:10px;color:var(--tx3);margin-top:2px;line-height:1.45}
+
+/* ─── EQUIPMENT ─── */
+#lolstwin .eq-slot{
+  display:flex;gap:10px;align-items:center;padding:9px 11px;
+  background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);
+  margin-bottom:6px;transition:background .15s;
+}
+#lolstwin .eq-slot:hover{background:var(--bg4)}
+#lolstwin .eq-slot-label{
+  font-family:var(--fh);font-size:8px;letter-spacing:.5px;text-transform:uppercase;
+  color:var(--tx3);width:68px;flex-shrink:0;text-align:right;
+}
+#lolstwin .eq-slot-line{width:1px;height:30px;background:var(--bd);flex-shrink:0}
 #lolstwin .eq-item{flex:1;min-width:0}
 #lolstwin .eq-name{font-size:12px;font-weight:700;color:var(--tx)}
-#lolstwin .eq-desc{font-size:10px;color:var(--tx3);margin-top:2px}
-#lolstwin .eq-cond{font-size:9px;padding:1px 6px;border-radius:99px;font-weight:700;margin-left:6px;display:inline-block}
-#lolstwin .cond-pristine{color:#70d490;border:1px solid rgba(112,212,144,.4);background:rgba(112,212,144,.1)}
-#lolstwin .cond-good{color:#8a9ab8;border:1px solid rgba(138,154,184,.4);background:rgba(138,154,184,.1)}
-#lolstwin .cond-worn{color:#d9c089;border:1px solid rgba(217,192,137,.4);background:rgba(217,192,137,.1)}
-#lolstwin .cond-damaged{color:#d4883a;border:1px solid rgba(212,136,58,.4);background:rgba(212,136,58,.1)}
-#lolstwin .cond-broken{color:#c8506a;border:1px solid rgba(200,80,106,.4);background:rgba(200,80,106,.1)}
+#lolstwin .eq-desc{font-size:10px;color:var(--tx3);margin-top:3px;line-height:1.45}
+#lolstwin .eq-cond{
+  font-family:var(--fh);font-size:8px;padding:1px 6px;border-radius:99px;
+  font-weight:700;margin-left:7px;display:inline-block;letter-spacing:.5px;
+}
+#lolstwin .cond-pristine{color:#60e490;border:1px solid rgba(96,228,144,.4);background:rgba(96,228,144,.08)}
+#lolstwin .cond-good{color:#7890b8;border:1px solid rgba(120,144,184,.4);background:rgba(120,144,184,.08)}
+#lolstwin .cond-worn{color:#d8c070;border:1px solid rgba(216,192,112,.4);background:rgba(216,192,112,.08)}
+#lolstwin .cond-damaged{color:#d87830;border:1px solid rgba(216,120,48,.4);background:rgba(216,120,48,.08)}
+#lolstwin .cond-broken{color:#d84870;border:1px solid rgba(216,72,112,.4);background:rgba(216,72,112,.08)}
 #lolstwin .eq-empty{font-size:11px;color:var(--tx3);font-style:italic}
-#lolstwin .craft-lbl{font-size:10px;color:var(--tx3);letter-spacing:.5px;margin-bottom:6px}
-#lolstwin .craft-pills{display:flex;flex-wrap:wrap;gap:5px;min-height:34px;margin-bottom:8px}
-#lolstwin .craft-pill{padding:4px 10px;border-radius:99px;font-size:11px;cursor:pointer;background:var(--bg3);border:1px solid var(--bg4);color:var(--tx2);user-select:none}
-#lolstwin .craft-pill:hover{border-color:var(--acc);color:var(--acc)}
-#lolstwin .craft-pill.selected{background:var(--abg);border-color:var(--acc);color:var(--acc);font-weight:700}
-#lolstwin .pill-qty{font-size:9px;opacity:.7}
-#lolstwin .craft-sel-box{background:var(--bg3);border:1px dashed var(--abd);border-radius:var(--r2);padding:8px;min-height:36px;font-size:11px;color:var(--tx3);margin-bottom:8px}
-#lolstwin .craft-sel-box.has-items{color:var(--tx2)}
-#lolstwin .craft-intent{width:100%;background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);color:var(--tx);padding:8px 10px;font-size:12px;font-family:inherit;outline:none;resize:none;margin-bottom:8px}
-#lolstwin .craft-intent:focus{border-color:var(--acc)}
+
+/* ─── CRAFTING ─── */
+#lolstwin .craft-lbl{font-size:10px;color:var(--tx3);letter-spacing:.4px;margin-bottom:7px}
+#lolstwin .craft-pills{display:flex;flex-wrap:wrap;gap:5px;min-height:36px;margin-bottom:10px}
+#lolstwin .craft-pill{
+  padding:5px 11px;border-radius:99px;font-size:11px;cursor:pointer;
+  background:var(--bg3);border:1px solid var(--bg4);color:var(--tx2);
+  user-select:none;transition:all .15s;
+}
+#lolstwin .craft-pill:hover{border-color:var(--abd);color:var(--acc)}
+#lolstwin .craft-pill.selected{
+  background:var(--abg);border-color:var(--acc);color:var(--acc);font-weight:700;
+  box-shadow:0 0 6px rgba(200,155,60,.25);
+}
+#lolstwin .pill-qty{font-size:9px;opacity:.65}
+#lolstwin .craft-sel-box{
+  background:var(--bg3);border:1px dashed rgba(200,155,60,.35);border-radius:var(--r2);
+  padding:9px 11px;min-height:38px;font-size:11px;color:var(--tx3);margin-bottom:10px;
+  line-height:1.5;
+}
+#lolstwin .craft-sel-box.has-items{color:var(--acc)}
+#lolstwin .craft-intent{
+  width:100%;background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);
+  color:var(--tx);padding:9px 11px;font-size:12px;font-family:inherit;
+  outline:none;resize:none;margin-bottom:10px;transition:border-color .2s;
+}
+#lolstwin .craft-intent:focus{border-color:var(--acc);box-shadow:0 0 0 2px var(--abg)}
 #lolstwin .craft-intent::placeholder{color:var(--tx3)}
-#lolstwin .btn-craft{width:100%;padding:10px;border-radius:var(--r2);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;background:linear-gradient(135deg,var(--acc),#e8c060);color:#0d0e10;border:none}
-#lolstwin .recipe-card{background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);padding:10px;margin-bottom:7px}
-#lolstwin .recipe-hdr{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-#lolstwin .recipe-name{flex:1;font-size:12px;font-weight:700;color:var(--tx)}
-#lolstwin .recipe-q{font-size:9px;font-weight:700;padding:2px 7px;border-radius:99px}
-#lolstwin .q-excellent{color:#d4af37;border:1px solid rgba(212,175,55,.4);background:rgba(212,175,55,.1)}
-#lolstwin .q-good{color:#70b870;border:1px solid rgba(112,184,112,.4);background:rgba(112,184,112,.1)}
-#lolstwin .q-ok{color:#8a8aaa;border:1px solid rgba(138,138,170,.4);background:rgba(138,138,170,.1)}
-#lolstwin .q-bad{color:#c87a3a;border:1px solid rgba(200,122,58,.4);background:rgba(200,122,58,.1)}
-#lolstwin .q-failed{color:#a83838;border:1px solid rgba(168,56,56,.4);background:rgba(168,56,56,.1)}
+#lolstwin .btn-craft{
+  width:100%;padding:11px;border-radius:var(--r2);font-family:var(--fh);
+  font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;
+  background:linear-gradient(135deg,var(--acc) 0%,#e8c860 50%,var(--acc) 100%);
+  background-size:200% 100%;color:#07090d;border:none;
+  box-shadow:0 2px 12px rgba(200,155,60,.35);transition:all .2s;
+}
+#lolstwin .btn-craft:hover{background-position:100% 0;box-shadow:0 4px 20px rgba(200,155,60,.55)}
+
+/* ─── RECIPE LOG ─── */
+#lolstwin .recipe-card{
+  background:var(--bg3);border:1px solid var(--bg4);border-radius:var(--r2);
+  padding:10px 12px;margin-bottom:7px;border-left:3px solid transparent;
+}
+#lolstwin .recipe-card.q-excellent{border-left-color:#ffd700}
+#lolstwin .recipe-card.q-good{border-left-color:#60b860}
+#lolstwin .recipe-card.q-ok{border-left-color:#8080a8}
+#lolstwin .recipe-card.q-bad{border-left-color:#c07030}
+#lolstwin .recipe-card.q-failed{border-left-color:#a03030}
+#lolstwin .recipe-hdr{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+#lolstwin .recipe-name{flex:1;font-size:12px;font-weight:700;color:var(--tx);font-family:var(--fh);letter-spacing:.3px}
+#lolstwin .recipe-q{font-family:var(--fh);font-size:8px;font-weight:700;padding:2px 8px;border-radius:99px;letter-spacing:.5px}
+#lolstwin .q-excellent{color:#ffd700;border:1px solid rgba(255,215,0,.4);background:rgba(255,215,0,.08)}
+#lolstwin .q-good{color:#60b860;border:1px solid rgba(96,184,96,.4);background:rgba(96,184,96,.08)}
+#lolstwin .q-ok{color:#8888b0;border:1px solid rgba(136,136,176,.4);background:rgba(136,136,176,.08)}
+#lolstwin .q-bad{color:#c07030;border:1px solid rgba(192,112,48,.4);background:rgba(192,112,48,.08)}
+#lolstwin .q-failed{color:#b03838;border:1px solid rgba(176,56,56,.4);background:rgba(176,56,56,.08)}
 #lolstwin .recipe-ingr{font-size:10px;color:var(--tx3);margin-bottom:3px}
 #lolstwin .recipe-result{font-size:11px;color:var(--tx2)}
-#lolstwin .recipe-notes{font-size:10px;color:var(--tx3);font-style:italic;margin-top:3px}
-#lolstwin .btn-del{padding:3px 8px;font-size:10px;border-radius:var(--r2);cursor:pointer;background:rgba(168,56,56,.15);border:1px solid rgba(168,56,56,.35);color:#c87070;flex-shrink:0}
-#lolstwin .empty-state{text-align:center;padding:24px 0;color:var(--tx3);font-size:11px;letter-spacing:1px}
-#lolstwin #lolstfoot{border-top:1px solid var(--bd);padding:8px 14px;font-size:9px;color:var(--tx3);text-align:center;letter-spacing:1px;background:var(--bg2);text-transform:uppercase}
+#lolstwin .recipe-notes{font-size:10px;color:var(--tx3);font-style:italic;margin-top:4px;padding-top:4px;border-top:1px solid var(--bg4)}
+#lolstwin .btn-del{
+  padding:3px 8px;font-size:9px;border-radius:var(--r2);cursor:pointer;
+  background:rgba(168,48,48,.12);border:1px solid rgba(168,48,48,.3);
+  color:#c07070;flex-shrink:0;transition:all .15s;font-family:var(--fh);letter-spacing:.5px;
+}
+#lolstwin .btn-del:hover{background:rgba(168,48,48,.25);color:#e08080}
+
+/* ─── EMPTY STATE ─── */
+#lolstwin .empty-state{
+  text-align:center;padding:28px 0;color:var(--tx3);font-size:10.5px;
+  letter-spacing:2px;font-family:var(--fh);text-transform:uppercase;
+}
+#lolstwin .empty-state::before{content:'◈';display:block;font-size:18px;margin-bottom:8px;opacity:.3}
+
+/* ─── FOOTER ─── */
+#lolstwin #lolstfoot{
+  border-top:1px solid rgba(255,255,255,.05);padding:7px 14px;
+  font-family:var(--fh);font-size:8px;color:var(--tx3);text-align:center;
+  letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+  position:relative;
+}
+#lolstwin #lolstfoot::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--bd),transparent);
+}
 </style>
 </head>
 <body>
 <textarea id="lolstraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
 <div id="lolstwin">
   <div id="lolstwhead">
-    <svg id="lolstsigil" width="28" height="28" viewBox="0 0 28 28"></svg>
+    <svg id="lolstsigil" width="38" height="38" viewBox="0 0 28 28"></svg>
     <div id="lolsthdtxt">
       <div id="lolsttitle">STATUS TRACKER</div>
       <div id="lolstnm">—</div>
     </div>
+    <div id="lolsthdvit"></div>
     <div id="lolstlnbtn">EN</div>
     <div id="lolstchev">▲</div>
   </div>
@@ -139,15 +353,20 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
   var RC={demacia:'#4A70B0',noxus:'#9B2020',freljord:'#5FA8C8',ionia:'#9870C0',piltover:'#D4A830',zaun:'#4A8A60',shurima:'#C8A84B',ixtal:'#3A8A50',targon:'#7A8EC8',camavor:'#A83848',shadow_isles:'#2A8060',bilgewater:'#C87840',bandle:'#D4B870',void:'#8A4AC8'};
   var acc=d.theme_color||RC[d.region]||'#C89B3C';
 
-  function hexRgb(h){var n=parseInt((String(h||'').replace('#','').replace(/^(?:[0-9a-f]{3})$/i,function(x){return x[0]+x[0]+x[1]+x[1]+x[2]+x[2];}))||'C89B3C',16)||0xC89B3C;return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+  function hexRgb(h){
+    var s=String(h||'').replace('#','');
+    if(s.length===3)s=s[0]+s[0]+s[1]+s[1]+s[2]+s[2];
+    var n=parseInt(s,16)||0xC89B3C;
+    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+  }
 
   var win=g('lolstwin');
   if(!win)return;
   var rgb=hexRgb(acc);
   win.style.setProperty('--acc',acc);
-  win.style.setProperty('--abg','rgba('+rgb+',.13)');
-  win.style.setProperty('--abd','rgba('+rgb+',.28)');
-  win.style.setProperty('--bd','rgba('+rgb+',.30)');
+  win.style.setProperty('--abg','rgba('+rgb+',.12)');
+  win.style.setProperty('--abd','rgba('+rgb+',.30)');
+  win.style.setProperty('--bd','rgba('+rgb+',.25)');
 
   var L={
     stat:['STAT','สถานะ'],skill:['SKILL','ทักษะ'],items:['ITEMS','ของ'],gear:['GEAR','อุปกรณ์'],craft:['CRAFT','คราฟ'],log:['LOG','บันทึก'],
@@ -155,14 +374,14 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     eq:['EQUIPMENT','อาวุธ/ชุด'],cr:['CRAFTING','คราฟ'],lg:['RECIPE LOG','บันทึกสูตร'],
     ing:['Select ingredients:','เลือกวัตถุดิบ:'],sel_lbl:['Selected:','เลือกแล้ว:'],
     iph:['What are you trying to craft?','คุณต้องการคราฟอะไร?'],
-    cbtn:['⚒ CRAFT','⚒ คราฟ'],del:['DEL','ลบ'],
+    cbtn:['⚒  CRAFT','⚒  คราฟ'],del:['DEL','ลบ'],
     no_ab:['No abilities recorded.','ไม่มีความสามารถ'],no_inv:['Inventory is empty.','กระเป๋าว่างเปล่า'],
-    no_gear:['No equipment.','ไม่มีอุปกรณ์'],no_rec:['No recipes logged yet.','ยังไม่มีสูตรที่บันทึก'],
-    no_craf:['No inventory items available.','ไม่มีวัตถุดิบในกระเป๋า'],
+    no_gear:['No equipment.','ไม่มีอุปกรณ์'],no_rec:['No recipes yet.','ยังไม่มีสูตร'],
+    no_craf:['No items available.','ไม่มีวัตถุดิบ'],
     none:['—','—'],ilbl:['Ingredients:','วัตถุดิบ:'],rlbl:['Result:','ผลลัพธ์:'],
     hp:['HP','HP'],mp:['MP','MP'],
     nm:['Name','ชื่อ'],ag:['Age','อายุ'],gd:['Gender','เพศ'],rg:['Region','ภูมิภาค'],bg:['Background','ภูมิหลัง'],gl:['Goal','เป้าหมาย'],
-    foot:['RUNETERRA STATUS SYSTEM','ระบบติดตามสถานะ รูนเทอร์รา'],norm:['Normal','ปกติ']
+    foot:['RUNETERRA STATUS SYSTEM','ระบบสถานะ รูนเทอร์รา'],norm:['Normal','ปกติ']
   };
   function T(k){var a=L[k];if(!a)return k;return TH?a[1]:a[0];}
 
@@ -172,7 +391,7 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
       demacia:'<polygon points="14,2 22,10 22,24 6,24 6,10" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="14" y1="2" x2="14" y2="24" stroke="'+c+'" stroke-width="1"/><line x1="6" y1="14" x2="22" y2="14" stroke="'+c+'" stroke-width="1"/>',
       noxus:'<polygon points="14,3 24,25 4,25" fill="none" stroke="'+c+'" stroke-width="1.5"/><polygon points="14,9 20,22 8,22" fill="'+c+'" opacity=".3"/>',
       freljord:'<line x1="14" y1="2" x2="14" y2="26" stroke="'+c+'" stroke-width="1.5"/><line x1="2" y1="14" x2="26" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="5.5" y1="5.5" x2="22.5" y2="22.5" stroke="'+c+'" stroke-width="1"/><line x1="22.5" y1="5.5" x2="5.5" y2="22.5" stroke="'+c+'" stroke-width="1"/><circle cx="14" cy="14" r="3" fill="'+c+'"/>',
-      ionia:'<circle cx="14" cy="10" r="4" fill="'+c+'"/><circle cx="14" cy="18" r="4" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="8" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="14" cy="10" r="1.5" fill="#0d0e10"/><circle cx="14" cy="18" r="1.5" fill="'+c+'"/>',
+      ionia:'<circle cx="14" cy="10" r="4" fill="'+c+'"/><circle cx="14" cy="18" r="4" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="8" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="14" cy="10" r="1.5" fill="#07090d"/><circle cx="14" cy="18" r="1.5" fill="'+c+'"/>',
       piltover:'<circle cx="14" cy="14" r="8" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="'+c+'"/><line x1="14" y1="2" x2="14" y2="6" stroke="'+c+'" stroke-width="1.5"/><line x1="14" y1="22" x2="14" y2="26" stroke="'+c+'" stroke-width="1.5"/><line x1="2" y1="14" x2="6" y2="14" stroke="'+c+'" stroke-width="1.5"/><line x1="22" y1="14" x2="26" y2="14" stroke="'+c+'" stroke-width="1.5"/>',
       zaun:'<rect x="9" y="4" width="10" height="14" rx="5" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="11" y1="18" x2="11" y2="24" stroke="'+c+'" stroke-width="1"/><line x1="17" y1="18" x2="17" y2="24" stroke="'+c+'" stroke-width="1"/><line x1="8" y1="22" x2="20" y2="22" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="10" r="2.5" fill="'+c+'" opacity=".5"/>',
       shurima:'<circle cx="14" cy="14" r="9" fill="none" stroke="'+c+'" stroke-width="1.2"/><polygon points="14,5 16.5,11.5 23,11.5 17.5,15.5 19.5,22 14,18 8.5,22 10.5,15.5 5,11.5 11.5,11.5" fill="'+c+'" opacity=".6"/>',
@@ -200,14 +419,14 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     var cb='';
     if(!conds.length&&!injs.length){cb='<span class="badge empty">'+esc(T('norm'))+'</span>';}
     else{
-      conds.forEach(function(c){cb+='<span class="badge condition">'+esc(c)+'</span>';});
+      conds.forEach(function(c){cb+='<span class="badge condition">⚡ '+esc(c)+'</span>';});
       injs.forEach(function(c){cb+='<span class="badge injury">⚠ '+esc(c)+'</span>';});
     }
     return '<div class="igrid">'+gh+'</div>'+
       '<div class="sec">'+T('vital')+'</div>'+
       '<div class="bars">'+
-        '<div class="bar-row"><div class="bar-label">'+T('hp')+'</div><div class="bar-track"><div class="bar-fill bar-hp" style="width:'+hpP+'%"></div></div><div class="bar-val">'+esc(hp.cur)+'/'+esc(hp.max)+'</div></div>'+
-        '<div class="bar-row"><div class="bar-label">'+T('mp')+'</div><div class="bar-track"><div class="bar-fill bar-mp" style="width:'+mpP+'%"></div></div><div class="bar-val">'+esc(mp.cur)+'/'+esc(mp.max)+'</div></div>'+
+        '<div class="bar-row"><div class="bar-label">'+T('hp')+'</div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill bar-hp" style="width:'+hpP+'%"></div></div><div class="bar-nums"><span class="bar-val">'+esc(hp.cur)+' / '+esc(hp.max)+'</span></div></div></div>'+
+        '<div class="bar-row"><div class="bar-label">'+T('mp')+'</div><div class="bar-wrap"><div class="bar-track"><div class="bar-fill bar-mp" style="width:'+mpP+'%"></div></div><div class="bar-nums"><span class="bar-val">'+esc(mp.cur)+' / '+esc(mp.max)+'</span></div></div></div>'+
       '</div>'+
       '<div class="sec">'+T('cond')+'</div>'+
       '<div class="badges">'+cb+'</div>';
@@ -218,7 +437,7 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     if(!ab.length)return '<div class="empty-state">'+esc(T('no_ab'))+'</div>';
     return '<div class="sec">'+T('skills')+'</div>'+ab.map(function(a){
       var rk=a.rank||'D';
-      return '<div class="ab-card"><div class="rank-badge rank-'+rk+'">'+esc(rk)+'</div><div><div class="ab-name">'+esc(a.name)+'</div><div class="ab-desc">'+esc(a.desc)+'</div></div></div>';
+      return '<div class="ab-card r-'+rk+'"><div class="rank-badge rank-'+rk+'">'+esc(rk)+'</div><div class="ab-body"><div class="ab-name">'+esc(a.name)+'</div><div class="ab-desc">'+esc(a.desc)+'</div></div></div>';
     }).join('');
   }
 
@@ -272,8 +491,9 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     var h='<div class="sec">'+T('lg')+'</div>';
     if(!rc.length)return h+'<div class="empty-state">'+esc(T('no_rec'))+'</div>';
     return h+rc.map(function(r){
-      return '<div class="recipe-card">'+
-        '<div class="recipe-hdr"><div class="recipe-name">'+esc(r.name)+'</div><span class="recipe-q q-'+(r.quality||'ok')+'">'+esc(r.quality||'ok')+'</span><button class="btn-del" data-rid="'+esc(r.id)+'" data-rname="'+esc(r.name)+'">'+T('del')+'</button></div>'+
+      var q=r.quality||'ok';
+      return '<div class="recipe-card q-'+q+'">'+
+        '<div class="recipe-hdr"><div class="recipe-name">'+esc(r.name)+'</div><span class="recipe-q q-'+q+'">'+esc(q)+'</span><button class="btn-del" data-rid="'+esc(r.id)+'" data-rname="'+esc(r.name)+'">'+T('del')+'</button></div>'+
         '<div class="recipe-ingr">'+esc(T('ilbl'))+' '+esc((r.ingredients||[]).join(', '))+'</div>'+
         '<div class="recipe-result">'+esc(T('rlbl'))+' '+esc(r.result||'—')+'</div>'+
         (r.notes?'<div class="recipe-notes">'+esc(r.notes)+'</div>':'')+
@@ -286,6 +506,14 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
     var nm=g('lolstnm');if(nm)nm.textContent=d.name||'—';
     var ln=g('lolstlnbtn');if(ln)ln.textContent=TH?'TH':'EN';
     var ft=g('lolstfoot');if(ft)ft.textContent=T('foot');
+
+    var hv=g('lolsthdvit');
+    if(hv){
+      var hp=d.hp||{cur:0,max:100};var mp=d.mana||{cur:0,max:100};
+      hv.innerHTML=
+        '<div class="hbar-row"><span class="hbar-lbl">HP</span><div class="hbar-track"><div class="hbar-fill hbar-hp" style="width:'+pct(hp.cur,hp.max)+'%"></div></div><span class="hbar-val">'+esc(hp.cur)+'/'+esc(hp.max)+'</span></div>'+
+        '<div class="hbar-row"><span class="hbar-lbl">MP</span><div class="hbar-track"><div class="hbar-fill hbar-mp" style="width:'+pct(mp.cur,mp.max)+'%"></div></div><span class="hbar-val">'+esc(mp.cur)+'/'+esc(mp.max)+'</span></div>';
+    }
 
     var defs=[
       ['stat',T('stat'),pStat],
@@ -330,14 +558,12 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
 
   var lnbtn=g('lolstlnbtn');
   if(lnbtn)lnbtn.addEventListener('click',function(e){
-    e.stopPropagation();
-    TH=!TH;sel=[];build();
+    e.stopPropagation();TH=!TH;sel=[];build();
   });
 
   var tabs=g('lolsttabs');
   if(tabs)tabs.addEventListener('click',function(e){
-    var tab=e.target.closest('.lolst-tab');
-    if(!tab)return;
+    var tab=e.target.closest('.lolst-tab');if(!tab)return;
     var t=tab.getAttribute('data-t');
     Array.prototype.forEach.call(tabs.querySelectorAll('.lolst-tab'),function(x){x.classList.toggle('active',x===tab);});
     var panes=g('lolstpanes');
@@ -356,8 +582,7 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
       if(box){
         var inv=d.inventory||[];
         var txt=sel.length?sel.map(function(i){var it=inv[i];return it?it.name+' ×'+(it.qty||1):'?';}).join(' + '):T('none');
-        box.textContent=txt;
-        box.classList.toggle('has-items',sel.length>0);
+        box.textContent=txt;box.classList.toggle('has-items',sel.length>0);
       }
       return;
     }
@@ -370,8 +595,7 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
       if(!intent){alert(TH?'ระบุสิ่งที่ต้องการคราฟ':'Describe what you want to craft.');return;}
       var ingr=sel.map(function(i){var it=inv[i];return it?it.name+' ×'+(it.qty||1):'?';});
       sendToChat('<'+'LOL_CRAFT>'+JSON.stringify({ingredients:ingr,intent:intent})+'<'+'/LOL_CRAFT>');
-      sel=[];build();
-      return;
+      sel=[];build();return;
     }
     var del=e.target.closest('.btn-del');
     if(del){
