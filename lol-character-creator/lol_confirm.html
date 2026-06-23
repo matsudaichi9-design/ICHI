@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+
+.crd{
+ max-width:460px;margin:6px auto;position:relative;
+ background:#030508;border:1px solid rgba(200,155,60,.22);
+ border-radius:8px;overflow:hidden;
+ color:#E8D9B0;font-family:'Spectral',Georgia,serif;
+ box-shadow:0 16px 44px rgba(0,0,0,.78),0 0 64px -22px var(--acc,#C89B3C);
+ animation:cardapp .45s cubic-bezier(.22,.68,0,1.1) both
+}
+@keyframes cardapp{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.crd::before,.crd::after{
+ content:'';position:absolute;width:13px;height:13px;
+ border-color:var(--acc,#C89B3C);border-style:solid;opacity:.35;top:7px;z-index:4;pointer-events:none
+}
+.crd::before{left:7px;border-width:1px 0 0 1px}
+.crd::after{right:7px;border-width:1px 1px 0 0}
+
+/* ── TOP BAND ── */
+.ctop{
+ text-align:center;padding:22px 18px 16px;position:relative;
+ border-bottom:1px solid var(--bd,rgba(200,155,60,.22))
+}
+.ctop-bg{
+ position:absolute;inset:0;
+ background:linear-gradient(170deg,var(--acc-fade,rgba(200,155,60,.12)) 0%,transparent 65%);
+ pointer-events:none;z-index:0
+}
+.ctop > *{position:relative;z-index:1}
+
+/* ── SIGIL ── */
+.sigil{width:62px;height:62px;margin:0 auto 14px}
+.sigil svg{
+ width:100%;height:100%;color:var(--acc,#C89B3C);
+ filter:drop-shadow(0 0 5px var(--acc,#C89B3C));
+ animation:sigpulse 3s ease-in-out infinite
+}
+.sigil.spin svg{animation:sigpulse 3s ease-in-out infinite,sigspin 9s linear infinite}
+.sigil.spinfast svg{animation:sigpulse 2.5s ease-in-out infinite,sigspin 5s linear infinite}
+@keyframes sigpulse{0%,100%{filter:drop-shadow(0 0 4px var(--acc,#C89B3C))}50%{filter:drop-shadow(0 0 14px var(--acc,#C89B3C))}}
+@keyframes sigspin{to{transform:rotate(360deg)}}
+
+.c-tag{font-family:'Cinzel',serif;font-size:7px;letter-spacing:4px;color:var(--acc,#C89B3C);opacity:.6;margin-bottom:6px}
+.c-name{font-family:'Cinzel Decorative',serif;font-size:21px;color:#f0e8d0;letter-spacing:2px;line-height:1.15;margin-bottom:4px;text-shadow:0 0 20px rgba(200,155,60,.3)}
+.c-title{font-size:13px;color:#A89870;font-style:italic;letter-spacing:1px;margin-bottom:5px}
+.c-alias{font-family:'Cinzel',serif;font-size:8px;color:#605840;letter-spacing:2px;margin-bottom:9px}
+.rbadge{
+ display:inline-block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:2.5px;
+ color:var(--acc,#C89B3C);border:1px solid var(--abd,rgba(200,155,60,.38));
+ border-radius:20px;padding:2px 14px;background:var(--abg,rgba(200,155,60,.10))
+}
+
+/* ── SEPARATOR ── */
+.sep{
+ height:1px;background:linear-gradient(90deg,transparent,var(--acc,#C89B3C),transparent);
+ position:relative;margin:10px 0
+}
+.sep::before{
+ content:'◆';position:absolute;top:-5px;left:50%;transform:translateX(-50%);
+ font-size:7px;color:var(--acc,#C89B3C);background:#030508;padding:0 8px
+}
+
+/* ── BODY ── */
+.cbody{padding:0 14px 14px}
+
+/* Quote */
+.qwrap{
+ padding:9px 12px 9px 18px;margin:12px 0 2px;
+ background:#070A12;border-left:2px solid var(--acc,#C89B3C);
+ border-radius:0 6px 6px 0;position:relative
+}
+.qmark{
+ position:absolute;top:2px;left:5px;
+ font-family:Georgia,serif;font-size:30px;color:var(--acc,#C89B3C);opacity:.28;line-height:1
+}
+.qtext{font-size:13px;color:#A89870;font-style:italic;line-height:1.65;padding-left:4px}
+
+/* Section header */
+.sh{
+ font-family:'Cinzel',serif;font-size:8px;letter-spacing:2.5px;color:#605840;
+ text-transform:uppercase;margin:13px 0 8px;padding-bottom:5px;
+ border-bottom:1px solid var(--bd,rgba(200,155,60,.22));
+ display:flex;align-items:center;gap:6px
+}
+.sh::before{content:'◆';font-size:5.5px;color:var(--acc,#C89B3C);opacity:.7}
+
+/* Chips */
+.crow{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.chip{
+ display:inline-flex;align-items:center;gap:3px;padding:3px 9px;
+ background:#070A12;border:1px solid var(--bd,rgba(200,155,60,.22));
+ border-radius:12px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.8px;color:#A89870
+}
+.clbl{color:#605840;font-size:7px;margin-right:2px}
+
+/* Rune chips */
+.rchip{
+ display:inline-flex;align-items:center;gap:5px;
+ padding:4px 10px;background:var(--abg,rgba(200,155,60,.10));
+ border:1px solid var(--abd,rgba(200,155,60,.38));
+ border-radius:6px;font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.8px;
+ color:var(--acc,#C89B3C)
+}
+.rchip .rsym{font-size:15px}
+
+/* Stat bars */
+.srow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.snm{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.8px;color:#A89870;min-width:82px;flex-shrink:0}
+.sbar{flex:1;height:5px;background:#0A0E1A;border-radius:3px;overflow:hidden}
+.sfill{
+ height:100%;width:0;border-radius:3px;
+ background:linear-gradient(90deg,var(--acc,#C89B3C) 0%,#f0e8d0 100%);
+ transition:width .9s cubic-bezier(.22,.68,0,1)
+}
+.sv{font-family:'Cinzel',serif;font-size:10px;color:var(--acc,#C89B3C);min-width:16px;text-align:right}
+
+/* Abilities */
+.ablist{display:flex;flex-wrap:wrap;gap:5px}
+.abitem{
+ font-size:12px;padding:3px 10px;
+ background:#070A12;border:1px solid var(--bd,rgba(200,155,60,.22));
+ border-radius:12px;color:#A89870
+}
+
+/* Collapsible */
+.coll-hdr{
+ cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+ font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:#605840;
+ text-transform:uppercase;padding:8px 0 5px;
+ border-bottom:1px solid var(--bd,rgba(200,155,60,.22));margin-top:10px;
+ user-select:none
+}
+.coll-hdr::before{content:'◆';font-size:5.5px;color:var(--acc,#C89B3C);opacity:.7;margin-right:6px}
+.carr{color:var(--acc,#C89B3C);opacity:.5;font-size:10px;transition:transform .3s;font-family:monospace}
+.coll.open .carr{transform:rotate(180deg)}
+.coll-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.coll.open .coll-body{max-height:600px}
+.lore-blk{
+ padding:9px 11px;margin-top:7px;
+ background:#070A12;border:1px solid var(--bd,rgba(200,155,60,.22));
+ border-radius:5px;font-size:13px;color:#A89870;line-height:1.65
+}
+
+/* Destiny row */
+.drow{
+ display:flex;align-items:center;gap:8px;padding:7px 0;
+ font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:1.5px;color:#A89870
+}
+.dval{color:var(--acc,#C89B3C)}
+
+/* ── FOOTER ── */
+.cfoot{
+ padding:8px 14px;border-top:1px solid var(--bd,rgba(200,155,60,.22));
+ background:rgba(0,0,0,.3);display:flex;align-items:center;justify-content:space-between
+}
+.fl{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:1.5px;color:#605840;text-transform:uppercase;font-style:italic}
+.fr{font-family:'Cinzel',serif;font-size:8px;color:var(--acc,#C89B3C);opacity:.4;letter-spacing:4px}
+</style>
+</head>
+<body>
+<textarea id="raw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+
+<div class="crd" id="crd">
+ <div class="ctop" id="ctop">
+  <div class="ctop-bg" id="ctop_bg"></div>
+  <div class="sigil" id="sigil"></div>
+  <div class="c-tag" id="c_tag">CHAMPION OF RUNETERRA</div>
+  <div class="c-name" id="c_name">—</div>
+  <div class="c-title" id="c_title"></div>
+  <div class="c-alias" id="c_alias"></div>
+  <div class="rbadge" id="rbadge">RUNETERRA</div>
+ </div>
+ <div class="cbody">
+  <div id="q_sec"></div>
+  <div id="chip_sec"></div>
+  <div id="rune_sec"></div>
+  <div id="stat_sec"></div>
+  <div id="ab_sec"></div>
+  <div id="lore_sec"></div>
+  <div id="dest_sec"></div>
+ </div>
+ <div class="cfoot">
+  <span class="fl" id="c_motto">FORGE YOUR LEGEND</span>
+  <span class="fr" id="c_badge">⟐ LOL ⟐</span>
+ </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function rgba(hex,a){
+ hex=String(hex||'#C89B3C').replace('#','');
+ if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+ var n=parseInt(hex,16);if(isNaN(n))n=0xC89B3C;
+ return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
+}
+
+/* ── REGION THEMES ── */
+var RT={
+ demacia:    {col:'#4A70B0',name:'DEMACIA',    spin:false,motto:['Might and Honor','ฤทธิ์และเกียรติ']},
+ noxus:      {col:'#9B2020',name:'NOXUS',      spin:true, motto:['Only the Strong Survive','เพียงผู้แข็งแกร่งเท่านั้น']},
+ freljord:   {col:'#5FA8C8',name:'FRELJORD',   spin:true, motto:['Strength Endures','ความแข็งแกร่งคงอยู่']},
+ ionia:      {col:'#9870C0',name:'IONIA',      spin:true, motto:['Balance in All Things','สมดุลในทุกสิ่ง']},
+ piltover:   {col:'#D4A830',name:'PILTOVER',   spin:true, motto:['Progress Above All','ความก้าวหน้าเหนือสิ่งอื่น']},
+ zaun:       {col:'#4A8A60',name:'ZAUN',       spin:false,motto:['Innovation Survives','นวัตกรรมเอาชีวิตรอด']},
+ shurima:    {col:'#C8A84B',name:'SHURIMA',    spin:true, motto:['Arise','ลุกขึ้น']},
+ ixtal:      {col:'#3A8A50',name:'IXTAL',      spin:false,motto:['Nature Preserved','ธรรมชาติได้รับการพิทักษ์']},
+ targon:     {col:'#7A8EC8',name:'MOUNT TARGON',spin:false,motto:['Beyond the Summit','เหนือยอดเขา']},
+ camavor:    {col:'#A83848',name:'CAMAVOR',    spin:false,motto:['Eternal Sovereignty','อธิปไตยนิรันดร์']},
+ shadow_isles:{col:'#2A8060',name:'SHADOW ISLES',spin:false,motto:['Lost to the Mist','สูญสลายในหมอก']},
+ bilgewater: {col:'#C87840',name:'BILGEWATER', spin:false,motto:['Fortune Favors the Bold','โชคชะตาช่วยคนกล้า']},
+ bandle:     {col:'#D4B870',name:'BANDLE CITY',spin:false,motto:['Magic in Everything','เวทมนตร์อยู่ในทุกสิ่ง']},
+ void:       {col:'#8A4AC8',name:'THE VOID',   spin:true, motto:['Consume. Expand. Return.','กลืน. ขยาย. กลับคืน.']},
+ wanderer:   {col:'#C89B3C',name:'RUNETERRA',  spin:false,motto:['Every Road is Home','ทุกถนนคือบ้าน']}
+};
+
+/* ── REGION SIGILS (SVG) ── */
+function sigil(rgn,col){
+ var s=col,f=col;
+ var o='<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">';
+ var c=function(x,y,r,fill,opacity,stroke,sw){
+  return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'"'
+   +(fill?' fill="'+fill+'" fill-opacity="'+(opacity||1)+'"':'')
+   +(stroke?' stroke="'+stroke+'" stroke-width="'+(sw||1)+'"':'')+'/>';
+ };
+ var poly=function(pts,fill,fo,stroke,sw){
+  return '<polygon points="'+pts+'"'
+   +(fill?' fill="'+fill+'" fill-opacity="'+(fo||1)+'"':'')
+   +(stroke?' stroke="'+stroke+'" stroke-width="'+(sw||1)+'"':'')+'/>';
+ };
+ var line=function(x1,y1,x2,y2,sw,op){
+  return '<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2
+   +'" stroke="'+s+'" stroke-width="'+(sw||1)+'" opacity="'+(op||1)+'"/>';
+ };
+ var path=function(d,stroke,sw,fill,fo,op){
+  return '<path d="'+d+'" stroke="'+(stroke||s)+'" stroke-width="'+(sw||1)+'"'
+   +(fill?' fill="'+(fill||'none')+'"':'fill="none"')
+   +(fo?' fill-opacity="'+fo+'"':'')
+   +' opacity="'+(op||1)+'"/>';
+ };
+
+ switch(rgn){
+
+  case 'demacia': // Shield with cross and gem
+   o+=path('M30 6L52 17v21c0 12-22 17-22 17S8 50 8 38V17z',s,1.2,'none',0,.38);
+   o+=line(30,14,30,47,1,.9);o+=line(14,30,46,30,1,.9);
+   o+=line(18,22,42,22,.8,.45);
+   o+=poly('30,22 37,30 30,38 23,30',f,1);
+   o+=c(30,30,4,f,.15,s,1);
+   break;
+
+  case 'noxus': // Three-blade claw
+   o+=c(30,30,22,'none',0,s,1,.25);
+   o+=c(30,30,6,f,1);
+   ['0','120','240'].forEach(function(r){
+    o+='<polygon points="30,8 34,22 30,28 26,22" fill="'+f+'" opacity=".85" transform="rotate('+r+' 30 30)"/>';
+   });
+   o+=path('M30 22 L30 8',s,1,'none',0,.4);
+   break;
+
+  case 'freljord': // Snowflake
+   for(var i=0;i<6;i++){
+    var a=i*60*Math.PI/180;
+    var x2=(30+24*Math.cos(a)).toFixed(1),y2=(30+24*Math.sin(a)).toFixed(1);
+    o+=line(30,30,x2,y2,1.4,.9);
+    var bx=(30+16*Math.cos(a)),by=(30+16*Math.sin(a));
+    var t1x=(bx+6*Math.cos(a+Math.PI/3)).toFixed(1),t1y=(by+6*Math.sin(a+Math.PI/3)).toFixed(1);
+    var t2x=(bx+6*Math.cos(a-Math.PI/3)).toFixed(1),t2y=(by+6*Math.sin(a-Math.PI/3)).toFixed(1);
+    o+=line(bx.toFixed(1),by.toFixed(1),t1x,t1y,1,.55);
+    o+=line(bx.toFixed(1),by.toFixed(1),t2x,t2y,1,.55);
+   }
+   o+=poly('30,24 34,30 30,36 26,30',f,.7);
+   break;
+
+  case 'ionia': // Yin-yang
+   o+=c(30,30,22,'none',0,s,1,.4);
+   o+=path('M30 8 A11 11 0 0 1 30 30 A11 11 0 0 0 30 52',s,1.5,'none',0,.9);
+   o+=c(30,19,6,f,.85);o+=c(30,41,6,'none',0,s,1.3);o+=c(30,41,2.5,f,.5);
+   for(var j=0;j<6;j++){var aj=j*60*Math.PI/180;o+=c((30+22*Math.cos(aj)).toFixed(1),(30+22*Math.sin(aj)).toFixed(1),1.2,f,.35);}
+   break;
+
+  case 'piltover': // Hextech gear
+   var hpts=[],ihpts=[];
+   for(var k=0;k<6;k++){var ak=(k*60-30)*Math.PI/180;hpts.push((30+21*Math.cos(ak)).toFixed(1)+','+(30+21*Math.sin(ak)).toFixed(1));ihpts.push((30+13*Math.cos(ak)).toFixed(1)+','+(30+13*Math.sin(ak)).toFixed(1));}
+   o+=poly(hpts.join(' '),'none',0,s,1.5,.5);
+   o+=poly(ihpts.join(' '),f,.12,s,.9,.7);
+   for(var k=0;k<6;k++){var ak=(k*60-30)*Math.PI/180;o+=c((30+21*Math.cos(ak)).toFixed(1),(30+21*Math.sin(ak)).toFixed(1),2.2,f,.7);}
+   o+=poly('30,22 37,30 30,38 23,30',f,1);
+   break;
+
+  case 'zaun': // Chemtech flask
+   o+=path('M22 10 h16 v10 l10 14 v12 Q48 54 30 54 Q12 54 12 46 V34 l10-14 V10z',s,1.2,'none',0,.4);
+   o+=c(30,41,8,f,.15,s,1,.7);o+=c(30,41,3,f,.9);
+   o+=line(22,34,38,34,1,.5);o+=line(30,26,30,50,1,.5);
+   o+=c(23,45,1.5,f,.5);o+=c(36,44,1.2,f,.4);o+=c(26,38,1,f,.35);
+   o+=c(35,48,1.8,f,.3);
+   break;
+
+  case 'shurima': // Sun disc
+   o+=c(30,30,28,'none',0,s,1,.18);o+=c(30,30,12,f,.12,s,1,.6);o+=c(30,30,7,f,.95);
+   for(var m=0;m<8;m++){var am=m*45*Math.PI/180;o+=line((30+14*Math.cos(am)).toFixed(1),(30+14*Math.sin(am)).toFixed(1),(30+25*Math.cos(am)).toFixed(1),(30+25*Math.sin(am)).toFixed(1),1.5,.75);}
+   break;
+
+  case 'ixtal': // Four-element petals
+   o+=c(30,30,22,'none',0,s,1,.22);
+   [0,90,180,270].forEach(function(rot){
+    var ar=rot*Math.PI/180;
+    var cx=(30+13*Math.cos(ar-Math.PI/2)).toFixed(1),cy=(30+13*Math.sin(ar-Math.PI/2)).toFixed(1);
+    o+='<ellipse cx="'+cx+'" cy="'+cy+'" rx="5" ry="10" transform="rotate('+rot+' '+cx+' '+cy+')" fill="'+f+'" fill-opacity=".25" stroke="'+s+'" stroke-width="1" opacity=".7"/>';
+   });
+   o+=c(30,30,6,f,.9);
+   break;
+
+  case 'targon': // Mountain with stars
+   o+=path('M30 6 L54 52 H6 Z',s,1.2,'none',0,.35);
+   o+=path('M30 16 L44 44 H16 Z',f,.12,s,.9,.5);
+   // Summit star
+   o+='<polygon points="30,7 31.3,11 35.5,11 32.1,13.5 33.4,17.5 30,15 26.6,17.5 27.9,13.5 24.5,11 28.7,11" fill="'+f+'" opacity=".95"/>';
+   [[16,16],[44,16],[8,28],[52,28],[20,8],[40,8]].forEach(function(p){o+=c(p[0],p[1],1.2,f,.4);});
+   break;
+
+  case 'camavor': // Bleeding crown
+   o+=path('M12 40 L18 18 L26 30 L30 8 L34 30 L42 18 L48 40 Z',s,1.2,f,.12,.75);
+   o+='<rect x="12" y="40" width="36" height="8" rx="1" stroke="'+s+'" stroke-width="1.2" fill="'+f+'" fill-opacity=".18" opacity=".8"/>';
+   o+=poly('30,26 34,32 30,37 26,32',f,1);
+   o+=path('M23 48 Q23 56 27 56 Q31 56 31 48',s,.5,f,.6,.55);
+   o+=path('M34 48 Q34 53 37 53 Q40 53 40 48',s,.5,f,.4,.4);
+   break;
+
+  case 'shadow_isles': // Crown with wisps
+   o+=line(16,40,16,18,1.2,.7);o+=line(30,40,30,10,1.2,.7);o+=line(44,40,44,18,1.2,.7);
+   o+=c(16,16,3.5,f,.85);o+=c(30,8,4.5,f,.85);o+=c(44,16,3.5,f,.85);
+   o+=path('M10 40 L50 40',s,1.2,'none',0,.45);
+   o+=path('M12 50 Q18 44 24 50 Q30 56 36 50 Q42 44 50 50',s,1,'none',0,.4);
+   o+=path('M8 46 Q14 40 20 46',s,.8,'none',0,.3);
+   break;
+
+  case 'bilgewater': // Anchor
+   o+=c(30,14,7,'none',0,s,1.4,.65);
+   o+=line(30,21,30,52,1.5,.9);o+=line(16,30,44,30,1.3,.8);
+   o+=path('M16 52 Q8 44 16 36',s,1.3,'none',0,.7);
+   o+=path('M44 52 Q52 44 44 36',s,1.3,'none',0,.7);
+   o+=path('M14 26 Q8 14 20 10 Q30 6 28 18',s,1,'none',0,.4);
+   o+=c(30,14,3,f,.8);
+   break;
+
+  case 'bandle': // Yordle door with stars
+   o+=path('M18 52 L18 28 Q18 10 30 10 Q42 10 42 28 L42 52 Z',s,1.2,'none',0,.45);
+   o+=path('M22 52 L22 30 Q22 16 30 16 Q38 16 38 30 L38 52 Z',f,.08,s,.9,.6);
+   o+=c(36,30,2.5,f,.8);
+   o+=c(20,8,2.2,f,.55);o+=c(30,5,2.8,f,.65);o+=c(40,8,2.2,f,.55);
+   o+=c(15,14,1.5,f,.4);o+=c(45,14,1.5,f,.4);
+   o+=c(30,32,5,f,.1,s,.8,.55);
+   break;
+
+  case 'void': // Void eye
+   o+=c(30,30,22,'none',0,s,1,.22);
+   for(var v=0;v<4;v++){
+    var av=v*90*Math.PI/180;
+    var vx=(30+18*Math.cos(av)).toFixed(1),vy=(30+18*Math.sin(av)).toFixed(1);
+    var vx2=(30+18*Math.cos(av+Math.PI/2)).toFixed(1),vy2=(30+18*Math.sin(av+Math.PI/2)).toFixed(1);
+    o+=path('M'+vx+' '+vy+' Q30 30 '+vx2+' '+vy2,s,1,'none',0,.55);
+   }
+   o+='<ellipse cx="30" cy="30" rx="8" ry="18" stroke="'+s+'" stroke-width="1.3" opacity=".8"/>';
+   o+='<ellipse cx="30" cy="30" rx="3" ry="12" fill="'+f+'" opacity=".55"/>';
+   o+=c(30,30,5,f,.95);
+   break;
+
+  default: // Compass rose (wanderer)
+   for(var w=0;w<8;w++){
+    var aw=w*45*Math.PI/180,wl=w%2===0?23:16;
+    o+=line(30,30,(30+wl*Math.cos(aw)).toFixed(1),(30+wl*Math.sin(aw)).toFixed(1),w%2===0?1.5:1,w%2===0?.85:.45);
+   }
+   o+=c(30,30,5,f,.18,s,1.2,.7);o+=c(30,30,2,f,.9);
+ }
+ return o+'</svg>';
+}
+
+/* ── RUNE MAP ── */
+var RM={
+ precision:{sym:'⚔',en:'Precision',th:'ความแม่นยำ'},
+ domination:{sym:'🩸',en:'Domination',th:'การครอบงำ'},
+ sorcery:{sym:'✦',en:'Sorcery',th:'เวทมนตร์'},
+ resolve:{sym:'🛡',en:'Resolve',th:'ความอดทน'},
+ inspiration:{sym:'⚙',en:'Inspiration',th:'แรงบันดาลใจ'},
+ corruption:{sym:'☠',en:'Corruption',th:'การทุจริต'},
+ celestial:{sym:'★',en:'Celestial',th:'เทวา'},
+ spirit:{sym:'🌿',en:'Spirit',th:'วิญญาณ'},
+ runic:{sym:'◈',en:'Runic',th:'รูนิก'}
+};
+
+/* ── STAT LABELS ── */
+var SL={
+ str:['Strength','ความแข็งแกร่ง'],
+ agi:['Agility','ความว่องไว'],
+ int:['Intellect','สติปัญญา'],
+ wil:['Will','เจตจำนง'],
+ arc:['Arcane','พลังเวท'],
+ res:['Resilience','ความอดทน']
+};
+
+/* ── PARSE DATA ── */
+var raw=(g('raw').value||'').replace(/<\/?LOL_CONFIRM>/gi,'').trim();
+var d={};try{d=JSON.parse(raw);}catch(e){}
+var TH=(d.lang==='th');
+var ln=TH?1:0;
+var region=d.region||'wanderer';
+var theme=RT[region]||RT.wanderer;
+
+/* ── APPLY THEME ── */
+var crd=g('crd');
+crd.style.setProperty('--acc',theme.col);
+crd.style.setProperty('--abg',rgba(theme.col,.10));
+crd.style.setProperty('--abd',rgba(theme.col,.38));
+crd.style.setProperty('--bd',rgba(theme.col,.22));
+g('ctop_bg').style.background='linear-gradient(170deg,'+rgba(theme.col,.15)+' 0%,transparent 65%)';
+// Update ::before/::after colors via border-color cascade (already uses var(--acc))
+
+/* ── SIGIL ── */
+var sigEl=g('sigil');
+sigEl.innerHTML=sigil(region,theme.col);
+if(theme.spin)sigEl.classList.add('spin');
+
+/* ── HEADER ── */
+g('c_tag').textContent=TH?'แชมเปี้ยนแห่งรูนเทอร์รา':'CHAMPION OF RUNETERRA';
+g('c_name').textContent=d.name||'—';
+if(d.title)g('c_title').textContent='"'+d.title+'"';
+if(d.alias){g('c_alias').textContent=d.alias;g('c_alias').style.display='block';}
+else g('c_alias').style.display='none';
+g('rbadge').textContent=theme.name;
+g('c_motto').textContent=theme.motto[ln];
+
+/* ── QUOTE ── */
+if(d.quote&&d.quote.trim()){
+ g('q_sec').innerHTML='<div class="qwrap"><div class="qmark">&ldquo;</div><div class="qtext">'+esc(d.quote)+'</div></div>';
+}
+
+/* ── CHIPS ── */
+var chips=[];
+var chipMap=[
+ ['species','Species/Race','สายพันธุ์'],['role','Role','บทบาท'],
+ ['magic_type','Magic','เวทมนตร์'],['weapon','Weapon','อาวุธ'],
+ ['faction','Faction','สังกัด'],['era','Era','ยุค'],['fight_style','Style','สไตล์'],
+ ['age','Age','อายุ'],['gender','Gender','เพศ'],['magic_rank','Magic Rank','ระดับพลัง']
+];
+var chipHtml='<div class="sep"></div><div class="crow">';
+chipMap.forEach(function(cm){
+ var val=d[cm[0]];
+ if(val&&String(val).trim()){
+  chipHtml+='<div class="chip"><span class="clbl">'+(TH?cm[2]:cm[1])+'</span>'+esc(val)+'</div>';
+ }
+});
+chipHtml+='</div>';
+g('chip_sec').innerHTML=chipHtml;
+
+/* ── RUNE AFFINITIES ── */
+if(d.rune_affinities&&d.rune_affinities.length){
+ var rh='<div class="sh">'+esc(TH?'ความสัมพันธ์รูน':'Rune Affinities')+'</div><div class="crow">';
+ d.rune_affinities.forEach(function(id){
+  var r=RM[id];if(!r)return;
+  rh+='<div class="rchip"><span class="rsym">'+r.sym+'</span>'+esc(TH?r.th:r.en)+'</div>';
+ });
+ rh+='</div>';
+ g('rune_sec').innerHTML=rh;
+}
+
+/* ── STATS ── */
+if(d.stats){
+ var sh='<div class="sh">'+esc(TH?'พารามิเตอร์':'Champion Parameters')+'</div>';
+ ['str','agi','int','wil','arc','res'].forEach(function(key){
+  var val=d.stats[key]||0;
+  var nm=SL[key]?SL[key][ln]:key;
+  sh+='<div class="srow">'
+   +'<div class="snm">'+esc(nm)+'</div>'
+   +'<div class="sbar"><div class="sfill" id="sf_'+key+'" data-w="'+(val*10)+'%"></div></div>'
+   +'<div class="sv">'+val+'</div>'
+   +'</div>';
+ });
+ g('stat_sec').innerHTML=sh;
+ setTimeout(function(){
+  ['str','agi','int','wil','arc','res'].forEach(function(key,i){
+   setTimeout(function(){
+    var el=g('sf_'+key);
+    if(el)el.style.width=el.getAttribute('data-w');
+   },i*80);
+  });
+ },350);
+}
+
+/* ── ABILITIES ── */
+if(d.abilities&&d.abilities.length){
+ var ah='<div class="sh">'+esc(TH?'ความสามารถพิเศษ':'Signature Abilities')+'</div><div class="ablist">';
+ d.abilities.forEach(function(a){ah+='<div class="abitem">'+esc(a)+'</div>';});
+ ah+='</div>';
+ g('ab_sec').innerHTML=ah;
+}
+
+/* ── LORE (collapsible) ── */
+var lore='';
+function coll(id,labelEn,labelTh,content){
+ if(!content||!content.trim())return '';
+ return '<div class="coll" id="'+id+'">'
+  +'<div class="coll-hdr" onclick="var e=document.getElementById(\''+id+'\');e.classList.toggle(\'open\')">'
+  +esc(TH?labelTh:labelEn)
+  +'<span class="carr">▾</span></div>'
+  +'<div class="coll-body"><div class="lore-blk">'+esc(content)+'</div></div>'
+  +'</div>';
+}
+lore+=coll('cl_bg','Background','ภูมิหลัง',d.background);
+lore+=coll('cl_app','Appearance','รูปลักษณ์',d.appearance);
+lore+=coll('cl_per','Personality','บุคลิกภาพ',d.personality);
+lore+=coll('cl_ex','Additional Notes','หมายเหตุ',d.extra);
+if(lore)g('lore_sec').innerHTML=lore;
+
+/* ── DESTINY ── */
+if(d.destiny||d.goal||d.magic_origin){
+ var dh='<div class="sep"></div>';
+ if(d.destiny)dh+='<div class="drow"><span>'+(TH?'โชคชะตา':'Destiny')+'</span><span class="dval">'+esc(d.destiny)+'</span></div>';
+ if(d.goal)dh+='<div class="drow"><span>'+(TH?'เป้าหมาย':'Goal')+'</span><span class="dval">'+esc(d.goal)+'</span></div>';
+ if(d.magic_origin)dh+='<div class="drow"><span>'+(TH?'ที่มาพลัง':'Power Origin')+'</span><span class="dval">'+esc(d.magic_origin)+'</span></div>';
+ g('dest_sec').innerHTML=dh;
+}
+
+/* ── FOOTER BADGE ── */
+g('c_badge').textContent='⟐ '+theme.name+' ⟐';
+
+})();
+</script>
+</body>
+</html>
