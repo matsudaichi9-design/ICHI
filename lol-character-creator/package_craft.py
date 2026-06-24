@@ -6,9 +6,9 @@ with open('lol_craft.html', 'r', encoding='utf-8') as f:
 html = re.sub(r'(html\s*,\s*body\s*\{[^}]*background\s*:\s*)[^;]+;', r'\1transparent;', html)
 
 data = {
-    "id": "lol-runeterra-craft",
-    "scriptName": "LoL Runeterra Crafting Result",
-    "findRegex": "/<LOL_CRAFT_RESULT>([\\s\\S]*?)<\\/LOL_CRAFT_RESULT>/gm",
+    "id": "lol-runeterra-craft-request",
+    "scriptName": "LoL Runeterra Crafting Request",
+    "findRegex": "/<LOL_CRAFT>([\\s\\S]*?)<\\/LOL_CRAFT>/gm",
     "replaceString": "```\n" + html + "\n```",
     "trimStrings": [],
     "placement": [1, 2],
