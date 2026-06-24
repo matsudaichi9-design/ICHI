@@ -383,19 +383,19 @@ html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;fon
         var lv=parseInt(card.querySelector('.lolrel-inp-lvl').value)||0;
         var st=card.querySelector('.lolrel-inp-status').value||'';
         var nt=card.querySelector('.lolrel-inp-note').value||'';
-        var relName='';
-        for(var i=0;i<relations.length;i++){if(String(relations[i].id)===String(rid)){relName=relations[i].name||'';break;}}
-        sendToChat('<'+'LOL_RELATION_EDIT>'+JSON.stringify({id:parseInt(rid),name:relName,score:sc,level:lv,status:st,note:nt})+'<'+'/LOL_RELATION_EDIT>');
+        var relName='';var relRegion='';
+        for(var i=0;i<relations.length;i++){if(String(relations[i].id)===String(rid)){relName=relations[i].name||'';relRegion=relations[i].region||'';break;}}
+        sendToChat('<'+'LOL_RELATION_EDIT>'+JSON.stringify({id:parseInt(rid),name:relName,region:relRegion,score:sc,level:lv,status:st,note:nt,theme_color:acc,lang:TH?'th':'en'})+'<'+'/LOL_RELATION_EDIT>');
         var ed3=card.querySelector('.lolrel-edit');
         if(ed3)ed3.classList.remove('on');
         return;
       }
       if(e.target.classList.contains('lolrel-btn-del')){
-        var relName2='';
-        for(var j=0;j<relations.length;j++){if(String(relations[j].id)===String(rid)){relName2=relations[j].name||'';break;}}
+        var relName2='';var relRegion2='';
+        for(var j=0;j<relations.length;j++){if(String(relations[j].id)===String(rid)){relName2=relations[j].name||'';relRegion2=relations[j].region||'';break;}}
         var msg=TH?('ลบความสัมพันธ์กับ '+relName2+'?'):('Remove relationship with '+relName2+'?');
         if(confirm(msg)){
-          sendToChat('<'+'LOL_RELATION_DELETE>'+JSON.stringify({id:parseInt(rid),name:relName2})+'<'+'/LOL_RELATION_DELETE>');
+          sendToChat('<'+'LOL_RELATION_DELETE>'+JSON.stringify({id:parseInt(rid),name:relName2,region:relRegion2,theme_color:acc,lang:TH?'th':'en'})+'<'+'/LOL_RELATION_DELETE>');
         }
         return;
       }

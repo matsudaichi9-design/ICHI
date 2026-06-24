@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Relation Edit</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#loledwin{
+  --acc:#C89B3C;--abg:rgba(200,155,60,.12);--abd:rgba(200,155,60,.28);
+  --bg:#07090d;--bg2:#0c0f16;--bg3:#12151e;--bg4:#1a1e28;--bg5:#222638;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#505048;--bd:rgba(200,155,60,.25);
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+  max-width:420px;margin:0 auto;overflow:hidden;
+  box-shadow:0 4px 28px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04);
+  color:var(--tx);
+}
+#loledwin #loledhead{
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:linear-gradient(160deg,#0f1322 0%,#0a0e16 100%);
+  border-bottom:1px solid var(--bd);position:relative;
+}
+#loledwin #loledhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.35;
+}
+#loledwin #loledico{
+  width:30px;height:30px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--abg);border:1px solid var(--abd);
+}
+#loledwin #loledhdtxt{flex:1;min-width:0}
+#loledwin #loledtitle{font-family:var(--fh);font-size:7.5px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);opacity:.75;margin-bottom:2px}
+#loledwin #loledcname{font-family:var(--fh);font-size:14px;font-weight:600;color:#f0e8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#loledwin #loledreg{display:flex;align-items:center;gap:5px;margin-top:2px}
+#loledwin #loledregsigil{flex-shrink:0;opacity:.7}
+#loledwin #loledregname{font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3)}
+#loledwin #loledbody{padding:11px 13px;display:flex;flex-direction:column;gap:8px}
+#loledwin .loled-row{display:flex;align-items:center;gap:9px}
+#loledwin .loled-lbl{
+  font-family:var(--fh);font-size:7.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--tx3);min-width:42px;flex-shrink:0;
+}
+#loledwin .loled-bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+#loledwin .loled-bar-fill{height:100%;border-radius:3px}
+#loledwin .loled-val{font-family:var(--fh);font-size:9px;color:var(--tx3);min-width:42px;text-align:right;flex-shrink:0}
+#loledwin .loled-pips{display:flex;gap:3px;flex:1}
+#loledwin .loled-pip{flex:1;height:4px;border-radius:2px;background:var(--bg5)}
+#loledwin .loled-pip.on{background:var(--acc)}
+#loledwin .loled-lvlval{font-family:var(--fh);font-size:9px;color:var(--acc);min-width:80px;text-align:right;flex-shrink:0}
+#loledwin .loled-divider{height:1px;background:var(--bg4);margin:2px 0}
+#loledwin .loled-status{
+  font-family:var(--fh);font-size:9px;letter-spacing:.5px;
+  display:inline-block;padding:3px 10px;border-radius:99px;
+  border:1px solid rgba(255,255,255,.12);color:var(--tx2);
+  align-self:flex-start;margin-left:51px;
+}
+#loledwin .loled-note{
+  font-size:10.5px;color:var(--tx3);line-height:1.55;font-style:italic;
+  padding-left:4px;border-left:2px solid var(--bd);margin-left:51px;
+}
+#loledwin #loledfoot{
+  border-top:1px solid rgba(255,255,255,.05);padding:5px 13px;
+  font-family:var(--fh);font-size:7.5px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="loledraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="loledwin">
+  <div id="loledhead">
+    <div id="loledico"></div>
+    <div id="loledhdtxt">
+      <div id="loledtitle">BOND UPDATED</div>
+      <div id="loledcname">—</div>
+      <div id="loledreg">
+        <div id="loledregsigil"></div>
+        <div id="loledregname">—</div>
+      </div>
+    </div>
+  </div>
+  <div id="loledbody"></div>
+  <div id="loledfoot">BOND REGISTRY · RUNETERRA</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){if(v==null)return '';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var rawEl=g('loledraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?LOL_RELATION_EDIT>/gi,'').trim();
+  var d={}; try{d=JSON.parse(raw);}catch(e){}
+  var TH=(d.lang==='th');
+  var sc=Math.max(0,Math.min(100,d.score||0));
+  var lv=Math.max(0,Math.min(10,d.level||0));
+
+  var RC={demacia:'#4A70B0',noxus:'#9B2020',freljord:'#5FA8C8',ionia:'#9870C0',piltover:'#D4A830',zaun:'#4A8A60',shurima:'#C8A84B',ixtal:'#3A8A50',targon:'#7A8EC8',camavor:'#A83848',shadow_isles:'#2A8060',bilgewater:'#C87840',bandle:'#D4B870',void:'#8A4AC8'};
+  var acc=d.theme_color||'#C89B3C';
+  var regionKey=(d.region||'').toLowerCase().replace(/\s+/g,'_');
+  var rc=RC[regionKey]||'#808090';
+
+  function hexRgb(h){var s=String(h||'').replace('#','');if(s.length===3)s=s[0]+s[0]+s[1]+s[1]+s[2]+s[2];var n=parseInt(s,16)||0xC89B3C;return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+
+  var win=g('loledwin'); if(!win)return;
+  var rgb=hexRgb(acc);
+  win.style.setProperty('--acc',acc);
+  win.style.setProperty('--abg','rgba('+rgb+',.12)');
+  win.style.setProperty('--abd','rgba('+rgb+',.28)');
+  win.style.setProperty('--bd','rgba('+rgb+',.25)');
+
+  function sigilSm(r,c){
+    var p={
+      demacia:'<polygon points="8,1 13,6 13,14 3,14 3,6" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      noxus:'<polygon points="8,2 14,14 2,14" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      freljord:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      ionia:'<circle cx="8" cy="5" r="3" fill="'+c+'"/><circle cx="8" cy="11" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      piltover:'<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      zaun:'<rect x="5" y="2" width="6" height="9" rx="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="4" y1="13" x2="12" y2="13" stroke="'+c+'" stroke-width="1.2"/>',
+      shurima:'<circle cx="8" cy="8" r="6" fill="none" stroke="'+c+'" stroke-width="1"/><polygon points="8,2 9.5,6.5 14,6.5 10.5,9 11.5,13.5 8,11 4.5,13.5 5.5,9 2,6.5 6.5,6.5" fill="'+c+'" opacity=".7"/>',
+      ixtal:'<circle cx="8" cy="8" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><ellipse cx="8" cy="4" rx="2" ry="3" fill="'+c+'" opacity=".5"/>',
+      targon:'<polygon points="8,1 13,14 3,14" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="5" r="1.5" fill="'+c+'"/>',
+      camavor:'<circle cx="8" cy="6" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="10" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/>',
+      shadow_isles:'<circle cx="8" cy="8" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="4" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/><circle cx="12" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      bilgewater:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="3" y1="5" x2="13" y2="5" stroke="'+c+'" stroke-width="1.2"/>',
+      bandle:'<rect x="4" y="7" width="8" height="7" rx="1" fill="none" stroke="'+c+'" stroke-width="1.2"/><polygon points="8,1 14,7 2,7" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      void:'<ellipse cx="8" cy="8" rx="6" ry="6" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>'
+    };
+    var def='<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="3" x2="8" y2="13" stroke="'+c+'" stroke-width="1"/><line x1="3" y1="8" x2="13" y2="8" stroke="'+c+'" stroke-width="1"/>';
+    return '<svg width="16" height="16" viewBox="0 0 16 16">'+(p[r]||def)+'</svg>';
+  }
+
+  function scoreColor(s){
+    if(s>=90)return '#ffd700';
+    if(s>=70)return '#50d870';
+    if(s>=50)return '#50a860';
+    if(s>=30)return '#c89030';
+    return '#707080';
+  }
+
+  function lvlLabel(l){
+    var en=['Unknown','Stranger','Acquaintance','Acquaintance','Friend','Friend','Close Friend','Close Friend','Trusted','Bonded','Soulbound'];
+    var th=['ไม่ทราบ','คนแปลกหน้า','คนรู้จัก','คนรู้จัก','เพื่อน','เพื่อน','เพื่อนสนิท','เพื่อนสนิท','ไว้วางใจ','ผูกพัน','สายสัมพันธ์'];
+    return TH?th[Math.max(0,Math.min(10,l))]:en[Math.max(0,Math.min(10,l))];
+  }
+
+  function statusColor(status){
+    var s=(status||'').toLowerCase();
+    if(/enemy|foe|hostile|ศัตรู|คู่แค้น/.test(s))return '#d04848';
+    if(/rival|adversary|คู่แข่ง|คู่ปรับ/.test(s))return '#c87030';
+    if(/ally|friend|companion|partner|สหาย|เพื่อน/.test(s))return '#50a860';
+    if(/lover|love|beloved|darling|คนรัก|ที่รัก/.test(s))return '#d060b0';
+    if(/mentor|master|teacher|อาจารย์|ครู/.test(s))return '#c89030';
+    return '#808090';
+  }
+
+  // Header
+  var ico=g('loledico');
+  if(ico){
+    ico.style.background='rgba('+rgb+',.12)';
+    ico.style.borderColor='rgba('+rgb+',.28)';
+    ico.innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5L11.5 4.5L5 11H3V9L9.5 2.5Z" stroke="'+acc+'" stroke-width="1.2" stroke-linejoin="round"/><line x1="8" y1="4" x2="10" y2="6" stroke="'+acc+'" stroke-width="1.2"/></svg>';
+  }
+  var cn=g('loledcname'); if(cn)cn.textContent=d.name||'—';
+  var rs=g('loledregsigil'); if(rs)rs.innerHTML=sigilSm(regionKey,rc);
+  var rn=g('loledregname'); if(rn){rn.textContent=d.region||'—';rn.style.color=rc+'88';}
+  var ft=g('loledfoot'); if(ft)ft.textContent=TH?'อัปเดตสายสัมพันธ์ · รูนเทอร์รา':'BOND REGISTRY · RUNETERRA';
+
+  // Body
+  var body=g('loledbody'); if(!body)return;
+  var sclr=scoreColor(sc);
+  var pips='';
+  for(var i=1;i<=10;i++){pips+='<div class="loled-pip'+(i<=lv?' on':'')+'"></div>';}
+  var stclr=statusColor(d.status||'');
+  var statusHtml=d.status?('<div class="loled-status" style="border-color:'+stclr+'44;color:'+stclr+'">'+esc(d.status)+'</div>'):'';
+  var noteHtml=d.note?('<div class="loled-note">'+esc(d.note)+'</div>'):'';
+  body.innerHTML=
+    '<div class="loled-row">'+
+      '<div class="loled-lbl">'+(TH?'คะแนน':'Score')+'</div>'+
+      '<div class="loled-bar-track"><div class="loled-bar-fill" style="width:'+sc+'%;background:'+sclr+';box-shadow:0 0 6px '+sclr+'88"></div></div>'+
+      '<div class="loled-val">'+sc+' / 100</div>'+
+    '</div>'+
+    '<div class="loled-row">'+
+      '<div class="loled-lbl">'+(TH?'ระดับ':'Level')+'</div>'+
+      '<div class="loled-pips">'+pips+'</div>'+
+      '<div class="loled-lvlval">Lv.'+lv+' — '+esc(lvlLabel(lv))+'</div>'+
+    '</div>'+
+    (statusHtml||noteHtml?'<div class="loled-divider"></div>':'')+
+    statusHtml+
+    noteHtml;
+})();
+</script>
+</body>
+</html>
