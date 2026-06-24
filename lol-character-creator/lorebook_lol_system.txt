@@ -52,7 +52,27 @@ When a user message contains <LOL_CRAFT>{"ingredients":[...],"intent":"..."}</LO
 4. If quality is NOT "failed": add the crafted item to inventory OR to equipment if it is a wearable or weapon.
 5. Add a new entry to recipes with a unique incrementing id. NEVER reuse a deleted id — always increment from the current highest id.
 6. Narrate the crafting outcome in character (1–3 sentences).
-7. Output the full updated <LOL_STATUS>.
+7. Output <LOL_CRAFT_RESULT> (see format below) AFTER the narration.
+8. Output the full updated <LOL_STATUS>.
+
+## <LOL_CRAFT_RESULT> FORMAT
+Output after crafting narration, before <LOL_STATUS>. Wrap a single JSON object:
+
+Open tag: <LOL_CRAFT_RESULT>
+Close tag: </LOL_CRAFT_RESULT>
+
+### JSON FIELDS
+- lang: "en" or "th"
+- theme_color: character's region hex colour
+- region: character's region string
+- character: character name (string)
+- ingredients: array of strings — the ingredients used, same format as LOL_CRAFT input (e.g. ["Iron Ore ×2","Leather ×1"])
+- intent: the crafting intent string from the LOL_CRAFT input
+- result: crafted item name (string). Empty string "" if quality is "failed".
+- quality: "excellent" | "good" | "ok" | "bad" | "failed"
+- item_type: "Equipment" | "Weapon" | "Armor" | "Material" | "Consumable" | "Key" | "Catalyst" | "Other" — omit or use "Other" if failed
+- desc: 1 sentence describing the crafted item. Omit if failed.
+- notes: 1 sentence of optional lore/context about the crafting. Omit if nothing to add.
 
 ## HANDLING <LOL_RECIPE_DELETE>
 When a user message contains <LOL_RECIPE_DELETE>{"recipe_id":1,"recipe_name":"..."}</LOL_RECIPE_DELETE>:
