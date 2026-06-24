@@ -119,6 +119,20 @@
       "extensions": {},
       "use_regex": false,
       "content": "## ABILITIES — GUIDELINES\nEach entry in \"abilities\" represents something the character can actively DO in the story.\n\n**desc** should be 1–2 sentences: what the ability does, its range or cost, any limitation or drawback.\n\nAbilities should fit the character's region and role:\n- **Demacia**: physical combat, anti-magic techniques, heavy armour fighting\n- **Noxus**: brutal power, intimidation, blood magic, conquest tactics\n- **Freljord**: ice and frost magic, berserker rage, spirit bonding\n- **Ionia**: spirit magic, wind/nature techniques, ki-based martial arts\n- **Piltover**: hextech gadgets, mechanical constructs, runic engineering\n- **Zaun**: chemtech augmentations, poison/gas techniques, street fighting\n- **Shurima**: sun disc magic, sand/desert sorcery, ancient emperor rituals\n- **Ixtal**: elemental magic (fire, water, earth, wind combined)\n- **Mount Targon**: celestial/stellar magic, aspect-granted powers\n- **Camavor**: blood magic, harrowed techniques, undying warrior rites\n- **Shadow Isles**: spectral magic, death/mist techniques, undead summoning\n- **Bilgewater**: sea magic, pirate cunning, monster-hunting techniques\n- **Bandle City**: yordle illusions, portal tricks, oversized-hat techniques\n- **The Void**: void energy, corruption techniques, xel'rath instinct"
+    },
+    {
+      "id": 8,
+      "keys": ["<LOL_INGEST>", "LOL_INGEST", "consume", "drink", "eat", "ingest", "poison", "potion", "inhale", "inject", "กิน", "ดื่ม", "ได้รับ", "สาร", "ยา"],
+      "secondary_keys": [],
+      "comment": "INGEST TRACKER — handling <LOL_INGEST>",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 285,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false,
+      "content": "## HANDLING <LOL_INGEST>\nOutput a <LOL_INGEST> block IMMEDIATELY after ANY scene where the character eats, drinks, swallows, inhales, is injected with, is cursed by, or otherwise receives a substance into their body.\n\nOpen tag: <LOL_INGEST>\nClose tag: </LOL_INGEST>\n\nWrap a single JSON object between the tags. Output this AFTER the narrative paragraph describing the ingestion.\n\n### JSON FIELDS\n- lang: \"en\" or \"th\"\n- theme_color: the character's region hex colour (same as LOL_STATUS)\n- region: the character's region string\n- character: character name (string)\n- item_name: name of the substance, food, potion, poison, etc. (string)\n- item_type: one of — Potion / Elixir / Food / Herb / Poison / Venom / Drug / Reagent / Magic / Curse / Other\n- method: one of — Consumed / Drunk / Inhaled / Injected / Applied / Cursed / Absorbed\n- flavor: 1 sentence describing the immediate sensory experience (taste, smell, feeling). Omit key if none.\n- short_effects: array of {\"effect\":\"...\",\"type\":\"positive|negative|neutral|unknown\",\"duration\":\"...\"} — effects lasting minutes to hours\n- long_effects: array of {\"effect\":\"...\",\"type\":\"positive|negative|neutral|unknown\",\"duration\":\"...\"} — effects lasting days, weeks, or permanently. Use [] if none known yet.\n- notes: 1–2 sentences of lore/context about the substance. Omit key if nothing to add.\n\n### EFFECT TYPES\n- positive: beneficial effect (stat boost, healing, enhancement)\n- negative: harmful effect (damage, debuff, side effect)\n- neutral: neither clearly helpful nor harmful\n- unknown: uncertain — the character or narrator cannot yet determine the effect\n\n### TRIGGER RULES\n- Output <LOL_INGEST> whenever a substance enters the body — food, drink, potion, poison, drug, magic brew, cursed item consumed, inhaled gas, injected serum, absorbed through skin.\n- Do NOT output <LOL_INGEST> for passive environmental effects (weather, ambient magic) unless the character deliberately absorbs them.\n- If effects are unknown (unidentified substance), set all effect types to \"unknown\" and duration to \"Unknown\".\n- Always place <LOL_INGEST> AFTER the narrative, never interrupt the story.\n- Also update <LOL_STATUS> if the substance changes hp, mana, conditions, or injuries."
     }
   ]
 }

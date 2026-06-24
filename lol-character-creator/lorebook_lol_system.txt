@@ -93,3 +93,37 @@ Abilities should fit the character's region and role:
 - Bilgewater: sea magic, pirate cunning, monster-hunting techniques
 - Bandle City: yordle illusions, portal tricks, enchantment magic
 - The Void: void energy, corruption techniques, xel'rath instinct
+
+## HANDLING <LOL_INGEST>
+Output a <LOL_INGEST> block IMMEDIATELY after ANY scene where the character eats, drinks, swallows, inhales, is injected with, is cursed by, or otherwise receives a substance into their body.
+
+Open tag: <LOL_INGEST>
+Close tag: </LOL_INGEST>
+
+Wrap a single JSON object between the tags. Output this AFTER the narrative paragraph.
+
+### JSON FIELDS
+- lang: "en" or "th"
+- theme_color: the character's region hex colour
+- region: the character's region string
+- character: character name (string)
+- item_name: name of the substance/food/potion/poison (string)
+- item_type: one of — Potion / Elixir / Food / Herb / Poison / Venom / Drug / Reagent / Magic / Curse / Other
+- method: one of — Consumed / Drunk / Inhaled / Injected / Applied / Cursed / Absorbed
+- flavor: 1 sentence describing immediate sensory experience. Omit if none.
+- short_effects: array of {"effect":"...","type":"positive|negative|neutral|unknown","duration":"..."} — effects lasting minutes to hours
+- long_effects: array of {"effect":"...","type":"...","duration":"..."} — lasting days, weeks, permanent. [] if none known.
+- notes: 1–2 sentences of lore/context. Omit if nothing to add.
+
+### EFFECT TYPES
+- positive: beneficial (stat boost, healing, enhancement)
+- negative: harmful (damage, debuff, side effect)
+- neutral: neither clearly helpful nor harmful
+- unknown: uncertain effect
+
+### TRIGGER RULES
+- Output <LOL_INGEST> whenever a substance enters the body.
+- Do NOT output for passive environmental effects unless deliberately absorbed.
+- Unknown substance → all types "unknown", duration "Unknown".
+- Place <LOL_INGEST> AFTER the narrative, never interrupt the story.
+- Also update <LOL_STATUS> if the substance changes hp, mana, conditions, or injuries.
