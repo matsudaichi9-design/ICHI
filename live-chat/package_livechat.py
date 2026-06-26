@@ -8,17 +8,18 @@ html = re.sub(r'(html\s*,\s*body\s*\{[^}]*background\s*:\s*)[^;]+;', r'\1transpa
 data = {
     "id": "live-chat-widget",
     "scriptName": "Live Chat Widget",
-    # matches ```live-chat\n{json}\n``` code block the AI outputs
-    "findRegex": "/```live-chat\\n([\\s\\S]*?)\\n```/gm",
+    # Match the TWO-LINE format the AI outputs:
+    #   <LC/>
+    #   LCDATA:{"title":"..."}
+    # \s* between them allows the newline; (.+) captures single-line JSON
+    "findRegex": "/<LC\\/>\\s*LCDATA:(.+)/gm",
     "replaceString": "```\n" + html + "\n```",
     "trimStrings": [],
     "placement": [1],
     "disabled": False,
-    # false = regex runs on RAW text before markdown rendering
-    # prevents <LIVE_CHAT> from being stripped/escaped by markdown
     "markdownOnly": False,
     "promptOnly": False,
-    "runOnEdit": True,
+    "runOnEdit": False,
     "substituteRegex": 0,
     "minDepth": None,
     "maxDepth": None
