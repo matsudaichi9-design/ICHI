@@ -8,17 +8,20 @@ html = re.sub(r'(html\s*,\s*body\s*\{[^}]*background\s*:\s*)[^;]+;', r'\1transpa
 data = {
     "id": "live-chat-widget",
     "scriptName": "Live Chat Widget",
-    "findRegex": "/<LIVE_CHAT>([\\s\\S]*?)<\\/LIVE_CHAT>/gm",
+    # matches ```live-chat\n{json}\n``` code block the AI outputs
+    "findRegex": "/```live-chat\\n([\\s\\S]*?)\\n```/gm",
     "replaceString": "```\n" + html + "\n```",
     "trimStrings": [],
     "placement": [1],
     "disabled": False,
-    "markdownOnly": True,
+    # false = regex runs on RAW text before markdown rendering
+    # prevents <LIVE_CHAT> from being stripped/escaped by markdown
+    "markdownOnly": False,
     "promptOnly": False,
     "runOnEdit": True,
     "substituteRegex": 0,
     "minDepth": None,
-    "maxDepth": 0
+    "maxDepth": None
 }
 
 out = 'regex_livechat.json'

@@ -291,6 +291,9 @@ var LC={
   init:function(){
     var raw=g('lcraw');if(!raw)return;
     var txt=raw.value.trim();if(!txt)return;
+    // decode HTML entities SillyTavern may inject (e.g. &quot; → ")
+    var dec=document.createElement('textarea');dec.innerHTML=txt;txt=dec.value.trim();
+    if(!txt)return;
     var d;try{d=JSON.parse(txt)}catch(e){
       g('lc-title').textContent='Live Stream';
       LC.toggle();return;
