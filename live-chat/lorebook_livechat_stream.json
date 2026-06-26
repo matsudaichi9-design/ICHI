@@ -1,0 +1,40 @@
+{
+    "entries": {
+        "0": {
+            "uid": 0,
+            "key": [
+                "live", "stream", "livestream", "streaming", "broadcast",
+                "ไลฟ์", "ถ่ายทอด", "สตรีม", "ไลฟ์สตรีม", "放送", "配信"
+            ],
+            "keysecondary": [],
+            "comment": "Live Stream Chat Widget — Output Instruction",
+            "content": "[LIVE STREAM CHAT WIDGET PROTOCOL]\nThis scene involves a live stream. At the very END of every response (after all narrative text), output EXACTLY this block — nothing else after it:\n\n<STREAM_LIVE>{\"title\":\"[stream title]\",\"status\":\"live\",\"viewers\":[number],\"chat\":[{\"user\":\"[name]\",\"color\":\"[hex]\",\"msg\":\"[message]\",\"badge\":\"[badge]\"},{\"user\":\"[name]\",\"color\":\"[hex]\",\"msg\":\"[message]\",\"badge\":\"\"}],\"donations\":[{\"user\":\"[name]\",\"amount\":[number],\"currency\":\"¥\",\"msg\":\"[message]\"}],\"top_donors\":[{\"rank\":1,\"user\":\"[name]\",\"total\":[number],\"currency\":\"¥\"},{\"rank\":2,\"user\":\"[name]\",\"total\":[number],\"currency\":\"¥\"}]}</STREAM_LIVE>\n\nCRITICAL FORMAT RULES:\n• Open with <STREAM_LIVE> and close with </STREAM_LIVE> — these tags must be on their own line at the very end\n• The JSON content must be on a SINGLE LINE — do NOT pretty-print or add line breaks inside the JSON\n• Do NOT wrap in code blocks, backticks, or any markdown formatting\n• This entire block must be the LAST thing in your response\n\nJSON field rules:\n• title — stream title matching the current scene\n• status — \"live\" when streaming, \"offline\" when not\n• viewers — integer that rises/falls naturally with scene energy (e.g. 800 to 12000)\n• chat — 6 to 15 messages reacting naturally to the narrative; use varied casual language, emojis, mix of languages\n• badge values: \"subscriber\" | \"moderator\" | \"vip\" | \"member\" | \"\" (empty string for no badge)\n• color — assign a consistent hex color per viewer name; keep it the same across responses\n• donations — array of 0 to 2 entries when someone donates; omit or use [] when no donations this turn\n• top_donors — up to 5 entries; totals accumulate across the session; omit or use [] if no donations have occurred yet",
+            "constant": false,
+            "selective": false,
+            "selectiveLogic": 0,
+            "addMemo": false,
+            "order": 100,
+            "position": 1,
+            "disable": false,
+            "excludeRecursion": false,
+            "preventRecursion": false,
+            "delayUntilRecursion": false,
+            "probability": 100,
+            "useProbability": false,
+            "depth": 4,
+            "group": "live-stream-chat",
+            "groupOverride": false,
+            "groupWeight": 100,
+            "scanDepth": null,
+            "caseSensitive": null,
+            "automationId": "",
+            "role": null,
+            "vectorized": false,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0
+        }
+    },
+    "originalCharacterName": "",
+    "defaultConfig": {}
+}
