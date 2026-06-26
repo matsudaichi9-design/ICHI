@@ -1,1057 +1,841 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cinzel+Decorative:wght@700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:transparent}
+html,body{background:transparent;font-family:'Space Grotesk',sans-serif}
 
-.win{
-  max-width:484px;margin:6px auto;overflow:hidden;
-  background:#04070f;border:1px solid rgba(74,127,212,.2);border-radius:6px;
-  color:#c8d8f4;font-family:'Crimson Pro',Georgia,serif;
-  box-shadow:0 8px 48px rgba(4,12,40,.9),0 0 80px -28px rgba(74,127,212,.28);
-  position:relative;animation:wapp .5s cubic-bezier(.22,.68,0,1.1) both
+:root{
+  --bg:#030508;--s0:#07090f;--s1:#0c1018;--s2:#101520;
+  --b0:#2a5ab8;--b1:#4a7fd4;--b2:#7aafff;
+  --r:#c83040;--g:#3ab858;
+  --t0:#c8d8f4;--t1:#6a84b4;--t2:#2a3a5a;
+  --cut:10px;
 }
-@keyframes wapp{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
-.win::before{
+
+#knycr{
+  max-width:520px;margin:6px auto;
+  background:var(--s0);
+  clip-path:polygon(0 0,calc(100% - var(--cut)) 0,100% var(--cut),100% 100%,var(--cut) 100%,0 calc(100% - var(--cut)));
+  color:var(--t0);position:relative;overflow:hidden;
+  animation:fadein .4s ease both;
+}
+@keyframes fadein{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+#knycr::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse at 50% -10%,rgba(74,127,212,.1) 0%,transparent 55%),
-    radial-gradient(ellipse at 10% 100%,rgba(40,70,180,.07) 0%,transparent 50%)
+  background-image:radial-gradient(circle,rgba(74,127,212,.05) 1px,transparent 1px);
+  background-size:22px 22px;
 }
 
-/* ── TOOLBAR ── */
-.tbar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:5px 12px;background:rgba(74,127,212,.05);border-bottom:1px solid rgba(74,127,212,.1);
-  position:relative;z-index:2
+/* ─ HEADER ─ */
+.kh{
+  position:relative;z-index:1;
+  padding:14px 18px 12px;
+  background:linear-gradient(135deg,rgba(42,90,184,.14) 0%,transparent 55%);
+  border-bottom:1px solid rgba(74,127,212,.12);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:10px;
 }
-.tbg{display:flex;gap:4px}
-.tbtn{
-  font-family:'Cinzel',serif;font-size:8px;letter-spacing:1.5px;color:#5878a0;
-  background:rgba(74,127,212,.06);border:1px solid rgba(74,127,212,.18);
-  border-radius:99px;padding:3px 10px;cursor:pointer;transition:all .18s
+.kh::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--b0) 25%,var(--b2) 50%,var(--b0) 75%,transparent);
+  opacity:.55;
 }
-.tbtn:hover{color:#c8d8f4;border-color:rgba(74,127,212,.4)}
-.tbtn.on{background:rgba(74,127,212,.18);color:#7aafff;border-color:rgba(74,127,212,.5)}
-.tbar-mid{font-family:'Cinzel',serif;font-size:7px;letter-spacing:4px;color:#2a3450;text-transform:uppercase}
+.kh-l{flex:1;min-width:0}
+.kh-eyebrow{
+  font-size:8px;font-weight:600;letter-spacing:3px;
+  color:var(--b1);text-transform:uppercase;opacity:.65;margin-bottom:5px;
+}
+.kh-title{
+  font-family:'Cinzel',serif;font-size:16px;font-weight:900;
+  letter-spacing:2px;color:var(--t0);line-height:1.15;
+}
+.kh-title span{color:var(--b2)}
+.kh-kanji{
+  font-size:11px;letter-spacing:4px;color:var(--t2);margin-top:3px;
+  font-family:'Space Grotesk',sans-serif;font-weight:300;
+}
+.kh-r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0}
+.kh-flower{width:42px;height:42px;opacity:.75}
+.kh-flower svg{width:100%;height:100%;animation:fg 3.5s ease-in-out infinite}
+@keyframes fg{0%,100%{filter:drop-shadow(0 0 3px rgba(74,127,212,.4))}50%{filter:drop-shadow(0 0 12px rgba(122,175,255,.75))}}
+.kh-badge{
+  font-size:7.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px 3px 8px;
+  clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%);
+  background:rgba(74,127,212,.12);color:var(--b2);
+  transition:background .35s,color .35s;
+}
+.kh-badge.sla{background:rgba(58,184,88,.15);color:#60d878}
+.kh-badge.dem{background:rgba(200,48,64,.15);color:#e06070}
 
-/* ── HEADER ── */
-.hdr{
-  text-align:center;padding:20px 16px 16px;position:relative;z-index:1;
-  border-bottom:1px solid rgba(74,127,212,.1)
+/* ─ FACTION STRIP ─ */
+.fact-strip{
+  height:2px;margin:0;
+  background:rgba(74,127,212,.2);
+  transition:background .4s;position:relative;z-index:2;
 }
-.hdr::after{
-  content:'';position:absolute;bottom:0;left:10%;right:10%;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(74,127,212,.45),transparent)
-}
-.hflower{width:72px;height:72px;margin:0 auto 12px}
-.hflower svg{width:100%;height:100%;animation:glow 3.5s ease-in-out infinite}
-@keyframes glow{0%,100%{filter:drop-shadow(0 0 4px rgba(74,127,212,.45))}50%{filter:drop-shadow(0 0 14px rgba(122,175,255,.8))}}
+.fact-strip.sla{background:linear-gradient(90deg,transparent,var(--g) 20%,var(--g) 80%,transparent)}
+.fact-strip.dem{background:linear-gradient(90deg,transparent,var(--r) 20%,var(--r) 80%,transparent)}
 
-.htag{font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:5px;color:#4a7fd4;opacity:.65;margin-bottom:6px;text-transform:uppercase}
-.htitle{font-family:'Cinzel Decorative',serif;font-size:16px;color:#c8d8f4;letter-spacing:3px;line-height:1.2;margin-bottom:2px}
-.hsub{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:3px;color:#2a3450;margin-bottom:10px;text-transform:uppercase}
-.hbadge{
-  display:inline-block;padding:3px 16px;
-  border:1px solid rgba(74,127,212,.28);border-radius:99px;background:rgba(74,127,212,.08);
-  font-family:'Cinzel',serif;font-size:8px;letter-spacing:2px;color:#4a7fd4;transition:all .4s
+/* ─ PANES ─ */
+.pane{display:none;padding:18px 18px 16px;position:relative;z-index:1;min-height:320px}
+.pane.vis{display:block}
+.pane::after{
+  content:attr(data-num);
+  position:absolute;right:6px;top:-10px;
+  font-family:'Cinzel',serif;font-size:100px;font-weight:900;
+  color:rgba(74,127,212,.03);pointer-events:none;user-select:none;line-height:1;
 }
 
-/* ── PROGRESS TABS ── */
-.tabs{
-  display:flex;align-items:flex-start;justify-content:center;
-  padding:12px 8px 0;background:rgba(0,0,0,.22);position:relative;z-index:2
+/* ─ SECTION HEADER ─ */
+.shd{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.shd-gem{
+  width:12px;height:12px;flex-shrink:0;
+  clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  background:var(--b1);
 }
-.tab-line{flex:1;height:1px;background:rgba(74,127,212,.15);margin-top:11px;max-width:36px}
-.stab{
-  display:flex;flex-direction:column;align-items:center;gap:5px;
-  cursor:pointer;padding:0 3px 10px;min-width:54px;user-select:none
+.shd-title{
+  font-family:'Cinzel',serif;font-size:9.5px;font-weight:700;
+  letter-spacing:3px;color:var(--b1);text-transform:uppercase;
 }
-.tab-dot{
-  width:22px;height:22px;border-radius:50%;border:1.5px solid rgba(74,127,212,.25);
-  background:rgba(74,127,212,.06);display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel',serif;font-size:8.5px;color:#2a3450;transition:all .22s
-}
-.tab-lbl{font-family:'Cinzel',serif;font-size:6px;letter-spacing:.8px;color:#2a3450;text-transform:uppercase;white-space:nowrap;transition:color .22s}
-.stab:hover .tab-dot{border-color:rgba(74,127,212,.5);color:#7890b8}
-.stab:hover .tab-lbl{color:#7890b8}
-.stab.on .tab-dot{border-color:#4a7fd4;background:rgba(74,127,212,.18);color:#7aafff;box-shadow:0 0 10px rgba(74,127,212,.35)}
-.stab.on .tab-lbl{color:#7aafff}
+.shd-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(74,127,212,.22),transparent)}
 
-/* ── PANES ── */
-.spane{display:none;padding:13px 13px 10px;animation:pfade .2s ease;position:relative;z-index:1}
-.spane.on{display:block}
-@keyframes pfade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── FORM ── */
-.frow{margin-bottom:9px}
-.frow2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px}
-.flbl{font-family:'Cinzel',serif;font-size:7px;letter-spacing:1.5px;color:#2a3450;text-transform:uppercase;margin-bottom:4px;display:block}
-.finp,.fsel,.farea{
-  width:100%;background:#080e1c;border:1px solid rgba(74,127,212,.16);
-  border-radius:4px;color:#c8d8f4;font-family:'Crimson Pro',Georgia,serif;
-  font-size:14px;padding:7px 10px;outline:none;transition:border-color .18s
+/* ─ FIELDS ─ */
+.row{margin-bottom:14px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:0 18px;margin-bottom:14px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:0 14px;margin-bottom:14px}
+.flbl{
+  font-size:8.5px;font-weight:600;letter-spacing:2.5px;
+  color:var(--t1);text-transform:uppercase;margin-bottom:5px;display:block;
 }
-.finp:focus,.fsel:focus,.farea:focus{border-color:rgba(74,127,212,.55);background:#0d1528}
+.finp,.fsel,.fta{
+  width:100%;background:transparent;
+  border:none;border-bottom:1px solid rgba(74,127,212,.22);
+  color:var(--t0);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:400;
+  padding:5px 0;outline:none;transition:border-color .2s;
+}
+.finp:focus,.fsel:focus{border-bottom-color:var(--b2)}
+.finp::placeholder,.fta::placeholder{color:var(--t2);font-size:11.5px}
 .fsel{
-  appearance:none;-webkit-appearance:none;cursor:pointer;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%234a7fd4'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
-  background-color:#080e1c
+  cursor:pointer;-webkit-appearance:none;appearance:none;
+  padding-right:18px;
+  background-image:url("data:image/svg+xml,%3Csvg width='8' height='5' viewBox='0 0 8 5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0l4 5 4-5z' fill='%234a7fd4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 0 center;background-size:8px 5px;
 }
-.fsel option{background:#080e1c;color:#c8d8f4}
-.fsel optgroup{background:#04070f;color:#2a3450}
-.farea{resize:vertical;min-height:58px;line-height:1.6}
-.infoblurb{
-  margin-top:6px;padding:7px 11px;background:#0d1528;
-  border:1px solid rgba(74,127,212,.1);border-left:2px solid #4a7fd4;
-  border-radius:0 4px 4px 0;font-size:12px;color:#5878a0;font-style:italic;line-height:1.55;display:none
+.fsel option{background:#0c1018;color:#c8d8f4}
+.fta{
+  border:1px solid rgba(74,127,212,.15);padding:8px;
+  font-size:12px;resize:vertical;min-height:62px;border-radius:0;
+  background:rgba(74,127,212,.03);
 }
-.infoblurb.vis{display:block}
-.cpnl{margin-top:6px;padding:8px;background:#0d1528;border:1px solid rgba(74,127,212,.1);border-radius:4px;display:none}
-.cpnl.vis{display:block}
+.fta:focus{border-color:rgba(74,127,212,.35);outline:none}
 
-/* ── SECTION HEADER ── */
-.sh{
-  font-family:'Cinzel',serif;font-size:7px;letter-spacing:2.5px;color:#2a3450;
-  text-transform:uppercase;margin:12px 0 8px;padding-bottom:5px;
-  border-bottom:1px solid rgba(74,127,212,.1);display:flex;align-items:center;gap:6px
+/* ─ LORE BLURB ─ */
+.lore{
+  padding:7px 10px;margin:4px 0 6px;
+  background:rgba(74,127,212,.05);border-left:2px solid rgba(74,127,212,.3);
+  font-size:10.5px;color:var(--t1);line-height:1.5;display:none;
 }
-.sh::before{content:'◆';font-size:5px;color:#4a7fd4;opacity:.7}
-.sh-note{font-size:6.5px;font-weight:normal;text-transform:none;letter-spacing:.5px;margin-left:auto;opacity:.5}
-.ctog{font-size:8px;font-family:'Cinzel',serif;color:#4a7fd4;cursor:pointer;opacity:.55;margin-left:4px;transition:opacity .18s}
-.ctog:hover{opacity:1}
+.lore.vis{display:block}
 
-/* ── FACTION SECTION TOGGLE ── */
-.fsec{display:none}.fsec.vis{display:block}
+/* ─ FACTION SECTIONS ─ */
+.fsec{display:none}
+.fsec.vis{display:block}
 
-/* ── STAT TICKS ── */
-.stat-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
-.stat-nm{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:.8px;color:#5878a0;min-width:76px;flex-shrink:0}
-.ticks{display:flex;gap:2px;flex:1}
-.tick{flex:1;height:7px;background:#080e1c;border:1px solid rgba(74,127,212,.14);border-radius:1px;cursor:pointer;transition:background .1s}
-.tick.on{background:#2a5aac;border-color:#4a7fd4}
-.tick.on.hi{background:#4a7fd4;box-shadow:0 0 5px rgba(74,127,212,.45)}
-.stat-v{font-family:'Cinzel',serif;font-size:10px;color:#7aafff;min-width:16px;text-align:right}
-
-/* ══ SKILL SYSTEM ══ */
-.sk-bar{display:flex;align-items:center;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.sk-filter{
-  font-family:'Cinzel',serif;font-size:7px;letter-spacing:1px;
-  padding:4px 11px;border-radius:99px;cursor:pointer;transition:all .15s;
-  border:1px solid rgba(74,127,212,.18);color:#2a3450;background:transparent;user-select:none
+/* ─ STAT SEGMENTS ─ */
+.stat-blk{margin-bottom:12px}
+.stat-hd{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.stat-nm{font-size:9.5px;font-weight:600;letter-spacing:2px;color:var(--t1);text-transform:uppercase}
+.stat-vl{font-family:'Cinzel',serif;font-size:14px;font-weight:700;color:var(--b2);min-width:20px;text-align:right}
+.seg-bar{display:flex;gap:2px}
+.seg{
+  height:9px;flex:1;cursor:pointer;
+  background:rgba(74,127,212,.07);border:1px solid rgba(74,127,212,.14);
+  transition:all .12s;
 }
-.sk-filter:hover{border-color:rgba(74,127,212,.4);color:#7890b8}
-.sk-filter.on{background:rgba(74,127,212,.14);border-color:rgba(74,127,212,.5);color:#7aafff}
-.sk-filter.f-dem.on{background:rgba(200,48,64,.12);border-color:rgba(200,48,64,.45);color:#e86070}
-.sk-filter.f-sla.on{background:rgba(80,180,100,.1);border-color:rgba(80,180,100,.4);color:#70d888}
+.seg:hover{background:rgba(74,127,212,.18);border-color:rgba(74,127,212,.35)}
+.seg.on{background:var(--b0);border-color:var(--b1);box-shadow:0 0 5px rgba(74,127,212,.28)}
+.seg.on:hover{background:var(--b1)}
 
-.sk-search{
-  width:100%;background:#080e1c;border:1px solid rgba(74,127,212,.16);
-  border-radius:4px;color:#c8d8f4;font-family:'Cinzel',serif;font-size:10.5px;
-  padding:6px 10px;outline:none;margin-bottom:8px;letter-spacing:.5px
+/* ─ SKILLS ─ */
+.sk-bar{
+  display:flex;gap:0;margin-bottom:8px;
+  clip-path:polygon(0 0,calc(100% - 5px) 0,100% 5px,100% 100%,5px 100%,0 calc(100% - 5px));
 }
-.sk-search:focus{border-color:rgba(74,127,212,.45)}
-.sk-search::placeholder{color:#2a3450;font-style:italic}
+.sk-f{
+  flex:1;padding:5px 3px;text-align:center;cursor:pointer;
+  font-size:7.5px;font-weight:600;letter-spacing:1.5px;color:var(--t2);text-transform:uppercase;
+  background:rgba(74,127,212,.05);border-right:1px solid rgba(74,127,212,.1);
+  transition:all .15s;
+}
+.sk-f:last-child{border-right:none}
+.sk-f:hover{background:rgba(74,127,212,.1);color:var(--t1)}
+.sk-f.on{background:rgba(74,127,212,.18);color:var(--b2)}
+.sk-srch{
+  width:100%;background:transparent;border:none;border-bottom:1px solid rgba(74,127,212,.18);
+  color:var(--t0);font-family:'Space Grotesk',sans-serif;font-size:11px;
+  padding:5px 0;outline:none;margin-bottom:8px;
+}
+.sk-srch::placeholder{color:var(--t2);font-size:10px}
+.sk-srch:focus{border-bottom-color:var(--b2)}
+.sk-info{font-size:8px;color:var(--t2);letter-spacing:1px;margin-bottom:8px}
+.sk-info em{color:var(--b2);font-style:normal;font-weight:600}
+.sk-list{
+  display:grid;grid-template-columns:1fr 1fr;
+  max-height:300px;overflow-y:auto;
+}
+.sk-list::-webkit-scrollbar{width:3px}
+.sk-list::-webkit-scrollbar-thumb{background:rgba(74,127,212,.2)}
+.sk-row{
+  display:flex;align-items:flex-start;gap:7px;
+  padding:7px 8px;cursor:pointer;
+  border-bottom:1px solid rgba(74,127,212,.06);
+  border-right:1px solid rgba(74,127,212,.06);
+  transition:background .12s;user-select:none;position:relative;
+}
+.sk-row:hover{background:rgba(74,127,212,.06)}
+.sk-row.sel{background:rgba(74,127,212,.1);border-left:2px solid var(--b1)}
+.sk-row.locked{opacity:.3;cursor:not-allowed;pointer-events:none}
+.sk-row.hidden{display:none}
+.sk-chk{
+  width:12px;height:12px;flex-shrink:0;margin-top:1px;
+  border:1px solid rgba(74,127,212,.28);background:transparent;
+  display:flex;align-items:center;justify-content:center;transition:all .12s;
+}
+.sk-row.sel .sk-chk{background:var(--b1);border-color:var(--b2)}
+.sk-chk::after{content:'';width:5px;height:5px;background:var(--s0);display:none}
+.sk-row.sel .sk-chk::after{display:block}
+.sk-bd{flex:1;min-width:0}
+.sk-nm{font-size:10.5px;font-weight:600;color:var(--t0);line-height:1.2}
+.sk-row.sel .sk-nm{color:var(--b2)}
+.sk-tag{
+  display:inline-block;font-size:6.5px;font-weight:700;letter-spacing:1px;
+  padding:1px 4px;text-transform:uppercase;margin:2px 0;
+}
+.sk-tag.uni{background:rgba(74,127,212,.15);color:var(--b2)}
+.sk-tag.sla{background:rgba(58,184,88,.12);color:var(--g)}
+.sk-tag.dem{background:rgba(200,48,64,.12);color:#e06070}
+.sk-rest{font-size:8px;color:#b05060;font-style:italic;line-height:1.2}
+.sk-desc{font-size:8.5px;color:var(--t2);line-height:1.3;margin-top:2px}
+.sk-lock-ic{position:absolute;right:5px;top:6px;font-size:8px;color:var(--t2);opacity:.4}
 
-.sk-count{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:1px;color:#4a7fd4;text-align:right;margin-bottom:6px}
-
-.sk-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:5px;
-  max-height:400px;overflow-y:auto;padding-right:2px
+/* ─ BOTTOM NAV ─ */
+.nav{
+  display:flex;align-items:stretch;
+  background:rgba(3,5,8,.9);
+  border-top:1px solid rgba(74,127,212,.12);
+  position:sticky;bottom:0;z-index:10;
 }
-.sk-grid::-webkit-scrollbar{width:3px}
-.sk-grid::-webkit-scrollbar-track{background:rgba(74,127,212,.04)}
-.sk-grid::-webkit-scrollbar-thumb{background:rgba(74,127,212,.28);border-radius:3px}
-
-.sk-card{
-  background:#080e1c;border:1px solid rgba(74,127,212,.1);border-radius:4px;
-  padding:8px 9px 7px;cursor:pointer;transition:all .14s;position:relative;
-  display:flex;flex-direction:column;gap:3px;user-select:none
+.ntab{
+  flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:8px 2px;cursor:pointer;
+  border-top:2px solid transparent;margin-top:-1px;
+  transition:all .18s;user-select:none;
 }
-.sk-card:hover:not(.locked){border-color:rgba(74,127,212,.32);background:#0d1528}
-.sk-card.sel{border-color:rgba(74,127,212,.55);background:rgba(74,127,212,.09);box-shadow:0 0 8px rgba(74,127,212,.18)}
-.sk-card.sel::after{content:'✓';position:absolute;top:5px;right:7px;font-size:9px;color:#7aafff;opacity:.8}
-.sk-card.locked{opacity:.22;cursor:not-allowed;pointer-events:none}
-.sk-card.hidden{display:none}
-
-.sk-name{font-family:'Cinzel',serif;font-size:9.5px;font-weight:600;letter-spacing:.3px;color:#c8d8f4;line-height:1.3;padding-right:14px}
-.sk-card.sel .sk-name{color:#7aafff}
-.sk-desc{font-size:10px;color:#2a3450;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.sk-card.sel .sk-desc{color:#5878a0}
-.sk-foot{display:flex;align-items:center;gap:4px;margin-top:3px;flex-wrap:wrap}
-.sk-tag{font-family:'Cinzel',serif;font-size:6.5px;letter-spacing:.7px;padding:1.5px 5px;border-radius:3px}
-.t-uni{background:rgba(74,127,212,.1);color:#4a7fd4;border:1px solid rgba(74,127,212,.18)}
-.t-sla{background:rgba(80,180,100,.08);color:#60d078;border:1px solid rgba(80,180,100,.18)}
-.t-dem{background:rgba(200,48,64,.1);color:#c83040;border:1px solid rgba(200,48,64,.2)}
-.sk-restrict{font-family:'Cinzel',serif;font-size:6.5px;color:#b07828;letter-spacing:.3px;opacity:.8}
-
-/* ── FOOTER ── */
-.ftr{
-  padding:11px 13px;border-top:1px solid rgba(74,127,212,.1);
-  background:rgba(74,127,212,.04);display:flex;gap:8px;align-items:center;
-  position:relative;z-index:2
+.ntab:hover{background:rgba(74,127,212,.06)}
+.ntab.on{border-top-color:var(--b2);background:rgba(74,127,212,.07)}
+.ntab-n{font-family:'Cinzel',serif;font-size:11px;font-weight:700;color:var(--t2);transition:color .18s}
+.ntab-l{font-size:6.5px;font-weight:600;letter-spacing:1.5px;color:var(--t2);text-transform:uppercase;margin-top:2px;transition:color .18s}
+.ntab.on .ntab-n,.ntab.on .ntab-l{color:var(--b2)}
+.nav-send{
+  flex:1.3;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:6px;cursor:pointer;
+  background:rgba(42,90,184,.12);border-left:1px solid rgba(74,127,212,.15);
+  clip-path:polygon(7px 0,100% 0,100% 100%,0 100%);
+  transition:background .2s;
 }
-.btn-main{
-  flex:1;padding:10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:2.5px;font-weight:700;
-  color:#04070f;background:linear-gradient(135deg,#3a6dc4 0%,#6aa0f0 100%);
-  border:none;border-radius:4px;cursor:pointer;transition:all .22s;text-transform:uppercase
-}
-.btn-main:hover{filter:brightness(1.12);box-shadow:0 0 22px rgba(74,127,212,.45)}
-.btn-sec{
-  padding:10px 13px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:1.5px;
-  color:#2a3450;background:#080e1c;border:1px solid rgba(74,127,212,.16);
-  border-radius:4px;cursor:pointer;transition:all .18s
-}
-.btn-sec:hover{color:#5878a0;border-color:rgba(74,127,212,.35)}
-.shake{animation:shk .3s ease}
-@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.nav-send:hover{background:rgba(42,90,184,.25)}
+.nav-send-lbl{font-family:'Cinzel',serif;font-size:8.5px;font-weight:700;letter-spacing:2.5px;color:var(--b2);text-transform:uppercase}
+.nav-send-sub{font-size:7px;font-weight:500;letter-spacing:1px;color:var(--b0);text-transform:uppercase;margin-top:2px}
 </style>
 </head>
 <body>
-<div class="win" id="win">
-
-<!-- TOOLBAR -->
-<div class="tbar">
-  <div class="tbg">
-    <button class="tbtn on" id="btn_en" onclick="KNY.ln('en')">EN</button>
-    <button class="tbtn" id="btn_th" onclick="KNY.ln('th')">TH</button>
-  </div>
-  <div class="tbar-mid" id="tbar_mid">KIMETSU NO YAIBA</div>
-  <div class="tbg">
-    <button class="tbtn" id="btn_reset_tb" onclick="KNY.reset()" style="letter-spacing:.5px">RESET</button>
-  </div>
-</div>
+<div id="knycr">
 
 <!-- HEADER -->
-<div class="hdr">
-  <div class="hflower">
-    <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Blue Higanbana Spider Lily petals -->
-      <path d="M40 37 Q39 27 36 17 Q40 13 44 17 Q41 27 40 37Z" fill="#4a7fd4" opacity=".72"/>
-      <path d="M40 37 Q50 33 59 27 Q62 32 58 37 Q48 38 40 37Z" fill="#4a7fd4" opacity=".65"/>
-      <path d="M40 37 Q48 44 53 55 Q48 59 43 55 Q41 44 40 37Z" fill="#4a7fd4" opacity=".72"/>
-      <path d="M40 37 Q41 47 44 57 Q40 61 36 57 Q39 47 40 37Z" fill="#4a7fd4" opacity=".65"/>
-      <path d="M40 37 Q32 44 27 55 Q22 59 27 54 Q32 44 40 37Z" fill="#4a7fd4" opacity=".72"/>
-      <path d="M40 37 Q30 33 21 27 Q18 32 22 37 Q32 38 40 37Z" fill="#4a7fd4" opacity=".65"/>
-      <!-- Inner petal highlights -->
-      <path d="M40 37 Q39.5 30 38 22 Q40 20 42 22 Q40.5 30 40 37Z" fill="#7aafff" opacity=".35"/>
-      <path d="M40 37 Q46 35 53 31 Q54 33 52 36 Q46 37 40 37Z" fill="#7aafff" opacity=".3"/>
-      <!-- Stamens radiating outward -->
-      <g stroke="#7aafff" stroke-linecap="round" opacity=".75">
-        <line x1="40" y1="35" x2="40" y2="7" stroke-width=".9"/>
-        <line x1="40" y1="35" x2="40" y2="69" stroke-width=".9"/>
-        <line x1="40" y1="35" x2="12" y2="19" stroke-width=".9"/>
-        <line x1="40" y1="35" x2="68" y2="19" stroke-width=".9"/>
-        <line x1="40" y1="35" x2="12" y2="51" stroke-width=".9"/>
-        <line x1="40" y1="35" x2="68" y2="51" stroke-width=".9"/>
-        <!-- Secondary stamens -->
-        <line x1="40" y1="35" x2="24" y2="8" stroke-width=".6"/>
-        <line x1="40" y1="35" x2="56" y2="8" stroke-width=".6"/>
-        <line x1="40" y1="35" x2="7" y2="35" stroke-width=".6"/>
-        <line x1="40" y1="35" x2="73" y2="35" stroke-width=".6"/>
-        <line x1="40" y1="35" x2="24" y2="62" stroke-width=".6"/>
-        <line x1="40" y1="35" x2="56" y2="62" stroke-width=".6"/>
-        <!-- Stamen tips -->
-        <circle cx="40" cy="7" r="1.8" fill="#7aafff"/>
-        <circle cx="40" cy="69" r="1.8" fill="#7aafff"/>
-        <circle cx="12" cy="19" r="1.8" fill="#7aafff"/>
-        <circle cx="68" cy="19" r="1.8" fill="#7aafff"/>
-        <circle cx="12" cy="51" r="1.8" fill="#7aafff"/>
-        <circle cx="68" cy="51" r="1.8" fill="#7aafff"/>
-        <circle cx="24" cy="8" r="1.3" fill="#7aafff" opacity=".6"/>
-        <circle cx="56" cy="8" r="1.3" fill="#7aafff" opacity=".6"/>
-        <circle cx="7" cy="35" r="1.3" fill="#7aafff" opacity=".6"/>
-        <circle cx="73" cy="35" r="1.3" fill="#7aafff" opacity=".6"/>
-        <circle cx="24" cy="62" r="1.3" fill="#7aafff" opacity=".6"/>
-        <circle cx="56" cy="62" r="1.3" fill="#7aafff" opacity=".6"/>
-      </g>
-      <!-- Center -->
-      <circle cx="40" cy="37" r="7" fill="#04070f" stroke="#4a7fd4" stroke-width="1.2" opacity=".95"/>
-      <circle cx="40" cy="37" r="3.5" fill="#4a7fd4" opacity=".85"/>
-      <circle cx="41.8" cy="35.2" r="1.2" fill="#c8d8f4" opacity=".5"/>
-    </svg>
+<div class="kh">
+  <div class="kh-l">
+    <div class="kh-eyebrow">Kimetsu No Yaiba · Operative File</div>
+    <div class="kh-title">CHARACTER<br><span>RECORD</span></div>
+    <div class="kh-kanji">鬼殺隊 · 鬼滅之刃</div>
   </div>
-  <div class="htag" id="htag">鬼滅の刃 · DEMON SLAYER</div>
-  <div class="htitle" id="htitle">CHARACTER CREATION</div>
-  <div class="hsub" id="hsub">FORGE YOUR PATH</div>
-  <div class="hbadge" id="hbadge">SELECT YOUR FACTION</div>
-</div>
-
-<!-- PROGRESS TABS -->
-<div class="tabs">
-  <div class="stab on" onclick="KNY.tb(0)">
-    <div class="tab-dot" id="tdot0">Ⅰ</div>
-    <div class="tab-lbl" id="t0">IDENTITY</div>
-  </div>
-  <div class="tab-line"></div>
-  <div class="stab" onclick="KNY.tb(1)">
-    <div class="tab-dot" id="tdot1">Ⅱ</div>
-    <div class="tab-lbl" id="t1">ORIGIN</div>
-  </div>
-  <div class="tab-line"></div>
-  <div class="stab" onclick="KNY.tb(2)">
-    <div class="tab-dot" id="tdot2">Ⅲ</div>
-    <div class="tab-lbl" id="t2">POWER</div>
-  </div>
-  <div class="tab-line"></div>
-  <div class="stab" onclick="KNY.tb(3)">
-    <div class="tab-dot" id="tdot3">Ⅳ</div>
-    <div class="tab-lbl" id="t3">SKILLS</div>
-  </div>
-  <div class="tab-line"></div>
-  <div class="stab" onclick="KNY.tb(4)">
-    <div class="tab-dot" id="tdot4">Ⅴ</div>
-    <div class="tab-lbl" id="t4">FATE</div>
+  <div class="kh-r">
+    <div class="kh-flower">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <g transform="translate(50,50)">
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(120)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(240)"/>
+          <ellipse cx="0" cy="-20" rx="5.5" ry="13" fill="#4a7fd4" opacity=".9" transform="rotate(300)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(0)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(60)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(120)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(180)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(240)"/>
+          <ellipse cx="0" cy="-21" rx="2" ry="7" fill="#7aafff" opacity=".55" transform="rotate(300)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(0)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(60)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(120)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(180)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(240)"/>
+          <line x1="0" y1="0" x2="0" y2="-34" stroke="#7aafff" stroke-width=".9" opacity=".8" transform="rotate(300)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(0)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(60)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(120)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(180)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(240)"/>
+          <circle cx="0" cy="-35" r="2" fill="#7aafff" opacity=".9" transform="rotate(300)"/>
+          <circle cx="0" cy="0" r="8" fill="#040608"/>
+          <circle cx="0" cy="0" r="5.5" fill="#3a6dc4" opacity=".85"/>
+          <circle cx="-1.5" cy="-1.5" r="2" fill="#7aafff" opacity=".5"/>
+        </g>
+      </svg>
+    </div>
+    <div class="kh-badge" id="kbadge">FACTION: —</div>
   </div>
 </div>
 
-<!-- ═══ I: IDENTITY ═══ -->
-<div class="spane on" id="pane0">
-  <div class="frow2">
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_name">Name</label>
-      <input class="finp" id="s_name" type="text" placeholder="Family · Given..."/>
+<!-- FACTION STRIP -->
+<div class="fact-strip" id="fstrip"></div>
+
+<!-- ─ PANE I: IDENTITY ─ -->
+<div class="pane vis" id="p0" data-num="Ⅰ">
+  <div class="shd"><div class="shd-gem"></div><div class="shd-title">Identity</div><div class="shd-line"></div></div>
+
+  <div class="row2">
+    <div class="row">
+      <label class="flbl">Full Name</label>
+      <input class="finp" id="i-name" type="text" placeholder="Character name">
     </div>
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_alias">Alias / Nickname</label>
-      <input class="finp" id="s_alias" type="text" placeholder="Optional..."/>
+    <div class="row">
+      <label class="flbl">Alias / Epithet</label>
+      <input class="finp" id="i-alias" type="text" placeholder="Known as...">
     </div>
   </div>
-  <div class="frow2">
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_age">Age</label>
-      <input class="finp" id="s_age" type="text" placeholder="e.g. 15"/>
+  <div class="row3">
+    <div class="row">
+      <label class="flbl">Age</label>
+      <input class="finp" id="i-age" type="text" placeholder="e.g. 17">
     </div>
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_gender">Gender</label>
-      <select class="fsel" id="s_gender">
-        <option value="">— Select —</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Non-binary">Non-binary</option>
-        <option value="Unknown">Unknown</option>
+    <div class="row">
+      <label class="flbl">Gender</label>
+      <select class="fsel" id="i-gender">
+        <option value="">—</option>
+        <option>Male</option><option>Female</option>
+        <option>Non-binary</option><option>Unknown</option>
       </select>
     </div>
+    <div class="row">
+      <label class="flbl">Height</label>
+      <input class="finp" id="i-height" type="text" placeholder="cm">
+    </div>
   </div>
-  <div class="frow">
-    <label class="flbl" id="l_appearance">Physical Appearance</label>
-    <textarea class="farea" id="s_appearance" rows="3" placeholder="Hair, eyes, build, marks, distinctive features, clothing style..."></textarea>
-  </div>
-  <div class="frow">
-    <label class="flbl" id="l_personality">Personality</label>
-    <textarea class="farea" id="s_personality" rows="2" placeholder="Core traits, behaviour under pressure, how others perceive them..."></textarea>
-  </div>
-</div>
-
-<!-- ═══ II: ORIGIN ═══ -->
-<div class="spane" id="pane1">
-  <div class="frow">
-    <label class="flbl" id="l_faction">Faction</label>
-    <select class="fsel" id="s_faction" onchange="KNY.onFaction()">
+  <div class="row">
+    <label class="flbl">Faction</label>
+    <select class="fsel" id="i-faction" onchange="KNY.onFaction()">
       <option value="">— Select Faction —</option>
-      <option value="Demon Slayer Corps">Demon Slayer Corps (鬼殺隊)</option>
-      <option value="Demon">Demon (鬼)</option>
-      <option value="Civilian">Civilian (一般人)</option>
-      <option value="Former Slayer">Former Slayer</option>
+      <option>Demon Slayer Corps</option>
+      <option>Former Slayer</option>
+      <option>Demon</option>
+      <option>Civilian</option>
+      <option>Other</option>
     </select>
-    <div class="infoblurb" id="faction_info"></div>
   </div>
+  <div class="row">
+    <label class="flbl">Appearance</label>
+    <textarea class="fta" id="i-appear" placeholder="Physical description — eye color, hair, build, distinguishing marks, attire..."></textarea>
+  </div>
+</div>
 
-  <!-- SLAYER fields -->
-  <div class="fsec" id="fsec_slayer">
-    <div class="frow2">
-      <div class="frow" style="margin:0">
-        <label class="flbl" id="l_rank">Corps Rank</label>
-        <select class="fsel" id="s_rank">
-          <option value="">— Select —</option>
-          <option value="Mizunoto (癸)">Mizunoto 癸 — Lowest</option>
-          <option value="Mizunoe (壬)">Mizunoe 壬</option>
-          <option value="Kanoto (辛)">Kanoto 辛</option>
-          <option value="Kanoe (庚)">Kanoe 庚</option>
-          <option value="Tsuchinoto (己)">Tsuchinoto 己</option>
-          <option value="Tsuchinoe (戊)">Tsuchinoe 戊</option>
-          <option value="Hinoto (丁)">Hinoto 丁</option>
-          <option value="Hinoe (丙)">Hinoe 丙</option>
-          <option value="Kinoto (乙)">Kinoto 乙</option>
-          <option value="Kinoe (甲)">Kinoe 甲 — Highest</option>
-          <option value="Hashira (柱)">Hashira 柱 — Pillar</option>
-        </select>
-      </div>
-      <div class="frow" style="margin:0">
-        <label class="flbl" id="l_origin_how">Path to Corps</label>
-        <select class="fsel" id="s_origin_how">
-          <option value="">— Select —</option>
-          <option value="Family tradition">Family Tradition</option>
-          <option value="Revenge">Driven by Revenge</option>
-          <option value="Trained from birth">Trained from Birth</option>
-          <option value="Late recruitment">Late Recruitment</option>
-          <option value="Survived a demon attack">Survived a Demon Attack</option>
-          <option value="custom">Custom...</option>
-        </select>
-      </div>
+<!-- ─ PANE II: ORIGIN ─ -->
+<div class="pane" id="p1" data-num="Ⅱ">
+  <div class="shd"><div class="shd-gem"></div><div class="shd-title">Origin</div><div class="shd-line"></div></div>
+
+  <div class="row2">
+    <div class="row">
+      <label class="flbl">Birthplace / Region</label>
+      <input class="finp" id="o-region" type="text" placeholder="Province, village...">
     </div>
-    <div class="cpnl" id="cpnl_origin_how">
-      <input class="finp" id="s_origin_how_c" type="text" placeholder="Custom origin..."/>
-    </div>
-    <div class="frow">
-      <label class="flbl" id="l_region">Region / Territory</label>
-      <select class="fsel" id="s_region">
-        <option value="">— Select —</option>
-        <option value="Edo / Tokyo">Edo / Tokyo Area</option>
-        <option value="Asakusa">Asakusa District</option>
-        <option value="Yoshiwara">Yoshiwara Entertainment District</option>
-        <option value="Mountain Region">Mountain Region</option>
-        <option value="Coastal Region">Coastal Region</option>
-        <option value="Rural Village">Rural Village</option>
-        <option value="Swordsmith Village">Swordsmith Village (Hidden)</option>
-        <option value="Butterfly Mansion">Butterfly Mansion Area</option>
-        <option value="Roaming">No Fixed Territory</option>
-      </select>
+    <div class="row">
+      <label class="flbl">Era / Period</label>
+      <input class="finp" id="o-era" type="text" placeholder="Taisho era...">
     </div>
   </div>
 
-  <!-- DEMON fields -->
-  <div class="fsec" id="fsec_demon">
-    <div class="frow2">
-      <div class="frow" style="margin:0">
-        <label class="flbl" id="l_dem_tier">Power Tier</label>
-        <select class="fsel" id="s_dem_tier">
-          <option value="">— Select —</option>
-          <option value="Newly Turned">Newly Turned</option>
-          <option value="Ordinary Demon">Ordinary Demon</option>
-          <option value="Powerful Demon">Powerful Demon</option>
-          <option value="Lower Moon Six (下弦の陸)">Lower Moon 6</option>
-          <option value="Lower Moon Five (下弦の伍)">Lower Moon 5</option>
-          <option value="Lower Moon Four (下弦の肆)">Lower Moon 4</option>
-          <option value="Lower Moon Three (下弦の参)">Lower Moon 3</option>
-          <option value="Lower Moon Two (下弦の弐)">Lower Moon 2</option>
-          <option value="Lower Moon One (下弦の壱)">Lower Moon 1</option>
-          <option value="Upper Moon Six (上弦の陸)">Upper Moon 6</option>
-          <option value="Upper Moon Five (上弦の伍)">Upper Moon 5</option>
-          <option value="Upper Moon Four (上弦の肆)">Upper Moon 4</option>
-          <option value="Upper Moon Three (上弦の参)">Upper Moon 3</option>
-          <option value="Upper Moon Two (上弦の弐)">Upper Moon 2</option>
-          <option value="Upper Moon One (上弦の壱)">Upper Moon 1</option>
+  <!-- SLAYER FIELDS -->
+  <div class="fsec" id="fsec_sla">
+    <div class="shd" style="margin-top:4px"><div class="shd-gem" style="background:var(--g)"></div><div class="shd-title" style="color:var(--g)">Corps Record</div><div class="shd-line"></div></div>
+    <div class="row2">
+      <div class="row">
+        <label class="flbl">Corps Rank</label>
+        <select class="fsel" id="o-rank">
+          <option value="">— Rank —</option>
+          <option>Mizunoto 癸</option><option>Mizunoe 壬</option>
+          <option>Kanoto 辛</option><option>Kanoe 庚</option>
+          <option>Tsuchinoto 己</option><option>Tsuchinoe 戊</option>
+          <option>Hinoto 丁</option><option>Hinoe 丙</option>
+          <option>Kinoto 乙</option><option>Kinoe 甲</option>
+          <option>Hashira 柱</option>
         </select>
       </div>
-      <div class="frow" style="margin:0">
-        <label class="flbl" id="l_dem_origin">How Turned</label>
-        <select class="fsel" id="s_dem_origin">
-          <option value="">— Select —</option>
-          <option value="Muzan's blood (direct)">Muzan's Blood (Direct)</option>
-          <option value="Upper Moon's blood">Upper Moon's Blood</option>
-          <option value="Another demon's blood">Another Demon's Blood</option>
-          <option value="Circumstances unknown">Unknown Circumstances</option>
-          <option value="custom">Custom...</option>
+      <div class="row">
+        <label class="flbl">Path to Corps</label>
+        <select class="fsel" id="o-path">
+          <option value="">— Path —</option>
+          <option>Final Selection</option>
+          <option>Wisteria Mountain Trial</option>
+          <option>Born into slayer family</option>
+          <option>Trained by Hashira</option>
+          <option>Other</option>
         </select>
       </div>
     </div>
-    <div class="cpnl" id="cpnl_dem_origin">
-      <input class="finp" id="s_dem_origin_c" type="text" placeholder="Custom..."/>
+  </div>
+
+  <!-- DEMON FIELDS -->
+  <div class="fsec" id="fsec_dem">
+    <div class="shd" style="margin-top:4px"><div class="shd-gem" style="background:var(--r)"></div><div class="shd-title" style="color:var(--r)">Demon Profile</div><div class="shd-line"></div></div>
+    <div class="row2">
+      <div class="row">
+        <label class="flbl">Power Tier</label>
+        <select class="fsel" id="o-tier">
+          <option value="">— Tier —</option>
+          <option>Lesser Demon</option><option>Intermediate Demon</option>
+          <option>Upper Demon</option><option>Twelve Kizuki</option>
+          <option>Lower Moon 6</option><option>Lower Moon 5</option>
+          <option>Lower Moon 4</option><option>Lower Moon 3</option>
+          <option>Lower Moon 2</option><option>Lower Moon 1</option>
+          <option>Upper Moon 6</option><option>Upper Moon 5</option>
+          <option>Upper Moon 4</option><option>Upper Moon 3</option>
+          <option>Upper Moon 2</option><option>Upper Moon 1</option>
+          <option>Progenitor / Muzan-class</option>
+        </select>
+      </div>
+      <div class="row">
+        <label class="flbl">Time as Demon</label>
+        <input class="finp" id="o-demtime" type="text" placeholder="e.g. 47 years">
+      </div>
     </div>
-    <div class="frow">
-      <label class="flbl" id="l_dem_time">Time as Demon</label>
-      <input class="finp" id="s_dem_time" type="text" placeholder="e.g. 47 years, a few months..."/>
+    <div class="row">
+      <label class="flbl">How Turned</label>
+      <textarea class="fta" id="o-origin" placeholder="Circumstances of becoming a demon..."></textarea>
     </div>
   </div>
 
-  <!-- Shared background -->
-  <div class="frow">
-    <label class="flbl" id="l_background">Background / History</label>
-    <textarea class="farea" id="s_background" rows="4" placeholder="Origin story, family, defining moments, what shaped this person..."></textarea>
+  <div class="row" style="margin-top:8px">
+    <label class="flbl">Background</label>
+    <textarea class="fta" id="o-bg" placeholder="History, family, formative experiences..."></textarea>
   </div>
 </div>
 
-<!-- ═══ III: POWER ═══ -->
-<div class="spane" id="pane2">
-  <!-- Stats always shown -->
-  <div class="sh"><span id="sh_stats">Combat Parameters</span><span class="sh-note" id="sh_stats_note">— click ticks</span></div>
-  <div id="stat_block"></div>
+<!-- ─ PANE III: POWER ─ -->
+<div class="pane" id="p2" data-num="Ⅲ">
+  <div class="shd"><div class="shd-gem"></div><div class="shd-title">Combat Parameters</div><div class="shd-line"></div></div>
 
-  <!-- Breathing style — slayer/former slayer -->
-  <div class="fsec" id="fsec_breath">
-    <div class="sh"><span id="sh_breath">Breathing Style</span></div>
-    <div class="frow">
-      <label class="flbl" id="l_breath">Primary Style</label>
-      <select class="fsel" id="s_breath" onchange="KNY.onBreath()">
-        <option value="">— None / Not Yet —</option>
-        <optgroup label="─ Original Pillars ─">
-          <option value="Water Breathing (水の呼吸)">Water Breathing 水の呼吸</option>
-          <option value="Flame Breathing (炎の呼吸)">Flame Breathing 炎の呼吸</option>
-          <option value="Thunder Breathing (雷の呼吸)">Thunder Breathing 雷の呼吸</option>
-          <option value="Wind Breathing (風の呼吸)">Wind Breathing 風の呼吸</option>
-          <option value="Stone Breathing (岩の呼吸)">Stone Breathing 岩の呼吸</option>
-        </optgroup>
-        <optgroup label="─ Derived Forms ─">
-          <option value="Insect Breathing (蟲の呼吸)">Insect Breathing 蟲の呼吸</option>
-          <option value="Love Breathing (恋の呼吸)">Love Breathing 恋の呼吸</option>
-          <option value="Mist Breathing (霞の呼吸)">Mist Breathing 霞の呼吸</option>
-          <option value="Sound Breathing (音の呼吸)">Sound Breathing 音の呼吸</option>
-          <option value="Flower Breathing (花の呼吸)">Flower Breathing 花の呼吸</option>
-          <option value="Serpent Breathing (蛇の呼吸)">Serpent Breathing 蛇の呼吸</option>
-          <option value="Beast Breathing (獣の呼吸)">Beast Breathing 獣の呼吸</option>
-        </optgroup>
-        <optgroup label="─ Transcendent ─">
-          <option value="Moon Breathing (月の呼吸)">Moon Breathing 月の呼吸</option>
-          <option value="Sun Breathing / Hinokami Kagura (日の呼吸)">Sun Breathing / Hinokami Kagura</option>
-        </optgroup>
-        <option value="custom">Custom / Original Style...</option>
-      </select>
-      <div class="infoblurb" id="breath_info"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 20px;margin-bottom:16px">
+    <div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Strength</div><div class="stat-vl" id="sv-str">0</div></div><div class="seg-bar" id="sb-str"></div></div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Speed</div><div class="stat-vl" id="sv-spd">0</div></div><div class="seg-bar" id="sb-spd"></div></div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Stamina</div><div class="stat-vl" id="sv-stm">0</div></div><div class="seg-bar" id="sb-stm"></div></div>
     </div>
-    <div class="cpnl" id="cpnl_breath">
-      <input class="finp" id="s_breath_c" type="text" placeholder="Custom breathing style name..."/>
-    </div>
-    <div class="frow">
-      <label class="flbl" id="l_breath_forms">Mastered Forms / Techniques</label>
-      <textarea class="farea" id="s_breath_forms" rows="2" placeholder="Name specific forms or developed techniques (optional)..."></textarea>
-    </div>
-    <div class="frow">
-      <label class="flbl" id="l_nichirin">Nichirin Blade Colour</label>
-      <input class="finp" id="s_nichirin" type="text" placeholder="e.g. Crimson-red, deep indigo, pitch black..."/>
+    <div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Intellect</div><div class="stat-vl" id="sv-int">0</div></div><div class="seg-bar" id="sb-int"></div></div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Willpower</div><div class="stat-vl" id="sv-wil">0</div></div><div class="seg-bar" id="sb-wil"></div></div>
+      <div class="stat-blk"><div class="stat-hd"><div class="stat-nm">Senses</div><div class="stat-vl" id="sv-sen">0</div></div><div class="seg-bar" id="sb-sen"></div></div>
     </div>
   </div>
 
-  <!-- Blood Demon Art — demon -->
-  <div class="fsec" id="fsec_art">
-    <div class="sh"><span id="sh_art">Blood Demon Art (血鬼術)</span></div>
-    <div class="frow">
-      <label class="flbl" id="l_art_name">Art Name</label>
-      <input class="finp" id="s_art_name" type="text" placeholder="e.g. Cellular Degeneration, Dream Spiral..."/>
+  <!-- BREATHING (Slayer) -->
+  <div class="fsec" id="fsec_bth">
+    <div class="shd"><div class="shd-gem" style="background:var(--g)"></div><div class="shd-title" style="color:var(--g)">Breathing Style</div><div class="shd-line"></div></div>
+    <div class="row2">
+      <div class="row">
+        <label class="flbl">Style</label>
+        <select class="fsel" id="p-breath" onchange="KNY.onBreath()">
+          <option value="">— Style —</option>
+          <option>Water Breathing</option><option>Flame Breathing</option>
+          <option>Thunder Breathing</option><option>Wind Breathing</option>
+          <option>Stone Breathing</option><option>Insect Breathing</option>
+          <option>Love Breathing</option><option>Mist Breathing</option>
+          <option>Sound Breathing</option><option>Flower Breathing</option>
+          <option>Serpent Breathing</option><option>Beast Breathing</option>
+          <option>Moon Breathing</option><option>Sun Breathing / Hinokami Kagura</option>
+          <option>Original / Self-developed</option><option>None</option>
+        </select>
+      </div>
+      <div class="row">
+        <label class="flbl">Nichirin Colour</label>
+        <input class="finp" id="p-nichirin" type="text" placeholder="Blade colour...">
+      </div>
     </div>
-    <div class="frow">
-      <label class="flbl" id="l_art_desc">Art Description</label>
-      <textarea class="farea" id="s_art_desc" rows="3" placeholder="Describe the nature, triggers, range, and limitations of the Blood Demon Art..."></textarea>
+    <div class="lore" id="breath-lore"></div>
+    <div class="row">
+      <label class="flbl">Known Forms / Techniques</label>
+      <textarea class="fta" id="p-bforms" placeholder="List known forms, custom techniques..."></textarea>
     </div>
-    <div class="frow">
-      <label class="flbl" id="l_art_weakness">Known Weaknesses</label>
-      <input class="finp" id="s_art_weakness" type="text" placeholder="Conditions under which the art fails or is limited..."/>
+  </div>
+
+  <!-- BLOOD DEMON ART (Demon) -->
+  <div class="fsec" id="fsec_bda">
+    <div class="shd"><div class="shd-gem" style="background:var(--r)"></div><div class="shd-title" style="color:var(--r)">Blood Demon Art</div><div class="shd-line"></div></div>
+    <div class="row">
+      <label class="flbl">Art Name</label>
+      <input class="finp" id="p-bdaname" type="text" placeholder="Name of the Blood Demon Art...">
+    </div>
+    <div class="row">
+      <label class="flbl">Description</label>
+      <textarea class="fta" id="p-bdadesc" placeholder="How the art manifests, abilities, range..."></textarea>
+    </div>
+    <div class="row">
+      <label class="flbl">Weakness / Limitation</label>
+      <textarea class="fta" id="p-bdaweak" placeholder="Counters, constraints, cost..."></textarea>
     </div>
   </div>
 </div>
 
-<!-- ═══ IV: SKILLS ═══ -->
-<div class="spane" id="pane3">
-  <div class="sk-bar" id="sk_filters">
-    <button class="sk-filter on" data-f="all" onclick="KNY.sf('all')">ALL</button>
-    <button class="sk-filter" data-f="uni" onclick="KNY.sf('uni')">UNIVERSAL</button>
-    <button class="sk-filter f-sla" data-f="sla" onclick="KNY.sf('sla')">SLAYER</button>
-    <button class="sk-filter f-dem" data-f="dem" onclick="KNY.sf('dem')">DEMON</button>
-    <button class="sk-filter" data-f="sel" onclick="KNY.sf('sel')">SELECTED</button>
+<!-- ─ PANE IV: SKILLS ─ -->
+<div class="pane" id="p3" data-num="Ⅳ">
+  <div class="shd"><div class="shd-gem"></div><div class="shd-title">Traits &amp; Abilities</div><div class="shd-line"></div></div>
+
+  <div class="sk-bar">
+    <div class="sk-f on" data-f="all" onclick="KNY.sf('all')">All</div>
+    <div class="sk-f" data-f="uni" onclick="KNY.sf('uni')">Universal</div>
+    <div class="sk-f" data-f="sla" onclick="KNY.sf('sla')">Slayer</div>
+    <div class="sk-f" data-f="dem" onclick="KNY.sf('dem')">Demon</div>
+    <div class="sk-f" data-f="sel" onclick="KNY.sf('sel')">Selected</div>
   </div>
-  <input class="sk-search" id="sk_search" placeholder="Search skills..." oninput="KNY.search()"/>
-  <div class="sk-count" id="sk_count">0 selected</div>
-  <div class="sk-grid" id="sk_grid"></div>
+  <input class="sk-srch" id="sk-srch" placeholder="Search abilities..." oninput="KNY.onSearch(this.value)">
+  <div class="sk-info">Selected: <em id="sk-count">0</em> / 61 abilities</div>
+
+  <div class="sk-list" id="sk-list"></div>
 </div>
 
-<!-- ═══ V: FATE ═══ -->
-<div class="spane" id="pane4">
-  <div class="frow2">
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_goal">Primary Goal</label>
-      <select class="fsel" id="s_goal">
-        <option value="">— Select —</option>
-        <option value="Slay all demons">Slay All Demons</option>
-        <option value="Avenge family / loved ones">Avenge Family</option>
-        <option value="Protect those I love">Protect Those I Love</option>
-        <option value="Become the strongest">Become the Strongest</option>
-        <option value="Reach Hashira rank">Reach Hashira Rank</option>
-        <option value="Find a cure for demonification">Find a Cure</option>
-        <option value="Serve Muzan faithfully">Serve Muzan</option>
-        <option value="Regain lost humanity">Regain Humanity</option>
-        <option value="Survive — nothing more">Survive</option>
-        <option value="Understand humans / demons">Understand Both Sides</option>
-        <option value="custom">Custom...</option>
-      </select>
+<!-- ─ PANE V: FATE ─ -->
+<div class="pane" id="p4" data-num="Ⅴ">
+  <div class="shd"><div class="shd-gem"></div><div class="shd-title">Fate &amp; Soul</div><div class="shd-line"></div></div>
+
+  <div class="row">
+    <label class="flbl">Personality</label>
+    <textarea class="fta" id="f-pers" placeholder="Temperament, mannerisms, emotional tendencies, how they carry themselves..."></textarea>
+  </div>
+  <div class="row2">
+    <div class="row">
+      <label class="flbl">Driving Goal</label>
+      <textarea class="fta" id="f-goal" placeholder="What they fight for..." style="min-height:52px"></textarea>
     </div>
-    <div class="frow" style="margin:0">
-      <label class="flbl" id="l_fate">Narrative Fate</label>
-      <select class="fsel" id="s_fate">
-        <option value="">— Unknown —</option>
-        <option value="The Chosen Blade">The Chosen Blade</option>
-        <option value="The Veteran">The Veteran</option>
-        <option value="The Sacrifice">The Sacrifice</option>
-        <option value="The Turned (Redemption)">The Turned (Redeemed)</option>
-        <option value="The Mentor">The Mentor</option>
-        <option value="The Conqueror">The Conqueror</option>
-        <option value="The Fallen">The Fallen</option>
-        <option value="The Wild Card">The Wild Card</option>
-        <option value="Fate Unknown">Fate Unknown</option>
-      </select>
+    <div class="row">
+      <label class="flbl">Bond / Connection</label>
+      <textarea class="fta" id="f-bond" placeholder="Key relationships..." style="min-height:52px"></textarea>
     </div>
   </div>
-  <div class="cpnl" id="cpnl_goal" style="margin-top:0;margin-bottom:9px">
-    <input class="finp" id="s_goal_c" type="text" placeholder="Custom goal..."/>
+  <div class="row">
+    <label class="flbl">Feared Fate</label>
+    <input class="finp" id="f-fate" type="text" placeholder="What outcome do they dread most...">
   </div>
-  <div class="frow">
-    <label class="flbl" id="l_bond">Most Important Bond</label>
-    <input class="finp" id="s_bond" type="text" placeholder="Person, memory, or ideal they fight for..."/>
+  <div class="row">
+    <label class="flbl">Defining Quote</label>
+    <input class="finp" id="f-quote" type="text" placeholder="A line they might say...">
   </div>
-  <div class="frow">
-    <label class="flbl" id="l_quote">Their Words</label>
-    <textarea class="farea" id="s_quote" rows="2" placeholder="A line that defines who they are..."></textarea>
+  <div class="row">
+    <label class="flbl">Hidden Secret</label>
+    <textarea class="fta" id="f-secret" placeholder="Something not widely known about them..." style="min-height:52px"></textarea>
   </div>
-  <div class="frow">
-    <label class="flbl" id="l_secret">Hidden Truth</label>
-    <textarea class="farea" id="s_secret" rows="2" placeholder="What they conceal, fear, or carry alone..."></textarea>
-  </div>
-  <div class="frow">
-    <label class="flbl" id="l_extra">Additional Notes</label>
-    <textarea class="farea" id="s_extra" rows="2" placeholder="Lore hooks, unique traits, relationships..."></textarea>
+  <div class="row">
+    <label class="flbl">Additional Notes</label>
+    <textarea class="fta" id="f-extra" placeholder="Anything else relevant..."></textarea>
   </div>
 </div>
 
-<!-- FOOTER -->
-<div class="ftr">
-  <button class="btn-sec" id="btn_reset" onclick="KNY.reset()">RESET</button>
-  <button class="btn-main" id="btn_confirm" onclick="KNY.send()">⟐ CONFIRM PATH</button>
+<!-- ─ BOTTOM NAV ─ -->
+<div class="nav">
+  <div class="ntab on" id="nt0" onclick="KNY.tb(0)"><div class="ntab-n">Ⅰ</div><div class="ntab-l">Identity</div></div>
+  <div class="ntab" id="nt1" onclick="KNY.tb(1)"><div class="ntab-n">Ⅱ</div><div class="ntab-l">Origin</div></div>
+  <div class="ntab" id="nt2" onclick="KNY.tb(2)"><div class="ntab-n">Ⅲ</div><div class="ntab-l">Power</div></div>
+  <div class="ntab" id="nt3" onclick="KNY.tb(3)"><div class="ntab-n">Ⅳ</div><div class="ntab-l">Skills</div></div>
+  <div class="ntab" id="nt4" onclick="KNY.tb(4)"><div class="ntab-n">Ⅴ</div><div class="ntab-l">Fate</div></div>
+  <div class="nav-send" onclick="KNY.send()">
+    <div class="nav-send-lbl">File ►</div>
+    <div class="nav-send-sub">Submit</div>
+  </div>
 </div>
 
-</div><!-- .win -->
+</div><!-- #knycr -->
+
 <script>
-var KNY=(function(){
-'use strict';
-
-/* ── STATE ── */
-var S={ln:'en',faction:'',skills:[],stats:{str:5,spd:5,stm:5,int:5,wil:5,sen:5},filter:'all',search:''};
-
-/* ── FACTION INFO ── */
-var FI={
-  'Demon Slayer Corps':'The Demon Slayer Corps operates in secret, dedicated to protecting humanity from demons. Slayers wield nichirin blades and breathing techniques developed over centuries of battle.',
-  'Demon':'Once human, transformed by Muzan Kibutsuji\'s blood. Demons regenerate from nearly any wound and may develop a unique Blood Demon Art. Sunlight and nichirin blades remain fatal.',
-  'Civilian':'An ordinary person in Taisho-era Japan — unaware of or entangled by the hidden war between slayers and demons.',
-  'Former Slayer':'One who has left or been expelled from the Corps, yet carries the techniques and scars of that life.'
-};
-
-/* ── BREATHING LORE ── */
-var BL={
-  'Water Breathing (水の呼吸)':'Fluid and adaptive, mimicking flowing water. One of the most widely taught styles. Used by Tanjiro, Giyu Tomioka. Ten forms, with an eleventh developed independently.',
-  'Flame Breathing (炎の呼吸)':'The fierce progenitor style. Rengoku\'s mastery is considered pinnacle. Powerful, direct, and consuming — like flame itself.',
-  'Thunder Breathing (雷の呼吸)':'Pure speed. All techniques are grounded in explosive acceleration, particularly the legs. Zenitsu\'s First Form represents its terrifying apex.',
-  'Wind Breathing (風の呼吸)':'Wild and unpredictable, like a gale. Sanemi Shinazugawa wields it with brutal effectiveness. Slashing, sweeping attacks with relentless pressure.',
-  'Stone Breathing (岩の呼吸)':'The most defensive of the original five. Gyomei Himejima\'s style uses chains and axes — immovable as the earth itself.',
-  'Insect Breathing (蟲の呼吸)':'Developed by Shinobu Kocho, who cannot behead demons. Uses precise piercing strikes to inject wisteria-based poisons into vital points.',
-  'Love Breathing (恋の呼吸)':'Mitsuri Kanroji\'s own style, derived from Flame. Flexible and striking — built around her unique muscle composition and whip-like blade.',
-  'Mist Breathing (霞の呼吸)':'Elusive and disorienting, like mist that obscures form and distance. Muichiro Tokito manifests its peak power through the Seventh Form.',
-  'Sound Breathing (音の呼吸)':'Tengen Uzui\'s explosive, flamboyant style. Uses dual swords and Sound Hashira awareness to create diversionary, overwhelming attacks.',
-  'Flower Breathing (花の呼吸)':'Derived from Water. Kanao Tsuyuri uses it with extraordinary visual acuity to predict opponents\' movements.',
-  'Serpent Breathing (蛇の呼吸)':'Obanai Iguro\'s winding, unpredictable style — blade curves like a serpent, finding gaps in defences through constant misdirection.',
-  'Beast Breathing (獣の呼吸)':'Inosuke Hashibira\'s self-taught style. Pure instinct and ferocity — developed in isolation on a mountain. Eschews technique for overwhelming wild aggression.',
-  'Moon Breathing (月の呼吸)':'Kokushibo\'s transcendent style. Sixteen forms. Creates slashing air currents with crescent shapes woven through Total Concentration Breathing.',
-  'Sun Breathing / Hinokami Kagura (日の呼吸)':'The original form — the source of all breathing styles. Passed through the Kamado family as a ritual dance. Thirteen Forms. The only style Muzan Kibutsuji genuinely fears.'
-};
-
-/* ── SKILLS DATA (61 total) ── */
 var SKILLS=[
-  /* ── UNIVERSAL (20) ── */
-  {id:'enhanced_senses',name:'Enhanced Senses',tag:'uni',desc:'Heightened hearing, smell, and sight far beyond normal human limits.',restrict:''},
-  {id:'combat_instinct',name:'Combat Instinct',tag:'uni',desc:'Subconscious awareness of danger before it visibly manifests.',restrict:''},
-  {id:'pain_resistance',name:'Pain Resistance',tag:'uni',desc:'Endure severe injuries without losing composure or battle focus.',restrict:''},
-  {id:'fearless_heart',name:'Fearless Heart',tag:'uni',desc:'Immune to terror auras, intimidation, and psychological attacks.',restrict:''},
-  {id:'keen_memory',name:'Keen Memory',tag:'uni',desc:'Retain techniques, routes, and encounters with near-perfect recall.',restrict:''},
-  {id:'strategic_mind',name:'Strategic Mind',tag:'uni',desc:'Read battlefield conditions and adapt tactics under pressure.',restrict:''},
-  {id:'deep_empathy',name:'Deep Empathy',tag:'uni',desc:"Intuitively perceive others' emotions, pain, and hidden intentions.",restrict:''},
-  {id:'survivors_will',name:"Survivor's Will",tag:'uni',desc:'Determination surges when pushed to the edge of annihilation.',restrict:''},
-  {id:'swift_footwork',name:'Swift Footwork',tag:'uni',desc:'Advanced movement and evasion refined beyond ordinary training.',restrict:''},
-  {id:'physical_peak',name:'Physical Peak',tag:'uni',desc:'Raw physical conditioning far beyond normal human capability.',restrict:''},
-  {id:'leadership',name:'Leadership',tag:'uni',desc:'Natural authority that rallies allies in moments of crisis.',restrict:''},
-  {id:'expert_tracker',name:'Expert Tracker',tag:'uni',desc:'Follow prey through terrain using minimal environmental clues.',restrict:''},
-  {id:'night_perception',name:'Night Perception',tag:'uni',desc:'Enhanced awareness and movement efficiency in darkness.',restrict:''},
-  {id:'herbalism',name:'Herbalism',tag:'uni',desc:'Identify and apply medicinal and demon-repelling plant knowledge.',restrict:''},
-  {id:'berserker',name:'Berserker State',tag:'uni',desc:'Enter a primal combat frenzy — raw power surges as pain recedes.',restrict:''},
-  {id:'precognition',name:'Precognition',tag:'uni',desc:'Sense incoming attacks a fraction of a second before arrival.',restrict:''},
-  {id:'mentor',name:'Mentor',tag:'uni',desc:'Effectively teach and transmit techniques to willing students.',restrict:''},
-  {id:'undying_legend',name:'Undying Legend',tag:'uni',desc:'Deeds and name inspire courage in those who hear of them.',restrict:''},
-  {id:'adaptability',name:'Battle Adaptability',tag:'uni',desc:'Rapidly restructure technique mid-fight to counter new threats.',restrict:''},
-  {id:'iron_will',name:'Iron Will',tag:'uni',desc:'Mental fortitude that endures prolonged suffering without breaking.',restrict:''},
-  /* ── SLAYER (21) ── */
-  {id:'total_conc',name:'Total Conc. Breathing: Constant',tag:'sla',desc:'Sustain Total Concentration Breathing every waking hour, not only in battle.',restrict:'Slayer only'},
-  {id:'transparent_world',name:'Transparent World',tag:'sla',desc:"See the flow of muscle, blood, and joints — perceive attacks before they're made.",restrict:'Slayer only · Extremely rare'},
-  {id:'demon_slayer_mark',name:'Demon Slayer Mark',tag:'sla',desc:'A body mark appears and dramatically amplifies all combat abilities.',restrict:'Slayer only · Rank Kinoe+'},
-  {id:'wisteria_immunity',name:'Wisteria Immunity',tag:'sla',desc:'Deliberate exposure has built meaningful resistance to wisteria poison.',restrict:'Slayer only'},
-  {id:'demon_awareness',name:'Demon Awareness',tag:'sla',desc:'Sense the presence, direction, and approximate power of nearby demons.',restrict:'Slayer only'},
-  {id:'nichirin_mastery',name:'Nichirin Blade Mastery',tag:'sla',desc:"Deep mastery of the nichirin blade's sun-channeling properties.",restrict:'Slayer only'},
-  {id:'multi_breathing',name:'Multiple Breathing Styles',tag:'sla',desc:'Proficient in two or more distinct breathing styles simultaneously.',restrict:'Slayer only · Rare'},
-  {id:'master_swordsman',name:'Master Swordsman',tag:'sla',desc:'Blade technique at the absolute pinnacle of human achievement.',restrict:'Slayer only · Rank Kinoe+'},
-  {id:'sun_breathing',name:'Sun Breathing Legacy',tag:'sla',desc:'Carrier of the original Hinokami Kagura — the source of all breathing.',restrict:'Slayer only · Extremely rare'},
-  {id:'thunder_clap',name:'Thunder Clap & Flash',tag:'sla',desc:'Pure speed burst: close any distance in a single explosive instant.',restrict:'Slayer only · Thunder Breathing'},
-  {id:'repetitive_action',name:'Repetitive Action',tag:'sla',desc:'Reach peak concentration through a personal mental or physical trigger.',restrict:'Slayer only'},
-  {id:'battle_awakening',name:'Battle Awakening',tag:'sla',desc:'Hidden reserves surface only when pushed to a true life-or-death threshold.',restrict:'Slayer only'},
-  {id:'speed_spec',name:'Speed Specialisation',tag:'sla',desc:'All physical development focused entirely on raw movement speed.',restrict:'Slayer only'},
-  {id:'strength_spec',name:'Strength Specialisation',tag:'sla',desc:'All physical development focused entirely on raw striking power.',restrict:'Slayer only'},
-  {id:'kasugai_bond',name:'Kasugai Crow Bond',tag:'sla',desc:'Strong bond with personal kasugai crow — used for advanced scouting and relay.',restrict:'Slayer only'},
-  {id:'corps_network',name:'Corps Network Access',tag:'sla',desc:'Privileged access to Corps intelligence, safe houses, and supply chains.',restrict:'Slayer only · Rank Tsuchinoe+'},
-  {id:'wisteria_coating',name:'Wisteria Weapon Coating',tag:'sla',desc:'Weapons coated in concentrated wisteria extract for demon debilitation.',restrict:'Slayer only'},
-  {id:'swordsmith_heritage',name:'Swordsmith Heritage',tag:'sla',desc:'Trained in Swordsmith Village craft — can maintain and repair nichirin blades.',restrict:'Slayer only'},
-  {id:'hashira_training',name:'Hashira Training Graduate',tag:'sla',desc:'Completed the full gruelling training gauntlet of all nine Hashira.',restrict:'Slayer only · Rank Kinoe+'},
-  {id:'breathing_evolved',name:'Evolved Breathing',tag:'sla',desc:'Personal breathing style has evolved beyond its source into a unique form.',restrict:'Slayer only · Rare'},
-  {id:'dual_blade',name:'Dual Blade Style',tag:'sla',desc:'Combines breathing technique with effective dual-blade combat.',restrict:'Slayer only'},
-  /* ── DEMON (20) ── */
-  {id:'regeneration',name:'Instant Regeneration',tag:'dem',desc:'Wounds heal within seconds unless inflicted by nichirin blade or sunlight.',restrict:'Demon only'},
-  {id:'flesh_manip',name:'Flesh Manipulation',tag:'dem',desc:'Consciously reshape and restructure own body at will.',restrict:'Demon only'},
-  {id:'unlimited_regen',name:'Unlimited Regeneration',tag:'dem',desc:'Even decapitation can be recovered from. Only sun or nichirin is permanent.',restrict:'Demon only · Upper Moon tier+'},
-  {id:'blood_demon_art',name:'Blood Demon Art',tag:'dem',desc:'A unique supernatural power expressed through blood and will.',restrict:'Demon only'},
-  {id:'absorption',name:'Demon Absorption',tag:'dem',desc:'Absorb and permanently incorporate abilities of consumed demons.',restrict:'Demon only · Rare'},
-  {id:'territory',name:'Territory Creation',tag:'dem',desc:'Manifest a bounded domain where reality bends to the demon\'s art.',restrict:'Demon only · Twelve Kizuki+'},
-  {id:'sunlight_resist',name:'Sunlight Resistance',tag:'dem',desc:'Partial or complete immunity to sunlight — an almost impossible aberration.',restrict:'Demon only · Extremely rare'},
-  {id:'emotion_feed',name:'Emotion Consumption',tag:'dem',desc:'Sustain power by feeding on a specific intense emotion rather than flesh.',restrict:'Demon only'},
-  {id:'hyper_speed',name:'Demonic Speed',tag:'dem',desc:'Movement so extreme it approaches teleportation to human perception.',restrict:'Demon only'},
-  {id:'body_detach',name:'Body Part Detachment',tag:'dem',desc:'Detach limbs or sensory organs and control them independently.',restrict:'Demon only'},
-  {id:'poison_blood',name:'Toxic Blood',tag:'dem',desc:'Blood is intensely toxic — contact causes rapid physical deterioration.',restrict:'Demon only'},
-  {id:'dream_manip',name:'Dream Manipulation',tag:'dem',desc:'Enter sleeping minds and imprison targets in inescapable illusions.',restrict:'Demon only · Twelve Kizuki+'},
-  {id:'kizuki_power',name:'Twelve Kizuki Enhancement',tag:'dem',desc:"Granted amplified power by Muzan as part of his chosen Twelve.",restrict:'Demon only · Twelve Kizuki only'},
-  {id:'muzan_blood',name:"Muzan's Blood Gift",tag:'dem',desc:"Direct infusion of Muzan's highest-grade blood; dramatically elevated power.",restrict:'Demon only · Upper Moon+'},
-  {id:'illusion',name:'Illusion Casting',tag:'dem',desc:'Project vivid multi-sensory illusions to disorient and paralyse.',restrict:'Demon only'},
-  {id:'curse_mark',name:'Curse Mark',tag:'dem',desc:'Leave a dormant curse on any who directly meet your gaze.',restrict:'Demon only'},
-  {id:'wisteria_override',name:'Wisteria Override',tag:'dem',desc:'Partial immunity to wisteria — significantly reduced debilitation.',restrict:'Demon only · Upper Moon tier+'},
-  {id:'age_immunity',name:'Age Immunity',tag:'dem',desc:"Frozen at the moment of demonification — completely immune to ageing.",restrict:'Demon only'},
-  {id:'sound_art',name:'Sound Manipulation',tag:'dem',desc:'Generate and weaponise supersonic waves and resonant acoustic attacks.',restrict:'Demon only'},
-  {id:'scent_erasure',name:'Scent Erasure',tag:'dem',desc:'Perfectly mask own presence, scent, and aura from slayer detection.',restrict:'Demon only'}
+  // ─ UNIVERSAL (20) ─
+  {id:'enhanced_senses',name:'Enhanced Senses',tag:'uni',desc:'Heightened perception beyond normal human limits.',restrict:''},
+  {id:'combat_instinct',name:'Combat Instinct',tag:'uni',desc:'Battle-hardened reflex; reacts before conscious thought.',restrict:''},
+  {id:'survivor_will',name:'Survivor\'s Will',tag:'uni',desc:'Refuses to fall even at the edge of death.',restrict:''},
+  {id:'quick_learner',name:'Quick Learner',tag:'uni',desc:'Absorbs techniques and information at accelerated rate.',restrict:''},
+  {id:'battle_sense',name:'Battle Sense',tag:'uni',desc:'Reads combat flow and anticipates enemy patterns.',restrict:''},
+  {id:'intimidating',name:'Intimidating Presence',tag:'uni',desc:'Aura suppresses weaker opponents and unsettles peers.',restrict:''},
+  {id:'pain_endure',name:'Pain Endurance',tag:'uni',desc:'Continues fighting through injuries that would fell others.',restrict:''},
+  {id:'iron_will',name:'Iron Will',tag:'uni',desc:'Mental fortitude resists fear, despair, and coercion.',restrict:''},
+  {id:'tactical_mind',name:'Tactical Mind',tag:'uni',desc:'Processes battlefield data rapidly; finds optimal paths.',restrict:''},
+  {id:'charisma',name:'Charismatic Aura',tag:'uni',desc:'Commands loyalty and trust through force of personality.',restrict:''},
+  {id:'loyal_heart',name:'Loyal Heart',tag:'uni',desc:'Bonds formed are unbreakable; fights hardest for others.',restrict:''},
+  {id:'sharp_eye',name:'Sharp Eye',tag:'uni',desc:'Exceptional visual acuity; spots openings and tells.',restrict:''},
+  {id:'empathic',name:'Empathic Bond',tag:'uni',desc:'Deeply reads emotions, creating strong interpersonal links.',restrict:''},
+  {id:'unwavering',name:'Unwavering Resolve',tag:'uni',desc:'Conviction never wavers under pressure.',restrict:''},
+  {id:'night_vision',name:'Night Vision',tag:'uni',desc:'Sees clearly in near-total darkness.',restrict:''},
+  {id:'tracking',name:'Tracking Expert',tag:'uni',desc:'Can follow trails by scent, sound, and subtle signs.',restrict:''},
+  {id:'multilingual',name:'Multilingual',tag:'uni',desc:'Speaks several regional dialects and ancient scripts.',restrict:''},
+  {id:'spirit_aware',name:'Spiritual Awareness',tag:'uni',desc:'Perceives supernatural presences others cannot.',restrict:''},
+  {id:'hidden_potential',name:'Hidden Potential',tag:'uni',desc:'Reserves of power that manifest under extreme duress.',restrict:''},
+  {id:'death_defiance',name:'Death Defiance',tag:'uni',desc:'Has survived what should have been fatal; fate seems bent.',restrict:''},
+
+  // ─ SLAYER (21) ─
+  {id:'total_conc',name:'Total Conc. Breathing: Constant',tag:'sla',desc:'Maintains Total Concentration Breathing at all times, permanently elevating output.',restrict:'Slayer only'},
+  {id:'transparent_world',name:'Transparent World',tag:'sla',desc:'Perceives the internal workings of living bodies; predicts muscle movement.',restrict:'Slayer only · Extremely rare'},
+  {id:'slayer_mark',name:'Demon Slayer Mark',tag:'sla',desc:'Mark appears, dramatically enhancing all combat abilities.',restrict:'Slayer only · Rank Kinoe+'},
+  {id:'red_nichirin',name:'Red Nichirin Blade',tag:'sla',desc:'Blade permanently turns crimson; negates demon regeneration on contact.',restrict:'Slayer only · Rare awakening'},
+  {id:'sun_heir',name:'Sun Breathing Heir',tag:'sla',desc:'Carries the lineage or knowledge of the first breathing style.',restrict:'Slayer only · Lineage required'},
+  {id:'beast_instinct',name:'Beast Instinct',tag:'sla',desc:'Animal-like fighting intuition; strikes from unpredictable angles.',restrict:'Slayer only'},
+  {id:'serpent_agility',name:'Serpentine Agility',tag:'sla',desc:'Fluid, twisting body movement makes attacks nearly impossible to predict.',restrict:'Slayer only'},
+  {id:'toxin_resist',name:'Insect Toxin Resistance',tag:'sla',desc:'Naturally resistant to most poisons and venoms.',restrict:'Slayer only'},
+  {id:'sound_disrupt',name:'Sound Disorientation',tag:'sla',desc:'Weaponizes sound and explosions to shatter opponent focus.',restrict:'Slayer only'},
+  {id:'flower_grace',name:'Flower Dance Grace',tag:'sla',desc:'Movements carry mesmerizing beauty that disguises lethal intent.',restrict:'Slayer only'},
+  {id:'mist_illusion',name:'Mist Illusion',tag:'sla',desc:'Speed and technique create after-images; blurs the line of reality.',restrict:'Slayer only'},
+  {id:'stone_endure',name:'Stone Endurance',tag:'sla',desc:'Hardened body absorbs blows that would shatter bone.',restrict:'Slayer only'},
+  {id:'love_charm',name:'Love\'s Charm',tag:'sla',desc:'Overwhelming emotional force transmitted through strikes.',restrict:'Slayer only'},
+  {id:'thunder_sprint',name:'Thunder Sprint',tag:'sla',desc:'Single movement covers extreme distance at lightning speed.',restrict:'Slayer only'},
+  {id:'flame_lineage',name:'Flame Pillar Lineage',tag:'sla',desc:'Carries the blazing technique of the flame breathing bloodline.',restrict:'Slayer only · Lineage required'},
+  {id:'wind_relentless',name:'Wind\'s Relentless Assault',tag:'sla',desc:'Never-ending offensive pressure that gives no opening to recover.',restrict:'Slayer only'},
+  {id:'water_adapt',name:'Water Adaptability',tag:'sla',desc:'Technique flows and adapts to any opponent shape or rhythm.',restrict:'Slayer only'},
+  {id:'hashira_aura',name:'Hashira Aura',tag:'sla',desc:'Emanates a pressure that stifles lower demons\' will to fight.',restrict:'Slayer only · Hashira rank'},
+  {id:'pillar_cand',name:'Pillar Candidate',tag:'sla',desc:'Recognised potential for Hashira; receives priority resources.',restrict:'Slayer only · Rank Kinoe+'},
+  {id:'former_legacy',name:'Former Hashira Legacy',tag:'sla',desc:'Once held Hashira rank; retains knowledge and some aura even after.',restrict:'Former Slayer only'},
+  {id:'corps_veteran',name:'Corps Veteran',tag:'sla',desc:'Years of service grant battle-tested composure and tactical depth.',restrict:'Slayer only · Rank Hinoe+'},
+
+  // ─ DEMON (20) ─
+  {id:'regeneration',name:'Instant Regeneration',tag:'dem',desc:'Heals wounds in seconds; only sunlight and Nichirin can hinder.',restrict:'Demon only'},
+  {id:'unlimited_regen',name:'Unlimited Regeneration',tag:'dem',desc:'Even decapitation is survivable; near-infinite healing capacity.',restrict:'Demon only · Upper Moon tier+'},
+  {id:'territory',name:'Territory Creation',tag:'dem',desc:'Manifests a spatial domain where the demon\'s power is absolute.',restrict:'Demon only · Twelve Kizuki+'},
+  {id:'blood_manip',name:'Blood Manipulation',tag:'dem',desc:'Controls and weaponizes blood as a direct combat tool.',restrict:'Demon only'},
+  {id:'flesh_weave',name:'Flesh Weaving',tag:'dem',desc:'Reshapes own or others\' flesh as weapon or shield.',restrict:'Demon only'},
+  {id:'miasma',name:'Miasma Breath',tag:'dem',desc:'Exhales toxic fog that corrodes matter and flesh.',restrict:'Demon only'},
+  {id:'cloning',name:'Cloning',tag:'dem',desc:'Creates functional duplicates of self to overwhelm opponents.',restrict:'Demon only'},
+  {id:'size_manip',name:'Size Manipulation',tag:'dem',desc:'Alters own body size from microscopic to enormous.',restrict:'Demon only'},
+  {id:'threads',name:'Thread Creation',tag:'dem',desc:'Spins razor-sharp threads from own body to ensnare and cut.',restrict:'Demon only'},
+  {id:'mem_absorb',name:'Memory Absorption',tag:'dem',desc:'Gains full memory and skills of those consumed.',restrict:'Demon only'},
+  {id:'hypnosis',name:'Hypnosis',tag:'dem',desc:'Commands weaker-willed individuals through sight or voice.',restrict:'Demon only'},
+  {id:'elem_ctrl',name:'Elemental Control',tag:'dem',desc:'Bends an element (fire, water, earth) to will.',restrict:'Demon only · Upper Demon tier+'},
+  {id:'bda_mastery',name:'Blood Demon Art Mastery',tag:'dem',desc:'Art operates at peak efficiency with minimal Muzan blood cost.',restrict:'Demon only · Twelve Kizuki+'},
+  {id:'kizuki_power',name:'Twelve Kizuki Power',tag:'dem',desc:'Carries the concentrated power directly granted by Muzan.',restrict:'Demon only · Twelve Kizuki only'},
+  {id:'upper_resilience',name:'Upper Moon Resilience',tag:'dem',desc:'Damage that would destroy lower demons merely inconveniences.',restrict:'Demon only · Upper Moon tier+'},
+  {id:'sunlight_partial',name:'Partial Sunlight Immunity',tag:'dem',desc:'Withstands brief solar exposure; weakened but not destroyed.',restrict:'Demon only · Upper Moon 1 / Special only'},
+  {id:'barrier',name:'Barrier Creation',tag:'dem',desc:'Erects defensive barriers that block most physical attacks.',restrict:'Demon only · Twelve Kizuki+'},
+  {id:'shapeshift',name:'Shape Shifting',tag:'dem',desc:'Alters appearance completely; can mimic humans or other demons.',restrict:'Demon only'},
+  {id:'devouring',name:'Devouring Maw',tag:'dem',desc:'Mouth or extensions consume and absorb prey entirely.',restrict:'Demon only'},
+  {id:'shadow_walk',name:'Shadow Walking',tag:'dem',desc:'Moves through shadows unseen; ambushes from any dark space.',restrict:'Demon only'}
 ];
 
-/* ── STATS ── */
-var STATS=[
-  ['str','Strength','ความแข็งแกร่ง'],
-  ['spd','Speed','ความเร็ว'],
-  ['stm','Stamina','ความอดทน'],
-  ['int','Intellect','สติปัญญา'],
-  ['wil','Willpower','เจตจำนง'],
-  ['sen','Senses','การรับรู้']
-];
+var S={tab:0,faction:'',stats:{str:0,spd:0,stm:0,int:0,wil:0,sen:0},skills:[],filter:'all',search:''};
 
-/* ── LABELS ── */
-var L={
-  tbar_mid:['KIMETSU NO YAIBA','กิเมตสึ โนะ ยาอิบะ'],
-  htag:['鬼滅の刃 · DEMON SLAYER','鬼滅の刃 · นักล่าอสูร'],
-  htitle:['CHARACTER CREATION','สร้างตัวละคร'],
-  hsub:['FORGE YOUR PATH','สร้างเส้นทางของคุณ'],
-  t0:['IDENTITY','ตัวตน'],t1:['ORIGIN','ต้นกำเนิด'],t2:['POWER','พลัง'],t3:['SKILLS','ทักษะ'],t4:['FATE','โชคชะตา'],
-  l_name:['Name','ชื่อ'],l_alias:['Alias / Nickname','ฉายา'],
-  l_age:['Age','อายุ'],l_gender:['Gender','เพศ'],
-  l_appearance:['Physical Appearance','รูปลักษณ์'],l_personality:['Personality','บุคลิกภาพ'],
-  l_faction:['Faction','สังกัด'],l_rank:['Corps Rank','ยศ'],
-  l_origin_how:['Path to Corps','เส้นทางสู่กองทหาร'],
-  l_region:['Region / Territory','ภูมิภาค'],
-  l_dem_tier:['Power Tier','ระดับพลัง'],l_dem_origin:['How Turned','การกลายเป็นอสูร'],
-  l_dem_time:['Time as Demon','ระยะเวลาเป็นอสูร'],
-  l_background:['Background / History','ภูมิหลัง'],
-  sh_stats:['Combat Parameters','พารามิเตอร์การต่อสู้'],
-  sh_stats_note:['— click ticks','— คลิกเพื่อตั้งค่า'],
-  sh_breath:['Breathing Style','สไตล์การหายใจ'],
-  l_breath:['Primary Style','สไตล์หลัก'],
-  l_breath_forms:['Mastered Forms / Techniques','รูปแบบที่เชี่ยวชาญ'],
-  l_nichirin:['Nichirin Blade Colour','สีใบมีด'],
-  sh_art:['Blood Demon Art (血鬼術)','ศิลปะเลือดอสูร (血鬼術)'],
-  l_art_name:['Art Name','ชื่อศิลปะ'],l_art_desc:['Art Description','คำอธิบาย'],
-  l_art_weakness:['Known Weaknesses','จุดอ่อน'],
-  l_goal:['Primary Goal','เป้าหมายหลัก'],l_fate:['Narrative Fate','ชะตากรรม'],
-  l_bond:['Most Important Bond','สิ่งที่ต่อสู้เพื่อ'],
-  l_quote:['Their Words','คำพูดประจำตัว'],l_secret:['Hidden Truth','ความจริงที่ซ่อน'],
-  l_extra:['Additional Notes','หมายเหตุ'],
-  btn_confirm:['⟐ CONFIRM PATH','⟐ ยืนยันเส้นทาง'],
-  btn_reset:['RESET','รีเซ็ต']
+function g(id){return document.getElementById(id)}
+
+var BREATH_LORE={
+  'Water Breathing':'The most widespread style. 10 standard forms. Mimics the flow of water — adaptive, fluid, never exhausted. Ideal for versatile fighters.',
+  'Flame Breathing':'Passed through the Rengoku bloodline. Aggressive, powerful, linear strikes. 9 forms. The original style alongside Sun Breathing.',
+  'Thunder Breathing':'Agatsuma style. Lightning-fast linear movement. 6 forms, most famous being Thunderclap and Flash variants.',
+  'Wind Breathing':'Destructive wide-range slashes like a gale. 9 forms. Highly aggressive; suits relentless offensive fighters.',
+  'Stone Breathing':'5 forms. Earth-shattering strikes relying on brute force and unyielding body constitution.',
+  'Insect Breathing':'Created by Shinobu Kocho. Rapid, precise thrusting to inject wisteria-derived poison through blade.',
+  'Love Breathing':'Kanroji\'s personal derivative. 6 forms. Flowing, whip-like strikes that confuse opponents.',
+  'Mist Breathing':'7 forms (6 standard + Seventh Form). Speed-based illusions; attacks blur the line between present and past.',
+  'Sound Breathing':'Uzui\'s style. 5 forms, all involving explosive sound bursts and rhythm disruption.',
+  'Flower Breathing':'Branch of Water. 7 forms. Graceful, dance-like movements concealing lethal precision.',
+  'Serpent Breathing':'Iguro\'s style. Twisting, coiling slashes that track targets around obstacles.',
+  'Beast Breathing':'14 forms (irregular). Inosuke\'s self-taught style; wild, unpredictable animal movements.',
+  'Moon Breathing':'16 forms. Kokushibo\'s derivative of Sun Breathing; sweeping crescent slashes.',
+  'Sun Breathing / Hinokami Kagura':'The first breathing style, source of all others. 12 forms + Thirteenth Form. The only style that can kill Muzan.',
+  'Original / Self-developed':'A unique style created by this individual, drawing from personal experience or existing styles.'
 };
 
-function g(id){return document.getElementById(id);}
-function gt(k){var a=L[k];return a?a[S.ln==='th'?1:0]:k;}
-
-/* ── INIT ── */
-function init(){
-  buildStats();buildSkillGrid();applyLabels();
-  // custom panel toggles
-  var selMap={
-    's_origin_how':'cpnl_origin_how',
-    's_dem_origin':'cpnl_dem_origin',
-    's_goal':'cpnl_goal',
-    's_breath':'cpnl_breath'
-  };
-  Object.keys(selMap).forEach(function(sid){
-    var el=g(sid);if(!el)return;
-    el.addEventListener('change',function(){
-      var vis=this.value==='custom';
-      var pnl=g(selMap[sid]);if(pnl)pnl.classList.toggle('vis',vis);
+var KNY={
+  init:function(){
+    var keys=['str','spd','stm','int','wil','sen'];
+    keys.forEach(function(k){
+      var bar=g('sb-'+k);if(!bar)return;
+      for(var i=1;i<=10;i++){
+        var seg=document.createElement('div');
+        seg.className='seg';
+        seg.setAttribute('data-k',k);seg.setAttribute('data-v',i);
+        seg.onclick=(function(kk,vv){return function(){KNY.setStat(kk,vv)}})(k,i);
+        bar.appendChild(seg);
+      }
     });
-  });
-}
-
-/* ── FACTION CHANGE ── */
-function onFaction(){
-  var v=g('s_faction').value;
-  S.faction=v;
-  var fi=FI[v]||'';
-  var fib=g('faction_info');
-  if(fib){fib.textContent=fi;fib.classList.toggle('vis',!!fi);}
-
-  var badge=g('hbadge');
-  if(badge){
-    if(v==='Demon Slayer Corps'){
-      badge.textContent='DEMON SLAYER CORPS';
-      badge.style.color='#70d888';badge.style.borderColor='rgba(80,180,100,.4)';badge.style.background='rgba(80,180,100,.08)';
-    } else if(v==='Demon'){
-      badge.textContent='DEMON';
-      badge.style.color='#e86070';badge.style.borderColor='rgba(200,48,64,.4)';badge.style.background='rgba(200,48,64,.08)';
-    } else if(v){
-      badge.textContent=v.toUpperCase();
-      badge.style.color='#4a7fd4';badge.style.borderColor='rgba(74,127,212,.3)';badge.style.background='rgba(74,127,212,.08)';
-    } else {
-      badge.textContent='SELECT YOUR FACTION';
-      badge.style.color='';badge.style.borderColor='';badge.style.background='';
+    KNY.buildSkills();
+  },
+  tb:function(n){
+    for(var i=0;i<5;i++){
+      g('p'+i).classList.toggle('vis',i===n);
+      g('nt'+i).classList.toggle('on',i===n);
     }
-  }
-
-  // show/hide faction sections
-  var isSlayer=(v==='Demon Slayer Corps'||v==='Former Slayer');
-  var isDemon=(v==='Demon');
-  ['fsec_slayer'].forEach(function(id){var e=g(id);if(e)e.classList.toggle('vis',isSlayer);});
-  ['fsec_breath'].forEach(function(id){var e=g(id);if(e)e.classList.toggle('vis',isSlayer);});
-  ['fsec_demon'].forEach(function(id){var e=g(id);if(e)e.classList.toggle('vis',isDemon);});
-  ['fsec_art'].forEach(function(id){var e=g(id);if(e)e.classList.toggle('vis',isDemon);});
-
-  // update skill locks
-  updateSkillLocks();
-}
-
-/* ── BREATHING CHANGE ── */
-function onBreath(){
-  var v=g('s_breath').value;
-  var info=BL[v]||'';
-  var ib=g('breath_info');
-  if(ib){ib.textContent=info;ib.classList.toggle('vis',!!info&&v!=='custom');}
-}
-
-/* ── SKILL GRID ── */
-function buildSkillGrid(){
-  var grid=g('sk_grid');if(!grid)return;
-  grid.innerHTML='';
-  SKILLS.forEach(function(sk){
-    var card=document.createElement('div');
-    card.className='sk-card';
-    card.id='skc_'+sk.id;
-    card.setAttribute('data-tag',sk.tag);
-    card.setAttribute('data-name',sk.name.toLowerCase());
-
-    var tagClass={'uni':'t-uni','sla':'t-sla','dem':'t-dem'}[sk.tag]||'t-uni';
-    var tagLabel={'uni':'✦ Universal','sla':'🗡 Slayer','dem':'👹 Demon'}[sk.tag]||'Universal';
-
-    card.innerHTML=
-      '<div class="sk-name">'+escH(sk.name)+'</div>'+
-      '<div class="sk-desc">'+escH(sk.desc)+'</div>'+
-      '<div class="sk-foot">'+
-        '<span class="sk-tag '+tagClass+'">'+tagLabel+'</span>'+
-        (sk.restrict?'<span class="sk-restrict">⚠ '+escH(sk.restrict)+'</span>':'')+
-      '</div>';
-
-    card.onclick=function(){toggleSkill(sk.id,card);};
-    grid.appendChild(card);
-  });
-  updateSkillLocks();
-  updateCount();
-}
-
-function toggleSkill(id,card){
-  if(card.classList.contains('locked'))return;
-  card.classList.toggle('sel');
-  var i=S.skills.indexOf(id);
-  if(i>=0)S.skills.splice(i,1);else S.skills.push(id);
-  updateCount();
-  if(S.filter==='sel')applyFilter();
-}
-
-function updateSkillLocks(){
-  var isSlayer=(S.faction==='Demon Slayer Corps'||S.faction==='Former Slayer');
-  var isDemon=(S.faction==='Demon');
-  SKILLS.forEach(function(sk){
-    var card=g('skc_'+sk.id);if(!card)return;
-    var locked=false;
-    if(sk.tag==='sla'&&isDemon)locked=true;
-    if(sk.tag==='dem'&&isSlayer)locked=true;
-    card.classList.toggle('locked',locked);
-    if(locked&&card.classList.contains('sel')){
-      card.classList.remove('sel');
-      var i=S.skills.indexOf(sk.id);if(i>=0)S.skills.splice(i,1);
-    }
-  });
-  updateCount();
-}
-
-function updateCount(){
-  var el=g('sk_count');
-  if(el)el.textContent=S.skills.length+(S.ln==='th'?' ทักษะที่เลือก':' skill'+(S.skills.length!==1?'s':'')+' selected');
-}
-
-/* ── FILTER ── */
-function sf(f){
-  S.filter=f;
-  document.querySelectorAll('.sk-filter').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-f')===f);});
-  applyFilter();
-}
-
-function applyFilter(){
-  var q=S.search.toLowerCase();
-  SKILLS.forEach(function(sk){
-    var card=g('skc_'+sk.id);if(!card)return;
-    var show=true;
-    if(S.filter==='uni'&&sk.tag!=='uni')show=false;
-    if(S.filter==='sla'&&sk.tag!=='sla')show=false;
-    if(S.filter==='dem'&&sk.tag!=='dem')show=false;
-    if(S.filter==='sel'&&!card.classList.contains('sel'))show=false;
-    if(q&&card.getAttribute('data-name').indexOf(q)<0&&sk.desc.toLowerCase().indexOf(q)<0)show=false;
-    card.classList.toggle('hidden',!show);
-  });
-}
-
-function search(){
-  S.search=(g('sk_search').value||'').trim();
-  applyFilter();
-}
-
-/* ── STATS ── */
-function buildStats(){
-  var TH=S.ln==='th',blk=g('stat_block');
-  if(!blk)return;blk.innerHTML='';
-  STATS.forEach(function(st){
-    var key=st[0],nm=TH?st[2]:st[1];
-    var row=document.createElement('div');row.className='stat-row';
-    var nd=document.createElement('div');nd.className='stat-nm';nd.textContent=nm;
-    var td=document.createElement('div');td.className='ticks';td.id='tck_'+key;
-    var vd=document.createElement('div');vd.className='stat-v';vd.id='sv_'+key;
-    for(var i=1;i<=10;i++){
-      (function(i){
-        var t=document.createElement('div');
-        t.className='tick'+(S.stats[key]>=i?' on':'')+(i>=9&&S.stats[key]>=i?' hi':'');
-        t.onclick=function(){setStat(key,i);};
-        td.appendChild(t);
-      })(i);
-    }
-    vd.textContent=S.stats[key];
-    row.appendChild(nd);row.appendChild(td);row.appendChild(vd);
-    blk.appendChild(row);
-  });
-}
-function setStat(key,val){
-  S.stats[key]=val;
-  var tc=g('tck_'+key).children;
-  for(var i=0;i<10;i++){tc[i].className='tick'+(val>i?' on':'')+(i>=8&&val>i?' hi':'');}
-  g('sv_'+key).textContent=val;
-}
-
-/* ── LABELS ── */
-function applyLabels(){
-  ['tbar_mid','htag','htitle','hsub','t0','t1','t2','t3','t4',
-   'l_name','l_alias','l_age','l_gender','l_appearance','l_personality',
-   'l_faction','l_rank','l_origin_how','l_region',
-   'l_dem_tier','l_dem_origin','l_dem_time','l_background',
-   'sh_stats','sh_stats_note','sh_breath','l_breath','l_breath_forms','l_nichirin',
-   'sh_art','l_art_name','l_art_desc','l_art_weakness',
-   'l_goal','l_fate','l_bond','l_quote','l_secret','l_extra'
-  ].forEach(function(k){var el=g(k);if(el)el.textContent=gt(k);});
-  g('btn_confirm').textContent=gt('btn_confirm');
-  g('btn_reset').textContent=gt('btn_reset');
-  buildStats();updateCount();
-}
-
-/* ── TABS ── */
-function tb(i){
-  document.querySelectorAll('.spane').forEach(function(p,j){p.classList.toggle('on',j===i);});
-  document.querySelectorAll('.stab').forEach(function(t,j){t.classList.toggle('on',j===i);});
-}
-
-/* ── LANGUAGE ── */
-function ln(m){
-  S.ln=m;
-  g('btn_en').classList.toggle('on',m==='en');
-  g('btn_th').classList.toggle('on',m==='th');
-  applyLabels();
-}
-
-/* ── CUSTOM PANEL ── */
-function tc(key){var el=g('cpnl_'+key);if(el)el.classList.toggle('vis');}
-
-/* ── ESCAPE ── */
-function escH(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-/* ── RESET ── */
-function reset(){
-  S.skills=[];S.stats={str:5,spd:5,stm:5,int:5,wil:5,sen:5};S.faction='';S.filter='all';S.search='';
-  document.querySelectorAll('.finp,.fsel,.farea').forEach(function(el){
-    if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';
-  });
-  document.querySelectorAll('.cpnl,.infoblurb,.fsec').forEach(function(el){el.classList.remove('vis');});
-  document.querySelectorAll('.sk-card.sel').forEach(function(c){c.classList.remove('sel');});
-  document.querySelectorAll('.sk-card.hidden').forEach(function(c){c.classList.remove('hidden');});
-  document.querySelectorAll('.sk-card.locked').forEach(function(c){c.classList.remove('locked');});
-  var sd=g('sk_search');if(sd)sd.value='';
-  sf('all');
-  var badge=g('hbadge');
-  if(badge){badge.textContent='SELECT YOUR FACTION';badge.style.color='';badge.style.borderColor='';badge.style.background='';}
-  buildStats();tb(0);
-}
-
-/* ── SEND ── */
-function send(){
-  var v=function(id){var el=g(id);return el?el.value.trim():'';};
-  var cv=function(sid,cid){return v(sid)==='custom'?v(cid):v(sid);};
-
-  var skNames=SKILLS.filter(function(sk){return S.skills.indexOf(sk.id)>=0;}).map(function(sk){return sk.name;});
-
-  var out={
-    lang:S.ln,
-    name:v('s_name'),alias:v('s_alias'),age:v('s_age'),gender:v('s_gender'),
-    appearance:v('s_appearance'),personality:v('s_personality'),
-    faction:v('s_faction'),
-    rank:v('s_rank'),
-    origin_path:cv('s_origin_how','s_origin_how_c'),
-    region:v('s_region'),
-    demon_tier:v('s_dem_tier'),
-    demon_origin:cv('s_dem_origin','s_dem_origin_c'),
-    demon_time:v('s_dem_time'),
-    background:v('s_background'),
-    breathing_style:v('s_breath')==='custom'?v('s_breath_c'):v('s_breath'),
-    breathing_forms:v('s_breath_forms'),
-    nichirin_colour:v('s_nichirin'),
-    blood_demon_art:v('s_art_name'),
-    blood_demon_art_desc:v('s_art_desc'),
-    blood_demon_art_weakness:v('s_art_weakness'),
-    stats:S.stats,
-    skills:skNames,
-    goal:cv('s_goal','s_goal_c'),
-    fate:v('s_fate'),
-    bond:v('s_bond'),
-    quote:v('s_quote'),
-    secret:v('s_secret'),
-    extra:v('s_extra')
-  };
-
-  var txt='<'+'KNY_CONFIRM>'+JSON.stringify(out,null,2)+'<'+'/KNY_CONFIRM>';
-  setTimeout(function(){
+    S.tab=n;
+  },
+  onFaction:function(){
+    var f=g('i-faction').value;S.faction=f;
+    var isSla=(f==='Demon Slayer Corps'||f==='Former Slayer');
+    var isDem=(f==='Demon');
+    // origin sections
+    ['fsec_sla','fsec_dem'].forEach(function(id){g(id).classList.remove('vis')});
+    if(isSla)g('fsec_sla').classList.add('vis');
+    if(isDem)g('fsec_dem').classList.add('vis');
+    // power sections
+    ['fsec_bth','fsec_bda'].forEach(function(id){g(id).classList.remove('vis')});
+    if(isSla)g('fsec_bth').classList.add('vis');
+    if(isDem)g('fsec_bda').classList.add('vis');
+    // header badge
+    var badge=g('kbadge');var strip=g('fstrip');
+    badge.className='kh-badge';strip.className='fact-strip';
+    if(isSla){badge.textContent='SLAYER · '+f.toUpperCase();badge.classList.add('sla');strip.classList.add('sla');}
+    else if(isDem){badge.textContent='DEMON';badge.classList.add('dem');strip.classList.add('dem');}
+    else{badge.textContent='FACTION: '+(f||'—')}
+    // skill locks
+    KNY.updateLocks();
+  },
+  onBreath:function(){
+    var v=g('p-breath').value;
+    var lore=g('breath-lore');
+    if(BREATH_LORE[v]){lore.textContent=BREATH_LORE[v];lore.classList.add('vis');}
+    else lore.classList.remove('vis');
+  },
+  setStat:function(k,v){
+    var cur=S.stats[k];
+    S.stats[k]=(cur===v)?0:v;
+    var n=S.stats[k];
+    g('sv-'+k).textContent=n;
+    var segs=g('sb-'+k).querySelectorAll('.seg');
+    segs.forEach(function(s,i){s.classList.toggle('on',i<n)});
+  },
+  buildSkills:function(){
+    var list=g('sk-list');list.innerHTML='';
+    SKILLS.forEach(function(sk){
+      var row=document.createElement('div');
+      row.className='sk-row';row.id='skr_'+sk.id;
+      row.setAttribute('data-name',sk.name.toLowerCase());
+      row.setAttribute('data-tag',sk.tag);
+      row.onclick=(function(id){return function(){KNY.toggleSkill(id)}})(sk.id);
+      var restHtml=sk.restrict?'<div class="sk-rest">⊘ '+sk.restrict+'</div>':'';
+      row.innerHTML='<div class="sk-chk"></div><div class="sk-bd"><div class="sk-nm">'+sk.name+'</div><span class="sk-tag '+sk.tag+'">'+sk.tag.toUpperCase()+'</span>'+restHtml+'<div class="sk-desc">'+sk.desc+'</div></div><div class="sk-lock-ic" style="display:none">🔒</div>';
+      list.appendChild(row);
+    });
+    KNY.updateLocks();
+  },
+  toggleSkill:function(id){
+    var row=g('skr_'+id);if(!row||row.classList.contains('locked'))return;
+    var sel=row.classList.toggle('sel');
+    var idx=S.skills.indexOf(id);
+    if(sel&&idx<0)S.skills.push(id);
+    else if(!sel&&idx>=0)S.skills.splice(idx,1);
+    g('sk-count').textContent=S.skills.length;
+  },
+  updateLocks:function(){
+    var isSla=(S.faction==='Demon Slayer Corps'||S.faction==='Former Slayer');
+    var isDem=(S.faction==='Demon');
+    SKILLS.forEach(function(sk){
+      var row=g('skr_'+sk.id);if(!row)return;
+      var locked=(sk.tag==='sla'&&isDem)||(sk.tag==='dem'&&isSla);
+      row.classList.toggle('locked',locked);
+      var lockIc=row.querySelector('.sk-lock-ic');
+      if(lockIc)lockIc.style.display=locked?'block':'none';
+      if(locked&&row.classList.contains('sel')){
+        row.classList.remove('sel');
+        var idx=S.skills.indexOf(sk.id);
+        if(idx>=0)S.skills.splice(idx,1);
+      }
+    });
+    if(g('sk-count'))g('sk-count').textContent=S.skills.length;
+  },
+  sf:function(f){
+    S.filter=f;
+    document.querySelectorAll('.sk-f').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-f')===f)});
+    KNY.applyFilter();
+  },
+  onSearch:function(v){S.search=v.toLowerCase();KNY.applyFilter()},
+  applyFilter:function(){
+    SKILLS.forEach(function(sk){
+      var row=g('skr_'+sk.id);if(!row)return;
+      var show=true;
+      if(S.filter==='uni'&&sk.tag!=='uni')show=false;
+      if(S.filter==='sla'&&sk.tag!=='sla')show=false;
+      if(S.filter==='dem'&&sk.tag!=='dem')show=false;
+      if(S.filter==='sel'&&!row.classList.contains('sel'))show=false;
+      if(S.search){
+        var hay=sk.name.toLowerCase()+' '+sk.desc.toLowerCase();
+        if(hay.indexOf(S.search)<0)show=false;
+      }
+      row.classList.toggle('hidden',!show);
+    });
+  },
+  gather:function(){
+    var skillNames=S.skills.map(function(id){
+      var sk=SKILLS.find(function(s){return s.id===id});return sk?sk.name:id;
+    });
+    return{
+      name:g('i-name').value.trim(),
+      alias:g('i-alias').value.trim(),
+      age:g('i-age').value.trim(),
+      gender:g('i-gender').value,
+      height:g('i-height').value.trim(),
+      faction:g('i-faction').value,
+      appearance:g('i-appear').value.trim(),
+      region:g('o-region').value.trim(),
+      era:g('o-era').value.trim(),
+      rank:g('o-rank').value,
+      origin_path:g('o-path').value,
+      demon_tier:g('o-tier').value,
+      demon_time:g('o-demtime').value.trim(),
+      demon_origin:g('o-origin').value.trim(),
+      background:g('o-bg').value.trim(),
+      breathing_style:g('p-breath').value,
+      nichirin_colour:g('p-nichirin').value.trim(),
+      breathing_forms:g('p-bforms').value.trim(),
+      blood_demon_art:g('p-bdaname').value.trim(),
+      blood_demon_art_desc:g('p-bdadesc').value.trim(),
+      blood_demon_art_weakness:g('p-bdaweak').value.trim(),
+      stats:Object.assign({},S.stats),
+      skills:skillNames,
+      personality:g('f-pers').value.trim(),
+      goal:g('f-goal').value.trim(),
+      bond:g('f-bond').value.trim(),
+      fate:g('f-fate').value.trim(),
+      quote:g('f-quote').value.trim(),
+      secret:g('f-secret').value.trim(),
+      extra:g('f-extra').value.trim()
+    };
+  },
+  send:function(){
+    var d=KNY.gather();
+    if(!d.name){alert('Please enter a character name first.');return;}
+    var payload='<KNY_CONFIRM>'+JSON.stringify(d)+'</KNY_CONFIRM>';
     try{
       var w=window.parent||window;
-      var ta=w.document.getElementById('send_textarea')||w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+      var ta=w.document.querySelector('#send_textarea,#text_input,textarea.message_input,[data-testid="message-input"]');
+      if(!ta){var tas=w.document.querySelectorAll('textarea');ta=tas[tas.length-1]||null;}
       if(ta){
-        var d=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
-        if(d&&d.set)d.set.call(ta,txt);else ta.value=txt;
+        var nv=Object.getOwnPropertyDescriptor(window.HTMLTextAreaElement.prototype,'value');
+        nv.set.call(ta,payload);
         ta.dispatchEvent(new Event('input',{bubbles:true}));
         setTimeout(function(){
-          try{
-            var sb=w.document.getElementById('send_but');
-            if(sb)sb.click();
-            else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
-          }catch(e){}
-        },150);
-        return;
+          var btn=w.document.querySelector('#send_but,button[aria-label="Send message"],[data-testid="send-button"]');
+          if(btn)btn.click();
+          else ta.form&&ta.form.requestSubmit();
+        },60);
       }
-    }catch(e){}
-    try{navigator.clipboard.writeText(txt);}catch(e){}
-  },450);
-}
+    }catch(e){prompt('Copy this payload:',payload);}
+  }
+};
 
-return{init:init,ln:ln,tb:tb,tc:tc,send:send,reset:reset,onFaction:onFaction,onBreath:onBreath,sf:sf,search:search};
-})();
-window.addEventListener('DOMContentLoaded',KNY.init);
+document.addEventListener('DOMContentLoaded',KNY.init);
+if(document.readyState!=='loading')KNY.init();
 </script>
 </body>
 </html>
