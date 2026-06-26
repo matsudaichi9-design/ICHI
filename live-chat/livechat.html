@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Nunito',sans-serif}
+
+:root{
+  --bg:#fefbff;--sur:#f8f0fe;--sur2:#f0e5fd;
+  --pur:#9b59d4;--pur-l:#c084fc;--pur-xl:#e9d5ff;
+  --pink:#e879a0;--pink-l:#fce7f3;
+  --blue-l:#dbeafe;--blue:#60a5fa;
+  --gold:#f59e0b;--gold-l:#fef3c7;
+  --red:#ef4444;
+  --grn:#22c55e;
+  --txt:#3d1f5e;--sub:#8b6ab0;--muted:#c4a8e0;
+  --r:14px;--rs:8px;
+}
+
+#lcraw{display:none}
+#lc{
+  max-width:420px;margin:8px auto;
+  background:var(--bg);
+  border-radius:var(--r);
+  border:1.5px solid rgba(192,132,252,.22);
+  box-shadow:0 4px 28px rgba(140,80,220,.1),0 1px 4px rgba(140,80,220,.08);
+  overflow:hidden;
+  animation:lup .3s cubic-bezier(.22,.68,0,1.1) both;
+}
+@keyframes lup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─ HEADER ─ */
+.lh{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 14px;
+  background:linear-gradient(120deg,#ede9fe 0%,#fce7f3 50%,#dbeafe 100%);
+  cursor:pointer;user-select:none;
+  border-bottom:1px solid rgba(192,132,252,.18);
+  transition:opacity .15s;
+}
+.lh:hover{opacity:.92}
+.lh-l{display:flex;align-items:center;gap:8px}
+.live-ring{position:relative;width:10px;height:10px;flex-shrink:0}
+.live-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:var(--red);display:block;
+  position:relative;z-index:1;
+}
+.live-ping{
+  position:absolute;inset:-3px;border-radius:50%;
+  background:var(--red);opacity:.35;
+  animation:ping 1.8s cubic-bezier(0,0,.2,1) infinite;
+}
+@keyframes ping{0%{transform:scale(1);opacity:.35}100%{transform:scale(2.2);opacity:0}}
+.live-badge{
+  font-size:9px;font-weight:800;letter-spacing:1.5px;
+  padding:2px 7px;border-radius:99px;
+  background:var(--red);color:#fff;text-transform:uppercase;
+}
+.offline-badge{
+  font-size:9px;font-weight:800;letter-spacing:1.5px;
+  padding:2px 7px;border-radius:99px;
+  background:#9ca3af;color:#fff;text-transform:uppercase;
+}
+.stream-title{
+  font-size:12.5px;font-weight:700;color:var(--txt);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px;
+}
+.lh-r{display:flex;align-items:center;gap:8px}
+.viewer-pill{
+  display:flex;align-items:center;gap:4px;
+  font-size:11px;font-weight:700;color:var(--sub);
+  background:rgba(255,255,255,.65);
+  padding:3px 8px;border-radius:99px;
+}
+.viewer-pill svg{width:12px;height:12px;fill:var(--sub)}
+.toggle-icon{
+  width:20px;height:20px;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:rgba(255,255,255,.5);
+  font-size:10px;color:var(--sub);transition:transform .22s;
+}
+.toggle-icon.open{transform:rotate(180deg)}
+
+/* ─ BODY ─ */
+.lb{
+  max-height:0;overflow:hidden;
+  transition:max-height .3s cubic-bezier(.4,0,.2,1);
+}
+.lb.open{max-height:520px}
+
+/* ─ TABS ─ */
+.tabs{
+  display:flex;gap:0;
+  padding:8px 10px 0;
+  background:var(--sur);
+  border-bottom:1px solid rgba(192,132,252,.14);
+}
+.tab-btn{
+  flex:1;padding:7px 4px 8px;
+  font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;
+  color:var(--muted);border:none;background:transparent;cursor:pointer;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all .18s;
+}
+.tab-btn:hover{color:var(--sub)}
+.tab-btn.on{color:var(--pur);border-bottom-color:var(--pur)}
+
+/* ─ CONTENT ─ */
+.tc{display:none;max-height:340px;overflow-y:auto}
+.tc.vis{display:block}
+.tc::-webkit-scrollbar{width:4px}
+.tc::-webkit-scrollbar-track{background:transparent}
+.tc::-webkit-scrollbar-thumb{background:rgba(192,132,252,.3);border-radius:4px}
+
+/* ─ CHAT ─ */
+.chat-list{padding:8px 10px;display:flex;flex-direction:column;gap:2px}
+.chat-empty{padding:24px;text-align:center;font-size:12px;color:var(--muted)}
+.cm{
+  display:flex;align-items:flex-start;gap:6px;
+  padding:4px 6px;border-radius:var(--rs);
+  transition:background .12s;
+}
+.cm:hover{background:rgba(192,132,252,.07)}
+.cm-badge{font-size:12px;flex-shrink:0;line-height:1.4}
+.cm-name{
+  font-size:11.5px;font-weight:800;white-space:nowrap;flex-shrink:0;
+}
+.cm-sep{font-size:10px;color:var(--muted);margin:0 1px}
+.cm-msg{font-size:12px;font-weight:500;color:var(--txt);line-height:1.5;word-break:break-word}
+
+/* ─ DONATE ─ */
+.don-list{padding:8px 10px;display:flex;flex-direction:column;gap:8px}
+.don-empty{padding:24px;text-align:center;font-size:12px;color:var(--muted)}
+.don-card{
+  border-radius:var(--rs);padding:10px 12px;
+  background:linear-gradient(135deg,#fff7ed,#fce7f3);
+  border:1.5px solid rgba(245,158,11,.2);
+  position:relative;overflow:hidden;
+}
+.don-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--gold),var(--pink));
+}
+.don-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.don-name{font-size:12px;font-weight:800;color:var(--txt)}
+.don-amount{
+  font-size:13px;font-weight:900;
+  background:linear-gradient(135deg,#f59e0b,#ec4899);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+}
+.don-msg{
+  font-size:11px;font-weight:500;color:var(--sub);
+  font-style:italic;line-height:1.45;
+}
+.don-time{font-size:9.5px;color:var(--muted);margin-top:3px}
+
+/* ─ TOP DONORS ─ */
+.top-list{padding:8px 10px;display:flex;flex-direction:column;gap:6px}
+.top-empty{padding:24px;text-align:center;font-size:12px;color:var(--muted)}
+.top-item{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:var(--rs);
+  background:var(--sur);border:1px solid rgba(192,132,252,.14);
+  transition:background .12s;
+}
+.top-item:hover{background:var(--sur2)}
+.top-rank{font-size:16px;width:24px;text-align:center;flex-shrink:0}
+.top-name{flex:1;font-size:13px;font-weight:700;color:var(--txt)}
+.top-total{
+  font-size:12.5px;font-weight:800;color:var(--gold);
+}
+.top-bar-wrap{width:60px;height:4px;background:rgba(192,132,252,.15);border-radius:2px;overflow:hidden}
+.top-bar{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pur-l),var(--pink))}
+
+/* ─ FOOTER ─ */
+.lf{
+  padding:5px 12px 7px;
+  background:var(--sur);
+  border-top:1px solid rgba(192,132,252,.12);
+  display:flex;justify-content:space-between;align-items:center;
+}
+.lf-label{font-size:8.5px;font-weight:700;letter-spacing:1.5px;color:var(--muted);text-transform:uppercase}
+.lf-total{font-size:9px;font-weight:700;color:var(--sub)}
+</style>
+</head>
+<body>
+<textarea id="lcraw">$1</textarea>
+<div id="lc">
+
+  <!-- HEADER -->
+  <div class="lh" id="lc-hdr" onclick="LC.toggle()">
+    <div class="lh-l">
+      <div class="live-ring" id="live-ring">
+        <div class="live-ping" id="live-ping"></div>
+        <div class="live-dot" id="live-dot"></div>
+      </div>
+      <div class="live-badge" id="live-status-badge">LIVE</div>
+      <div class="stream-title" id="lc-title">Loading...</div>
+    </div>
+    <div class="lh-r">
+      <div class="viewer-pill">
+        <svg viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+        <span id="lc-viewers">0</span>
+      </div>
+      <div class="toggle-icon" id="lc-toggle-ic">▾</div>
+    </div>
+  </div>
+
+  <!-- BODY (expandable) -->
+  <div class="lb" id="lc-body">
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn on" data-tab="chat" onclick="LC.tab('chat')">💬 Chat</button>
+      <button class="tab-btn" data-tab="donate" onclick="LC.tab('donate')">💎 Donate</button>
+      <button class="tab-btn" data-tab="top" onclick="LC.tab('top')">🏆 Top 5</button>
+    </div>
+
+    <!-- CHAT -->
+    <div class="tc vis" id="tc-chat">
+      <div class="chat-list" id="lc-chat">
+        <div class="chat-empty">No messages yet ✨</div>
+      </div>
+    </div>
+
+    <!-- DONATE -->
+    <div class="tc" id="tc-donate">
+      <div class="don-list" id="lc-donate">
+        <div class="don-empty">No donations yet 💌</div>
+      </div>
+    </div>
+
+    <!-- TOP 5 -->
+    <div class="tc" id="tc-top">
+      <div class="top-list" id="lc-top">
+        <div class="top-empty">No donors yet 🎀</div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="lf">
+      <div class="lf-label" id="lf-label">Live Stream</div>
+      <div class="lf-total" id="lf-total"></div>
+    </div>
+
+  </div><!-- lb -->
+</div><!-- #lc -->
+
+<script>
+var RANKS=['🥇','🥈','🥉','4th','5th'];
+var BADGES={subscriber:'💜',moderator:'🛡️',vip:'⭐',member:'💚',partner:'✅'};
+var COLORS=['#9b59d4','#e879a0','#3b82f6','#10b981','#f59e0b','#ef4444','#8b5cf6','#06b6d4','#ec4899','#84cc16'];
+
+function g(id){return document.getElementById(id)}
+
+function hashColor(str){
+  var h=0;for(var i=0;i<str.length;i++)h=str.charCodeAt(i)+((h<<5)-h);
+  return COLORS[Math.abs(h)%COLORS.length];
+}
+
+function fmtViewers(n){
+  if(n>=1000000)return(n/1000000).toFixed(1)+'M';
+  if(n>=1000)return(n/1000).toFixed(1)+'K';
+  return n+'';
+}
+
+function fmtAmt(amt,cur){
+  cur=cur||'¥';
+  if(typeof amt==='number')return cur+(amt>=1000?(amt/1000).toFixed(amt%1000?1:0)+'K':amt.toLocaleString());
+  return cur+(amt||'?');
+}
+
+var LC={
+  open:false,
+  currentTab:'chat',
+  toggle:function(){
+    LC.open=!LC.open;
+    g('lc-body').classList.toggle('open',LC.open);
+    g('lc-toggle-ic').classList.toggle('open',LC.open);
+  },
+  tab:function(t){
+    LC.currentTab=t;
+    document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-tab')===t)});
+    ['chat','donate','top'].forEach(function(id){
+      g('tc-'+id).classList.toggle('vis',id===t);
+    });
+  },
+  init:function(){
+    var raw=g('lcraw');if(!raw)return;
+    var txt=raw.value.trim();if(!txt)return;
+    var d;try{d=JSON.parse(txt)}catch(e){
+      g('lc-title').textContent='Live Stream';
+      LC.toggle();return;
+    }
+
+    // ─ HEADER ─
+    var isLive=(d.status||'').toLowerCase()==='live';
+    var dot=g('live-dot');var ping=g('live-ping');var badge=g('live-status-badge');
+    if(isLive){
+      dot.style.background='#ef4444';ping.style.display='block';
+      badge.className='live-badge';badge.textContent='LIVE';
+    } else {
+      dot.style.background='#9ca3af';ping.style.display='none';
+      badge.className='offline-badge';badge.textContent=(d.status||'OFFLINE').toUpperCase();
+    }
+    g('lc-title').textContent=d.title||'Live Stream';
+    g('lc-viewers').textContent=fmtViewers(d.viewers||0);
+
+    // ─ CHAT ─
+    var chatEl=g('lc-chat');
+    var msgs=d.chat||[];
+    if(msgs.length){
+      chatEl.innerHTML='';
+      msgs.forEach(function(m){
+        var color=m.color||hashColor(m.user||'anon');
+        var badge=m.badge&&BADGES[m.badge]?'<span class="cm-badge">'+BADGES[m.badge]+'</span>':'';
+        var row=document.createElement('div');row.className='cm';
+        row.innerHTML=badge+'<span class="cm-name" style="color:'+color+'">'+esc(m.user||'anon')+'</span><span class="cm-sep">:</span><span class="cm-msg">'+esc(m.msg||'')+'</span>';
+        chatEl.appendChild(row);
+      });
+      // auto-scroll to bottom
+      chatEl.scrollTop=chatEl.scrollHeight;
+    }
+
+    // ─ DONATE ─
+    var donEl=g('lc-donate');
+    var dons=d.donations||[];
+    if(dons.length){
+      donEl.innerHTML='';
+      dons.forEach(function(don){
+        var card=document.createElement('div');card.className='don-card';
+        var timeHtml=don.time?'<div class="don-time">'+esc(don.time)+'</div>':'';
+        var msgHtml=don.msg?'<div class="don-msg">"'+esc(don.msg)+'"</div>':'';
+        card.innerHTML='<div class="don-top"><span class="don-name">💎 '+esc(don.user||'Anonymous')+'</span><span class="don-amount">'+fmtAmt(don.amount,don.currency)+'</span></div>'+msgHtml+timeHtml;
+        donEl.appendChild(card);
+      });
+      // count + total
+      var total=dons.reduce(function(s,x){return s+(parseFloat(x.amount)||0)},0);
+      var cur=(dons[0]&&dons[0].currency)||'¥';
+      g('lf-total').textContent=dons.length+' donation'+(dons.length!==1?'s':'')+' · '+fmtAmt(total,cur);
+    } else {
+      g('lf-total').textContent='';
+    }
+
+    // ─ TOP 5 ─
+    var topEl=g('lc-top');
+    var tops=d.top_donors||[];
+    if(!tops.length&&dons.length){
+      // auto-compute from donations if not provided
+      var map={};
+      dons.forEach(function(x){
+        map[x.user]=(map[x.user]||0)+(parseFloat(x.amount)||0);
+      });
+      var cur0=(dons[0]&&dons[0].currency)||'¥';
+      tops=Object.keys(map).sort(function(a,b){return map[b]-map[a]}).slice(0,5).map(function(u,i){
+        return{rank:i+1,user:u,total:map[u],currency:cur0};
+      });
+    }
+    if(tops.length){
+      topEl.innerHTML='';
+      var maxAmt=tops.reduce(function(m,x){return Math.max(m,parseFloat(x.total)||0)},1);
+      tops.slice(0,5).forEach(function(t,i){
+        var pct=Math.round(((parseFloat(t.total)||0)/maxAmt)*100);
+        var item=document.createElement('div');item.className='top-item';
+        item.innerHTML='<div class="top-rank">'+RANKS[i]+'</div><div class="top-name">'+esc(t.user||'—')+'</div><div class="top-bar-wrap"><div class="top-bar" style="width:'+pct+'%"></div></div><div class="top-total">'+fmtAmt(t.total,t.currency)+'</div>';
+        topEl.appendChild(item);
+      });
+    }
+
+    // label
+    g('lf-label').textContent=isLive?'🔴 Streaming Now':'⚫ Offline';
+
+    // auto-open
+    LC.toggle();
+  }
+};
+
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.addEventListener('DOMContentLoaded',LC.init);
+if(document.readyState!=='loading')LC.init();
+</script>
+</body>
+</html>
