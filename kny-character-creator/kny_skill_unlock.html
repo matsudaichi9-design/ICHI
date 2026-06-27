@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Inter',system-ui,sans-serif;font-size:13px}
+
+#kuwin{
+  --acc:#8B6FAE;--acc-rgb:139,111,174;
+  --abg:rgba(139,111,174,.13);--abd:rgba(139,111,174,.32);
+  --bg:#07090d;--bg2:#0d0f18;--bg3:#131720;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#484440;
+  --fh:'Noto Serif JP',Georgia,serif;
+  max-width:400px;margin:0 auto;
+  animation:kuIn .55s cubic-bezier(.2,1.1,.4,1) both
+}
+@keyframes kuIn{
+  from{opacity:0;transform:translateY(-18px) scale(.9)}
+  to{opacity:1;transform:none}
+}
+
+/* ── CARD ─────────────────────────────────────────── */
+.ku-card{
+  background:var(--bg);
+  border:1px solid var(--abd);
+  border-radius:12px;overflow:hidden;position:relative;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,.6),
+    0 10px 48px rgba(0,0,0,.9),
+    0 0 80px rgba(var(--acc-rgb),.07),
+    inset 0 1px 0 rgba(255,255,255,.04)
+}
+
+/* shimmer scan */
+.ku-card::before{
+  content:'';position:absolute;inset:0;z-index:20;pointer-events:none;
+  background:linear-gradient(115deg,
+    transparent 25%,
+    rgba(var(--acc-rgb),.1) 50%,
+    transparent 75%);
+  background-size:250% 100%;
+  animation:kuShim 2.8s ease .25s both;
+  border-radius:12px;
+}
+@keyframes kuShim{
+  from{background-position:250% 0}
+  to{background-position:-250% 0}
+}
+
+/* corner glow */
+.ku-card::after{
+  content:'';position:absolute;top:-50px;right:-50px;
+  width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--acc-rgb),.2),transparent 70%);
+  pointer-events:none
+}
+
+/* haori diagonal pattern */
+.ku-card-bg{
+  position:absolute;inset:0;pointer-events:none;opacity:.025;
+  background:repeating-linear-gradient(
+    -45deg,
+    rgba(var(--acc-rgb),1) 0,
+    rgba(var(--acc-rgb),1) 1px,
+    transparent 1px,transparent 14px
+  )
+}
+
+/* ── HEADER ───────────────────────────────────────── */
+.ku-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 16px;
+  background:linear-gradient(90deg,var(--bg2) 0%,rgba(var(--acc-rgb),.06) 50%,var(--bg2) 100%);
+  border-bottom:1px solid rgba(var(--acc-rgb),.18);
+  position:relative
+}
+.ku-title{
+  font-family:var(--fh);font-size:8px;letter-spacing:3.5px;text-transform:uppercase;
+  color:var(--acc);
+  text-shadow:0 0 12px rgba(var(--acc-rgb),.8);
+  animation:kuTitleIn .5s ease .15s both
+}
+@keyframes kuTitleIn{from{opacity:0;letter-spacing:8px}to{opacity:1;letter-spacing:3.5px}}
+.ku-stars{display:flex;gap:4px;animation:kuStarsIn .6s ease .5s both}
+@keyframes kuStarsIn{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
+.ku-star{
+  width:5px;height:5px;border-radius:50%;background:var(--acc);
+  animation:kuStarBlink 2s ease-in-out infinite
+}
+.ku-star:nth-child(2){animation-delay:.3s;opacity:.65;width:4px;height:4px}
+.ku-star:nth-child(3){animation-delay:.6s;opacity:.4;width:3px;height:3px}
+@keyframes kuStarBlink{0%,100%{opacity:.25;box-shadow:none}50%{opacity:1;box-shadow:0 0 6px var(--acc)}}
+
+/* ── BODY ─────────────────────────────────────────── */
+.ku-body{
+  padding:22px 20px 18px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative
+}
+
+/* kanji watermark */
+.ku-wm{
+  position:absolute;font-family:var(--fh);
+  font-size:130px;font-weight:900;
+  color:rgba(var(--acc-rgb),.035);
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  pointer-events:none;user-select:none;letter-spacing:-8px;
+  line-height:1
+}
+
+/* ── ICON ─────────────────────────────────────────── */
+.ku-icon-wrap{
+  position:relative;width:78px;height:78px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+  animation:kuIconIn .65s cubic-bezier(.15,1.5,.4,1) .2s both
+}
+@keyframes kuIconIn{
+  from{opacity:0;transform:scale(.2) rotate(-30deg)}
+  to{opacity:1;transform:none}
+}
+.ku-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:1.5px solid rgba(var(--acc-rgb),.4);
+  animation:kuRing 2.2s ease-in-out infinite
+}
+@keyframes kuRing{
+  0%,100%{transform:scale(1);opacity:.4}
+  50%{transform:scale(1.15);opacity:.85}
+}
+.ku-ring2{
+  position:absolute;inset:-10px;border-radius:50%;
+  border:1px solid rgba(var(--acc-rgb),.18);
+  animation:kuRing 2.2s ease-in-out .55s infinite
+}
+.ku-ring3{
+  position:absolute;inset:-22px;border-radius:50%;
+  border:1px dashed rgba(var(--acc-rgb),.1);
+  animation:kuRing3Spin 8s linear infinite
+}
+@keyframes kuRing3Spin{to{transform:rotate(360deg)}}
+.ku-glow{
+  position:absolute;inset:-8px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--acc-rgb),.35) 0%,transparent 70%);
+  animation:kuGlow 2.2s ease-in-out infinite
+}
+@keyframes kuGlow{
+  0%,100%{opacity:.5;transform:scale(.9)}
+  50%{opacity:1;transform:scale(1.1)}
+}
+.ku-ico{
+  font-size:36px;position:relative;z-index:2;
+  filter:drop-shadow(0 0 12px rgba(var(--acc-rgb),1)) drop-shadow(0 0 24px rgba(var(--acc-rgb),.6));
+}
+
+/* particles – JS fills these */
+.ku-pt{
+  position:absolute;border-radius:50%;background:var(--acc);pointer-events:none;
+  width:var(--sz,3px);height:var(--sz,3px);
+  left:50%;top:50%;margin-left:calc(var(--sz,3px)/-2);margin-top:calc(var(--sz,3px)/-2);
+  animation:kuPt var(--dur,1s) ease-out var(--del,0s) both
+}
+@keyframes kuPt{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--px,0),var(--py,0)) scale(0)}
+}
+
+/* ── TEXT ─────────────────────────────────────────── */
+.ku-cat{
+  font-size:8px;letter-spacing:2.5px;text-transform:uppercase;
+  padding:2px 10px;border-radius:99px;
+  background:var(--abg);border:1px solid rgba(var(--acc-rgb),.22);
+  color:var(--acc);margin-bottom:11px;
+  animation:kuFadeUp .5s ease .3s both
+}
+@keyframes kuFadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ku-name{
+  font-family:var(--fh);font-size:20px;font-weight:900;
+  color:var(--tx);text-align:center;letter-spacing:.4px;
+  margin-bottom:3px;
+  animation:kuFadeUp .5s ease .38s both
+}
+.ku-namejp{
+  font-family:var(--fh);font-size:11px;letter-spacing:4px;
+  color:var(--acc);opacity:.7;
+  text-align:center;margin-bottom:4px;
+  animation:kuFadeUp .5s ease .44s both
+}
+.ku-nameth{
+  font-size:10.5px;color:var(--tx2);text-align:center;margin-bottom:14px;
+  animation:kuFadeUp .5s ease .48s both
+}
+
+/* badge */
+.ku-badge-new{
+  display:inline-block;padding:1px 7px;border-radius:99px;
+  font-size:7.5px;letter-spacing:2px;text-transform:uppercase;
+  background:var(--acc);color:#fff;font-weight:700;
+  vertical-align:middle;margin-left:7px;
+  animation:kuBadgePop .5s cubic-bezier(.2,1.5,.4,1) .55s both
+}
+.ku-badge-upg{
+  display:inline-block;padding:1px 7px;border-radius:99px;
+  font-size:7.5px;letter-spacing:2px;text-transform:uppercase;
+  background:rgba(200,155,30,.18);border:1px solid rgba(200,155,30,.45);
+  color:#d4a030;font-weight:700;
+  vertical-align:middle;margin-left:7px;
+  animation:kuBadgePop .5s cubic-bezier(.2,1.5,.4,1) .55s both
+}
+@keyframes kuBadgePop{
+  from{opacity:0;transform:scale(.2) rotate(-25deg)}
+  to{opacity:1;transform:none}
+}
+
+/* level dots */
+.ku-levels{
+  display:flex;align-items:center;gap:7px;margin-bottom:16px;
+  animation:kuFadeUp .5s ease .54s both
+}
+.ku-dot{
+  height:6px;width:28px;border-radius:3px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.06)
+}
+.ku-dot.done{
+  background:linear-gradient(90deg,var(--acc),rgba(var(--acc-rgb),.7));
+  border-color:var(--acc);
+  box-shadow:0 0 8px rgba(var(--acc-rgb),.5)
+}
+.ku-dot.cur{
+  background:var(--acc);border-color:var(--acc);
+  box-shadow:0 0 14px rgba(var(--acc-rgb),.9);
+  animation:kuDotPulse 1.6s ease-in-out infinite
+}
+@keyframes kuDotPulse{
+  0%,100%{box-shadow:0 0 8px rgba(var(--acc-rgb),.55)}
+  50%{box-shadow:0 0 22px rgba(var(--acc-rgb),.95)}
+}
+.ku-lv-lbl{
+  font-family:var(--fh);font-size:9px;color:var(--tx2);
+  letter-spacing:.8px;margin-left:3px
+}
+
+/* effect box */
+.ku-effect{
+  width:100%;
+  display:flex;align-items:center;gap:12px;
+  padding:10px 15px;
+  background:rgba(var(--acc-rgb),.1);
+  border:1px solid rgba(var(--acc-rgb),.28);
+  border-radius:7px;
+  margin-bottom:13px;
+  animation:kuFadeUp .5s ease .6s both;
+  position:relative;overflow:hidden
+}
+.ku-effect::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(var(--acc-rgb),.06),transparent);
+  background-size:200%;
+  animation:kuShim 2.5s ease 1s both
+}
+.ku-effect-ico{font-size:18px;flex-shrink:0}
+.ku-effect-txt{
+  font-family:var(--fh);font-size:12.5px;font-weight:700;
+  color:var(--acc);letter-spacing:.4px;
+  text-shadow:0 0 15px rgba(var(--acc-rgb),.5)
+}
+
+/* desc */
+.ku-desc{
+  font-size:11px;line-height:1.65;color:var(--tx2);
+  text-align:center;margin-bottom:17px;
+  animation:kuFadeUp .5s ease .65s both
+}
+
+/* divider */
+.ku-div{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(var(--acc-rgb),.25),transparent);
+  margin-bottom:13px
+}
+
+/* footer */
+.ku-foot{
+  width:100%;display:flex;align-items:center;justify-content:space-between;
+  animation:kuFadeUp .5s ease .7s both
+}
+.ku-sp-row{display:flex;gap:20px}
+.ku-sp-item{display:flex;flex-direction:column;align-items:center;gap:2px}
+.ku-sp-lbl{
+  font-family:var(--fh);font-size:7.5px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--tx3)
+}
+.ku-sp-val{font-family:var(--fh);font-size:18px;font-weight:900}
+.ku-sp-spent{color:#e07878;text-shadow:0 0 12px rgba(220,80,80,.4)}
+.ku-sp-rem{color:var(--acc);text-shadow:0 0 12px rgba(var(--acc-rgb),.5)}
+
+/* lang btn */
+.ku-lng{
+  font-family:var(--fh);font-size:8px;letter-spacing:2px;
+  padding:4px 11px;border-radius:99px;
+  border:1px solid rgba(var(--acc-rgb),.28);
+  background:rgba(var(--acc-rgb),.08);
+  color:var(--tx2);cursor:pointer;user-select:none;
+  transition:all .2s
+}
+.ku-lng:hover{color:var(--acc);border-color:rgba(var(--acc-rgb),.6);background:rgba(var(--acc-rgb),.15)}
+
+/* ── SEAL ─────────────────────────────────────────── */
+.ku-seal{
+  text-align:center;padding:8px 16px 11px;
+  border-top:1px solid rgba(255,255,255,.04);
+  font-family:var(--fh);font-size:8px;letter-spacing:2.5px;
+  color:var(--tx3);
+  background:linear-gradient(0deg,rgba(var(--acc-rgb),.03),transparent)
+}
+</style>
+</head>
+<body>
+<textarea id="kuraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="kuwin"></div>
+<script>
+(function(){
+var g=function(id){return document.getElementById(id)};
+function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function hexRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16)||0;return((n>>16)&255)+','+(((n>>8)&255))+','+(n&255)}
+
+// ── PARSE DATA ──────────────────────────────────────────
+var rawEl=g('kuraw');
+var d={};
+try{
+  if(rawEl&&rawEl.value.trim()){
+    var dec=document.createElement('textarea');
+    dec.innerHTML=rawEl.value.trim();
+    d=JSON.parse(dec.value.trim());
+  }
+}catch(e){}
+
+var TH=(d.lang==='th');
+var win=g('kuwin');
+if(!win)return;
+
+// ── THEME ───────────────────────────────────────────────
+var acc=d.charColor||'#8B6FAE';
+var rgb=hexRgb(acc);
+win.style.setProperty('--acc',acc);
+win.style.setProperty('--acc-rgb',rgb);
+win.style.setProperty('--abg','rgba('+rgb+',.13)');
+win.style.setProperty('--abd','rgba('+rgb+',.32)');
+
+var faction=(d.faction||'slayer').toLowerCase();
+var FBGS={slayer:'#07090d',demon:'#100808',human:'#0f0c0a'};
+var FBG2={slayer:'#0d0f18',demon:'#1a0a0a',human:'#1a1612'};
+win.style.setProperty('--bg',FBGS[faction]||FBGS.slayer);
+win.style.setProperty('--bg2',FBG2[faction]||FBG2.slayer);
+
+// ── WATERMARK MAP ───────────────────────────────────────
+var wmMap={
+  slayer:'水',demon:'血',human:'人',
+  iron_body:'鉄',battle_instinct:'闘',quick_reflexes:'速',
+  pain_resistance:'耐',night_sight:'夜',iron_will:'意',
+  veteran_exp:'経',killing_aura:'殺',threat_sense:'感',last_stand:'死',
+  total_conc:'呼',breath_mastery:'息',nichirin_prof:'刃',
+  corps_network:'絆',demon_reading:'読',form_refinement:'型',
+  field_medicine:'癒',wisteria_mastery:'藤',dual_blade:'双',
+  recovery_adv:'回',focus_extend:'極',form_mastery:'奥',
+  blade_resonance:'共',sunlight_training:'陽',
+  const_conc:'恒',pillar_aura:'柱',transparent_world:'透',
+  slayer_mark:'痣',mark_control:'制',
+  rapid_regen:'再',enhanced_senses:'感',blood_potency:'濃',
+  territory_instinct:'縄',bda_refinement:'技',flesh_craft:'肉',
+  nightmare_aura:'夢',wisteria_resist:'耐',decap_resist:'首',
+  sunlight_resist:'日',demon_memory:'記',blood_manip:'血',
+  upper_presence:'威',blood_memory:'憶',infinite_regen:'生',
+  domain_creation:'界',secondary_bda:'双',muzan_blessing:'祝'
+};
+var wm=wmMap[d.id]||wmMap[faction]||'刃';
+
+// ── CAT LABELS ──────────────────────────────────────────
+function catLabel(cat){
+  var m={
+    all:TH?'ทุกฝ่าย':'Universal',
+    slayer:TH?'นักล่าอสูร':'Demon Slayer',
+    demon:TH?'อสูร':'Demon',
+    hashira:TH?'เสาหลัก':'Hashira',
+    upper_moon:'Upper Moon'
+  };
+  return m[cat]||cat;
+}
+
+// ── BUILD ───────────────────────────────────────────────
+function render(){
+  var level=parseInt(d.level)||1;
+  var maxLevel=parseInt(d.maxLevel)||1;
+  var isNew=d.isNew!==false&&level===1;
+
+  var nm=TH?(d.nameTH||d.name||'???'):( d.name||'???');
+  var nmJP=d.nameJP||'';
+  var nmAlt=TH?d.name:d.nameTH;
+  var desc=TH?(d.descTH||d.desc||''):( d.desc||'');
+  var eff=TH?(d.effectTH||d.effect||''):( d.effect||'');
+
+  var badge=isNew?
+    '<span class="ku-badge-new">'+(TH?'ใหม่':'NEW')+'</span>':
+    '<span class="ku-badge-upg">'+(TH?'อัพ':'UPGRADE')+'</span>';
+
+  var dotsH='';
+  for(var i=1;i<=Math.min(maxLevel,6);i++){
+    var cls=i<level?'ku-dot done':i===level?'ku-dot cur':'ku-dot';
+    dotsH+='<div class="'+cls+'"></div>';
+  }
+
+  var catTxt=catLabel(d.cat||'all');
+
+  win.innerHTML=
+  '<div class="ku-card">'+
+    '<div class="ku-card-bg"></div>'+
+    '<div class="ku-head">'+
+      '<div class="ku-title">'+(TH?'✦ ปลดล็อคสกิล ✦':'✦ SKILL UNLOCKED ✦')+'</div>'+
+      '<div class="ku-stars">'+
+        '<div class="ku-star"></div>'+
+        '<div class="ku-star"></div>'+
+        '<div class="ku-star"></div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="ku-body">'+
+      '<div class="ku-wm">'+esc(wm)+'</div>'+
+      '<div class="ku-icon-wrap" id="ku-iw">'+
+        '<div class="ku-ring3"></div>'+
+        '<div class="ku-ring2"></div>'+
+        '<div class="ku-ring"></div>'+
+        '<div class="ku-glow"></div>'+
+        '<div class="ku-ico">'+esc(d.icon||'◆')+'</div>'+
+      '</div>'+
+      '<div class="ku-cat">'+esc(catTxt)+'</div>'+
+      '<div class="ku-name">'+esc(nm)+badge+'</div>'+
+      (nmJP?'<div class="ku-namejp">'+esc(nmJP)+'</div>':'')+
+      (nmAlt&&nmAlt!==nm?'<div class="ku-nameth">'+esc(nmAlt)+'</div>':'')+
+      '<div class="ku-levels">'+
+        dotsH+
+        '<span class="ku-lv-lbl">Lv '+level+' / '+maxLevel+'</span>'+
+      '</div>'+
+      (eff?
+        '<div class="ku-effect">'+
+          '<div class="ku-effect-ico">'+esc(d.icon||'✦')+'</div>'+
+          '<div class="ku-effect-txt">'+esc(eff)+'</div>'+
+        '</div>':'')+
+      (desc?'<div class="ku-desc">'+esc(desc)+'</div>':'')+
+      '<div class="ku-div"></div>'+
+      '<div class="ku-foot">'+
+        '<div class="ku-sp-row">'+
+          '<div class="ku-sp-item">'+
+            '<div class="ku-sp-lbl">'+(TH?'SP ใช้':'SP Spent')+'</div>'+
+            '<div class="ku-sp-val ku-sp-spent">−'+esc(d.spSpent||0)+'</div>'+
+          '</div>'+
+          '<div class="ku-sp-item">'+
+            '<div class="ku-sp-lbl">'+(TH?'SP คงเหลือ':'Remaining')+'</div>'+
+            '<div class="ku-sp-val ku-sp-rem">'+esc(d.spRemaining||0)+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="ku-lng" id="kulng">'+(TH?'EN':'TH')+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<div class="ku-seal">'+esc(d.charName||'')+(d.charName?'　·　':'')+'鬼滅の刃</div>'+
+  '</div>';
+
+  // particles
+  var iw=document.getElementById('ku-iw');
+  if(iw){
+    var pts=[0,30,60,90,120,150,180,210,240,270,300,330,15,75,135,195];
+    pts.forEach(function(a,i){
+      var p=document.createElement('div');
+      p.className='ku-pt';
+      var rad=a*Math.PI/180;
+      var dist=42+Math.random()*24;
+      var sz=(2+Math.random()*2.5).toFixed(1);
+      p.style.setProperty('--px',(Math.cos(rad)*dist).toFixed(1)+'px');
+      p.style.setProperty('--py',(Math.sin(rad)*dist).toFixed(1)+'px');
+      p.style.setProperty('--dur',(0.7+Math.random()*0.7).toFixed(2)+'s');
+      p.style.setProperty('--del',(0.18+i*0.045).toFixed(2)+'s');
+      p.style.setProperty('--sz',sz+'px');
+      p.style.opacity=(0.6+Math.random()*0.4).toFixed(2);
+      iw.appendChild(p);
+    });
+  }
+
+  // lang toggle
+  var lb=document.getElementById('kulng');
+  if(lb)lb.addEventListener('click',function(){
+    TH=!TH;render();
+  });
+}
+
+render();
+})();
+</script>
+</body>
+</html>
