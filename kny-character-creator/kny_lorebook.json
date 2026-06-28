@@ -37,7 +37,9 @@
     },
     "1": {
       "uid": 1,
-      "key": ["KNY_CONFIRM"],
+      "key": [
+        "KNY_CONFIRM"
+      ],
       "keysecondary": [],
       "comment": "KNY_CONFIRM — Character Creation Handler",
       "content": "## KNY CHARACTER CREATION TRIGGER\n\nWhen you see `<KNY_CONFIRM>{...}</KNY_CONFIRM>` in the user's message, parse the JSON inside as a new character profile and:\n\n1. Welcome the character into the world of Kimetsu no Yaiba.\n2. Describe a brief opening scene fitting their faction and background.\n3. Set the initial status block from the creation data:\n   - hp: {cur: 100, max: 100} (adjust for faction)\n   - stamina: {cur: 100, max: 100} for slayers (or null for demons)\n   - recovery: {cur: 50, max: 50} for slayers (or null for demons)\n   - skillPoints: 0\n   - unlockedSkills: []\n   - abilities: map `techniques` array from creation JSON → abilities array\n   - inventory: map `startingItems` from creation JSON if present, else []\n   - equipment: auto-add Nichirin Katana for slayers, or blank for others\n   - fame: []\n   - killCount: 0\n   - rank: first rank for faction (see RANKS)\n   - nextRank: second rank\n   - rankReq: standard first requirement\n4. Then output the initial <KNY_STATUS> block.\n\n### CREATION JSON FIELDS (from kny_creation.html)\n- name, age, gender, faction, charColor\n- breathingStyle, nchirinColor, slayerMark (slayer specific)\n- bloodConc, humanMemories, wisteriaReact (demon specific)\n- traits: array of selected trait IDs\n- personality, backstory, appearance, motivation, era\n- demonAwareness, techniques",
@@ -71,7 +73,9 @@
     },
     "2": {
       "uid": 2,
-      "key": ["KNY_SKILL_UNLOCK"],
+      "key": [
+        "KNY_SKILL_UNLOCK"
+      ],
       "keysecondary": [],
       "comment": "KNY_SKILL_UNLOCK — Skill Unlock/Upgrade Handler",
       "content": "## KNY SKILL UNLOCK TRIGGER\n\nWhen you see `<KNY_SKILL_UNLOCK>{\"id\":\"...\",\"action\":\"unlock\"}` in the user's message:\n\n1. Look up the skill by its `id` in the SKILL TREE (see SKILL TREE entries).\n2. Verify the unlock is valid:\n   - Character's faction matches the skill's `cat`. cat=`all` works for everyone. `slayer`/`hashira` require slayer faction. `demon`/`upper_moon` require demon faction.\n   - `hashira` skills require rank = Hashira (柱). `upper_moon` skills require rank = Upper Moon (上弦) or Progenitor Level.\n   - If the skill has a `req` field, that prerequisite skill must already be unlocked.\n   - Character must have enough `skillPoints` (SP) to pay the cost.\n3. **If valid:**\n   - Deduct the SP cost from `skillPoints`.\n   - Increment the skill's level in `unlockedSkills` (add new entry if not present).\n   - Narrate a brief, dramatic scene of the character mastering the ability.\n   - Output a `<KNY_SKILL_UNLOCKED>` block (see format below) — this renders the visual unlock card.\n   - Output an updated `<KNY_STATUS>` block with the new SP and unlockedSkills.\n4. **If invalid:** Explain why the unlock failed (insufficient SP, wrong faction, prerequisite not met) without modifying the status. Do NOT output a `<KNY_SKILL_UNLOCKED>` block.\n\n### KNY_SKILL_UNLOCKED OUTPUT FORMAT\nAfter a successful unlock, append this block to your response:\n```\n<KNY_SKILL_UNLOCKED>\n{\n  \"id\": \"iron_body\",\n  \"level\": 2,\n  \"isNew\": false,\n  \"spSpent\": 1,\n  \"spRemaining\": 4,\n  \"charName\": \"...\",\n  \"charColor\": \"#8B6FAE\",\n  \"faction\": \"slayer\",\n  \"lang\": \"en\"\n}\n</KNY_SKILL_UNLOCKED>\n```\n- `id`: the exact skill ID string (e.g. `iron_body`, `total_conc`, `rapid_regen`)\n- `level`: the NEW level after this unlock (1 for first unlock, 2 for first upgrade, etc.)\n- `isNew`: true if this is the FIRST unlock (level 0→1); false if upgrading existing skill\n- `spSpent`: SP cost of this unlock; `spRemaining`: SP remaining after deduction\n- `charName`, `charColor`, `faction`, `lang`: copy from current character status\n- DO NOT add name, icon, effect, desc, maxLevel, or any display fields — the widget loads these from its own data table\n\n### SKILL LEVEL RULES\n- A skill at its max level cannot be upgraded further (do not output unlock card).\n- Skills with max level 1 are either unlocked (level 1) or locked — no upgrades.\n- Multi-level skills (max 2 or 3) cost their listed SP each time they are upgraded.",
