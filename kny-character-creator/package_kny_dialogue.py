@@ -22,17 +22,65 @@ def br(c):
     )
 
 # ── [SAY|$1|$2] ───────────────────────────────────────────────────────────────
-# Same outer frame as KNY header: TL+BR brackets, padding:11px 14px, transparent bg
-# Minimal rgba background so text stays legible against any chat theme
+# Design: 4-corner brackets (all corners) + fade-in lines from each corner toward
+# center ◆ at top and bottom + colored outer glow
+# Feel: "Breathing Form Declaration" — vivid, framed, distinctly KNY
+
+def corner(pos_v, pos_h, bord_v, bord_h):
+    return (
+        f'<div style="position:absolute;{pos_v}:0;{pos_h}:0;width:16px;height:16px;'
+        f'border-{bord_v}:2px solid $1;border-{bord_h}:2px solid $1;'
+        'opacity:.7;pointer-events:none;"></div>'
+    )
+
+def hline(side_v, side_h, direction):
+    # Horizontal fade-line from corner toward center on one side of top or bottom
+    grad = f'linear-gradient(90deg,$1,rgba(0,0,0,0))' if direction == 'ltr' else f'linear-gradient(90deg,rgba(0,0,0,0),$1)'
+    anchor = 'left:16px;right:calc(50% + 9px)' if direction == 'ltr' else 'right:16px;left:calc(50% + 9px)'
+    op = '.42' if side_v == 'top' else '.28'
+    return (
+        f'<div style="position:absolute;{side_v}:0;{anchor};height:1px;'
+        f'background:{grad};opacity:{op};pointer-events:none;"></div>'
+    )
+
+def diamond(side_v, op):
+    # ◆ centered on top or bottom edge
+    shift = 'translate(-50%,-50%)' if side_v == 'top' else 'translate(-50%,50%)'
+    return (
+        f'<div style="position:absolute;{side_v}:0;left:50%;transform:{shift};'
+        f'color:$1;font-size:7px;line-height:1;opacity:{op};pointer-events:none;">◆</div>'
+    )
 
 SAY_HTML = (
     FONTS +
-    '<div style="position:relative;max-width:500px;margin:6px auto 14px;'
-    'padding:11px 14px;background:rgba(10,6,18,.32);'
+
+    # Outer container — dark atmospheric bg + outer color glow
+    '<div style="position:relative;max-width:500px;margin:8px auto 16px;'
+    'padding:14px 18px;'
+    'background:linear-gradient(150deg,rgba(14,9,22,.6),rgba(7,5,13,.68));'
     "font-family:'Shippori Mincho','Noto Serif JP','Noto Serif Thai','Times New Roman',serif;"
-    'font-size:14px;line-height:1.66;color:#ede8f5;">' +
-    tl('$1') + br('$1') +
+    'font-size:14px;line-height:1.68;color:#ede8f5;'
+    'box-shadow:0 0 24px -8px $1,0 5px 20px rgba(0,0,0,.55);">' +
+
+    # 4 corner brackets
+    corner('top',    'left',  'top',    'left')  +
+    corner('top',    'right', 'top',    'right') +
+    corner('bottom', 'left',  'bottom', 'left')  +
+    corner('bottom', 'right', 'bottom', 'right') +
+
+    # Top: left fade-line · ◆ · right fade-line
+    hline('top', 'left',  'ltr') +
+    diamond('top', '.65')        +
+    hline('top', 'right', 'rtl') +
+
+    # Bottom: left fade-line · ◆ · right fade-line
+    hline('bottom', 'left',  'ltr') +
+    diamond('bottom', '.45')        +
+    hline('bottom', 'right', 'rtl') +
+
+    # Speech text
     '$2'
+
     '</div>'
 )
 
