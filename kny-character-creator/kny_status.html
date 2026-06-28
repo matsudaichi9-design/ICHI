@@ -1028,6 +1028,15 @@ if(panesEl)panesEl.addEventListener('click',function(e){
     var curLv=curSk?curSk.level:0;
     var newLv=curLv+1;
     var spRem=Math.max(0,(parseInt(d.skillPoints)||0)-sk.c);
+    // Update local state immediately so tree re-renders correctly
+    d.skillPoints=spRem;
+    if(!d.unlockedSkills)d.unlockedSkills=[];
+    var _found=false;
+    for(var _i=0;_i<d.unlockedSkills.length;_i++){if(d.unlockedSkills[_i].id===skId){d.unlockedSkills[_i].level=newLv;_found=true;break;}}
+    if(!_found)d.unlockedSkills.push({id:skId,level:newLv});
+    // Re-render tree panel with updated d
+    var _pn=g('knypanes');
+    if(_pn)Array.prototype.forEach.call(_pn.querySelectorAll('.kny-panel'),function(p){if(p.getAttribute('data-p')==='tree')p.innerHTML=pTree();});
     showUnlockOverlay(sk,newLv,spRem);
     var msg='<'+'KNY_SKILL_UNLOCK>'+JSON.stringify({id:skId,action:'unlock',level:newLv})+'<'+'/KNY_SKILL_UNLOCK>';
     sendToChat(msg);
