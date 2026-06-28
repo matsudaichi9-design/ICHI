@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>KNY Bond Updated</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#knyleditwin{
+  --acc:#C4A830;--abg:rgba(196,168,48,.12);--abd:rgba(196,168,48,.28);
+  --bg:#07090c;--bg2:#0a0c10;--bg3:#10121a;--bg4:#181a22;--bg5:#20222c;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#505048;--bd:rgba(196,168,48,.25);
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+  max-width:420px;margin:0 auto;overflow:hidden;
+  box-shadow:0 4px 28px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04);
+  color:var(--tx);
+}
+#knyleditwin #knyledithead{
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:linear-gradient(160deg,#0e1020 0%,#0a0c18 100%);
+  border-bottom:1px solid var(--bd);position:relative;
+}
+#knyleditwin #knyledithead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.4;
+}
+#knyleditwin #knyledit-ico{
+  width:30px;height:30px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--abg);border:1px solid var(--abd);
+}
+#knyleditwin #knyledithdtxt{flex:1;min-width:0}
+#knyleditwin #knyledittitle{font-family:var(--fh);font-size:7px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);opacity:.75;margin-bottom:2px}
+#knyleditwin #knyleditcname{font-family:var(--fh);font-size:14px;font-weight:600;color:#f0e8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#knyleditwin #knyleditreg{display:flex;align-items:center;gap:5px;margin-top:2px}
+#knyleditwin #knyleditfacticon{flex-shrink:0;opacity:.7}
+#knyleditwin #knyleditfnm{font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3)}
+#knyleditwin #knyleditbody{padding:11px 13px;display:flex;flex-direction:column;gap:8px}
+#knyleditwin .kled-row{display:flex;align-items:center;gap:9px}
+#knyleditwin .kled-lbl{font-family:var(--fh);font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);min-width:48px;flex-shrink:0}
+#knyleditwin .kled-bar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+#knyleditwin .kled-bar-fill{height:100%;border-radius:3px}
+#knyleditwin .kled-val{font-family:var(--fh);font-size:9px;color:var(--tx3);min-width:42px;text-align:right;flex-shrink:0}
+#knyleditwin .kled-pips{display:flex;gap:3px;flex:1}
+#knyleditwin .kled-pip{flex:1;height:4px;border-radius:2px;background:var(--bg5)}
+#knyleditwin .kled-pip.on{background:var(--acc)}
+#knyleditwin .kled-lvlval{font-family:var(--fh);font-size:9px;color:var(--acc);min-width:90px;text-align:right;flex-shrink:0}
+#knyleditwin .kled-divider{height:1px;background:var(--bg4);margin:2px 0}
+#knyleditwin .kled-status{
+  font-family:var(--fh);font-size:9px;letter-spacing:.5px;
+  display:inline-block;padding:3px 10px;border-radius:99px;
+  border:1px solid rgba(255,255,255,.12);color:var(--tx2);
+  align-self:flex-start;margin-left:57px;
+}
+#knyleditwin .kled-note{
+  font-size:10.5px;color:var(--tx3);line-height:1.55;font-style:italic;
+  padding-left:4px;border-left:2px solid var(--bd);margin-left:57px;
+}
+#knyleditwin #knyleditfoot{
+  border-top:1px solid rgba(255,255,255,.05);padding:5px 13px;
+  font-family:var(--fh);font-size:7px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="knyleditraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="knyleditwin">
+  <div id="knyledithead">
+    <div id="knyledit-ico"></div>
+    <div id="knyledithdtxt">
+      <div id="knyledittitle">絆更新 · BOND UPDATED</div>
+      <div id="knyleditcname">—</div>
+      <div id="knyleditreg">
+        <div id="knyleditfacticon"></div>
+        <div id="knyleditfnm">—</div>
+      </div>
+    </div>
+  </div>
+  <div id="knyleditbody"></div>
+  <div id="knyleditfoot">絆録 · KNY BOND REGISTRY</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){if(v==null)return '';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var rawEl=g('knyleditraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?KNY_RELATION_EDIT>/gi,'').trim();
+  var d={}; try{var dec=document.createElement('textarea');dec.innerHTML=raw;d=JSON.parse(dec.value.trim());}catch(e){}
+  var TH=(d.lang==='th');
+  var sc=Math.max(0,Math.min(100,d.score||0));
+  var lv=Math.max(0,Math.min(10,d.level||0));
+
+  var FC={slayer:'#8B6FAE',hashira:'#C4A830',demon:'#9B2020',upper_moon:'#7A2060',lower_moon:'#9B4030',human:'#7A7860'};
+  var fk=(d.faction||'').toLowerCase().replace(/\s+/g,'_');
+  var fc=FC[fk]||'#808090';
+  var acc=d.charColor||fc;
+
+  function hexRgb(h){var s=String(h||'').replace('#','');if(s.length===3)s=s[0]+s[0]+s[1]+s[1]+s[2]+s[2];var n=parseInt(s,16)||0xC4A830;return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);}
+
+  var win=g('knyleditwin'); if(!win)return;
+  var rgb=hexRgb(acc);
+  win.style.setProperty('--acc',acc);
+  win.style.setProperty('--abg','rgba('+rgb+',.12)');
+  win.style.setProperty('--abd','rgba('+rgb+',.28)');
+  win.style.setProperty('--bd','rgba('+rgb+',.25)');
+
+  function sigil(f,c){
+    var p={
+      slayer:'<line x1="8" y1="2" x2="8" y2="14" stroke="'+c+'" stroke-width="1.4" stroke-linecap="round"/><line x1="4" y1="7" x2="12" y2="7" stroke="'+c+'" stroke-width="1.2" stroke-linecap="round"/><line x1="5" y1="5" x2="11" y2="9" stroke="'+c+'" stroke-width=".8" opacity=".5" stroke-linecap="round"/>',
+      hashira:'<rect x="6" y="2" width="4" height="10" rx="1" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="3" y1="12" x2="13" y2="12" stroke="'+c+'" stroke-width="1.4"/><line x1="5" y1="12" x2="5" y2="14" stroke="'+c+'" stroke-width="1"/><line x1="11" y1="12" x2="11" y2="14" stroke="'+c+'" stroke-width="1"/>',
+      demon:'<path d="M8 2 Q13 5 12 10 Q10 14 8 14 Q6 14 4 10 Q3 5 8 2Z" fill="none" stroke="'+c+'" stroke-width="1.2"/><path d="M6 6 L8 9 L10 6" fill="none" stroke="'+c+'" stroke-width="1" stroke-linecap="round"/>',
+      upper_moon:'<path d="M6 3 Q3 8 6 13 Q4 12 3 8 Q4 4 6 3Z" fill="'+c+'" opacity=".6"/><circle cx="9" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.1"/>',
+      lower_moon:'<path d="M7 3 Q4 8 7 13 Q5 12 4 8 Q5 4 7 3Z" fill="'+c+'" opacity=".5"/><circle cx="9" cy="8" r="4.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      human:'<circle cx="8" cy="5.5" r="2.8" fill="none" stroke="'+c+'" stroke-width="1.2"/><path d="M3 14 Q3 10 8 10 Q13 10 13 14" fill="none" stroke="'+c+'" stroke-width="1.2" stroke-linecap="round"/>'
+    };
+    var def='<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/>';
+    return '<svg width="16" height="16" viewBox="0 0 16 16">'+(p[f]||def)+'</svg>';
+  }
+
+  function scoreColor(s){
+    if(s>=90)return '#ffd700';if(s>=70)return '#50d870';
+    if(s>=50)return '#50a860';if(s>=30)return '#c89030';return '#707080';
+  }
+
+  function lvlLabel(l){
+    var en=['Unknown','Stranger','Stranger','Acquaintance','Acquaintance','Ally','Ally','Trusted','Trusted','Soul Bound','Beyond Death'];
+    var th=['ไม่ทราบ','คนแปลกหน้า','คนแปลกหน้า','คนรู้จัก','คนรู้จัก','พันธมิตร','พันธมิตร','ไว้วางใจ','ไว้วางใจ','ผูกพัน','เหนือความตาย'];
+    return TH?th[Math.max(0,Math.min(10,l))]:en[Math.max(0,Math.min(10,l))];
+  }
+
+  function statusColor(st){
+    var s=(st||'').toLowerCase();
+    if(/enemy|foe|hostile|demon|อสูร|ศัตรู|คู่แค้น|oni/.test(s))return '#d04848';
+    if(/rival|adversary|คู่ปรับ/.test(s))return '#c87030';
+    if(/ally|comrade|partner|fellow|สหาย|เพื่อนร่วมรบ|พันธมิตร/.test(s))return '#50a860';
+    if(/lover|love|beloved|คนรัก|ที่รัก/.test(s))return '#d060b0';
+    if(/mentor|master|hashira|เสาหลัก|อาจารย์/.test(s))return '#c4a830';
+    return '#808090';
+  }
+
+  var FL={slayer:'Demon Slayer Corps',hashira:'Hashira',demon:'Demon',upper_moon:'Upper Moon',lower_moon:'Lower Moon',human:'Human'};
+  var FLT={slayer:'กองพันนักล่า',hashira:'เสาหลัก',demon:'อสูร',upper_moon:'Upper Moon',lower_moon:'Lower Moon',human:'มนุษย์'};
+
+  var ico=g('knyledit-ico');
+  if(ico){
+    ico.style.background='rgba('+rgb+',.12)';
+    ico.style.borderColor='rgba('+rgb+',.28)';
+    ico.innerHTML='<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9.5 2.5L11.5 4.5L5 11H3V9L9.5 2.5Z" stroke="'+acc+'" stroke-width="1.2" stroke-linejoin="round"/><line x1="8" y1="4" x2="10" y2="6" stroke="'+acc+'" stroke-width="1.2"/></svg>';
+  }
+  var cn=g('knyleditcname'); if(cn)cn.textContent=d.name||'—';
+  var fi=g('knyleditfacticon'); if(fi)fi.innerHTML=sigil(fk,fc);
+  var fn_=g('knyleditfnm'); if(fn_){fn_.textContent=TH?(FLT[fk]||d.faction||'—'):(FL[fk]||d.faction||'—');fn_.style.color=fc+'88';}
+  var ft=g('knyleditfoot'); if(ft)ft.textContent=TH?'อัปเดตสายสัมพันธ์ · บันทึกสายสัมพันธ์':'絆録 · KNY BOND REGISTRY';
+
+  var body=g('knyleditbody'); if(!body)return;
+  var sclr=scoreColor(sc);
+  var pips='';for(var i=1;i<=10;i++){pips+='<div class="kled-pip'+(i<=lv?' on':'')+'"></div>';}
+  var stclr=statusColor(d.status||'');
+  var statusHtml=d.status?('<div class="kled-status" style="border-color:'+stclr+'44;color:'+stclr+'">'+esc(d.status)+'</div>'):'';
+  var noteHtml=d.note?('<div class="kled-note">'+esc(d.note)+'</div>'):'';
+  body.innerHTML=
+    '<div class="kled-row">'+
+      '<div class="kled-lbl">'+(TH?'คะแนน':'Score')+'</div>'+
+      '<div class="kled-bar-track"><div class="kled-bar-fill" style="width:'+sc+'%;background:'+sclr+';box-shadow:0 0 6px '+sclr+'88"></div></div>'+
+      '<div class="kled-val">'+sc+' / 100</div>'+
+    '</div>'+
+    '<div class="kled-row">'+
+      '<div class="kled-lbl">'+(TH?'ระดับ':'Level')+'</div>'+
+      '<div class="kled-pips">'+pips+'</div>'+
+      '<div class="kled-lvlval">Lv.'+lv+' — '+esc(lvlLabel(lv))+'</div>'+
+    '</div>'+
+    (statusHtml||noteHtml?'<div class="kled-divider"></div>':'')+
+    statusHtml+
+    noteHtml;
+})();
+</script>
+</body>
+</html>

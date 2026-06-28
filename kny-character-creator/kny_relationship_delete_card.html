@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>KNY Bond Severed</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#knydelwin{
+  --acc:#9B2020;--abg:rgba(155,32,32,.12);--abd:rgba(155,32,32,.3);
+  --bg:#07090c;--bg2:#0a090c;--bd:rgba(155,32,32,.3);
+  --tx:#e4d8c0;--tx2:#8a8070;--tx3:#484038;
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+  max-width:360px;margin:0 auto;overflow:hidden;
+  box-shadow:0 4px 28px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.03);
+  color:var(--tx);
+}
+#knydelwin #knydelhead{
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:linear-gradient(160deg,#140a0a 0%,#0e0808 100%);
+  border-bottom:1px solid var(--bd);position:relative;
+}
+#knydelwin #knydelhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.4;
+}
+#knydelwin #knydelic{
+  width:30px;height:30px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--abg);border:1px solid var(--abd);
+}
+#knydelwin #knydelhdtxt{flex:1;min-width:0}
+#knydelwin #knydeltitle{font-family:var(--fh);font-size:7px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);opacity:.8;margin-bottom:2px}
+#knydelwin #knydelcname{font-family:var(--fh);font-size:14px;font-weight:600;color:#e4bfbf;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#knydelwin #knydelfact{display:flex;align-items:center;gap:5px;margin-top:2px}
+#knydelwin #knydelfnm{font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3)}
+#knydelwin #knydelbody{padding:12px 13px}
+#knydelwin #knydelmsg{
+  font-size:11px;color:var(--tx3);line-height:1.65;
+  padding-left:6px;border-left:2px solid rgba(155,32,32,.35);
+}
+#knydelwin #knydelmsg strong{color:var(--tx2);font-weight:600}
+#knydelwin #knydelfoot{
+  border-top:1px solid rgba(255,255,255,.04);padding:5px 13px;
+  font-family:var(--fh);font-size:7px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="knydelraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="knydelwin">
+  <div id="knydelhead">
+    <div id="knydelic">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <line x1="3" y1="3" x2="11" y2="11" stroke="#9B2020" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="11" y1="3" x2="3" y2="11" stroke="#9B2020" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div id="knydelhdtxt">
+      <div id="knydeltitle">絆断絶 · BOND SEVERED</div>
+      <div id="knydelcname">—</div>
+      <div id="knydelfact">
+        <div id="knydelfacticon"></div>
+        <div id="knydelfnm">—</div>
+      </div>
+    </div>
+  </div>
+  <div id="knydelbody">
+    <div id="knydelmsg"></div>
+  </div>
+  <div id="knydelfoot">絆録 · KNY BOND REGISTRY</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){if(v==null)return '';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var rawEl=g('knydelraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?KNY_RELATION_DELETE>/gi,'').trim();
+  var d={}; try{var dec=document.createElement('textarea');dec.innerHTML=raw;d=JSON.parse(dec.value.trim());}catch(e){}
+  var TH=(d.lang==='th');
+
+  var FC={slayer:'#8B6FAE',hashira:'#C4A830',demon:'#9B2020',upper_moon:'#7A2060',lower_moon:'#9B4030',human:'#7A7860'};
+  var fk=(d.faction||'').toLowerCase().replace(/\s+/g,'_');
+  var fc=FC[fk]||'#808090';
+
+  function sigil(f,c){
+    var p={
+      slayer:'<line x1="8" y1="2" x2="8" y2="14" stroke="'+c+'" stroke-width="1.4" stroke-linecap="round"/><line x1="4" y1="7" x2="12" y2="7" stroke="'+c+'" stroke-width="1.2" stroke-linecap="round"/><line x1="5" y1="5" x2="11" y2="9" stroke="'+c+'" stroke-width=".8" opacity=".5" stroke-linecap="round"/>',
+      hashira:'<rect x="6" y="2" width="4" height="10" rx="1" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="3" y1="12" x2="13" y2="12" stroke="'+c+'" stroke-width="1.4"/><line x1="5" y1="12" x2="5" y2="14" stroke="'+c+'" stroke-width="1"/><line x1="11" y1="12" x2="11" y2="14" stroke="'+c+'" stroke-width="1"/>',
+      demon:'<path d="M8 2 Q13 5 12 10 Q10 14 8 14 Q6 14 4 10 Q3 5 8 2Z" fill="none" stroke="'+c+'" stroke-width="1.2"/><path d="M6 6 L8 9 L10 6" fill="none" stroke="'+c+'" stroke-width="1" stroke-linecap="round"/>',
+      upper_moon:'<path d="M6 3 Q3 8 6 13 Q4 12 3 8 Q4 4 6 3Z" fill="'+c+'" opacity=".6"/><circle cx="9" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.1"/>',
+      lower_moon:'<path d="M7 3 Q4 8 7 13 Q5 12 4 8 Q5 4 7 3Z" fill="'+c+'" opacity=".5"/><circle cx="9" cy="8" r="4.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      human:'<circle cx="8" cy="5.5" r="2.8" fill="none" stroke="'+c+'" stroke-width="1.2"/><path d="M3 14 Q3 10 8 10 Q13 10 13 14" fill="none" stroke="'+c+'" stroke-width="1.2" stroke-linecap="round"/>'
+    };
+    var def='<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="4" x2="8" y2="12" stroke="'+c+'" stroke-width="1"/><line x1="4" y1="8" x2="12" y2="8" stroke="'+c+'" stroke-width="1"/>';
+    return '<svg width="16" height="16" viewBox="0 0 16 16">'+(p[f]||def)+'</svg>';
+  }
+
+  var win=g('knydelwin'); if(!win)return;
+  var cn=g('knydelcname'); if(cn)cn.textContent=d.name||'—';
+  var fi=g('knydelfacticon'); if(fi)fi.innerHTML=sigil(fk,fc);
+  var fn_=g('knydelfnm');
+  if(fn_){
+    var FL={slayer:'Demon Slayer Corps',hashira:'Hashira',demon:'Demon',upper_moon:'Upper Moon',lower_moon:'Lower Moon',human:'Human'};
+    var FLT={slayer:'กองพันนักล่า',hashira:'เสาหลัก',demon:'อสูร',upper_moon:'Upper Moon',lower_moon:'Lower Moon',human:'มนุษย์'};
+    fn_.textContent=TH?(FLT[fk]||d.faction||'—'):(FL[fk]||d.faction||'—');
+    fn_.style.color=fc+'88';
+  }
+  var ft=g('knydelfoot');
+  if(ft)ft.textContent=TH?'ตัดสายสัมพันธ์ · บันทึกสายสัมพันธ์':'絆録 · KNY BOND REGISTRY';
+  var msg=g('knydelmsg');
+  if(msg){
+    var ns='<strong>'+esc(d.name||'—')+'</strong>';
+    msg.innerHTML=TH?('สายสัมพันธ์กับ '+ns+' ถูกลบออกจากบันทึกแล้ว'):('The bond with '+ns+' has been severed from the registry.');
+  }
+})();
+</script>
+</body>
+</html>
