@@ -327,6 +327,57 @@ var g=function(id){return document.getElementById(id)};
 function esc(s){if(s==null)return'';return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function hexRgb(h){h=(h||'').replace('#','');if(h.length===3)h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];var n=parseInt(h,16)||0;return((n>>16)&255)+','+(((n>>8)&255))+','+(n&255)}
 
+// ── SKILL TABLE — all display data local; AI only sends id/level/SP ──
+var SK={
+  iron_body:{ico:'🛡',jp:'鉄の体',en:'Iron Body',th:'ร่างกายเหล็ก',cat:'all',m:3,ef:'HP Max +15/lv',tf:'HP สูงสุด +15/ระดับ',eD:'Toughen the body to endure more punishment. HP Max +15 per level.',tD:'เสริมร่างกายผ่านการฝึกอย่างหนัก HP สูงสุด +15 ต่อระดับ'},
+  battle_instinct:{ico:'⚡',jp:'闘の本能',en:'Battle Instinct',th:'สัญชาตญาณนักสู้',cat:'all',m:1,ef:'Technique DMG +10%',tf:'ความเสียหายเทคนิค +10%',eD:'Years of combat hone reflexes into instant reads. Technique damage +10%.',tD:'ปีแห่งการต่อสู้ฝึกฝนสัญชาตญาณ ความเสียหายเทคนิค +10%'},
+  quick_reflexes:{ico:'🌀',jp:'迅速な反応',en:'Quick Reflexes',th:'ปฏิกิริยาเร็ว',cat:'all',m:1,ef:'Dodge chance +10%',tf:'โอกาสหลบหลีก +10%',eD:'Body moves before the mind finishes thinking. Dodge chance +10%.',tD:'ร่างกายเคลื่อนก่อนจิตใจคิดเสร็จ โอกาสหลบหลีก +10%'},
+  pain_resistance:{ico:'💢',jp:'苦痛耐性',en:'Pain Resistance',th:'ทนความเจ็บปวด',cat:'all',m:2,ef:'Injury penalties ↓/lv',tf:'ผลเสียบาดแผล ↓/ระดับ',eD:'Harden the mind against agony. Injury penalties reduced per level.',tD:'ฝึกจิตใจต้านความเจ็บปวด ลดผลเสียจากบาดแผลต่อระดับ'},
+  night_sight:{ico:'🌙',jp:'夜目',en:'Night Sight',th:'สายตากลางคืน',cat:'all',m:1,ef:'No night perception penalty',tf:'ไม่มีบทลงโทษกลางคืน',eD:'Adapted to darkness from countless night hunts. No perception penalty after dusk.',tD:'ปรับตัวกับความมืดจากการล่ากลางคืนนับไม่ถ้วน ไม่มีบทลงโทษการรับรู้หลังค่ำ'},
+  iron_will:{ico:'🔰',jp:'鋼の意志',en:'Iron Will',th:'เจตจำนงเหล็ก',cat:'all',m:1,ef:'Immune: Fear & Confusion',tf:'ภูมิคุ้มกัน: กลัว/สับสน',eD:'A fortress mind that resists fear, confusion, and despair.',tD:'จิตใจที่แข็งแกร่งต้านทานความกลัว ความสับสน และความสิ้นหวัง'},
+  veteran_exp:{ico:'⭐',jp:'古強者の本能',en:"Veteran's Instinct",th:'สัญชาตญาณนักรบ',cat:'all',m:1,ef:'+1 SP on major kill',tf:'+1 SP เมื่อสังหารศัตรูสำคัญ',eD:'Forge wisdom from every enemy fallen. +1 SP when defeating a significant foe.',tD:'สร้างปัญญาจากทุกศัตรูที่ล้มลง +1 SP เมื่อเอาชนะศัตรูสำคัญ'},
+  killing_aura:{ico:'👁',jp:'殺気',en:'Killing Aura',th:'ออร่านักฆ่า',cat:'all',m:1,ef:'Weak enemies flee on sight',tf:'ศัตรูอ่อนแอหนีเมื่อพบ',eD:'A tangible bloodlust radiates outward — weak enemies hesitate or flee.',tD:'ความกระหายเลือดที่จับต้องได้แผ่ออกไป ศัตรูอ่อนแอลังเลหรือหนี'},
+  threat_sense:{ico:'🔍',jp:'危機感知',en:'Threat Sense',th:'รับรู้ภัย',cat:'all',m:1,ef:'Detect hidden ambushes',tf:'ตรวจจับการซุ่มโจมตี',eD:'A primal alarm that fires before an ambush lands — detect hidden threats.',tD:'สัญญาณเตือนดั้งเดิมที่ดังก่อนการซุ่มโจมตี ตรวจจับภัยที่ซ่อนอยู่'},
+  last_stand:{ico:'🔥',jp:'最後の砦',en:'Last Stand',th:'ยืนหยัดสุดท้าย',cat:'all',m:1,ef:'+25% all power below 20% HP',tf:'+25% พลัง HP < 20%',eD:'Something primal ignites when cornered. +25% all power below 20% HP.',tD:'บางสิ่งดั้งเดิมจุดไฟขึ้นเมื่อถูกมุม +25% พลังงานทั้งหมดเมื่อ HP ต่ำกว่า 20%'},
+  total_conc:{ico:'💨',jp:'全集中の呼吸',en:'Total Concentration Breathing',th:'การหายใจเต็มสมาธิ',cat:'slayer',m:3,ef:'Stamina Max +30/lv',tf:'Stamina สูงสุด +30/ระดับ',eD:'Push breathing capacity further with each level. Stamina Max +30 per level.',tD:'ผลักขีดจำกัดการหายใจในแต่ละระดับ Stamina สูงสุด +30 ต่อระดับ'},
+  breath_mastery:{ico:'🌬',jp:'呼吸の極意',en:'Breathing Mastery',th:'เชี่ยวชาญการหายใจ',cat:'slayer',m:1,ef:'All technique cost -25%',tf:'ต้นทุนเทคนิคทั้งหมด -25%',eD:'Perfect breath control — all techniques cost -25% stamina.',tD:'ควบคุมการหายใจอย่างสมบูรณ์แบบ ทุกเทคนิคใช้ Stamina -25%'},
+  nichirin_prof:{ico:'⚔',jp:'日輪刀習熟',en:'Nichirin Proficiency',th:'ความชำนาญดาบ Nichirin',cat:'slayer',m:2,ef:'Blade techniques +15%/lv',tf:'เทคนิคดาบ +15%/ระดับ',eD:'The blade becomes an extension of breath and will. Blade techniques +15% per level.',tD:'ดาบกลายเป็นส่วนขยายของลมปราณ เทคนิคดาบ +15% ต่อระดับ'},
+  corps_network:{ico:'📜',jp:'鬼殺隊ネット',en:'Corps Network',th:'เครือข่ายกองพัน',cat:'slayer',m:1,ef:'Better intel & NPC trust',tf:'ข้อมูล/ความไว้ใจ NPC ดีขึ้น',eD:'Connections within the Corps open doors others cannot. Better intel and NPC relations.',tD:'การเชื่อมต่อในกองพันเปิดประตูที่คนอื่นเปิดไม่ได้ ข้อมูลและความสัมพันธ์ NPC ที่ดีกว่า'},
+  demon_reading:{ico:'🧿',jp:'鬼の読解',en:'Demon Reading',th:'อ่านอสูร',cat:'slayer',m:1,ef:'ID weaknesses & Blood Arts faster',tf:'ระบุจุดอ่อน/Blood Art เร็วขึ้น',eD:'A practiced eye for demonic physiology — identify weaknesses and blood arts faster.',tD:'ดวงตาที่ฝึกฝนสำหรับสรีรวิทยาของอสูร ระบุจุดอ่อนและศิลปะเลือดได้เร็วขึ้น'},
+  form_refinement:{ico:'💠',jp:'型の洗練',en:'Form Refinement',th:'ขัดเกลาท่า',cat:'slayer',m:3,ef:'Technique precision +10%/lv',tf:'ความแม่นยำเทคนิค +10%/ระดับ',eD:'Polish breathing forms through endless repetition. Technique precision +10% per level.',tD:'ขัดเกลาท่าการหายใจผ่านการฝึกซ้ำ ความแม่นยำเทคนิค +10% ต่อระดับ'},
+  field_medicine:{ico:'🩹',jp:'野戦治療',en:'Field Medicine',th:'การแพทย์ภาคสนาม',cat:'slayer',m:1,ef:'Improvised healing unlocked',tf:'ปลดล็อคการรักษาด้นสด',eD:'Improvised healing under pressure — make the most of limited supplies.',tD:'การรักษาแบบด้นสดภายใต้แรงกดดัน ใช้ประโยชน์สูงสุดจากอุปกรณ์จำกัด'},
+  wisteria_mastery:{ico:'🌸',jp:'藤の極意',en:'Wisteria Mastery',th:'เชี่ยวชาญดอกฟูจิ',cat:'slayer',m:1,ef:'Wisteria tools ↑↑ effective',tf:'เครื่องมือดอกฟูจิ ↑↑',eD:'Wisteria tools — arrows, traps, barriers — become significantly more effective.',tD:'เครื่องมือดอกฟูจิ ลูกศร กับดัก สิ่งกีดขวาง มีประสิทธิภาพสูงขึ้นอย่างมีนัย'},
+  dual_blade:{ico:'⚔⚔',jp:'二刀流',en:'Dual Blade Style',th:'สไตล์สองดาบ',cat:'slayer',m:1,ef:'Offense ↑↑ / Defense ↓',tf:'โจมตี ↑↑ / ป้องกัน ↓',eD:'Harness the chaos of twin blades — overwhelming offense at the cost of defense.',tD:'ควบคุมความโกลาหลของดาบคู่ การโจมตีล้นหลาม แลกกับการป้องกันที่ลดลง'},
+  recovery_adv:{ico:'💧',jp:'回復呼吸',en:'Advanced Recovery Breathing',th:'การหายใจฟื้นฟูขั้นสูง',cat:'slayer',m:2,ef:'Recovery Max +30/lv',tf:'Recovery สูงสุด +30/ระดับ',eD:'Channel breath into healing with greater efficiency. Recovery Max +30 per level.',tD:'นำลมปราณเข้าสู่การรักษาด้วยประสิทธิภาพสูง Recovery สูงสุด +30 ต่อระดับ'},
+  focus_extend:{ico:'🌊',jp:'集中延長',en:'Focus Extension',th:'ขยายสมาธิ',cat:'slayer',m:2,ef:'Stamina drain -15%/lv',tf:'ระบาย Stamina -15%/ระดับ',eD:'Sustain concentration for longer burst windows. Stamina drain -15% per level.',tD:'รักษาสมาธิในช่วงเวลาที่ยาวนานขึ้น อัตราระบาย Stamina -15% ต่อระดับ'},
+  form_mastery:{ico:'🔮',jp:'型の極致',en:'Form Mastery',th:'เชี่ยวชาญท่าขั้นสูง',cat:'slayer',m:1,ef:'Deeper forms unlocked',tf:'ปลดล็อคท่าลึก',eD:'Access the deeper, more devastating forms of your breathing style.',tD:'เข้าถึงท่าที่ลึกและทรงพลังกว่าของสไตล์การหายใจของคุณ'},
+  blade_resonance:{ico:'✨',jp:'刀の共鳴',en:'Blade Resonance',th:'การสั่นพ้องของดาบ',cat:'slayer',m:1,ef:'Cuts find target unerringly',tf:'การตัดไม่พลาดเป้า',eD:'Nichirin synchronizes with breathing rhythm — cuts find their mark unerringly.',tD:'Nichirin ซิงค์กับจังหวะการหายใจ การตัดพบเป้าหมายอย่างไม่ผิดพลาด'},
+  sunlight_training:{ico:'☀',jp:'陽光訓練',en:'Sunlight Training',th:'ฝึกฝนแสงแดด',cat:'slayer',m:1,ef:'No sunlight disorientation',tf:'ไม่สับสนจากแสงแดดกะทันหัน',eD:'Acclimatize the eyes to extreme brightness — no disorientation in sudden sunlight.',tD:'ปรับดวงตาให้ชินกับแสงสว่างจัด ไม่มีความสับสนจากแสงอาทิตย์กะทันหัน'},
+  const_conc:{ico:'◎',jp:'全集中・常中',en:'Total Concentration: Constant',th:'สมาธิเต็มเปี่ยม: ตลอดเวลา',cat:'hashira',m:1,ef:'Stamina ≥ 30% always',tf:'Stamina ≥ 30% ตลอดเวลา',eD:'Peak breathing maintained even during sleep. Stamina never drops below 30% outside combat.',tD:'การหายใจจุดสูงสุดแม้ขณะหลับ Stamina ไม่ตกต่ำกว่า 30% นอกการต่อสู้'},
+  pillar_aura:{ico:'🏛',jp:'柱の威',en:"Pillar's Aura",th:'ออร่าเสาหลัก',cat:'hashira',m:1,ef:'Demons weakened when near',tf:'อสูรอ่อนแอเมื่ออยู่ใกล้',eD:'A suffocating presence — demons feel physically weakened just being near a Hashira.',tD:'การปรากฏตัวที่หนักอึ้ง อสูรรู้สึกอ่อนแอทางกายภาพเพียงแค่อยู่ใกล้ Hashira'},
+  transparent_world:{ico:'🔬',jp:'透き通る世界',en:'Transparent World',th:'โลกโปร่งใส',cat:'hashira',m:1,ef:'Predict all combat movements',tf:'อ่านการเคลื่อนไหวทั้งหมด',eD:'Perceive muscle contractions, blood flow, joint stress — combat becomes predictable.',tD:'รับรู้การหดตัวของกล้ามเนื้อ การไหลของเลือด ความเครียดข้อต่อ การต่อสู้อ่านออก'},
+  slayer_mark:{ico:'⚙',jp:'鬼殺の痣',en:'Slayer Mark',th:'ตราประทับนักล่า',cat:'hashira',m:1,ef:'HP/Stamina +50, lifespan ↓',tf:'HP/Stamina +50, อายุ ↓',eD:'Awaken the demon-like mark — massive surge. HP/Stamina Max +50, but life shortens.',tD:'ปลุกตราประทับคล้ายอสูร พลังงานพุ่งสูง HP/Stamina สูงสุด +50 แต่ชีวิตสั้นลง'},
+  mark_control:{ico:'🔗',jp:'痣の制御',en:'Mark Control',th:'ควบคุมตราประทับ',cat:'hashira',m:1,ef:'Aging toll greatly slowed',tf:'การแก่ชราช้าลงอย่างมาก',eD:'Discipline the mark — slow the aging toll significantly.',tD:'วินัยในตราประทับ ชะลอค่าใช้จ่ายการแก่ชราอย่างมีนัย'},
+  rapid_regen:{ico:'❤',jp:'急速再生',en:'Rapid Regeneration',th:'การฟื้นฟูเร็ว',cat:'demon',m:3,ef:'HP regen speed +30%/lv',tf:'HP ฟื้นฟู +30%/ระดับ',eD:'Accelerate cell regeneration beyond normal demonic rates. HP recovery +30% per level.',tD:'เร่งการสร้างเซลล์ใหม่เกินอัตราปกติ ความเร็วฟื้นฟู HP +30% ต่อระดับ'},
+  enhanced_senses:{ico:'👂',jp:'強化感覚',en:'Enhanced Senses',th:'ประสาทสัมผัสขั้นสูง',cat:'demon',m:2,ef:'Sense heartbeats & emotions/lv',tf:'รับรู้หัวใจ/อารมณ์/ระดับ',eD:'Sharpen demon senses — detect heartbeats, trace emotions, read micro-expressions.',tD:'ทำให้ประสาทสัมผัสของอสูรแหลมคม ตรวจจับการเต้นหัวใจ อ่านอารมณ์'},
+  blood_potency:{ico:'🩸',jp:'血の濃度',en:'Blood Potency',th:'ความเข้มข้นของเลือด',cat:'demon',m:2,ef:'Power per feeding ↑/lv',tf:'พลังต่อการดูดซึม ↑/ระดับ',eD:"Greater power absorbed per feeding — Muzan's blood burns stronger each level.",tD:'ได้รับพลังมากขึ้นต่อการดูดซึมแต่ละครั้ง เลือดของ Muzan แรงขึ้นทุกระดับ'},
+  territory_instinct:{ico:'🏰',jp:'縄張り本能',en:'Territory Instinct',th:'สัญชาตญาณอาณาเขต',cat:'demon',m:1,ef:'Combat bonus in claimed domain',tf:'โบนัสต่อสู้ในอาณาเขต',eD:'Claim a domain — gain supernatural combat advantage within its borders.',tD:'อ้างสิทธิ์อาณาเขต ได้รับข้อได้เปรียบการต่อสู้เหนือธรรมชาติภายในขอบเขต'},
+  bda_refinement:{ico:'🔴',jp:'血鬼術洗練',en:'BDA Refinement',th:'ขัดเกลา Blood Demon Art',cat:'demon',m:3,ef:'BDA power +20%/lv',tf:'พลัง BDA +20%/ระดับ',eD:'Refine Blood Demon Art beyond its base form. Technique power +20% per level.',tD:'ขัดเกลา Blood Demon Art เกินรูปแบบพื้นฐาน พลังเทคนิค +20% ต่อระดับ'},
+  flesh_craft:{ico:'🧬',jp:'肉体改造',en:'Flesh Crafting',th:'การปั้นร่างกาย',cat:'demon',m:1,ef:'Reshape flesh into weapons/forms',tf:'ปรับร่างกายเป็นอาวุธ/รูปทรง',eD:'Reshape own flesh — create weapons, alter features, reposition organs at will.',tD:'ปรับรูปร่างร่างกาย สร้างอาวุธจากเนื้อ เปลี่ยนลักษณะ เคลื่อนย้ายอวัยวะ'},
+  nightmare_aura:{ico:'😱',jp:'悪夢の波動',en:'Nightmare Aura',th:'ออร่าฝันร้าย',cat:'demon',m:1,ef:'Humans paralyzed with fear',tf:'มนุษย์อัมพาตจากความกลัว',eD:'Project primal fear — nearby humans suffer disorientation and instinctive paralysis.',tD:'ฉายความกลัวดั้งเดิม มนุษย์ใกล้เคียงทนทุกข์จากความสับสนและอัมพาตสัญชาตญาณ'},
+  wisteria_resist:{ico:'🍇',jp:'藤耐性',en:'Wisteria Resistance',th:'ต้านทานดอกฟูจิ',cat:'demon',m:3,ef:'Wisteria effect -30%/lv',tf:'ผลดอกฟูจิ -30%/ระดับ',eD:'Condition the body against wisteria poison. Effect severity -30% per level.',tD:'ปรับสภาพร่างกายต้านพิษดอกฟูจิ ความรุนแรงของผล -30% ต่อระดับ'},
+  decap_resist:{ico:'🔩',jp:'首の硬化',en:'Neck Hardening',th:'เสริมความแข็งแกร่งคอ',cat:'demon',m:1,ef:'Partial decapitation resistance',tf:'ต้านการตัดหัวบางส่วน',eD:'Reinforce the neck with concentrated demon flesh. Partial decapitation resistance.',tD:'เสริมคอด้วยเนื้ออสูรที่เข้มข้น ต้านทานการตัดหัวบางส่วน'},
+  sunlight_resist:{ico:'🌤',jp:'日光耐性',en:'Sunlight Resistance',th:'ต้านทานแสงอาทิตย์',cat:'demon',m:3,ef:'Sunlight: 3s/8s/15s per lv',tf:'แสงแดด: 3วิ/8วิ/15วิ/ระดับ',eD:'Endure brief sunlight through will and Muzan blood. Duration: 3s / 8s / 15s per level.',tD:'ทนแสงอาทิตย์สั้นๆ ผ่านเจตจำนงและเลือด Muzan ระยะเวลา: 3วิ / 8วิ / 15วิ'},
+  demon_memory:{ico:'🧠',jp:'鬼の記憶',en:'Demonic Memory',th:'ความทรงจำอสูร',cat:'demon',m:1,ef:'Perfect recall of all victims',tf:'จดจำเหยื่อทุกคนสมบูรณ์แบบ',eD:'Perfect recall of every face, voice, and secret absorbed from victims.',tD:'จดจำใบหน้า เสียง และความลับทุกอย่างจากเหยื่อได้อย่างสมบูรณ์แบบ'},
+  blood_manip:{ico:'💉',jp:'血の操作',en:'Blood Manipulation',th:'การควบคุมเลือด',cat:'demon',m:1,ef:'Control blood as weapon/barrier',tf:'ควบคุมเลือดเป็นอาวุธ/โล่',eD:'Direct control over expelled blood — weaponize as projectile, blade, or barrier.',tD:'ควบคุมโดยตรงเหนือเลือดที่พ่นออก ใช้เป็นกระสุน ใบมีด หรือสิ่งกีดขวาง'},
+  upper_presence:{ico:'🌑',jp:'上弦の威圧',en:'Upper Moon Presence',th:'การปรากฏตัว Upper Moon',cat:'upper_moon',m:1,ef:'Lesser beings freeze involuntarily',tf:'สิ่งมีชีวิตต่ำกว่าหยุดนิ่ง',eD:'An aura so dense it distorts air — lesser beings freeze involuntarily.',tD:'ออร่าที่หนาแน่นจนบิดเบือนอากาศ สิ่งมีชีวิตชั้นต่ำกว่าหยุดนิ่งโดยไม่ตั้งใจ'},
+  blood_memory:{ico:'🩸',jp:'血の記憶',en:'Blood Memory',th:'ความทรงจำในเลือด',cat:'upper_moon',m:1,ef:'Access all bloodline senses',tf:'เข้าถึงประสาทสัมผัสในเลือด',eD:'Access the senses and memories of every demon who carries your blood.',tD:'เข้าถึงประสาทสัมผัสและความทรงจำของอสูรทุกตนที่มีเลือดของคุณ'},
+  infinite_regen:{ico:'♾',jp:'無限再生',en:'Near-Infinite Regeneration',th:'การฟื้นฟูเกือบไม่จำกัด',cat:'upper_moon',m:1,ef:'Regen from any wound in seconds',tf:'ฟื้นฟูจากบาดแผลใดก็ได้',eD:'Regenerate from almost any wound in seconds. Severed limbs rejoin instantly.',tD:'ฟื้นฟูจากบาดแผลเกือบทุกอย่างในไม่กี่วินาที แขนขาที่ถูกตัดกลับมาทันที'},
+  domain_creation:{ico:'🌐',jp:'領域展開',en:'Domain Creation',th:'การสร้างอาณาเขต',cat:'upper_moon',m:1,ef:'Physical laws bend to your will',tf:'กฎกายภาพโค้งงอตามเจตจำนง',eD:'Manifest a territory where the physical and metaphysical laws bend to your will.',tD:'แสดงออกซึ่งอาณาเขตที่กฎทางกายภาพและอภิปรัชญาโค้งงอตามเจตจำนงของคุณ'},
+  secondary_bda:{ico:'🔀',jp:'第二血鬼術',en:'Secondary Blood Art',th:'ศิลปะเลือดที่สอง',cat:'upper_moon',m:1,ef:'Awaken a 2nd Blood Demon Art',tf:'ปลุก Blood Demon Art ที่สอง',eD:'Awaken a second, distinct Blood Demon Art through extreme mastery.',tD:'ปลุก Blood Demon Art ที่สองและแตกต่างผ่านความเชี่ยวชาญขั้นสุดยอด'},
+  muzan_blessing:{ico:'♛',jp:'無惨の祝福',en:"Muzan's Blessing",th:'พรของ Muzan',cat:'upper_moon',m:1,ef:'All abilities surge massively',tf:'ความสามารถทั้งหมดพุ่งสูงสุด',eD:"A direct infusion of Muzan's purest blood — all abilities surge and will-override protection granted.",tD:'การฉีดเลือดบริสุทธิ์ที่สุดของ Muzan โดยตรง ความสามารถทั้งหมดพุ่งสูงและได้รับการป้องกัน'}
+};
+
 // ── PARSE DATA ──────────────────────────────────────────
 var rawEl=g('kuraw');
 var d={};
@@ -338,9 +389,19 @@ try{
   }
 }catch(e){}
 
+// Look up skill from local table using id from AI
+var skId=d.id||'';
+var sk=SK[skId];
+
 var TH=(d.lang==='th');
 var win=g('kuwin');
 if(!win)return;
+
+// Fallback if skill not found
+if(!sk){
+  win.innerHTML='<div style="padding:22px;text-align:center;font-family:\'Noto Serif JP\',serif;font-size:10px;letter-spacing:2px;color:#484440;background:#07090d;border:1px solid #2a2030;border-radius:12px">SKILL NOT FOUND<br><span style="font-size:9px;opacity:.5">id: '+esc(skId||'(empty)')+'</span></div>';
+  return;
+}
 
 // ── THEME ───────────────────────────────────────────────
 var acc=d.charColor||'#8B6FAE';
@@ -356,51 +417,25 @@ var FBG2={slayer:'#0d0f18',demon:'#1a0a0a',human:'#1a1612'};
 win.style.setProperty('--bg',FBGS[faction]||FBGS.slayer);
 win.style.setProperty('--bg2',FBG2[faction]||FBG2.slayer);
 
-// ── WATERMARK MAP ───────────────────────────────────────
-var wmMap={
-  slayer:'水',demon:'血',human:'人',
-  iron_body:'鉄',battle_instinct:'闘',quick_reflexes:'速',
-  pain_resistance:'耐',night_sight:'夜',iron_will:'意',
-  veteran_exp:'経',killing_aura:'殺',threat_sense:'感',last_stand:'死',
-  total_conc:'呼',breath_mastery:'息',nichirin_prof:'刃',
-  corps_network:'絆',demon_reading:'読',form_refinement:'型',
-  field_medicine:'癒',wisteria_mastery:'藤',dual_blade:'双',
-  recovery_adv:'回',focus_extend:'極',form_mastery:'奥',
-  blade_resonance:'共',sunlight_training:'陽',
-  const_conc:'恒',pillar_aura:'柱',transparent_world:'透',
-  slayer_mark:'痣',mark_control:'制',
-  rapid_regen:'再',enhanced_senses:'感',blood_potency:'濃',
-  territory_instinct:'縄',bda_refinement:'技',flesh_craft:'肉',
-  nightmare_aura:'夢',wisteria_resist:'耐',decap_resist:'首',
-  sunlight_resist:'日',demon_memory:'記',blood_manip:'血',
-  upper_presence:'威',blood_memory:'憶',infinite_regen:'生',
-  domain_creation:'界',secondary_bda:'双',muzan_blessing:'祝'
-};
-var wm=wmMap[d.id]||wmMap[faction]||'刃';
-
 // ── CAT LABELS ──────────────────────────────────────────
-function catLabel(cat){
-  var m={
-    all:TH?'ทุกฝ่าย':'Universal',
-    slayer:TH?'นักล่าอสูร':'Demon Slayer',
-    demon:TH?'อสูร':'Demon',
-    hashira:TH?'เสาหลัก':'Hashira',
-    upper_moon:'Upper Moon'
-  };
-  return m[cat]||cat;
+function catLabel(cat,th){
+  var en={all:'Universal',slayer:'Demon Slayer',demon:'Demon',hashira:'Hashira',upper_moon:'Upper Moon'};
+  var th_={all:'ทุกฝ่าย',slayer:'นักล่าอสูร',demon:'อสูร',hashira:'เสาหลัก',upper_moon:'Upper Moon'};
+  return th?(th_[cat]||cat):(en[cat]||cat);
 }
 
-// ── BUILD ───────────────────────────────────────────────
+// ── RENDER ──────────────────────────────────────────────
 function render(){
   var level=parseInt(d.level)||1;
-  var maxLevel=parseInt(d.maxLevel)||1;
-  var isNew=d.isNew!==false&&level===1;
+  var maxLevel=sk.m;
+  var isNew=(d.isNew!==false)&&level===1;
 
-  var nm=TH?(d.nameTH||d.name||'???'):( d.name||'???');
-  var nmJP=d.nameJP||'';
-  var nmAlt=TH?d.name:d.nameTH;
-  var desc=TH?(d.descTH||d.desc||''):( d.desc||'');
-  var eff=TH?(d.effectTH||d.effect||''):( d.effect||'');
+  var nm=TH?sk.th:sk.en;
+  var nmJP=sk.jp||'';
+  var nmAlt=TH?sk.en:sk.th;
+  var desc=TH?sk.tD:sk.eD;
+  var eff=TH?sk.tf:sk.ef;
+  var wm=(sk.jp||'').charAt(0)||'刃';
 
   var badge=isNew?
     '<span class="ku-badge-new">'+(TH?'ใหม่':'NEW')+'</span>':
@@ -411,8 +446,6 @@ function render(){
     var cls=i<level?'ku-dot done':i===level?'ku-dot cur':'ku-dot';
     dotsH+='<div class="'+cls+'"></div>';
   }
-
-  var catTxt=catLabel(d.cat||'all');
 
   win.innerHTML=
   '<div class="ku-card">'+
@@ -432,19 +465,19 @@ function render(){
         '<div class="ku-ring2"></div>'+
         '<div class="ku-ring"></div>'+
         '<div class="ku-glow"></div>'+
-        '<div class="ku-ico">'+esc(d.icon||'◆')+'</div>'+
+        '<div class="ku-ico">'+esc(sk.ico||'◆')+'</div>'+
       '</div>'+
-      '<div class="ku-cat">'+esc(catTxt)+'</div>'+
+      '<div class="ku-cat">'+esc(catLabel(sk.cat,TH))+'</div>'+
       '<div class="ku-name">'+esc(nm)+badge+'</div>'+
       (nmJP?'<div class="ku-namejp">'+esc(nmJP)+'</div>':'')+
       (nmAlt&&nmAlt!==nm?'<div class="ku-nameth">'+esc(nmAlt)+'</div>':'')+
-      '<div class="ku-levels">'+
-        dotsH+
-        '<span class="ku-lv-lbl">Lv '+level+' / '+maxLevel+'</span>'+
-      '</div>'+
+      (maxLevel>1?
+        '<div class="ku-levels">'+dotsH+
+          '<span class="ku-lv-lbl">Lv '+level+' / '+maxLevel+'</span>'+
+        '</div>':'')+
       (eff?
         '<div class="ku-effect">'+
-          '<div class="ku-effect-ico">'+esc(d.icon||'✦')+'</div>'+
+          '<div class="ku-effect-ico">'+esc(sk.ico||'✦')+'</div>'+
           '<div class="ku-effect-txt">'+esc(eff)+'</div>'+
         '</div>':'')+
       (desc?'<div class="ku-desc">'+esc(desc)+'</div>':'')+
@@ -486,11 +519,8 @@ function render(){
     });
   }
 
-  // lang toggle
   var lb=document.getElementById('kulng');
-  if(lb)lb.addEventListener('click',function(){
-    TH=!TH;render();
-  });
+  if(lb)lb.onclick=function(){TH=!TH;render();};
 }
 
 render();
