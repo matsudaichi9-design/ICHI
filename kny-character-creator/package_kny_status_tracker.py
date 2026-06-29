@@ -253,7 +253,14 @@ OLD_DEFS_END = "    ['fame',TH?'ชื่อเสียง':'FAME',pFame]\n  ];
 NEW_DEFS_END = "    ['fame',TH?'ชื่อเสียง':'FAME',pFame],\n    ['crow',TH?'อีกา':'CROW',pCrow]\n  ];\n  var tabsH=''"
 rs = rs.replace(OLD_DEFS_END, NEW_DEFS_END, 1)
 
-# ── 8. Fix event handler selector for compact skill buttons ───────────────────
+# ── 8. Fix pTree return: cardsH was renamed to miniH but return wasn't patched ─
+rs = rs.replace(
+    "  return spH+\n    '<div class=\"tct-row\">'+filtersH+'</div>'+\n    (cardsH||'<div class=\"empty-state\">'+T('noskill')+'</div>');\n}\n\n",
+    "  return spH+\n    '<div class=\"tct-row\">'+filtersH+'</div>'+\n    (miniH?'<div class=\"skill-grid\">'+miniH+'</div>':'<div class=\"empty-state\">'+T('noskill')+'</div>');\n}\n\n",
+    1
+)
+
+# ── 9. Fix event handler selector for compact skill buttons ───────────────────
 rs = rs.replace(
     "closest('.skill-btn[data-sk]');",
     "closest('.skill-btn[data-sk],.skill-mini-btn[data-sk]');"
