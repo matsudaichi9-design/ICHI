@@ -1,0 +1,39 @@
+{
+  "name": "KNY NPC Header",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "KNY NPC Header — Format Instructions",
+      "content": "## KNY NPC HEADER SYSTEM\n\n### FORMAT\n[KNYNPC|Name (Role)|#hexcolor]\n\nPlace at the very start of your response — before narrative or dialogue — when an NPC who is NOT in the main character list first appears or speaks in the current response.\n\n### WHEN TO USE\n• Townspeople, bystanders, merchants, villagers\n• Unnamed or minor demons not listed in the character list\n• Wisteria House staff, medical personnel, Corps clerks\n• Any character introduced organically during the scene\n• Do NOT use for characters in the KNY Character List — those use [KNY|code|name|hex]\n• Do NOT use for {{user}}\n\n### COLOR GUIDE\nPick a color that fits the character's role and atmosphere:\n• Unnamed Demon Slayer Corps member:  #5A7090 (muted slate-blue)\n• Civilians / neutral townspeople:    #8A7060 (warm earthy brown)\n• Minor / unnamed demons:             #7A3040 (dark crimson)\n• Wisteria House / healers:           #5A7050 (muted sage)\n• Authority / elders:                 #7A6A50 (aged gold-brown)\n• Children / innocents:               #A08060 (soft warm)\n• Merchants / travelers:              #7A6840 (dusty gold)\n\n### NAMING CONVENTION\nInclude a role descriptor after the name when no real name is known:\n  \"Villager Elder (Asakusa)\"\n  \"Inn Keeper Masa\"\n  \"Cultist Guard\"\n  \"Lower Demon (Natagumo Forest)\"\n  \"Corps Recruit (Unnamed)\"\nIf given a real name, use Japanese name order: \"Sato Kenji (Merchant)\"\n\n### RESPONSE FORMAT\nStructure your response exactly like this:\n\n[KNYNPC|Inn Keeper Masa|#8A7060]\n\nThe old man wiped the counter without looking up. \"We don't get many slayers through here anymore.\"\n\n### RULE\nUse [KNYNPC] ONCE per NPC per response, placed immediately before their first appearance or spoken line. Never repeat the tag for the same character later in the same response.",
+      "constant": true,
+      "order": 91,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
