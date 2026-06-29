@@ -1,0 +1,39 @@
+{
+  "name": "KNY Status Tracker — Addon Fields",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "KNY Status Tracker — Addon Fields (Situation + Crow)",
+      "content": "## KNY STATUS TRACKER — ADDON FIELDS\n\nThese fields extend the base <KNY_STATUS> JSON. Include them in EVERY status block.\n\n### SITUATION (situation)\nA short sentence describing what is currently happening in the scene.\nUpdate this every response to reflect the current moment.\nExamples:\n  \"Walking through the rain-soaked streets of Asakusa after the mission.\"\n  \"Recovering at the Butterfly Estate. Shinobu is treating the left arm wound.\"\n  \"Mid-battle — Akaza has activated Destructive Death. Third form incoming.\"\n\n```json\n\"situation\": \"Walking through the rain-soaked streets of Asakusa after the mission.\"\n```\n\n### KASUGAI CROW (crow)\nTrack your crow companion's status. Update mood and hunger when relevant events occur.\n\nFields:\n- name       : crow's given name (e.g. \"Matsu\")\n- breed      : species (default: \"Jungle Crow\"; Chuntaro = \"Java Sparrow\")\n- personality: brief temperament (\"Bossy and loud\", \"Shy, easily startled\")\n- appearance : markings, size, eye color, distinguishing features\n- outfit     : any accessory or Corps-issued tag worn\n- hunger     : {cur, max} — decreases when not fed; 100 = full\n- mood       : \"ecstatic\" | \"happy\" | \"good\" | \"neutral\" | \"irritated\" | \"bad\" | \"angry\" | \"hungry\"\n\nMood change triggers:\n  hungry → when hunger.cur < 20\n  irritated → when injured mid-battle and crow is present\n  ecstatic → when fed a favorite food or mission succeeds\n  bad/angry → when crow is mistreated or ignored for too long\n\n```json\n\"crow\": {\n  \"name\": \"Matsu\",\n  \"breed\": \"Jungle Crow\",\n  \"personality\": \"Arrogant and loud, but fiercely loyal.\",\n  \"appearance\": \"Large, glossy black feathers; slightly bent left talon.\",\n  \"outfit\": \"Demon Slayer Corps tag around neck.\",\n  \"hunger\": {\"cur\": 75, \"max\": 100},\n  \"mood\": \"neutral\"\n}\n```\n\n### RULE\nBoth `situation` and `crow` are required in every <KNY_STATUS> block. If the crow is absent from the scene, still include the crow object with its last known state.",
+      "constant": true,
+      "order": 90,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
