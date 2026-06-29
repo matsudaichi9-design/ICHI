@@ -253,6 +253,12 @@ OLD_DEFS_END = "    ['fame',TH?'ชื่อเสียง':'FAME',pFame]\n  ];
 NEW_DEFS_END = "    ['fame',TH?'ชื่อเสียง':'FAME',pFame],\n    ['crow',TH?'อีกา':'CROW',pCrow]\n  ];\n  var tabsH=''"
 rs = rs.replace(OLD_DEFS_END, NEW_DEFS_END, 1)
 
+# ── 8. Fix event handler selector for compact skill buttons ───────────────────
+rs = rs.replace(
+    "closest('.skill-btn[data-sk]');",
+    "closest('.skill-btn[data-sk],.skill-mini-btn[data-sk]');"
+)
+
 # ── Write regex JSON ──────────────────────────────────────────────────────────
 data['replaceString'] = rs
 with open(OUT, 'w', encoding='utf-8') as f:
