@@ -1,101 +1,131 @@
 import json
 
 html = (
-    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700'
-    '&family=Shippori+Mincho:wght@500;600&family=Noto+Serif+JP:wght@500;700'
-    '&family=Noto+Serif+Thai:wght@500;600&display=swap" rel="stylesheet"/>'
+    '<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700'
+    '&family=Roboto+Mono:wght@500;600;700&family=Noto+Serif+JP:wght@600;700'
+    '&display=swap" rel="stylesheet"/>'
 
-    # Outer container — padded, relative, corner brackets frame the card
-    '<div style="position:relative;max-width:420px;margin:14px auto 10px;padding:11px 14px;'
-    "font-family:'Shippori Mincho','Noto Serif JP','Noto Serif Thai','Times New Roman',serif;"
-    'background:transparent;">'
+    # ── Outer card — ID/dossier panel, sharp corners, solid border ──────
+    '<div style="position:relative;max-width:420px;margin:14px auto 10px;overflow:hidden;'
+    "font-family:'Oswald','Roboto Mono',sans-serif;"
+    'background:linear-gradient(160deg,#17171c 0%,#0a0a0d 100%);'
+    'border:1px solid $3;border-radius:2px;'
+    'box-shadow:0 0 0 1px rgba(0,0,0,.6),0 10px 26px -10px rgba(0,0,0,.85);">'
 
-    # Corner bracket — top-left
-    '<div style="position:absolute;top:0;left:0;width:13px;height:13px;'
-    'border-top:1.5px solid $3;border-left:1.5px solid $3;opacity:.55;'
-    'pointer-events:none;"></div>'
+    # Blueprint/graph-paper texture, very faint
+    '<div style="position:absolute;inset:0;opacity:.05;pointer-events:none;'
+    'background-image:repeating-linear-gradient(0deg,$3 0 1px,transparent 1px 21px),'
+    'repeating-linear-gradient(90deg,$3 0 1px,transparent 1px 21px);"></div>'
 
-    # Corner bracket — bottom-right
-    '<div style="position:absolute;bottom:0;right:0;width:13px;height:13px;'
-    'border-bottom:1.5px solid $3;border-right:1.5px solid $3;opacity:.55;'
-    'pointer-events:none;"></div>'
+    # Top classification stripe
+    '<div style="height:3px;background:$3;width:100%;"></div>'
 
-    # Background watermark kanji 血 (blood — central motif of the vampire apocalypse)
-    '<div style="position:absolute;right:14px;top:50%;transform:translateY(-50%);'
-    "font-family:'Noto Serif JP','Shippori Mincho',serif;"
-    'font-size:62px;font-weight:700;color:$3;opacity:.07;line-height:1;'
-    'pointer-events:none;user-select:none;z-index:0;letter-spacing:0;">血</div>'
+    # Header strip — file label left, classification right
+    '<div style="position:relative;z-index:1;display:flex;align-items:center;'
+    'justify-content:space-between;padding:6px 12px 5px;'
+    'border-bottom:1px solid rgba(255,255,255,.08);">'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:8px;font-weight:600;"
+    'letter-spacing:2px;color:rgba(255,255,255,.4);">PERSONNEL FILE</span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;"
+    'letter-spacing:2px;color:$3;">CLASSIFIED</span>'
+    '</div>'
 
-    # Inner row — above watermark
-    '<div style="position:relative;z-index:1;display:flex;align-items:center;gap:13px;">'
+    # Main content row
+    '<div style="position:relative;z-index:1;display:flex;align-items:flex-start;'
+    'gap:12px;padding:11px 13px 10px;">'
 
-    # ── Avatar ────────────────────────────────────────────────────────
-    '<div style="position:relative;width:56px;height:56px;flex-shrink:0;">'
+    # ── ID photo block ────────────────────────────────────────────────
+    '<div style="position:relative;width:64px;height:78px;flex-shrink:0;">'
 
-    # Main frame: rectangular, no circular elements
-    '<div style="position:absolute;inset:0;border-radius:3px;overflow:hidden;'
-    'background:#06060d;border:1.5px solid $3;'
-    'box-shadow:0 0 22px -5px $3,inset 0 0 12px -6px $3;">'
+    # Frame
+    '<div style="position:absolute;inset:0;border:2px solid $3;border-radius:2px;'
+    'overflow:hidden;background:#0a0a0d;">'
 
     # Tint overlay
     '<div style="position:absolute;inset:0;'
-    'background:radial-gradient(circle at 50% 36%,rgba(28,12,50,.3),#06060d 66%);'
+    'background:radial-gradient(circle at 50% 32%,rgba(20,20,28,.35),#0a0a0d 70%);'
     'z-index:1;pointer-events:none;"></div>'
 
-    # Fallback SVG silhouette
+    # Fallback silhouette
     '<div style="position:absolute;inset:0;display:flex;align-items:center;'
     'justify-content:center;z-index:2;">'
-    '<svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="$3" '
-    'stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.82;">'
+    '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="$3" '
+    'stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.75;">'
     '<circle cx="12" cy="8.5" r="3.5"/>'
     '<path d="M5 20.5a7 7 0 0 1 14 0"/>'
     '</svg></div>'
 
-    # Portrait image
+    # Portrait — desaturated dossier-photo treatment
     '<img src="https://files.catbox.moe/$1" alt="$2" '
     'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;'
-    'display:block;background:#06060d;z-index:3;" onerror="this.style.display=\'none\'"/>'
+    'display:block;background:#0a0a0d;z-index:3;'
+    'filter:grayscale(.55) contrast(1.1) brightness(.92);" '
+    'onerror="this.style.display=\'none\'"/>'
 
-    '</div>'  # end main frame
+    '</div>'  # end frame
 
-    # Badge tab — top-LEFT corner (flat tab, not a rotated diamond or circle)
-    '<div style="position:absolute;top:-1px;left:-1px;z-index:10;'
-    'padding:2px 5px;background:$3;border-radius:0 0 4px 0;">'
-    "<span style=\"font-family:'Shippori Mincho','Noto Serif JP',serif;"
-    'font-size:8px;font-weight:700;color:#05050b;line-height:1;display:block;">軍</span>'
+    # Corner bolts — metallic rivets
+    '<div style="position:absolute;top:1.5px;left:1.5px;width:4px;height:4px;border-radius:50%;'
+    'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
+    '<div style="position:absolute;top:1.5px;right:1.5px;width:4px;height:4px;border-radius:50%;'
+    'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
+    '<div style="position:absolute;bottom:1.5px;left:1.5px;width:4px;height:4px;border-radius:50%;'
+    'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
+
+    # Classification stamp — rotated kanji seal over bottom-right corner
+    '<div style="position:absolute;bottom:-7px;right:-7px;z-index:6;width:24px;height:24px;'
+    'border-radius:50%;border:1px solid $3;background:rgba(8,8,11,.78);'
+    'display:flex;align-items:center;justify-content:center;transform:rotate(-18deg);'
+    'box-shadow:0 0 8px -2px $3;">'
+    "<span style=\"font-family:'Noto Serif JP',serif;font-size:10px;font-weight:700;"
+    'color:$3;line-height:1;opacity:.9;">機密</span>'
     '</div>'
 
-    '</div>'  # end avatar
+    '</div>'  # end photo block
 
     # ── Text block ────────────────────────────────────────────────────
-    '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;">'
+    '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;padding-top:1px;">'
 
     # Name
-    "<span style=\"font-family:'Cinzel','Times New Roman',serif;"
-    'font-size:14.5px;font-weight:600;color:#f0eae0;letter-spacing:1.5px;'
+    "<span style=\"font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;"
+    'text-transform:uppercase;letter-spacing:1px;color:#f0eae0;'
     'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'
-    'text-shadow:0 0 18px -4px $3;">$2</span>'
+    'text-shadow:0 0 16px -4px $3;">$2</span>'
 
-    # Thin divider line below name
-    '<div style="height:1px;background:linear-gradient(90deg,$3,rgba(0,0,0,0) 70%);'
-    'opacity:.38;"></div>'
-
-    # Subtitle: outlined pill — 月鬼軍 (Moon Demon Company, Guren's official squad name)
+    # Unit tag — sharp-corner rectangular badge
     '<div>'
-    '<span style="display:inline-flex;align-items:center;gap:5px;'
-    'border:1px solid $3;border-radius:20px;padding:2px 9px;opacity:.72;">'
-    '<span style="color:$3;font-size:5px;line-height:1;">◆</span>'
-    "<span style=\"font-size:7.5px;letter-spacing:5px;color:#7a6f88;"
-    "font-family:'Shippori Mincho','Noto Serif JP',serif;\">月 鬼 軍</span>"
-    '<span style="color:$3;font-size:5px;line-height:1;">◆</span>'
-    '</span>'
+    "<span style=\"display:inline-block;background:$3;color:#0a0a0d;"
+    "font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;"
+    'letter-spacing:1.5px;padding:2px 6px;border-radius:1px;">MOON DEMON CO.</span>'
     '</div>'
+
+    # Barcode strip
+    '<div style="height:9px;width:100%;max-width:150px;opacity:.5;'
+    'background:repeating-linear-gradient(90deg,#e8e2d8 0 1px,transparent 1px 2px,'
+    '#e8e2d8 3px 5px,transparent 5px 6px,#e8e2d8 8px 9px,transparent 9px 11px);"></div>'
+
+    # Status line
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:600;"
+    'letter-spacing:1.5px;color:rgba(255,255,255,.35);">STATUS: ACTIVE DUTY</span>'
 
     '</div>'  # end text block
 
-    '</div>'  # end inner row
+    '</div>'  # end main content row
 
-    '</div>'  # end outer container
+    # Perforated footer strip
+    '<div style="position:relative;z-index:1;border-top:1px dashed rgba(255,255,255,.15);'
+    'display:flex;align-items:center;justify-content:space-between;padding:4px 13px 6px;">'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:500;"
+    'letter-spacing:1.5px;color:rgba(255,255,255,.3);">JAPANESE IMPERIAL DEMON ARMY</span>'
+    '<span style="display:inline-flex;align-items:center;gap:4px;">'
+    '<span style="width:5px;height:5px;border-radius:50%;background:$3;'
+    'box-shadow:0 0 5px 1px $3;"></span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:600;"
+    'letter-spacing:1.5px;color:rgba(255,255,255,.3);">終わりのセラフ</span>'
+    '</span>'
+    '</div>'
+
+    '</div>'  # end outer card
 )
 
 data = {
