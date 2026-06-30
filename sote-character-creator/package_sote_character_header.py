@@ -6,7 +6,7 @@ html = (
     '&display=swap" rel="stylesheet"/>'
 
     # ── Outer card — ID/dossier panel, sharp corners, solid border ──────
-    '<div style="position:relative;max-width:420px;margin:14px auto 10px;overflow:hidden;'
+    '<div style="position:relative;max-width:340px;margin:10px auto 8px;overflow:hidden;'
     "font-family:'Oswald','Roboto Mono',sans-serif;"
     'background:linear-gradient(160deg,#17171c 0%,#0a0a0d 100%);'
     'border:1px solid $3;border-radius:2px;'
@@ -18,24 +18,24 @@ html = (
     'repeating-linear-gradient(90deg,$3 0 1px,transparent 1px 21px);"></div>'
 
     # Top classification stripe
-    '<div style="height:3px;background:$3;width:100%;"></div>'
+    '<div style="height:2px;background:$3;width:100%;"></div>'
 
     # Header strip — file label left, classification right
     '<div style="position:relative;z-index:1;display:flex;align-items:center;'
-    'justify-content:space-between;padding:6px 12px 5px;'
+    'justify-content:space-between;padding:4px 9px 3px;'
     'border-bottom:1px solid rgba(255,255,255,.08);">'
-    "<span style=\"font-family:'Roboto Mono',monospace;font-size:8px;font-weight:600;"
-    'letter-spacing:2px;color:rgba(255,255,255,.4);">PERSONNEL FILE</span>'
-    "<span style=\"font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;"
-    'letter-spacing:2px;color:$3;">CLASSIFIED</span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:6.5px;font-weight:600;"
+    'letter-spacing:1.5px;color:rgba(255,255,255,.4);">PERSONNEL FILE</span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:6.5px;font-weight:700;"
+    'letter-spacing:1.5px;color:$3;">CLASSIFIED</span>'
     '</div>'
 
     # Main content row
     '<div style="position:relative;z-index:1;display:flex;align-items:flex-start;'
-    'gap:12px;padding:11px 13px 10px;">'
+    'gap:9px;padding:8px 9px 7px;">'
 
     # ── ID photo block ────────────────────────────────────────────────
-    '<div style="position:relative;width:64px;height:78px;flex-shrink:0;">'
+    '<div style="position:relative;width:78px;height:96px;flex-shrink:0;">'
 
     # Frame
     '<div style="position:absolute;inset:0;border:2px solid $3;border-radius:2px;'
@@ -49,7 +49,7 @@ html = (
     # Fallback silhouette
     '<div style="position:absolute;inset:0;display:flex;align-items:center;'
     'justify-content:center;z-index:2;">'
-    '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="$3" '
+    '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="$3" '
     'stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" style="opacity:.75;">'
     '<circle cx="12" cy="8.5" r="3.5"/>'
     '<path d="M5 20.5a7 7 0 0 1 14 0"/>'
@@ -65,48 +65,48 @@ html = (
     '</div>'  # end frame
 
     # Corner bolts — metallic rivets
-    '<div style="position:absolute;top:1.5px;left:1.5px;width:4px;height:4px;border-radius:50%;'
+    '<div style="position:absolute;top:1.5px;left:1.5px;width:4.5px;height:4.5px;border-radius:50%;'
     'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
-    '<div style="position:absolute;top:1.5px;right:1.5px;width:4px;height:4px;border-radius:50%;'
+    '<div style="position:absolute;top:1.5px;right:1.5px;width:4.5px;height:4.5px;border-radius:50%;'
     'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
-    '<div style="position:absolute;bottom:1.5px;left:1.5px;width:4px;height:4px;border-radius:50%;'
+    '<div style="position:absolute;bottom:1.5px;left:1.5px;width:4.5px;height:4.5px;border-radius:50%;'
     'background:radial-gradient(circle at 35% 35%,#aaa,#444 70%);z-index:5;"></div>'
 
     # Classification stamp — rotated kanji seal over bottom-right corner
-    '<div style="position:absolute;bottom:-7px;right:-7px;z-index:6;width:24px;height:24px;'
+    '<div style="position:absolute;bottom:-6px;right:-6px;z-index:6;width:21px;height:21px;'
     'border-radius:50%;border:1px solid $3;background:rgba(8,8,11,.78);'
     'display:flex;align-items:center;justify-content:center;transform:rotate(-18deg);'
     'box-shadow:0 0 8px -2px $3;">'
-    "<span style=\"font-family:'Noto Serif JP',serif;font-size:10px;font-weight:700;"
+    "<span style=\"font-family:'Noto Serif JP',serif;font-size:8.5px;font-weight:700;"
     'color:$3;line-height:1;opacity:.9;">機密</span>'
     '</div>'
 
     '</div>'  # end photo block
 
     # ── Text block ────────────────────────────────────────────────────
-    '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:5px;padding-top:1px;">'
+    '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-top:1px;">'
 
     # Name
-    "<span style=\"font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;"
-    'text-transform:uppercase;letter-spacing:1px;color:#f0eae0;'
+    "<span style=\"font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;"
+    'text-transform:uppercase;letter-spacing:.7px;color:#f0eae0;'
     'white-space:nowrap;overflow:hidden;text-overflow:ellipsis;'
-    'text-shadow:0 0 16px -4px $3;">$2</span>'
+    'text-shadow:0 0 14px -4px $3;">$2</span>'
 
     # Unit tag — sharp-corner rectangular badge
     '<div>'
     "<span style=\"display:inline-block;background:$3;color:#0a0a0d;"
-    "font-family:'Roboto Mono',monospace;font-size:8px;font-weight:700;"
-    'letter-spacing:1.5px;padding:2px 6px;border-radius:1px;">MOON DEMON CO.</span>'
+    "font-family:'Roboto Mono',monospace;font-size:6.5px;font-weight:700;"
+    'letter-spacing:1px;padding:1.5px 5px;border-radius:1px;">MOON DEMON CO.</span>'
     '</div>'
 
     # Barcode strip
-    '<div style="height:9px;width:100%;max-width:150px;opacity:.5;'
+    '<div style="height:7px;width:100%;max-width:120px;opacity:.5;'
     'background:repeating-linear-gradient(90deg,#e8e2d8 0 1px,transparent 1px 2px,'
     '#e8e2d8 3px 5px,transparent 5px 6px,#e8e2d8 8px 9px,transparent 9px 11px);"></div>'
 
     # Status line
-    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:600;"
-    'letter-spacing:1.5px;color:rgba(255,255,255,.35);">STATUS: ACTIVE DUTY</span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:6px;font-weight:600;"
+    'letter-spacing:1px;color:rgba(255,255,255,.35);">STATUS: ACTIVE DUTY</span>'
 
     '</div>'  # end text block
 
@@ -114,14 +114,14 @@ html = (
 
     # Perforated footer strip
     '<div style="position:relative;z-index:1;border-top:1px dashed rgba(255,255,255,.15);'
-    'display:flex;align-items:center;justify-content:space-between;padding:4px 13px 6px;">'
-    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:500;"
-    'letter-spacing:1.5px;color:rgba(255,255,255,.3);">JAPANESE IMPERIAL DEMON ARMY</span>'
-    '<span style="display:inline-flex;align-items:center;gap:4px;">'
-    '<span style="width:5px;height:5px;border-radius:50%;background:$3;'
+    'display:flex;align-items:center;justify-content:space-between;padding:3px 9px 4px;">'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:6px;font-weight:500;"
+    'letter-spacing:1px;color:rgba(255,255,255,.3);">JAPANESE IMPERIAL DEMON ARMY</span>'
+    '<span style="display:inline-flex;align-items:center;gap:3px;">'
+    '<span style="width:4px;height:4px;border-radius:50%;background:$3;'
     'box-shadow:0 0 5px 1px $3;"></span>'
-    "<span style=\"font-family:'Roboto Mono',monospace;font-size:7px;font-weight:600;"
-    'letter-spacing:1.5px;color:rgba(255,255,255,.3);">終わりのセラフ</span>'
+    "<span style=\"font-family:'Roboto Mono',monospace;font-size:6px;font-weight:600;"
+    'letter-spacing:1px;color:rgba(255,255,255,.3);">終わりのセラフ</span>'
     '</span>'
     '</div>'
 
