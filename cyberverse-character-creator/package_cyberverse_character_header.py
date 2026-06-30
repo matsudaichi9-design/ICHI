@@ -11,22 +11,20 @@ html = (
     # Inner row
     '<div style="position:relative;z-index:1;display:flex;align-items:center;gap:15px;">'
 
-    # ── Avatar — octagonal HUD-clipped frame with targeting reticle ticks ──
+    # ── Avatar — soft halo ring + glowing rounded-square frame ──────────
     '<div style="position:relative;width:64px;height:64px;flex-shrink:0;">'
 
-    # Border-fill layer (octagon)
-    '<div style="position:absolute;inset:0;'
-    'clip-path:polygon(20% 0,80% 0,100% 20%,100% 80%,80% 100%,20% 100%,0 80%,0 20%);'
-    'background:$3;box-shadow:0 0 16px -3px $3;"></div>'
+    # Outer halo ring — thin circular glow behind the frame
+    '<div style="position:absolute;inset:-5px;border-radius:50%;border:1px solid $3;opacity:.4;"></div>'
 
-    # Content layer (octagon, inset to fake a clipped border)
-    '<div style="position:absolute;inset:1.8px;overflow:hidden;'
-    'clip-path:polygon(20% 0,80% 0,100% 20%,100% 80%,80% 100%,20% 100%,0 80%,0 20%);'
-    'background:#05060a;">'
+    # Main frame — rounded square, clean border + outer/inner glow
+    '<div style="position:absolute;inset:0;border-radius:15px;overflow:hidden;'
+    'border:1.5px solid $3;background:#05060a;'
+    'box-shadow:0 0 16px -3px $3,inset 0 0 12px -6px $3;">'
 
     # Tint overlay
     '<div style="position:absolute;inset:0;'
-    'background:radial-gradient(circle at 50% 34%,rgba(0,240,255,.16),#05060a 72%);'
+    'background:radial-gradient(circle at 50% 34%,rgba(0,240,255,.18),#05060a 72%);'
     'z-index:1;pointer-events:none;"></div>'
 
     # Fallback silhouette
@@ -43,25 +41,25 @@ html = (
     'style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;'
     'display:block;background:#05060a;z-index:3;" onerror="this.style.display=\'none\'"/>'
 
-    '</div>'  # end content layer
+    '</div>'  # end main frame
 
-    # Targeting reticle ticks — 4 corners around the avatar
-    '<div style="position:absolute;top:-3px;left:-3px;width:9px;height:9px;'
-    'border-top:1.5px solid $3;border-left:1.5px solid $3;opacity:.85;pointer-events:none;"></div>'
-    '<div style="position:absolute;top:-3px;right:-3px;width:9px;height:9px;'
-    'border-top:1.5px solid $3;border-right:1.5px solid $3;opacity:.85;pointer-events:none;"></div>'
-    '<div style="position:absolute;bottom:-3px;left:-3px;width:9px;height:9px;'
-    'border-bottom:1.5px solid $3;border-left:1.5px solid $3;opacity:.85;pointer-events:none;"></div>'
-    '<div style="position:absolute;bottom:-3px;right:-3px;width:9px;height:9px;'
-    'border-bottom:1.5px solid $3;border-right:1.5px solid $3;opacity:.85;pointer-events:none;"></div>'
+    # Targeting reticle ticks — 4 corners, clear of the halo ring
+    '<div style="position:absolute;top:-8px;left:-8px;width:9px;height:9px;'
+    'border-top:1.5px solid $3;border-left:1.5px solid $3;opacity:.7;pointer-events:none;"></div>'
+    '<div style="position:absolute;top:-8px;right:-8px;width:9px;height:9px;'
+    'border-top:1.5px solid $3;border-right:1.5px solid $3;opacity:.7;pointer-events:none;"></div>'
+    '<div style="position:absolute;bottom:-8px;left:-8px;width:9px;height:9px;'
+    'border-bottom:1.5px solid $3;border-left:1.5px solid $3;opacity:.7;pointer-events:none;"></div>'
+    '<div style="position:absolute;bottom:-8px;right:-8px;width:9px;height:9px;'
+    'border-bottom:1.5px solid $3;border-right:1.5px solid $3;opacity:.7;pointer-events:none;"></div>'
 
     # Online status dot
-    '<div style="position:absolute;bottom:1px;left:1px;width:10px;height:10px;border-radius:50%;z-index:10;'
+    '<div style="position:absolute;bottom:-2px;left:-2px;width:10px;height:10px;border-radius:50%;z-index:10;'
     'background:#39ff8a;border:1.5px solid #05060a;box-shadow:0 0 6px 1px rgba(57,255,138,.7);"></div>'
 
     # Chip badge — top-right corner
-    '<div style="position:absolute;top:-5px;right:-5px;z-index:10;width:17px;height:17px;'
-    'border-radius:3px;background:$3;display:flex;align-items:center;justify-content:center;'
+    '<div style="position:absolute;top:-6px;right:-6px;z-index:10;width:17px;height:17px;'
+    'border-radius:5px;background:$3;display:flex;align-items:center;justify-content:center;'
     'box-shadow:0 0 9px -1px $3;">'
     '<svg viewBox="0 0 16 16" width="10" height="10" fill="none">'
     '<rect x="5" y="5" width="6" height="6" rx="1" stroke="#05060a" stroke-width="1.3"/>'
