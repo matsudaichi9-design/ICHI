@@ -1,0 +1,18 @@
+{
+    "id": "cyberverse-dialogue",
+    "scriptName": "Cyberverse Dialogue",
+    "findRegex": "/\\[VOX\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap\" rel=\"stylesheet\"/><div style=\"position:relative;max-width:500px;margin:8px auto 16px;padding:15px 19px 14px;overflow:hidden;border-radius:4px;background:linear-gradient(150deg,rgba(10,12,22,.74),rgba(5,6,10,.82));font-family:'Rajdhani',sans-serif;font-size:14.5px;line-height:1.62;color:#dff6ff;box-shadow:0 0 22px -8px $1,0 5px 20px rgba(0,0,0,.6);\"><div style=\"position:absolute;inset:0;pointer-events:none;opacity:.03;z-index:0;background:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);\"></div><div style=\"position:relative;z-index:1;font-family:'Share Tech Mono',monospace;font-size:7.5px;letter-spacing:2px;color:$1;opacity:.55;margin-bottom:8px;\">// VOICE LINK</div><div style=\"position:absolute;top:0;left:0;width:15px;height:15px;border-top:2px solid $1;border-left:2px solid $1;opacity:.7;pointer-events:none;\"></div><div style=\"position:absolute;top:0;right:0;width:15px;height:15px;border-top:2px solid $1;border-right:2px solid $1;opacity:.7;pointer-events:none;\"></div><div style=\"position:absolute;bottom:0;left:0;width:15px;height:15px;border-bottom:2px solid $1;border-left:2px solid $1;opacity:.7;pointer-events:none;\"></div><div style=\"position:absolute;bottom:0;right:0;width:15px;height:15px;border-bottom:2px solid $1;border-right:2px solid $1;opacity:.7;pointer-events:none;\"></div><div style=\"position:absolute;top:0;left:15px;right:calc(50% + 8px);height:1px;background:linear-gradient(90deg,$1,rgba(0,0,0,0));opacity:.4;pointer-events:none;\"></div><div style=\"position:absolute;top:0;left:50%;transform:translate(-50%,-50%);color:$1;font-size:8px;line-height:1;opacity:.7;pointer-events:none;\">⬡</div><div style=\"position:absolute;top:0;right:15px;left:calc(50% + 8px);height:1px;background:linear-gradient(90deg,rgba(0,0,0,0),$1);opacity:.4;pointer-events:none;\"></div><div style=\"position:absolute;bottom:0;left:15px;right:calc(50% + 8px);height:1px;background:linear-gradient(90deg,$1,rgba(0,0,0,0));opacity:.26;pointer-events:none;\"></div><div style=\"position:absolute;bottom:0;left:50%;transform:translate(-50%,50%);color:$1;font-size:8px;line-height:1;opacity:.45;pointer-events:none;\">⬡</div><div style=\"position:absolute;bottom:0;right:15px;left:calc(50% + 8px);height:1px;background:linear-gradient(90deg,rgba(0,0,0,0),$1);opacity:.26;pointer-events:none;\"></div><div style=\"position:relative;z-index:1;\">$2</div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}

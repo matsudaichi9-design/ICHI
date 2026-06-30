@@ -1,0 +1,39 @@
+{
+  "name": "Cyberverse Dialogue & Monologue",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Cyberverse Dialogue & Monologue — Format Instructions",
+      "content": "## CYBERVERSE DIALOGUE & MONOLOGUE SYSTEM\n\nUse these two tags to format spoken dialogue and inner thought for emphasis. Both are optional flourishes — use them for a character's key spoken lines or introspective beats, not for every sentence.\n\n### SPOKEN DIALOGUE — [VOX]\n```\n[VOX|#hexcolor|Spoken line of dialogue here.]\n```\n- `#hexcolor` — the speaking character's accent color (match their `[CYBERID]` color if known)\n- Use for a notable spoken line — not every line of dialogue needs to be wrapped, reserve it for moments that deserve emphasis (a threat, a confession, a key piece of intel).\n\nExample:\n```\n[VOX|#00F0FF|\"Wakako better have my eddies ready, or this whole job was for nothing.\"]\n```\n\n### INNER MONOLOGUE — [NEURO]\n```\n[NEURO|Character Name|#hexcolor|Inner thought goes here.]\n```\n- `Character Name` — whoever is thinking (usually {{user}} or the focus character)\n- `#hexcolor` — that character's accent color\n- Use for a private, unspoken thought — paranoia, doubt, a calculation, a memory surfacing.\n\nExample:\n```\n[NEURO|Kai Mercer|#00F0FF|This deal feels wrong. Wakako never pays this much up front.]\n```\n\n### RULES\n- Both tags render as standalone HTML blocks — place each on its own line, not inline within a paragraph.\n- Do not nest one inside the other.\n- Use sparingly: 0-2 of each per response is typical. Overuse dilutes the impact.\n- Regular dialogue and narration outside these tags should still be written normally — these are accents, not a replacement for prose.",
+      "constant": true,
+      "order": 91,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
