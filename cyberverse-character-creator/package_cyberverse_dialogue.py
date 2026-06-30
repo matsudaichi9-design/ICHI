@@ -6,71 +6,67 @@ FONTS = (
 )
 
 # ── [VOX|$1|$2] ─────────────────────────────────────────────────────────────
-# Spoken dialogue — "voice transmission" HUD frame: 4-corner brackets, fade-in
-# lines from each corner toward a center hex mark, faint scanline texture,
-# small "// VOICE LINK" tag in the top-left, outer accent-color glow.
+# Spoken dialogue — "voice-message" data panel: asymmetric notched corners
+# (top-left + bottom-right cut), a static waveform column + sideways-rotated
+# "VOICE LINK" tag on the left edge, faint scanline texture, outer glow.
+# Distinct silhouette from the symmetric bracket frames used elsewhere.
 
-def corner(pos_v, pos_h, bord_v, bord_h):
-    return (
-        f'<div style="position:absolute;{pos_v}:0;{pos_h}:0;width:15px;height:15px;'
-        f'border-{bord_v}:2px solid $1;border-{bord_h}:2px solid $1;'
-        'opacity:.7;pointer-events:none;"></div>'
+NOTCH = 'polygon(15px 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%,0 15px)'
+
+# Static waveform bars — fixed heights in px for a "snapshot" look
+BAR_HEIGHTS = [9, 16, 24, 13, 20, 8, 15]
+
+def waveform():
+    bars = ''.join(
+        f'<div style="width:3px;height:{h}px;border-radius:2px;background:$1;'
+        f'opacity:{".9" if h > 18 else ".55"};box-shadow:0 0 4px -1px $1;"></div>'
+        for h in BAR_HEIGHTS
     )
-
-def hline(side_v, direction):
-    grad = 'linear-gradient(90deg,$1,rgba(0,0,0,0))' if direction == 'ltr' else 'linear-gradient(90deg,rgba(0,0,0,0),$1)'
-    anchor = 'left:15px;right:calc(50% + 8px)' if direction == 'ltr' else 'right:15px;left:calc(50% + 8px)'
-    op = '.4' if side_v == 'top' else '.26'
     return (
-        f'<div style="position:absolute;{side_v}:0;{anchor};height:1px;'
-        f'background:{grad};opacity:{op};pointer-events:none;"></div>'
-    )
-
-def hexmark(side_v, op):
-    shift = 'translate(-50%,-50%)' if side_v == 'top' else 'translate(-50%,50%)'
-    return (
-        f'<div style="position:absolute;{side_v}:0;left:50%;transform:{shift};'
-        f'color:$1;font-size:8px;line-height:1;opacity:{op};pointer-events:none;">⬡</div>'
+        '<div style="display:flex;align-items:flex-end;gap:2.5px;height:24px;flex-shrink:0;">'
+        + bars + '</div>'
     )
 
 VOX_HTML = (
     FONTS +
 
-    '<div style="position:relative;max-width:500px;margin:8px auto 16px;'
-    'padding:15px 19px 14px;overflow:hidden;border-radius:4px;'
-    'background:linear-gradient(150deg,rgba(10,12,22,.74),rgba(5,6,10,.82));'
-    "font-family:'Rajdhani',sans-serif;"
-    'font-size:14.5px;line-height:1.62;color:#dff6ff;'
-    'box-shadow:0 0 22px -8px $1,0 5px 20px rgba(0,0,0,.6);">' +
+    '<div style="position:relative;max-width:500px;margin:8px auto 16px;">'
+
+    # Border-fill layer (notched, colored, glow)
+    f'<div style="position:absolute;inset:0;clip-path:{NOTCH};background:$1;'
+    'box-shadow:0 0 22px -8px $1;"></div>'
+
+    # Content layer (notched, inset to fake a clipped border)
+    f'<div style="position:relative;clip-path:{NOTCH};margin:1.6px;overflow:hidden;'
+    'background:linear-gradient(150deg,rgba(10,12,22,.92),rgba(5,6,10,.96));'
+    "font-family:'Rajdhani',sans-serif;font-size:14.5px;line-height:1.62;color:#dff6ff;"
+    'box-shadow:0 5px 20px rgba(0,0,0,.6);">' +
 
     # Faint scanline texture
     '<div style="position:absolute;inset:0;pointer-events:none;opacity:.03;z-index:0;'
     'background:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);"></div>' +
 
-    # Voice-link tag, top-left
-    "<div style=\"position:relative;z-index:1;font-family:'Share Tech Mono',monospace;"
-    'font-size:7.5px;letter-spacing:2px;color:$1;opacity:.55;margin-bottom:8px;">// VOICE LINK</div>' +
+    # Inner row: rotated tag + waveform | divider | text
+    '<div style="position:relative;z-index:1;display:flex;align-items:center;'
+    'gap:13px;padding:14px 18px 14px 15px;">' +
 
-    # 4 corner brackets
-    corner('top',    'left',  'top',    'left')  +
-    corner('top',    'right', 'top',    'right') +
-    corner('bottom', 'left',  'bottom', 'left')  +
-    corner('bottom', 'right', 'bottom', 'right') +
+    # Left column — sideways label above a static waveform snapshot
+    '<div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex-shrink:0;">'
+    "<span style=\"writing-mode:vertical-rl;font-family:'Share Tech Mono',monospace;"
+    'font-size:7px;letter-spacing:2px;color:$1;opacity:.6;">VOICE LINK</span>' +
+    waveform() +
+    '</div>' +
 
-    # Top: left fade-line · ⬡ · right fade-line
-    hline('top', 'ltr') +
-    hexmark('top', '.7') +
-    hline('top', 'rtl') +
-
-    # Bottom: left fade-line · ⬡ · right fade-line
-    hline('bottom', 'ltr') +
-    hexmark('bottom', '.45') +
-    hline('bottom', 'rtl') +
+    # Divider
+    '<div style="width:1px;align-self:stretch;background:$1;opacity:.22;flex-shrink:0;"></div>' +
 
     # Speech text
-    '<div style="position:relative;z-index:1;">$2</div>'
+    '<div style="flex:1;min-width:0;">$2</div>' +
 
-    '</div>'
+    '</div>'  # end inner row
+
+    '</div>'  # end content layer
+    '</div>'  # end outer wrap
 )
 
 vox_data = {
