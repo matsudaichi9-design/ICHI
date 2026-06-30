@@ -6,67 +6,35 @@ FONTS = (
 )
 
 # ── [VOX|$1|$2] ─────────────────────────────────────────────────────────────
-# Spoken dialogue — "voice-message" data panel: asymmetric notched corners
-# (top-left + bottom-right cut), a static waveform column + sideways-rotated
-# "VOICE LINK" tag on the left edge, faint scanline texture, outer glow.
-# Distinct silhouette from the symmetric bracket frames used elsewhere.
-
-NOTCH = 'polygon(15px 0,100% 0,100% calc(100% - 15px),calc(100% - 15px) 100%,0 100%,0 15px)'
-
-# Static waveform bars — fixed heights in px for a "snapshot" look
-BAR_HEIGHTS = [9, 16, 24, 13, 20, 8, 15]
-
-def waveform():
-    bars = ''.join(
-        f'<div style="width:3px;height:{h}px;border-radius:2px;background:$1;'
-        f'opacity:{".9" if h > 18 else ".55"};box-shadow:0 0 4px -1px $1;"></div>'
-        for h in BAR_HEIGHTS
-    )
-    return (
-        '<div style="display:flex;align-items:flex-end;gap:2.5px;height:24px;flex-shrink:0;">'
-        + bars + '</div>'
-    )
+# Spoken dialogue — slim, clean transmission card: thin glowing border,
+# soft outer glow, faint scanline texture, and a compact icon+tag row
+# above the line. Minimal footprint, no heavy framing elements.
 
 VOX_HTML = (
     FONTS +
 
-    '<div style="position:relative;max-width:500px;margin:8px auto 16px;">'
-
-    # Border-fill layer (notched, colored, glow)
-    f'<div style="position:absolute;inset:0;clip-path:{NOTCH};background:$1;'
-    'box-shadow:0 0 22px -8px $1;"></div>'
-
-    # Content layer (notched, inset to fake a clipped border)
-    f'<div style="position:relative;clip-path:{NOTCH};margin:1.6px;overflow:hidden;'
-    'background:linear-gradient(150deg,rgba(10,12,22,.92),rgba(5,6,10,.96));'
-    "font-family:'Rajdhani',sans-serif;font-size:14.5px;line-height:1.62;color:#dff6ff;"
-    'box-shadow:0 5px 20px rgba(0,0,0,.6);">' +
+    '<div style="position:relative;max-width:500px;margin:8px auto 14px;'
+    'padding:11px 15px 12px;border-radius:9px;overflow:hidden;'
+    'border:1.5px solid $1;'
+    'background:linear-gradient(160deg,rgba(12,14,24,.82),rgba(5,6,10,.9));'
+    "font-family:'Rajdhani',sans-serif;font-size:14.5px;line-height:1.6;color:#dff6ff;"
+    'box-shadow:0 0 16px -7px $1,0 4px 14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);">'
 
     # Faint scanline texture
-    '<div style="position:absolute;inset:0;pointer-events:none;opacity:.03;z-index:0;'
-    'background:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);"></div>' +
+    '<div style="position:absolute;inset:0;pointer-events:none;opacity:.025;z-index:0;'
+    'background:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);"></div>'
 
-    # Inner row: rotated tag + waveform | divider | text
-    '<div style="position:relative;z-index:1;display:flex;align-items:center;'
-    'gap:13px;padding:14px 18px 14px 15px;">' +
-
-    # Left column — sideways label above a static waveform snapshot
-    '<div style="display:flex;flex-direction:column;align-items:center;gap:7px;flex-shrink:0;">'
-    "<span style=\"writing-mode:vertical-rl;font-family:'Share Tech Mono',monospace;"
-    'font-size:7px;letter-spacing:2px;color:$1;opacity:.6;">VOICE LINK</span>' +
-    waveform() +
-    '</div>' +
-
-    # Divider
-    '<div style="width:1px;align-self:stretch;background:$1;opacity:.22;flex-shrink:0;"></div>' +
+    # Compact tag row
+    '<div style="position:relative;z-index:1;display:flex;align-items:center;gap:6px;margin-bottom:6px;">'
+    '<span style="color:$1;font-size:9px;line-height:1;">⬡</span>'
+    "<span style=\"font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;"
+    'color:$1;opacity:.6;">VOICE</span>'
+    '</div>'
 
     # Speech text
-    '<div style="flex:1;min-width:0;">$2</div>' +
+    '<div style="position:relative;z-index:1;">$2</div>'
 
-    '</div>'  # end inner row
-
-    '</div>'  # end content layer
-    '</div>'  # end outer wrap
+    '</div>'
 )
 
 vox_data = {
