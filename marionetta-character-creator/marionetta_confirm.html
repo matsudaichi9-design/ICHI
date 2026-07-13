@@ -3,149 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:transparent;font-family:'EB Garamond',serif;font-size:14px}
+html,body{background:transparent;font-family:'Cormorant Garamond',serif;font-size:15px}
 :root{
-  --bg:#0D0810;--pan:#180F18;--pan2:#221420;--pan3:#2C1A28;
-  --acc:#8B1A2B;--acc-rgb:139,26,43;
-  --gd:#C9922A;--gdd:rgba(201,146,42,.14);
-  --tx:#EAD9C2;--tx2:#A8927A;--mu:#786050;
-  --bd:rgba(139,26,43,.3);--bd2:rgba(255,255,255,.06);
+  --bg:#140D07;--pan:#1F150C;--pan2:#2A1D11;
+  --acc:#7A1220;--acc-rgb:122,18,32;
+  --gold:#B8862E;--goldd:rgba(184,134,46,.14);
+  --ink:#E8D9B8;--ink2:#B8A585;--mu:#7A6448;
+  --bd:rgba(184,134,46,.28);--bd2:rgba(255,255,255,.06);
 }
-#mccard{max-width:460px;margin:6px auto;background:var(--bg);border-radius:14px;overflow:hidden;border:1px solid rgba(var(--acc-rgb),.3);box-shadow:0 12px 48px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.04),0 0 40px rgba(var(--acc-rgb),.06);animation:mci .35s ease both}
-@keyframes mci{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+#poster{max-width:460px;margin:6px auto;background:radial-gradient(ellipse at 50% 0%,var(--pan) 0%,var(--bg) 70%);position:relative;border-radius:2px;box-shadow:0 16px 55px rgba(0,0,0,.82);animation:pin .35s ease both;overflow:hidden}
+@keyframes pin{from{opacity:0;transform:translateY(-6px) scale(.99)}to{opacity:1;transform:none}}
+#poster::before{content:'';position:absolute;inset:10px;border:1px solid var(--bd);pointer-events:none;z-index:3}
+#poster::after{content:'';position:absolute;inset:14px;border:1px solid var(--bd2);pointer-events:none;z-index:3}
+.rosette{position:absolute;width:20px;height:20px;color:var(--gold);font-size:15px;display:flex;align-items:center;justify-content:center;z-index:4;opacity:.75}
+.r-tl{top:12px;left:12px}.r-tr{top:12px;right:12px}.r-bl{bottom:12px;left:12px}.r-br{bottom:12px;right:12px}
 
-#mc-hero{padding:20px 20px 16px;background:linear-gradient(135deg,var(--pan) 0%,var(--bg) 100%);border-bottom:1px solid rgba(var(--acc-rgb),.2);position:relative;overflow:hidden}
-#mc-hero::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(115deg,rgba(201,146,42,.05) 0,rgba(201,146,42,.05) 2px,transparent 2px,transparent 16px);pointer-events:none}
-#mc-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 80% 30%,rgba(var(--acc-rgb),.14) 0%,transparent 65%);pointer-events:none}
-.mc-species-badge{position:relative;display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;margin-bottom:10px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:1px solid rgba(var(--acc-rgb),.35);background:rgba(var(--acc-rgb),.1);color:var(--gd);font-family:'Cinzel',serif}
-.mc-name-block{position:relative;margin-bottom:4px}
-.mc-name{font-family:'Cinzel Decorative',serif;font-size:23px;font-weight:700;color:var(--tx);line-height:1.15;text-shadow:0 0 20px rgba(var(--acc-rgb),.35)}
-.mc-alias{font-size:13px;font-style:italic;color:var(--gd);margin-top:2px}
-.mc-appearance{position:relative;font-size:11.5px;color:var(--tx2);line-height:1.6;margin-top:9px}
+#pcontent{position:relative;z-index:2;padding:34px 28px 26px;text-align:center}
 
-#mc-tabs{display:flex;background:var(--pan);border-bottom:1px solid var(--bd2);overflow-x:auto}
-#mc-tabs::-webkit-scrollbar{display:none}
-.mc-tab{flex:1;min-width:0;padding:9px 3px;text-align:center;cursor:pointer;font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mu);border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;user-select:none}
-.mc-tab:hover{color:var(--tx2)}
-.mc-tab.on{color:var(--gd);border-bottom-color:var(--gd)}
-.mc-panel{display:none;padding:16px 18px 18px}
-.mc-panel.on{display:block}
+#masthead{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+#pname{font-family:'UnifrakturMaguntia',cursive;font-size:34px;line-height:1.15;color:var(--ink);text-shadow:0 0 22px rgba(var(--acc-rgb),.4);word-break:break-word}
+#prole{font-size:13px;font-style:italic;color:var(--ink2);margin-top:6px}
 
-.mc-sec{font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;color:var(--gd);letter-spacing:1px;padding:6px 0 5px;border-bottom:1px solid var(--gdd);margin-bottom:11px;display:flex;align-items:center;gap:6px}
-.mc-sec::before{content:'♦';font-size:8px;color:var(--mu)}
-.mc-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gdd),transparent)}
-.mc-sec.mt{margin-top:16px}
+#medallion{width:74px;height:74px;border-radius:50%;margin:18px auto 14px;border:2px solid var(--gold);background:radial-gradient(circle at 35% 30%,rgba(var(--acc-rgb),.55),rgba(var(--acc-rgb),.25) 70%);display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 4px 14px rgba(0,0,0,.4),inset 0 0 14px rgba(0,0,0,.3)}
 
-.mc-igrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:11px}
-.mc-icard{background:var(--pan2);border:1px solid var(--bd2);border-radius:8px;padding:7px 10px;border-left:2px solid rgba(var(--acc-rgb),.4)}
-.mc-icard.full{grid-column:1/-1}
-.mc-icard-l{font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin-bottom:3px}
-.mc-icard-v{font-size:12.5px;color:var(--tx)}
-.mc-para{font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:11px}
+#tagline{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:22px}
+.tag-flag{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink2);padding:3px 9px;border:1px solid var(--bd2);border-radius:2px;background:var(--pan2)}
 
-.mc-stat-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
-.mc-stat-label{font-size:10.5px;font-weight:700;color:var(--tx2);width:104px;flex-shrink:0;font-family:'Cinzel',serif}
-.mc-stat-bar-wrap{flex:1;height:6px;background:var(--pan3);border-radius:3px;overflow:hidden}
-.mc-stat-bar-fill{height:100%;border-radius:3px;transition:width .6s ease}
-.mc-stat-badge{font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:99px;white-space:nowrap;font-family:'Cinzel',serif;flex-shrink:0}
-.mc-stat-num{font-size:9px;color:var(--mu);min-width:30px;text-align:right;flex-shrink:0}
+.p-rule{display:flex;align-items:center;gap:8px;margin:20px 0 14px}
+.p-rule::before,.p-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.p-rule span{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);white-space:nowrap}
 
-.mc-act-card{background:var(--pan2);border:1px solid var(--bd2);border-radius:9px;padding:10px 12px;margin-bottom:8px;border-left:3px solid var(--gd)}
-.mc-act-nm{font-size:12.5px;font-weight:700;color:var(--tx);font-family:'Cinzel',serif;margin-bottom:3px}
-.mc-act-desc{font-size:11px;color:var(--tx2);line-height:1.55}
+#billing{text-align:left;max-width:330px;margin:0 auto}
+.bill-row{display:flex;align-items:baseline;gap:6px;padding:5px 0}
+.bill-nm{font-size:12px;color:var(--ink2);white-space:nowrap;flex-shrink:0}
+.bill-dots{flex:1;border-bottom:1px dotted var(--bd);transform:translateY(-3px);min-width:10px}
+.bill-lvl{font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
 
-.mc-quote-wrap{background:var(--pan2);border-left:3px solid var(--gd);border-radius:0 8px 8px 0;padding:12px 15px;margin-bottom:14px;font-style:italic;color:var(--tx);font-size:13px;line-height:1.6}
-.mc-trait-cloud{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.mc-trait{padding:4px 10px;border-radius:7px;font-size:10.5px;background:var(--pan2);border:1px solid rgba(var(--acc-rgb),.3);color:var(--tx2)}
-.mc-soulgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:11px}
-.mc-soul-card{background:var(--pan2);border:1px solid var(--bd2);border-radius:8px;padding:8px 10px}
-.mc-soul-l{font-family:'Cinzel',serif;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);margin-bottom:3px}
-.mc-soul-v{font-size:11.5px;color:var(--tx)}
-.mc-secret-wrap{background:rgba(var(--acc-rgb),.08);border:1px solid rgba(var(--acc-rgb),.25);border-radius:8px;padding:10px 12px;margin-bottom:11px}
-.mc-secret-l{font-family:'Cinzel',serif;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gd);margin-bottom:4px}
-.mc-secret-v{font-size:11.5px;color:var(--tx2);line-height:1.5;font-style:italic}
+#engagement{text-align:left;max-width:340px;margin:0 auto;font-size:12.5px;color:var(--ink2);line-height:1.7}
+#engagement p{margin-bottom:10px}
+#engagement .lbl{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);display:block;margin-bottom:3px}
 
-.mc-scenario{display:flex;gap:11px;align-items:flex-start;background:var(--pan2);border:1px solid var(--bd2);border-radius:9px;padding:11px 13px}
-.mc-scen-ico{font-size:22px;flex-shrink:0;line-height:1}
-.mc-scen-ttl{font-size:12.5px;font-weight:700;color:var(--tx);font-family:'Cinzel',serif}
-.mc-scen-desc{font-size:11px;color:var(--tx2);margin-top:3px;line-height:1.5}
+#pullquote{font-family:'Dancing Script',cursive;font-size:22px;color:var(--gold);line-height:1.4;margin:6px auto 0;max-width:320px;text-shadow:0 0 12px rgba(184,134,46,.25)}
 
-.mc-empty{font-size:11px;color:var(--mu);font-style:italic;text-align:center;padding:14px 0}
+#stub-wrap{max-width:300px;margin:20px auto 0;position:relative}
+#stub{background:var(--pan2);border:1px dashed var(--bd);border-radius:3px;padding:12px 16px;text-align:center;cursor:pointer;transition:filter .3s;position:relative}
+#stub::before,#stub::after{content:'';position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
+#stub::before{left:-7px}#stub::after{right:-7px}
+#stub-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu)}
+#stub-txt{font-size:12px;font-style:italic;color:var(--ink2);margin-top:5px;filter:blur(5px);transition:filter .4s;user-select:none}
+#stub.revealed #stub-txt{filter:blur(0)}
+#stub-hint{font-size:9px;color:var(--mu);margin-top:6px}
+#stub.revealed #stub-hint{display:none}
 
-#mc-foot{border-top:1px solid var(--bd2);padding:9px 14px;font-family:'Cinzel',serif;font-size:9px;color:var(--mu);text-align:center;letter-spacing:2px;background:var(--pan)}
+#perf{max-width:320px;margin:8px auto 0;display:flex;align-items:center;gap:10px;text-align:left}
+#perf-ico{font-size:22px;flex-shrink:0}
+#perf-ttl{font-size:12.5px;font-weight:600;color:var(--ink)}
+#perf-desc{font-size:11px;color:var(--mu);font-style:italic;margin-top:2px}
+
+#pfoot{margin-top:26px;padding-top:16px;border-top:1px solid var(--bd2)}
+#admit{display:inline-block;padding:5px 16px;border:1.5px solid var(--gold);border-radius:2px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);transform:rotate(-2deg)}
+#pfinegrid{display:flex;justify-content:center;gap:18px;margin-top:12px;font-size:9.5px;color:var(--mu);letter-spacing:.5px}
+.mc-empty{font-size:11px;color:var(--mu);font-style:italic}
 </style>
 </head>
 <body>
 <textarea id="mnraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
-<div id="mccard">
-  <div id="mc-hero">
-    <div class="mc-species-badge" id="mc-species">—</div>
-    <div class="mc-name-block">
-      <div class="mc-name" id="mc-name">—</div>
-      <div class="mc-alias" id="mc-alias" style="display:none"></div>
+<div id="poster">
+  <div class="rosette r-tl">❦</div><div class="rosette r-tr">❦</div>
+  <div class="rosette r-bl">❦</div><div class="rosette r-br">❦</div>
+
+  <div id="pcontent">
+    <div id="masthead">✦ Now Appearing ✦</div>
+    <div id="pname">—</div>
+    <div id="prole"></div>
+
+    <div id="medallion">🎭</div>
+
+    <div id="tagline"></div>
+
+    <div class="p-rule"><span>The Billing</span></div>
+    <div id="billing"></div>
+
+    <div class="p-rule"><span>Special Engagement</span></div>
+    <div id="engagement"></div>
+    <div id="pullquote" style="display:none"></div>
+
+    <div id="stub-wrap" style="display:none">
+      <div id="stub">
+        <div id="stub-lbl">Sealed Confession</div>
+        <div id="stub-txt"></div>
+        <div id="stub-hint">tap to peel back the stub</div>
+      </div>
     </div>
-    <div class="mc-appearance" id="mc-appearance"></div>
-  </div>
 
-  <div id="mc-tabs">
-    <div class="mc-tab on" data-t="profile">Profile</div>
-    <div class="mc-tab" data-t="stats">Stats</div>
-    <div class="mc-tab" data-t="acts">Acts</div>
-    <div class="mc-tab" data-t="soul">Soul</div>
-  </div>
+    <div class="p-rule"><span>Tonight's Performance</span></div>
+    <div id="perf"></div>
 
-  <div class="mc-panel on" id="mcp-profile">
-    <div class="mc-sec">Identity</div>
-    <div class="mc-igrid" id="mc-idgrid"></div>
-    <div id="mc-species-detail"></div>
-    <div class="mc-sec mt">Origins</div>
-    <div class="mc-igrid" id="mc-origrid"></div>
-    <div class="mc-para" id="mc-background"></div>
-    <div class="mc-sec mt">Role in Society</div>
-    <div class="mc-igrid" id="mc-rolegrid"></div>
-  </div>
-
-  <div class="mc-panel" id="mcp-stats">
-    <div class="mc-sec">Skills & Capabilities</div>
-    <div id="mc-stats-list"></div>
-  </div>
-
-  <div class="mc-panel" id="mcp-acts">
-    <div class="mc-sec">Signature Acts & Tricks</div>
-    <div id="mc-acts-list"></div>
-  </div>
-
-  <div class="mc-panel" id="mcp-soul">
-    <div id="mc-quote-wrap" class="mc-quote-wrap" style="display:none">"<span id="mc-quote"></span>"</div>
-    <div class="mc-sec">Traits & Nature</div>
-    <div class="mc-trait-cloud" id="mc-traits"></div>
-    <div class="mc-sec mt">Personality</div>
-    <div class="mc-para" id="mc-personality"></div>
-    <div class="mc-soulgrid">
-      <div class="mc-soul-card"><div class="mc-soul-l">Deepest Desire</div><div class="mc-soul-v" id="mc-goal">—</div></div>
-      <div class="mc-soul-card"><div class="mc-soul-l">Greatest Bond</div><div class="mc-soul-v" id="mc-bond">—</div></div>
-      <div class="mc-soul-card"><div class="mc-soul-l">Greatest Fear</div><div class="mc-soul-v" id="mc-fear">—</div></div>
-      <div class="mc-soul-card"><div class="mc-soul-l">Philosophy</div><div class="mc-soul-v" id="mc-philosophy">—</div></div>
+    <div id="pfoot">
+      <span id="admit">✦ Admit One ✦</span>
+      <div id="pfinegrid"></div>
     </div>
-    <div id="mc-secret-wrap" class="mc-secret-wrap" style="display:none">
-      <div class="mc-secret-l">Dark Secret</div>
-      <div class="mc-secret-v" id="mc-secret"></div>
-    </div>
-    <div class="mc-sec mt">Starting Scenario</div>
-    <div id="mc-scenario"></div>
   </div>
-
-  <div id="mc-foot">✦ MARIONETTA · character dossier ✦</div>
 </div>
 
 <script>
 (function(){
 function g(id){return document.getElementById(id)}
 function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function setText(id,v){var e=g(id);if(e)e.textContent=v}
 
 var STATS=[
   {id:'cunning',nm:'Cunning'},
@@ -158,24 +125,23 @@ var STATS=[
 
 var SCENARIOS={
   ordinary:{ico:'🕯️',ttl:'Ordinary Life',desc:'Before the circus ever came to town.'},
-  opening:{ico:'🎪',ttl:'Opening Night',desc:'Your first night under the big top — nothing has been the same since.'},
-  bargain:{ico:'🖤',ttl:'The Bargain',desc:'Just after striking a deal you cannot take back.'},
-  onrun:{ico:'🌘',ttl:'On the Run',desc:'Fleeing Kalgratti authorities, or something worse.'},
-  backstage:{ico:'🎭',ttl:'Behind the Curtain',desc:'Backstage among the troupe, between shows.'},
-  aspett:{ico:'🔬',ttl:'The Research Center',desc:"Inside Aspett's walls — captive, survivor, or something else."}
+  opening:{ico:'🎪',ttl:'Opening Night',desc:'Nothing has been the same since.'},
+  bargain:{ico:'🖤',ttl:'The Bargain',desc:'A deal you cannot take back.'},
+  onrun:{ico:'🌘',ttl:'On the Run',desc:'Fleeing Kalgratti authorities.'},
+  backstage:{ico:'🎭',ttl:'Behind the Curtain',desc:'Among the troupe, between shows.'},
+  aspett:{ico:'🔬',ttl:'The Research Center',desc:"Inside Aspett's walls."}
 };
 
 function statLevel(v){
-  if(v<100)return{en:'Sideshow',color:'#786050'};
+  if(v<100)return{en:'Sideshow',color:'#7A6448'};
   if(v<300)return{en:'Understudy',color:'#9A8060'};
   if(v<500)return{en:'Featured Act',color:'#B09040'};
-  if(v<700)return{en:'Headliner',color:'#C9922A'};
-  if(v<850)return{en:'Star of the Show',color:'#D4708A'};
-  if(v<980)return{en:'Legend of the Big Top',color:'#8A6ACE'};
-  if(v<1000)return{en:'Otherworldly',color:'#8B1A2B'};
+  if(v<700)return{en:'Headliner',color:'#B8862E'};
+  if(v<850)return{en:'Star of the Show',color:'#A24868'};
+  if(v<980)return{en:'Legend',color:'#5A3E8A'};
+  if(v<1000)return{en:'Otherworldly',color:'#7A1220'};
   return{en:'Beyond the Veil',color:'#FFD700'};
 }
-function pct(v){v=parseFloat(v)||0;return Math.max(0,Math.min(100,v/10))}
 
 var raw=g('mnraw');var d=null;
 if(raw&&raw.value.trim()){
@@ -184,132 +150,85 @@ if(raw&&raw.value.trim()){
 }
 if(!d)d={};
 
-var acc=d.charColor||'#8B1A2B';
+var acc=d.charColor||'#7A1220';
 document.documentElement.style.setProperty('--acc',acc);
 function hexRgb(h){return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}
 try{document.documentElement.style.setProperty('--acc-rgb',hexRgb(acc))}catch(e){}
 
 var sp=d.species||'human';
-var spEl=g('mc-species');
-if(spEl)spEl.innerHTML=(sp==='ahkon'?'👁 Ah’kon':'🎭 Human');
+g('pname').textContent=d.name||'Unnamed';
+var roleLine=(sp==='ahkon'?"Ah'kon":'Human')+(d.role?' · '+d.role:'')+(d.alias?' · "'+d.alias+'"':'');
+g('prole').textContent=roleLine;
+g('medallion').textContent=(sp==='ahkon'?'👁':'🎭');
 
-setText('mc-name',d.name||'Unnamed');
-var aliasEl=g('mc-alias');
-if(d.alias){aliasEl.style.display='block';aliasEl.textContent='"'+d.alias+'"'}
-
-var apEl=g('mc-appearance');
-if(apEl)apEl.textContent=d.appearance||'';
-
-/* IDENTITY GRID */
-var idRows=[['Age',d.age],['Gender',d.gender],['Height / Build',d.height],['Voice',d.voice]];
-var idg=g('mc-idgrid');
-if(idg){
-  idg.innerHTML=idRows.map(function(r){return '<div class="mc-icard"><div class="mc-icard-l">'+esc(r[0])+'</div><div class="mc-icard-v">'+esc(r[1]||'—')+'</div></div>';}).join('');
+var traits=d.traits||[];
+var tagEl=g('tagline');
+if(traits.length){
+  tagEl.innerHTML=traits.slice(0,4).map(function(t){return '<span class="tag-flag">'+esc(t)+'</span>';}).join('');
+}else{
+  tagEl.innerHTML='<span class="mc-empty">No traits recorded</span>';
 }
 
-/* SPECIES DETAIL */
-var sd=g('mc-species-detail');
-if(sd){
-  var h='';
-  if(sp==='ahkon'){
-    h='<div class="mc-sec mt">Ah’kon Record</div><div class="mc-igrid">'+
-      '<div class="mc-icard"><div class="mc-icard-l">Third Eye State</div><div class="mc-icard-v">'+esc(d.thirdEye||'—')+'</div></div>'+
-      '<div class="mc-icard"><div class="mc-icard-l">Government Status</div><div class="mc-icard-v">'+esc(d.govStatus||'—')+'</div></div>'+
-      '<div class="mc-icard"><div class="mc-icard-l">Symbol Specialty</div><div class="mc-icard-v">'+esc(d.magicSpecialty||'—')+'</div></div>'+
-      '<div class="mc-icard"><div class="mc-icard-l">Aspett Research History</div><div class="mc-icard-v">'+esc(d.aspettHistory||'—')+'</div></div>'+
-    '</div>';
-  }else{
-    h='<div class="mc-sec mt">Civilian Record</div><div class="mc-igrid">'+
-      '<div class="mc-icard"><div class="mc-icard-l">Occupation</div><div class="mc-icard-v">'+esc(d.occupation||'—')+'</div></div>'+
-      '<div class="mc-icard"><div class="mc-icard-l">Stance on Ah’kon</div><div class="mc-icard-v">'+esc(d.ahkonStance||'—')+'</div></div>'+
-      (d.govTies?'<div class="mc-icard full"><div class="mc-icard-l">Government / Military Ties</div><div class="mc-icard-v">'+esc(d.govTies)+'</div></div>':'')+
-    '</div>';
-  }
-  sd.innerHTML=h;
-}
-
-/* ORIGINS */
-var orRows=[['Nation',d.nation],['Region',d.region],['Family & Lineage',d.family]];
-var org=g('mc-origrid');
-if(org)org.innerHTML=orRows.map(function(r){return '<div class="mc-icard'+(r[0]==='Family & Lineage'?' full':'')+'"><div class="mc-icard-l">'+esc(r[0])+'</div><div class="mc-icard-v">'+esc(r[1]||'—')+'</div></div>';}).join('');
-setText('mc-background',d.background||'No background recorded.');
-
-/* ROLE */
-var roleRows=[['Role',d.role]];
-if(d.role==='Circus Performer')roleRows.push(['Specialty',d.performerSpecialty]);
-var rg=g('mc-rolegrid');
-if(rg)rg.innerHTML=roleRows.map(function(r){return '<div class="mc-icard"><div class="mc-icard-l">'+esc(r[0])+'</div><div class="mc-icard-v">'+esc(r[1]||'—')+'</div></div>';}).join('');
-
-/* STATS */
-var statsList=g('mc-stats-list');
-if(statsList){
-  var sh='';
+/* BILLING */
+var billEl=g('billing');
+if(billEl){
+  var bh='';
   STATS.forEach(function(s){
     var v=(d.stats&&d.stats[s.id]!=null)?d.stats[s.id]:0;
     var lv=statLevel(v);
-    sh+='<div class="mc-stat-row">'+
-      '<span class="mc-stat-label">'+s.nm+'</span>'+
-      '<div class="mc-stat-bar-wrap"><div class="mc-stat-bar-fill" style="width:'+pct(v)+'%;background:'+lv.color+'"></div></div>'+
-      '<span class="mc-stat-badge" style="background:'+lv.color+'22;color:'+lv.color+';border:1px solid '+lv.color+'55">'+lv.en+'</span>'+
-      '<span class="mc-stat-num">'+v+'</span>'+
-    '</div>';
+    bh+='<div class="bill-row"><span class="bill-nm">'+s.nm+'</span><span class="bill-dots"></span><span class="bill-lvl" style="color:'+lv.color+'">'+lv.en+'</span></div>';
   });
-  statsList.innerHTML=sh;
+  billEl.innerHTML=bh;
 }
 
-/* ACTS */
-var actsList=g('mc-acts-list');
-if(actsList){
-  var acts=d.acts||[];
-  if(acts.length){
-    actsList.innerHTML=acts.map(function(a){
-      return '<div class="mc-act-card"><div class="mc-act-nm">'+esc(a.name||'Untitled Act')+'</div>'+(a.desc?'<div class="mc-act-desc">'+esc(a.desc)+'</div>':'')+'</div>';
-    }).join('');
-  }else{
-    actsList.innerHTML='<div class="mc-empty">No signature acts recorded</div>';
-  }
+/* ENGAGEMENT */
+var engEl=g('engagement');
+if(engEl){
+  var eh='';
+  if(d.personality)eh+='<p><span class="lbl">Personality</span>'+esc(d.personality)+'</p>';
+  if(d.background)eh+='<p><span class="lbl">Origin</span>'+esc(d.background)+'</p>';
+  var extras=[];
+  if(d.goal)extras.push('seeks '+d.goal.toLowerCase());
+  if(d.bond)extras.push('bound to '+d.bond.toLowerCase());
+  if(d.fear)extras.push('fears '+d.fear.toLowerCase());
+  if(extras.length)eh+='<p><span class="lbl">Known For</span>'+esc(extras.join(' · '))+'</p>';
+  if(!eh)eh='<div class="mc-empty">No dossier notes recorded.</div>';
+  engEl.innerHTML=eh;
 }
 
-/* SOUL */
 if(d.quote){
-  var qw=g('mc-quote-wrap');if(qw)qw.style.display='block';
-  setText('mc-quote',d.quote);
+  var pq=g('pullquote');
+  pq.style.display='block';
+  pq.textContent='"'+d.quote+'"';
 }
-var traitsEl=g('mc-traits');
-if(traitsEl&&d.traits&&d.traits.length){
-  traitsEl.innerHTML=d.traits.map(function(t){return '<span class="mc-trait">'+esc(t)+'</span>';}).join('');
-}else if(traitsEl){
-  traitsEl.innerHTML='<div class="mc-empty">No traits selected</div>';
-}
-setText('mc-personality',d.personality||'No personality defined.');
-setText('mc-goal',d.goal||'—');setText('mc-bond',d.bond||'—');
-setText('mc-fear',d.fear||'—');setText('mc-philosophy',d.philosophy||'—');
 
+/* SECRET STUB */
 if(d.secret){
-  var sw=g('mc-secret-wrap');if(sw)sw.style.display='block';
-  setText('mc-secret',d.secret);
+  g('stub-wrap').style.display='block';
+  g('stub-txt').textContent=d.secret;
+  g('stub').addEventListener('click',function(){this.classList.toggle('revealed')});
 }
 
-var scenEl=g('mc-scenario');
-if(scenEl){
+/* PERFORMANCE */
+var perfEl=g('perf');
+if(perfEl){
   var sc=d.scenario;var info=SCENARIOS[sc];
   if(sc==='custom'){
-    scenEl.innerHTML='<div class="mc-scenario"><span class="mc-scen-ico">✏️</span><div><div class="mc-scen-ttl">Custom</div><div class="mc-scen-desc">'+esc(d.scenarioCustom||'')+'</div></div></div>';
+    perfEl.innerHTML='<span id="perf-ico">✏️</span><div><div id="perf-ttl">Custom Opening</div><div id="perf-desc">'+esc(d.scenarioCustom||'')+'</div></div>';
   }else if(info){
-    scenEl.innerHTML='<div class="mc-scenario"><span class="mc-scen-ico">'+info.ico+'</span><div><div class="mc-scen-ttl">'+info.ttl+'</div><div class="mc-scen-desc">'+info.desc+'</div></div></div>';
+    perfEl.innerHTML='<span id="perf-ico">'+info.ico+'</span><div><div id="perf-ttl">'+info.ttl+'</div><div id="perf-desc">'+info.desc+'</div></div>';
   }else{
-    scenEl.innerHTML='<div class="mc-empty">No scenario set</div>';
+    perfEl.innerHTML='<div class="mc-empty">No performance scheduled</div>';
   }
 }
 
-/* TABS */
-document.querySelectorAll('.mc-tab').forEach(function(tab){
-  tab.addEventListener('click',function(){
-    var t=this.dataset.t;
-    document.querySelectorAll('.mc-tab').forEach(function(x){x.classList.toggle('on',x===tab)});
-    document.querySelectorAll('.mc-panel').forEach(function(p){p.classList.toggle('on',p.id==='mcp-'+t)});
-  });
-});
+/* FINE PRINT FOOTER */
+var fineRows=[];
+if(d.nation)fineRows.push(d.nation);
+if(d.region)fineRows.push(d.region);
+if(sp==='ahkon'&&d.govStatus)fineRows.push(d.govStatus);
+if(sp==='human'&&d.occupation)fineRows.push(d.occupation);
+g('pfinegrid').textContent=fineRows.join('   ·   ');
 })();
 </script>
 </body>
