@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond',serif;font-size:14px}
+:root{
+  --bg:#0D0810;--pan:#180F18;--pan2:#221420;--pan3:#2C1A28;
+  --acc:#8B1A2B;--acc-rgb:139,26,43;
+  --gd:#C9922A;--gdd:rgba(201,146,42,.14);
+  --tx:#EAD9C2;--tx2:#A8927A;--mu:#786050;
+  --bd:rgba(139,26,43,.3);--bd2:rgba(255,255,255,.07);
+  --rd:#8B1A2B;--rdd:rgba(139,26,43,.12);
+}
+#seal-overlay{position:fixed;inset:0;z-index:9999;background:rgba(3,2,6,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s}
+#seal-overlay.on{opacity:1;pointer-events:all}
+#seal-wrap{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center}
+#seal-ring{position:absolute;inset:0;border-radius:50%;border:2px solid var(--gd);border-top-color:transparent;box-shadow:0 0 20px rgba(201,146,42,.4);animation:sSpin .9s linear infinite}
+@keyframes sSpin{to{transform:rotate(360deg)}}
+#seal-ring2{position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(201,146,42,.3);border-bottom-color:transparent;animation:sSpin .6s linear infinite reverse}
+#seal-star{font-size:44px;color:var(--gd);text-shadow:0 0 24px rgba(201,146,42,.9);animation:sPulse 1.1s ease-in-out infinite}
+@keyframes sPulse{0%,100%{opacity:.6;transform:scale(.9)}50%{opacity:1;transform:scale(1.08)}}
+#seal-msg{margin-top:16px;font-size:10px;font-weight:700;letter-spacing:2.5px;color:var(--tx2);text-transform:uppercase}
+
+#mnwin{max-width:460px;margin:6px auto;background:var(--bg);border-radius:14px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 12px 48px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.04);animation:mni .3s ease both;position:relative}
+@keyframes mni{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+#mnwin[data-species=ahkon]{background-image:radial-gradient(circle at 85% 8%,rgba(106,74,154,.08),transparent 55%)}
+
+#mn-hdr{padding:15px 17px 12px;background:linear-gradient(135deg,var(--pan) 0%,var(--bg) 100%);border-bottom:1px solid var(--bd);position:relative;overflow:hidden}
+#mn-hdr::before{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(115deg,rgba(201,146,42,.05) 0,rgba(201,146,42,.05) 2px,transparent 2px,transparent 16px);pointer-events:none}
+#mn-hdr::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 78% 40%,rgba(var(--acc-rgb),.14) 0%,transparent 68%);pointer-events:none}
+.mn-hdr-row{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.mn-sup{font-size:7.5px;font-weight:700;letter-spacing:3px;color:var(--gd);text-transform:uppercase;margin-bottom:3px;opacity:.85}
+.mn-ttl{font-family:'Cinzel Decorative',serif;font-size:19px;font-weight:700;color:var(--tx);display:flex;align-items:center;gap:8px;line-height:1.15;text-shadow:0 0 18px rgba(var(--acc-rgb),.3)}
+.acc-dot{width:9px;height:9px;border-radius:50%;background:var(--acc);flex-shrink:0;box-shadow:0 0 9px rgba(var(--acc-rgb),.6)}
+.mn-sub{font-size:10px;color:var(--tx2);margin-top:3px;letter-spacing:.4px;font-style:italic}
+
+#mn-tabs{display:flex;background:var(--pan);border-bottom:1px solid var(--bd2);overflow-x:auto}
+#mn-tabs::-webkit-scrollbar{display:none}
+.mn-tab{flex:1;min-width:0;padding:8px 3px;text-align:center;cursor:pointer;font-family:'Cinzel',serif;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mu);border-bottom:2px solid transparent;transition:all .18s;white-space:nowrap;user-select:none}
+.mn-tab:hover{color:var(--tx2)}
+.mn-tab.on{color:var(--gd);border-bottom-color:var(--gd);background:var(--gdd)}
+.mn-pane{display:none;padding:14px 16px 16px;max-height:480px;overflow-y:auto}
+.mn-pane.on{display:block}
+.mn-pane::-webkit-scrollbar{width:3px}
+.mn-pane::-webkit-scrollbar-thumb{background:rgba(255,255,255,.08);border-radius:2px}
+
+.mn-sec{font-family:'Cinzel',serif;font-size:10.5px;font-weight:700;color:var(--gd);letter-spacing:1px;padding:6px 0 5px;border-bottom:1px solid var(--gdd);margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.mn-sec::before{content:'♦';font-size:8px;color:var(--mu)}
+.mn-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--gdd),transparent)}
+.mn-sec.mt{margin-top:16px}
+
+.kf-row{display:grid;gap:9px;margin-bottom:11px}
+.kf-row.c2{grid-template-columns:1fr 1fr}
+.kf-row.c3{grid-template-columns:1fr 1fr 1fr}
+.kf-lbl{display:flex;align-items:baseline;gap:4px;font-size:9px;font-weight:700;letter-spacing:1.4px;color:var(--mu);text-transform:uppercase;margin-bottom:4px;font-family:'EB Garamond',serif}
+.kf-lbl .opt{color:var(--tx2);font-size:7.5px;font-weight:400;letter-spacing:.5px;text-transform:none;font-style:italic}
+.kf-block{margin-bottom:11px}
+
+input[type=text],input[type=number],textarea,select{width:100%;background:var(--pan2);border:1px solid var(--bd2);border-radius:7px;padding:7px 10px;color:var(--tx);font-family:'EB Garamond',serif;font-size:13px;outline:none;transition:border-color .18s,box-shadow .18s;resize:vertical}
+input[type=text]:focus,input[type=number]:focus,textarea:focus,select:focus{border-color:rgba(var(--acc-rgb),.55);box-shadow:0 0 0 2px rgba(var(--acc-rgb),.12)}
+textarea{min-height:60px;line-height:1.5}
+select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath fill='%23786050' d='M5 6L0 0h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;cursor:pointer}
+select option{background:var(--pan)}
+
+#species-wrap{display:flex;gap:8px}
+.sp-pill{flex:1;padding:9px 6px;border-radius:9px;text-align:center;cursor:pointer;border:1.5px solid var(--bd2);background:var(--pan2);transition:all .22s;user-select:none}
+.sp-pill .sp-ico{font-size:18px;display:block;margin-bottom:3px}
+.sp-pill .sp-lbl{font-size:10px;font-weight:700;color:var(--mu);display:block;font-family:'Cinzel',serif;letter-spacing:.5px}
+.sp-pill .sp-sub{font-size:8px;color:var(--mu);display:block;margin-top:1px;font-style:italic}
+.sp-pill.on[data-s=human]{border-color:var(--gd);background:var(--gdd)}
+.sp-pill.on[data-s=ahkon]{border-color:#8A6ACE;background:rgba(138,106,206,.12)}
+.sp-pill.on .sp-lbl,.sp-pill.on .sp-sub{color:var(--tx)}
+.sp-sec{display:none}
+.sp-sec.on{display:block}
+
+#color-wrap{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+#charColorInput{width:38px;height:38px;padding:3px;border-radius:8px;border:1.5px solid var(--bd2);cursor:pointer;background:var(--pan2);flex-shrink:0}
+.color-swatches{display:flex;gap:5px;flex-wrap:wrap;flex:1}
+.csw{width:22px;height:22px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:all .15s;flex-shrink:0}
+.csw:hover{transform:scale(1.15)}
+.csw.on{border-color:rgba(255,255,255,.75);transform:scale(1.08)}
+
+.stat-block{margin-bottom:13px}
+.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.stat-nm{font-size:11px;font-weight:700;color:var(--tx);font-family:'Cinzel',serif}
+.stat-desc{font-size:9px;color:var(--tx2);margin-top:1px;font-style:italic}
+.stat-badge{font-size:9px;font-weight:700;padding:2px 8px;border-radius:99px;white-space:nowrap;font-family:'Cinzel',serif;letter-spacing:.3px}
+input[type=range]{-webkit-appearance:none;width:100%;height:5px;border-radius:3px;background:var(--pan3);outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;border-radius:50%;background:var(--gd);border:2px solid var(--bg);box-shadow:0 0 6px rgba(201,146,42,.6);cursor:pointer}
+input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--gd);border:2px solid var(--bg);cursor:pointer}
+
+.tct-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.tct{padding:4px 10px;border-radius:99px;font-size:9.5px;font-weight:700;cursor:pointer;border:1px solid var(--bd2);color:var(--mu);background:var(--pan2);transition:all .15s;user-select:none;font-family:'Cinzel',serif}
+.tct:hover{color:var(--tx2)}
+.tct.active{color:#fff;background:rgba(var(--acc-rgb),.55);border-color:var(--acc)}
+.trait-grid{display:flex;flex-wrap:wrap;gap:6px}
+.trait-chip{padding:6px 11px;border-radius:8px;font-size:11px;cursor:pointer;border:1px solid var(--bd2);background:var(--pan2);color:var(--tx2);transition:all .18s;user-select:none}
+.trait-chip:hover{border-color:rgba(var(--acc-rgb),.4)}
+.trait-chip.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.16);color:var(--tx)}
+.trait-desc{font-size:9.5px;color:var(--mu);line-height:1.5;margin-top:8px;padding:8px 10px;background:var(--pan2);border-radius:7px;border-left:2px solid var(--gd);display:none}
+.trait-desc.on{display:block}
+
+.act-card{background:var(--pan2);border:1px solid var(--bd2);border-radius:9px;padding:10px 11px;margin-bottom:8px;position:relative}
+.act-card input,.act-card textarea{margin-bottom:6px}
+.act-card textarea{min-height:0;height:44px}
+.act-rm{position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:rgba(139,26,43,.25);color:#E08090;font-size:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(139,26,43,.4);user-select:none}
+.act-add{width:100%;padding:9px;border-radius:8px;border:1.5px dashed var(--bd2);background:transparent;color:var(--mu);font-size:11px;font-weight:700;cursor:pointer;text-align:center;font-family:'Cinzel',serif;letter-spacing:.5px;transition:all .18s}
+.act-add:hover{border-color:var(--gd);color:var(--gd)}
+
+.scen-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:11px}
+.scen-card{padding:10px 9px;border-radius:9px;border:1.5px solid var(--bd2);background:var(--pan2);cursor:pointer;transition:all .2s;user-select:none}
+.scen-card.full{grid-column:1/-1}
+.scen-card.on{border-color:var(--acc);background:rgba(var(--acc-rgb),.12)}
+.scen-ico{font-size:16px;margin-bottom:3px;display:block}
+.scen-ttl{font-size:10.5px;font-weight:700;color:var(--tx);font-family:'Cinzel',serif}
+.scen-desc{font-size:8.5px;color:var(--tx2);margin-top:2px;line-height:1.4;font-style:italic}
+#scenarioCustomWrap{display:none}
+#scenarioCustomWrap.on{display:block}
+
+#mn-nav{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;background:var(--pan);border-top:1px solid var(--bd2)}
+.mn-nbtn{padding:7px 15px;border-radius:8px;font-size:10px;font-weight:700;letter-spacing:1px;cursor:pointer;border:1px solid var(--bd2);background:var(--pan2);color:var(--tx2);transition:all .18s;font-family:'Cinzel',serif;text-transform:uppercase}
+.mn-nbtn:hover{border-color:rgba(var(--acc-rgb),.5);color:var(--tx)}
+.mn-nbtn:disabled{opacity:.35;cursor:default;pointer-events:none}
+#mn-submit{background:linear-gradient(135deg,var(--acc),rgba(var(--acc-rgb),.7));border:none;color:#fff;box-shadow:0 4px 16px rgba(var(--acc-rgb),.35)}
+#mn-dots{display:flex;gap:5px}
+.mn-dot{width:6px;height:6px;border-radius:50%;background:var(--bd2)}
+.mn-dot.on{background:var(--gd);box-shadow:0 0 6px rgba(201,146,42,.6)}
+</style>
+</head>
+<body>
+<div id="seal-overlay">
+  <div id="seal-wrap">
+    <div id="seal-ring"></div><div id="seal-ring2"></div>
+    <div id="seal-star">✦</div>
+  </div>
+  <div id="seal-msg">Pulling the strings...</div>
+</div>
+
+<textarea id="mnraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="mnwin">
+  <div id="mn-hdr">
+    <div class="mn-hdr-row">
+      <div>
+        <div class="mn-sup">✦ Traveling Troupe Registry ✦</div>
+        <div class="mn-ttl"><span class="acc-dot" id="mn-accdot"></span>Marionetta</div>
+        <div class="mn-sub">Bind a soul to the stage — for better or worse.</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mn-tabs">
+    <div class="mn-tab on" data-t="0">Identity</div>
+    <div class="mn-tab" data-t="1">Origins</div>
+    <div class="mn-tab" data-t="2">Troupe</div>
+    <div class="mn-tab" data-t="3">Traits</div>
+    <div class="mn-tab" data-t="4">Soul</div>
+  </div>
+
+  <div id="mn-panes">
+  <!-- TAB 0: IDENTITY -->
+  <div class="mn-pane on" data-p="0">
+    <div class="mn-sec">Identity</div>
+    <div class="kf-row c2">
+      <div><label class="kf-lbl">Name</label><input type="text" id="f-name" placeholder="Character's given name"></div>
+      <div><label class="kf-lbl">Alias / Stage Name<span class="opt">(optional)</span></label><input type="text" id="f-alias" placeholder="e.g. &quot;The Vanishing Girl&quot;"></div>
+    </div>
+    <div class="kf-row c3">
+      <div><label class="kf-lbl">Age</label><input type="text" id="f-age" placeholder="e.g. 19"></div>
+      <div><label class="kf-lbl">Gender</label><input type="text" id="f-gender" placeholder="e.g. Female"></div>
+      <div><label class="kf-lbl">Height / Build</label><input type="text" id="f-height" placeholder="e.g. 5'4&quot;, slight"></div>
+    </div>
+    <div class="kf-block">
+      <label class="kf-lbl">Species</label>
+      <div id="species-wrap">
+        <div class="sp-pill on" data-s="human"><span class="sp-ico">🎭</span><span class="sp-lbl">Human</span><span class="sp-sub">of Kalgratt or beyond</span></div>
+        <div class="sp-pill" data-s="ahkon"><span class="sp-ico">👁</span><span class="sp-lbl">Ah'kon</span><span class="sp-sub">third-eyed, symbol-touched</span></div>
+      </div>
+    </div>
+    <div class="kf-block">
+      <label class="kf-lbl">Signature Color<span class="opt">sets the accent theme</span></label>
+      <div id="color-wrap">
+        <input type="color" id="charColorInput" value="#8B1A2B">
+        <div class="color-swatches">
+          <div class="csw on" style="background:#8B1A2B" data-c="#8B1A2B"></div>
+          <div class="csw" style="background:#C9922A" data-c="#C9922A"></div>
+          <div class="csw" style="background:#6A4A9A" data-c="#6A4A9A"></div>
+          <div class="csw" style="background:#4A9BA8" data-c="#4A9BA8"></div>
+          <div class="csw" style="background:#D4708A" data-c="#D4708A"></div>
+          <div class="csw" style="background:#707080" data-c="#707080"></div>
+          <div class="csw" style="background:#4A6B4A" data-c="#4A6B4A"></div>
+          <div class="csw" style="background:#C4432A" data-c="#C4432A"></div>
+        </div>
+      </div>
+    </div>
+    <div class="kf-row c2">
+      <div><label class="kf-lbl">Voice Style<span class="opt">(optional)</span></label><input type="text" id="f-voice" placeholder="e.g. Soft, hesitant"></div>
+    </div>
+    <div class="kf-block">
+      <label class="kf-lbl">Physical Appearance</label>
+      <textarea id="f-appearance" placeholder="Hair, eyes, build, marks, attire..."></textarea>
+    </div>
+  </div>
+
+  <!-- TAB 1: ORIGINS -->
+  <div class="mn-pane" data-p="1">
+    <div class="mn-sec">Origins</div>
+    <div class="kf-row c2">
+      <div>
+        <label class="kf-lbl">Nation</label>
+        <select id="f-nation">
+          <option>Kalgratt</option>
+          <option>Betheid</option>
+          <option>Custom</option>
+        </select>
+      </div>
+      <div><label class="kf-lbl">Region / Hometown</label><input type="text" id="f-region" placeholder="e.g. Aspett, outskirts of Kalgratt"></div>
+    </div>
+    <div class="kf-block" id="nationCustomWrap" style="display:none">
+      <label class="kf-lbl">Custom Nation</label>
+      <input type="text" id="f-nationCustom" placeholder="Name the nation">
+    </div>
+    <div class="kf-block">
+      <label class="kf-lbl">Family & Lineage</label>
+      <input type="text" id="f-family" placeholder="Parents, siblings, notable ancestry...">
+    </div>
+    <div class="kf-block">
+      <label class="kf-lbl">Background</label>
+      <textarea id="f-background" rows="4" placeholder="Origin story — formative events, what set them on this path..."></textarea>
+    </div>
+
+    <div class="sp-sec on" data-sp="human">
+      <div class="mn-sec mt">Civilian Record</div>
+      <div class="kf-row c2">
+        <div><label class="kf-lbl">Occupation</label><input type="text" id="f-occupation" placeholder="e.g. Seamstress, Police Sergeant"></div>
+        <div>
+          <label class="kf-lbl">Stance on Ah'kon</label>
+          <select id="f-ahkonStance">
+            <option>Sympathetic</option>
+            <option>Prejudiced</option>
+            <option>Neutral / Indifferent</option>
+            <option>Complicit with the Government</option>
+            <option>Secretly Allied</option>
+          </select>
+        </div>
+      </div>
+      <div class="kf-block">
+        <label class="kf-lbl">Ties to Kalgratti Government / Military<span class="opt">(optional)</span></label>
+        <input type="text" id="f-govTies" placeholder="e.g. Former army seamstress">
+      </div>
+    </div>
+
+    <div class="sp-sec" data-sp="ahkon">
+      <div class="mn-sec mt">Ah'kon Record</div>
+      <div class="kf-row c2">
+        <div>
+          <label class="kf-lbl">Third Eye State</label>
+          <select id="f-thirdEye">
+            <option>Shaved & Exposed</option>
+            <option>Sealed / Hidden</option>
+            <option>Awakened — Full Sight</option>
+            <option>Concealed by Illusion</option>
+          </select>
+        </div>
+        <div>
+          <label class="kf-lbl">Government Status</label>
+          <select id="f-govStatus">
+            <option>Government-Conscripted</option>
+            <option>Fugitive</option>
+            <option>Enslaved / Captive</option>
+            <option>Free & Hidden</option>
+            <option>Registered Citizen (rare)</option>
+          </select>
+        </div>
+      </div>
+      <div class="kf-row c2">
+        <div><label class="kf-lbl">Symbol Specialty</label><input type="text" id="f-magicSpecialty" placeholder="e.g. Illusion-craft, Ward-binding"></div>
+        <div>
+          <label class="kf-lbl">Aspett Research History</label>
+          <select id="f-aspettHistory">
+            <option>No contact</option>
+            <option>Survivor of experiments</option>
+            <option>Currently held</option>
+            <option>Escaped subject</option>
+            <option>Unknown / suppressed memories</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: TROUPE & TRADE -->
+  <div class="mn-pane" data-p="2">
+    <div class="mn-sec">Role in Society</div>
+    <div class="kf-row c2">
+      <div>
+        <label class="kf-lbl">Role</label>
+        <select id="f-role">
+          <option>Circus Performer</option>
+          <option>Kalgratti Official / Military</option>
+          <option>Researcher / Scientist</option>
+          <option>Merchant / Civilian</option>
+          <option>Nomad / Drifter</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div id="performerWrap">
+        <label class="kf-lbl">Performer Specialty</label>
+        <select id="f-performerSpecialty">
+          <option>Illusionist</option>
+          <option>Acrobat</option>
+          <option>Clown / Ringmaster</option>
+          <option>Seamstress / Costumer</option>
+          <option>Strongman</option>
+          <option>Fortune-Teller</option>
+          <option>Animal Handler</option>
+          <option>Musician</option>
+          <option>Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mn-sec mt">Skills & Capabilities</div>
+    <div id="stats-wrap"></div>
+
+    <div class="mn-sec mt">Signature Acts & Tricks<span class="opt" style="margin-left:6px">(optional)</span></div>
+    <div id="acts-list"></div>
+    <div class="act-add" id="act-add-btn">+ Add Signature Act</div>
+  </div>
+
+  <!-- TAB 3: TRAITS -->
+  <div class="mn-pane" data-p="3">
+    <div class="mn-sec">Traits & Nature</div>
+    <div class="tct-row" id="tct-row"></div>
+    <div class="trait-grid" id="trait-grid"></div>
+    <div class="trait-desc" id="trait-desc"></div>
+  </div>
+
+  <!-- TAB 4: SOUL -->
+  <div class="mn-pane" data-p="4">
+    <div class="mn-sec">Soul</div>
+    <div class="kf-block">
+      <label class="kf-lbl">Personality</label>
+      <textarea id="f-personality" placeholder="How do they think, feel, react? What defines their spirit?"></textarea>
+    </div>
+    <div class="kf-row c2">
+      <div><label class="kf-lbl">Deepest Desire</label><input type="text" id="f-goal" placeholder="What do they truly seek?"></div>
+      <div><label class="kf-lbl">Greatest Bond</label><input type="text" id="f-bond" placeholder="Who or what matters most?"></div>
+    </div>
+    <div class="kf-row c2">
+      <div><label class="kf-lbl">Greatest Fear</label><input type="text" id="f-fear" placeholder="What haunts them?"></div>
+      <div><label class="kf-lbl">Philosophy</label><input type="text" id="f-philosophy" placeholder="Their core belief or code"></div>
+    </div>
+    <div class="kf-row c2">
+      <div><label class="kf-lbl">Dark Secret<span class="opt">(optional)</span></label><input type="text" id="f-secret" placeholder="What do they hide?"></div>
+      <div><label class="kf-lbl">Iconic Quote<span class="opt">(optional)</span></label><input type="text" id="f-quote" placeholder='"A line that defines them"'></div>
+    </div>
+
+    <div class="mn-sec mt">Starting Scenario</div>
+    <div class="scen-grid" id="scen-grid"></div>
+    <div id="scenarioCustomWrap">
+      <label class="kf-lbl">Describe the Opening Scene</label>
+      <textarea id="f-scenarioCustom" placeholder="Describe where and how the story begins..."></textarea>
+    </div>
+  </div>
+  </div>
+
+  <div id="mn-nav">
+    <button class="mn-nbtn" id="mn-prev">‹ Back</button>
+    <div id="mn-dots"></div>
+    <button class="mn-nbtn" id="mn-next">Next ›</button>
+    <button class="mn-nbtn" id="mn-submit" style="display:none">Bind the Contract ✦</button>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function gv(id){var e=g(id);return e?e.value.trim():''}
+function esc(v){if(v==null)return'';return String(v)}
+
+var curTab=0;
+var curSpecies='human';
+var currentColor='#8B1A2B';
+var selTraits=[];
+var acts=[];
+var curScenario='';
+var statVals={};
+var initData=null;
+
+var STATS=[
+  {id:'cunning',nm:'Cunning',desc:'Wit, deception, reading people'},
+  {id:'agility',nm:'Agility & Grace',desc:'Acrobatics, reflexes, poise'},
+  {id:'willpower',nm:'Willpower',desc:'Resolve and inner fortitude'},
+  {id:'mysticism',nm:'Mysticism',desc:'Attunement to symbols and the uncanny'},
+  {id:'charisma',nm:'Stage Presence',desc:'Charm, showmanship, persuasion'},
+  {id:'force',nm:'Physical Force',desc:'Raw strength and combat capability'}
+];
+
+var TRAIT_CATS=[
+  {id:'stage',label:'Stage & Craft',traits:[
+    {n:'Natural Showman',d:'Commands a room the moment they step into the light — the audience is already theirs.'},
+    {n:'Master of Illusion',d:'Deception is an art form, and few can tell where the trick ends and truth begins.'},
+    {n:'Silver-Tongued',d:'Words come easy, and are rarely entirely honest.'},
+    {n:'Steady Hands',d:'Never trembles under pressure, on stage or off it.'},
+    {n:'Perfectionist',d:'Every act is rehearsed until it is flawless — and never quite feels finished.'},
+    {n:'Reckless Performer',d:'Takes the trick one step further than is safe, every single time.'},
+    {n:'Crowd-Pleaser',d:'Reads what an audience wants before they know it themselves.'},
+    {n:'Backstage Whisperer',d:'Knows every secret the troupe keeps behind the curtain.'},
+    {n:'Quick-Change Artist',d:'Vanishes and reappears as someone else before anyone can blink.'},
+    {n:'Disciplined',d:'Years of practice have carved precision into every motion.'}
+  ]},
+  {id:'uncanny',label:'The Uncanny',traits:[
+    {n:'Third Eye Sensitivity',d:'Perceives more of the spirit world than most, awakened or not.'},
+    {n:'Ward-Marked',d:'Carries a symbol etched somewhere on the body, for protection or binding.'},
+    {n:'Symbol-Touched',d:'Magic responds to them in ways it shouldn\'t, by all official accounts.'},
+    {n:'Spirit-Sighted',d:'Sees things at the edge of vision that others insist aren\'t there.'},
+    {n:'Omen-Reader',d:'Finds meaning — real or imagined — in coincidence and portent.'},
+    {n:'Skeptic of Magic',d:'Refuses to believe, even standing in front of the impossible.'},
+    {n:'Haunted Dreams',d:'Sleep brings visions that linger long after waking.'},
+    {n:'Ink-Stained Hands',d:'Marked, quite literally, by a life spent close to symbol-craft.'}
+  ]},
+  {id:'heart',label:'Heart',traits:[
+    {n:'Loyal to the Troupe',d:'Family is chosen, and this one was chosen for keeps.'},
+    {n:'Protective',d:'Steps between danger and the people they love without a second thought.'},
+    {n:'Warm-Hearted',d:'Kindness that survives even a hard life on the road.'},
+    {n:'Compassionate',d:'Feels the weight of others\' pain as if it were their own.'},
+    {n:'Hopeful',d:'Believes, against the evidence, that things can still get better.'},
+    {n:'Devoted',d:'Gives everything to the people and causes that matter to them.'},
+    {n:'Gentle Soul',d:'A softness that the carnival life hasn\'t managed to burn away.'},
+    {n:'Fiercely Honest',d:'Cannot lie convincingly, even when it would be safer to.'},
+    {n:'Found-Family Believer',d:'Blood means less than the bonds forged under the big top.'},
+    {n:'Forgiving',d:'Holds grudges loosely, even against those who\'ve earned them.'}
+  ]},
+  {id:'shadow',label:'Shadow',traits:[
+    {n:'Secretive',d:'Guards their past like it\'s the only thing they own.'},
+    {n:'Ruthless Bargainer',d:'Every deal favors them, and they make sure of it.'},
+    {n:'Vengeful',d:'Old wounds don\'t close — they just wait for the right moment.'},
+    {n:'Paranoid',d:'Trusts no one further than they can see them, and sometimes not even that.'},
+    {n:'Cold-Blooded',d:'Sentiment rarely factors into the decisions that matter.'},
+    {n:'Manipulative',d:'People are pieces on a board, useful until they aren\'t.'},
+    {n:'Haunted by the Past',d:'Something follows them from town to town, and it isn\'t human.'},
+    {n:'Self-Destructive',d:'Courts ruin as if daring the world to stop them.'},
+    {n:'Distrustful',d:'Kindness is assumed to have a price, always.'},
+    {n:'Melancholic',d:'A quiet sadness that colors even the brightest nights under the tent.'}
+  ]}
+];
+var curTctCat='stage';
+
+var SCENARIOS=[
+  {id:'ordinary',ico:'🕯️',ttl:'Ordinary Life',desc:'Before the circus ever came to town.'},
+  {id:'opening',ico:'🎪',ttl:'Opening Night',desc:'Your first night under the big top — nothing has been the same since.'},
+  {id:'bargain',ico:'🖤',ttl:'The Bargain',desc:'Just after striking a deal you cannot take back.'},
+  {id:'onrun',ico:'🌘',ttl:'On the Run',desc:'Fleeing Kalgratti authorities, or something worse.'},
+  {id:'backstage',ico:'🎭',ttl:'Behind the Curtain',desc:'Backstage among the troupe, between shows.'},
+  {id:'aspett',ico:'🔬',ttl:'The Research Center',desc:'Inside Aspett\'s walls — captive, survivor, or something else.'},
+  {id:'custom',ico:'✏️',ttl:'Custom',desc:'Define your own opening scene.',full:true}
+];
+
+function hexRgb(h){return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}
+function setAccent(hex){
+  currentColor=hex;
+  var r=document.documentElement;
+  r.style.setProperty('--acc',hex);
+  r.style.setProperty('--acc-rgb',hexRgb(hex));
+}
+
+function statLevel(v){
+  if(v<100)return{en:'Sideshow',color:'#786050',desc:'Barely worth a ticket stub'};
+  if(v<300)return{en:'Understudy',color:'#9A8060',desc:'Still learning the ropes'};
+  if(v<500)return{en:'Featured Act',color:'#B09040',desc:'Draws a modest crowd'};
+  if(v<700)return{en:'Headliner',color:'#C9922A',desc:'Top of the marquee'};
+  if(v<850)return{en:'Star of the Show',color:'#D4708A',desc:'The reason people come'};
+  if(v<980)return{en:'Legend of the Big Top',color:'#8A6ACE',desc:'Whispered about in every troupe'};
+  if(v<1000)return{en:'Otherworldly',color:'#8B1A2B',desc:'Something more than human skill'};
+  return{en:'Beyond the Veil',color:'#FFD700',desc:'Touches what should not be touched'};
+}
+
+function renderStats(){
+  var wrap=g('stats-wrap');if(!wrap)return;
+  var h='';
+  STATS.forEach(function(s){
+    var v=statVals[s.id]!=null?statVals[s.id]:200;
+    statVals[s.id]=v;
+    var lv=statLevel(v);
+    h+='<div class="stat-block">'+
+      '<div class="stat-top"><div><div class="stat-nm">'+s.nm+'</div><div class="stat-desc">'+s.desc+'</div></div>'+
+      '<span class="stat-badge" id="stat-badge-'+s.id+'" style="background:'+lv.color+'22;color:'+lv.color+';border:1px solid '+lv.color+'55">'+lv.en+'</span></div>'+
+      '<input type="range" min="0" max="1000" value="'+v+'" id="stat-'+s.id+'">'+
+    '</div>';
+  });
+  wrap.innerHTML=h;
+  STATS.forEach(function(s){
+    var inp=g('stat-'+s.id);
+    if(inp)inp.addEventListener('input',function(){updateStat(s.id,parseInt(this.value))});
+  });
+}
+function updateStat(id,v){
+  statVals[id]=v;
+  var lv=statLevel(v);
+  var b=g('stat-badge-'+id);
+  if(b){b.textContent=lv.en;b.style.background=lv.color+'22';b.style.color=lv.color;b.style.border='1px solid '+lv.color+'55'}
+}
+
+function renderTctTabs(){
+  var row=g('tct-row');if(!row)return;
+  row.innerHTML=TRAIT_CATS.map(function(c){
+    return '<div class="tct'+(c.id===curTctCat?' active':'')+'" data-cat="'+c.id+'">'+c.label+'</div>';
+  }).join('');
+  renderTraits();
+}
+function renderTraits(){
+  var grid=g('trait-grid');if(!grid)return;
+  var cat=TRAIT_CATS.find(function(c){return c.id===curTctCat});
+  if(!cat)return;
+  grid.innerHTML=cat.traits.map(function(t){
+    return '<div class="trait-chip'+(selTraits.indexOf(t.n)>=0?' on':'')+'" data-n="'+esc(t.n)+'" data-d="'+esc(t.d)+'">'+t.n+'</div>';
+  }).join('');
+}
+
+function renderActs(){
+  var list=g('acts-list');if(!list)return;
+  list.innerHTML=acts.map(function(a,i){
+    return '<div class="act-card" data-i="'+i+'">'+
+      '<div class="act-rm" data-rm="'+i+'">×</div>'+
+      '<input type="text" placeholder="Act name" value="'+esc(a.name||'').replace(/"/g,'&quot;')+'" data-f="name" data-i="'+i+'">'+
+      '<textarea placeholder="What happens when they perform it..." data-f="desc" data-i="'+i+'">'+esc(a.desc||'')+'</textarea>'+
+    '</div>';
+  }).join('');
+}
+function saveActFields(){
+  document.querySelectorAll('.act-card input[data-f],.act-card textarea[data-f]').forEach(function(el){
+    var i=parseInt(el.getAttribute('data-i'));var f=el.getAttribute('data-f');
+    if(acts[i])acts[i][f]=el.value;
+  });
+}
+
+function renderScenarios(){
+  var grid=g('scen-grid');if(!grid)return;
+  grid.innerHTML=SCENARIOS.map(function(s){
+    return '<div class="scen-card'+(s.full?' full':'')+(curScenario===s.id?' on':'')+'" data-s="'+s.id+'">'+
+      '<span class="scen-ico">'+s.ico+'</span><div class="scen-ttl">'+s.ttl+'</div><div class="scen-desc">'+s.desc+'</div>'+
+    '</div>';
+  }).join('');
+}
+
+function goTab(n){
+  n=Math.max(0,Math.min(4,n));
+  curTab=n;
+  document.querySelectorAll('.mn-tab').forEach(function(t){t.classList.toggle('on',parseInt(t.dataset.t)===n)});
+  document.querySelectorAll('.mn-pane').forEach(function(p){p.classList.toggle('on',parseInt(p.dataset.p)===n)});
+  document.querySelectorAll('.mn-dot').forEach(function(d,i){d.classList.toggle('on',i===n)});
+  g('mn-prev').disabled=(n===0);
+  g('mn-next').style.display=(n===4)?'none':'inline-block';
+  g('mn-submit').style.display=(n===4)?'inline-block':'none';
+}
+
+document.querySelectorAll('.mn-tab').forEach(function(t){t.addEventListener('click',function(){goTab(parseInt(this.dataset.t))})});
+g('mn-prev').addEventListener('click',function(){goTab(curTab-1)});
+g('mn-next').addEventListener('click',function(){goTab(curTab+1)});
+for(var i=0;i<5;i++){var d=document.createElement('div');d.className='mn-dot'+(i===0?' on':'');g('mn-dots').appendChild(d)}
+
+document.querySelectorAll('.sp-pill').forEach(function(p){
+  p.addEventListener('click',function(){
+    curSpecies=this.dataset.s;
+    document.querySelectorAll('.sp-pill').forEach(function(x){x.classList.toggle('on',x===p)});
+    document.querySelectorAll('.sp-sec').forEach(function(x){x.classList.toggle('on',x.dataset.sp===curSpecies)});
+    var win=g('mnwin');if(win)win.setAttribute('data-species',curSpecies);
+  });
+});
+
+g('charColorInput').addEventListener('input',function(){
+  setAccent(this.value);
+  document.querySelectorAll('.csw').forEach(function(x){x.classList.remove('on')});
+});
+document.querySelectorAll('.csw').forEach(function(sw){
+  sw.addEventListener('click',function(){
+    setAccent(this.dataset.c);
+    g('charColorInput').value=this.dataset.c;
+    document.querySelectorAll('.csw').forEach(function(x){x.classList.remove('on')});
+    sw.classList.add('on');
+  });
+});
+
+g('f-nation').addEventListener('change',function(){
+  g('nationCustomWrap').style.display=(this.value==='Custom')?'block':'none';
+});
+g('f-role').addEventListener('change',function(){
+  g('performerWrap').style.display=(this.value==='Circus Performer')?'block':'none';
+});
+
+g('tct-row').addEventListener('click',function(e){
+  var t=e.target.closest('.tct');if(!t)return;
+  curTctCat=t.getAttribute('data-cat');
+  renderTctTabs();
+});
+g('trait-grid').addEventListener('click',function(e){
+  var chip=e.target.closest('.trait-chip');if(!chip)return;
+  var n=chip.getAttribute('data-n');
+  var idx=selTraits.indexOf(n);
+  if(idx>=0)selTraits.splice(idx,1);else selTraits.push(n);
+  renderTraits();
+  var desc=g('trait-desc');
+  desc.textContent=chip.getAttribute('data-d');
+  desc.classList.add('on');
+});
+
+g('act-add-btn').addEventListener('click',function(){
+  saveActFields();
+  acts.push({name:'',desc:''});
+  renderActs();
+});
+g('acts-list').addEventListener('click',function(e){
+  var rm=e.target.closest('.act-rm');if(!rm)return;
+  saveActFields();
+  acts.splice(parseInt(rm.getAttribute('data-rm')),1);
+  renderActs();
+});
+
+g('scen-grid').addEventListener('click',function(e){
+  var card=e.target.closest('.scen-card');if(!card)return;
+  curScenario=card.getAttribute('data-s');
+  renderScenarios();
+  g('scenarioCustomWrap').classList.toggle('on',curScenario==='custom');
+});
+
+/* Init from $1 */
+var rawEl=g('mnraw');
+if(rawEl&&rawEl.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=rawEl.value.trim();
+  try{initData=JSON.parse(dec.value.trim())}catch(e){}
+}
+curSpecies=(initData&&initData.species)||'human';
+currentColor=(initData&&initData.charColor)||'#8B1A2B';
+selTraits=(initData&&initData.traits)?initData.traits.slice():[];
+acts=(initData&&initData.acts)?JSON.parse(JSON.stringify(initData.acts)):[];
+curScenario=(initData&&initData.scenario)||'';
+if(initData&&initData.stats)statVals=JSON.parse(JSON.stringify(initData.stats));
+
+renderStats();
+renderTctTabs();
+renderActs();
+renderScenarios();
+setAccent(currentColor);
+document.querySelectorAll('.csw').forEach(function(sw){sw.classList.toggle('on',sw.dataset.c===currentColor)});
+document.querySelectorAll('.sp-pill').forEach(function(p){p.classList.toggle('on',p.dataset.s===curSpecies)});
+document.querySelectorAll('.sp-sec').forEach(function(x){x.classList.toggle('on',x.dataset.sp===curSpecies)});
+var win0=g('mnwin');if(win0)win0.setAttribute('data-species',curSpecies);
+g('scenarioCustomWrap').classList.toggle('on',curScenario==='custom');
+
+function sv(id,val){var e=g(id);if(e&&val!=null)e.value=val}
+if(initData){
+  sv('f-name',initData.name);sv('f-alias',initData.alias);sv('f-age',initData.age);
+  sv('f-gender',initData.gender);sv('f-height',initData.height);sv('f-voice',initData.voice);
+  sv('f-appearance',initData.appearance);sv('f-nation',initData.nation);sv('f-nationCustom',initData.nationCustom);
+  sv('f-region',initData.region);sv('f-family',initData.family);sv('f-background',initData.background);
+  sv('f-occupation',initData.occupation);sv('f-ahkonStance',initData.ahkonStance);sv('f-govTies',initData.govTies);
+  sv('f-thirdEye',initData.thirdEye);sv('f-govStatus',initData.govStatus);
+  sv('f-magicSpecialty',initData.magicSpecialty);sv('f-aspettHistory',initData.aspettHistory);
+  sv('f-role',initData.role);sv('f-performerSpecialty',initData.performerSpecialty);
+  sv('f-personality',initData.personality);sv('f-goal',initData.goal);sv('f-bond',initData.bond);
+  sv('f-fear',initData.fear);sv('f-philosophy',initData.philosophy);sv('f-secret',initData.secret);
+  sv('f-quote',initData.quote);sv('f-scenarioCustom',initData.scenarioCustom);
+  if(initData.nation==='Custom')g('nationCustomWrap').style.display='block';
+  if(initData.role==='Circus Performer')g('performerWrap').style.display='block';
+}
+
+/* Auto-send to SillyTavern */
+function sendToST(json){
+  var oT='<'+'MARIONETTA_CONFIRM'+'>';var cT='<'+'/MARIONETTA_CONFIRM'+'>';
+  var txt=oT+'\\n'+json+'\\n'+cT;
+  try{
+    var w=window.parent||window;
+    var ta=w.document.getElementById('send_textarea')||
+           w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+    if(ta){
+      var dd=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
+      if(dd&&dd.set)dd.set.call(ta,txt);else ta.value=txt;
+      ta.dispatchEvent(new Event('input',{bubbles:true}));
+      setTimeout(function(){
+        try{
+          var sb=w.document.getElementById('send_but');
+          if(sb)sb.click();
+          else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
+        }catch(e2){}
+      },150);
+      return;
+    }
+  }catch(e){}
+  try{navigator.clipboard.writeText(txt);}catch(e2){}
+}
+
+g('mn-submit').addEventListener('click',function(){
+  saveActFields();
+  var out={
+    name:gv('f-name'),alias:gv('f-alias'),age:gv('f-age'),gender:gv('f-gender'),height:gv('f-height'),
+    species:curSpecies,charColor:currentColor,voice:gv('f-voice'),appearance:gv('f-appearance'),
+    nation:gv('f-nation')==='Custom'?gv('f-nationCustom'):gv('f-nation'),
+    nationCustom:gv('f-nationCustom'),region:gv('f-region'),family:gv('f-family'),background:gv('f-background'),
+    role:gv('f-role'),stats:{}
+  };
+  STATS.forEach(function(s){out.stats[s.id]=statVals[s.id]});
+  if(curSpecies==='human'){
+    out.occupation=gv('f-occupation');out.ahkonStance=gv('f-ahkonStance');out.govTies=gv('f-govTies');
+  }else{
+    out.thirdEye=gv('f-thirdEye');out.govStatus=gv('f-govStatus');
+    out.magicSpecialty=gv('f-magicSpecialty');out.aspettHistory=gv('f-aspettHistory');
+  }
+  if(out.role==='Circus Performer')out.performerSpecialty=gv('f-performerSpecialty');
+  out.traits=selTraits.slice();
+  out.acts=acts.filter(function(a){return a.name||a.desc});
+  out.personality=gv('f-personality');out.goal=gv('f-goal');out.bond=gv('f-bond');
+  out.fear=gv('f-fear');out.philosophy=gv('f-philosophy');out.secret=gv('f-secret');out.quote=gv('f-quote');
+  out.scenario=curScenario;out.scenarioCustom=gv('f-scenarioCustom');
+  var json=JSON.stringify(out,null,2);
+  var ov=g('seal-overlay');
+  if(ov)ov.classList.add('on');
+  setTimeout(function(){
+    if(ov)ov.classList.remove('on');
+    sendToST(json);
+  },1500);
+});
+})();
+</script>
+</body>
+</html>
