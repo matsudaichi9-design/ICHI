@@ -1,0 +1,39 @@
+{
+  "name": "Marionetta World Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marionetta World Tracker System",
+      "content": "## MARIONETTA WORLD TRACKER SYSTEM\n\nYou are running the Marionetta world state tracker. After EVERY response you write, append a world block on its own line with no extra text around it:\n\n<MARIONETTA_WORLD>\n{JSON}\n</MARIONETTA_WORLD>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies.\n\n---\n\n### WORLD JSON SCHEMA\n\n```json\n{\n  \"location\": {\n    \"name\": \"Aspett, Outer Ward\",\n    \"region\": \"Kalgratt\",\n    \"description\": \"Rain-slicked cobblestones and gaslit alleys, tense since the last raid.\"\n  },\n  \"date\": \"17th of Ashfall, Year 3 of the Long War\",\n  \"season\": \"Late Autumn\",\n  \"weather\": \"Cold drizzle, fog off the harbor\",\n  \"warStatus\": {\"level\": 65, \"label\": \"Active Offensive\", \"note\": \"Betheid forces pushing the eastern front.\"},\n  \"troupeWelcome\": {\"level\": 35, \"label\": \"Distrusted\", \"note\": \"Last town's rumors followed them here.\"},\n  \"ahkonWatch\": {\"level\": 82, \"label\": \"Hunted\", \"note\": \"Government sweeps every third night.\"},\n  \"dangerLevel\": {\"level\": 70, \"label\": \"Tense\"},\n  \"aspettShadow\": {\n    \"active\": true,\n    \"scheme\": \"Colonel Amalia is recruiting new 'volunteers' for the Research Center.\",\n    \"threatLevel\": \"High\"\n  },\n  \"present\": [\n    {\"name\": \"Sahed\", \"role\": \"Illusionist\", \"note\": \"Watching the crowd, uneasy.\"}\n  ],\n  \"rumors\": [\n    {\"text\": \"A merchant swears he saw a third-eyed child dragged from a cellar last week.\", \"tag\": \"Grim\"}\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `location` | where the current scene is set — update whenever the party moves |\n| `date` / `season` / `weather` | in-world flavor text, free-form strings |\n| `warStatus.level` | 0-100, 0 = uneasy peace, 100 = open war on this front |\n| `troupeWelcome.level` | 0-100, 0 = banned/run out of town, 100 = celebrated — HIGHER is SAFER here |\n| `ahkonWatch.level` | 0-100, 0 = safe haven for Ah'kon, 100 = active purge — HIGHER is MORE DANGEROUS |\n| `dangerLevel.level` | 0-100 overall scene tension, drives the peril badge in the header |\n| `aspettShadow.active` | set `false` (or omit `scheme`) when the Research Center has no current scheme in play — the section will show \"no known activity\" |\n| `present` | named characters currently in the scene; omit background extras |\n| `rumors` | current town gossip/events; 1-4 entries is typical, `tag` is a short one-word label (Grim, Troupe, War, Omen, etc.) |\n\n---\n\n### OUTPUT RULES\n• Copy the full JSON from the previous block and modify only what changed.\n• Never drop a key even if its value is unchanged.\n• Update `location`/`date`/`weather` whenever the story moves to a new place or time skips forward.\n• `warStatus` and `ahkonWatch` should drift slowly, scene to scene, not swing wildly — these reflect the broader world, not momentary events.\n• `troupeWelcome` can shift faster — it reacts directly to what the troupe does in the current town.\n• `aspettShadow` should escalate as the antagonist faction's plans advance across the story, and can go inactive between arcs.\n• `rumors` should rotate — drop stale ones and add new ones as time passes and the party moves between towns.",
+      "constant": true,
+      "order": 89,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
