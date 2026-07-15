@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Cormorant Garamond',serif;font-size:15px}
+:root{
+  --bg:#140D07;--pan:#1F150C;--pan2:#2A1D11;
+  --acc:#7A1220;--acc-rgb:122,18,32;
+  --gold:#B8862E;--goldd:rgba(184,134,46,.14);
+  --ink:#E8D9B8;--ink2:#B8A585;--mu:#7A6448;
+  --bd:rgba(184,134,46,.22);--bd2:rgba(255,255,255,.06);
+  --warm:#B8862E;--neutral:#7A6448;--hostile:#7A1220;
+}
+#rtwin{max-width:460px;margin:6px auto;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 14px 50px rgba(0,0,0,.8);position:relative;animation:rti .3s ease both}
+@keyframes rti{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+#mast{position:relative;padding:19px 20px 13px;text-align:center;background:linear-gradient(180deg,var(--pan) 0%,var(--bg) 100%);border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.corner-flourish{position:absolute;width:22px;height:22px;color:var(--gold);opacity:.5;font-size:16px;line-height:1}
+.cf-tl{top:8px;left:10px}.cf-tr{top:8px;right:10px;transform:scaleX(-1)}
+#bar-ico{width:38px;height:38px;margin:0 auto 8px}
+#mast-title{font-family:'UnifrakturMaguntia',cursive;font-size:22px;color:var(--ink);letter-spacing:.5px;text-shadow:0 0 16px rgba(var(--acc-rgb),.3)}
+#mast-sub{font-size:11px;font-style:italic;color:var(--ink2);margin-top:4px}
+#chev{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--mu);transition:transform .3s}
+#rtwin.closed #chev{transform:translateX(-50%) rotate(180deg)}
+#rtbody{max-height:2000px;overflow:hidden;transition:max-height .4s ease}
+#rtwin.closed #rtbody{max-height:0}
+
+#list{padding:14px 18px 6px;max-height:540px;overflow-y:auto}
+#list::-webkit-scrollbar{width:4px}
+#list::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+.thread{padding:14px 0;border-bottom:1px dashed var(--bd2)}
+.thread:last-child{border-bottom:none}
+.thread-top{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.thr-avatar{position:relative;width:38px;height:38px;flex-shrink:0}
+.thr-med{position:absolute;inset:0;border-radius:50%;overflow:hidden;border:1.5px solid var(--gold);background:#0F0A06;box-shadow:0 0 8px -2px var(--gold)}
+.thr-med img{width:100%;height:100%;object-fit:cover;display:block}
+.thr-mono{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'UnifrakturMaguntia',cursive;font-size:16px;color:var(--gold)}
+.thr-name-wrap{flex:1;min-width:0}
+.thr-name{font-size:16px;color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thr-status{display:inline-block;font-size:8.5px;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:2px;border:1px solid;margin-top:2px}
+.thr-tier{font-size:9px;letter-spacing:.5px;text-align:right;flex-shrink:0;white-space:nowrap}
+
+.string-wrap{position:relative;height:22px;margin-bottom:9px}
+.string-wrap svg{width:100%;height:100%;display:block;overflow:visible}
+.anchor{fill:var(--mu)}
+
+.thr-note{font-size:12px;font-style:italic;color:var(--ink2);line-height:1.55;margin-bottom:7px}
+.moments{margin-top:6px}
+.moment-row{display:flex;align-items:baseline;gap:6px;padding:2px 0}
+.moment-mark{color:var(--gold);font-size:9px;flex-shrink:0}
+.moment-txt{font-size:11px;color:var(--mu);line-height:1.4}
+
+.empty-note{font-size:12px;color:var(--mu);font-style:italic;text-align:center;padding:20px 0}
+#rtfoot{padding:9px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);text-align:center;border-top:1px solid var(--bd2);background:var(--pan)}
+</style>
+</head>
+<body>
+<textarea id="rtraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="rtwin">
+  <div id="mast">
+    <div class="corner-flourish cf-tl">❦</div>
+    <div class="corner-flourish cf-tr">❦</div>
+    <svg id="bar-ico" viewBox="0 0 38 38" fill="none">
+      <line x1="8" y1="8" x2="30" y2="8" stroke="#B8862E" stroke-width="1.6"/>
+      <line x1="12" y1="8" x2="7" y2="30" stroke="#B8862E" stroke-width="1.1" opacity=".8"/>
+      <line x1="19" y1="8" x2="19" y2="30" stroke="#B8862E" stroke-width="1.1" opacity=".8"/>
+      <line x1="26" y1="8" x2="31" y2="30" stroke="#B8862E" stroke-width="1.1" opacity=".8"/>
+      <circle cx="7" cy="31" r="2" fill="#E8D9B8"/><circle cx="19" cy="31" r="2" fill="#E8D9B8"/><circle cx="31" cy="31" r="2" fill="#E8D9B8"/>
+    </svg>
+    <div id="mast-title">Strings of the Heart</div>
+    <div id="mast-sub">Every bond is a string; some fray, some hold fast.</div>
+    <div id="chev">▲</div>
+  </div>
+
+  <div id="rtbody">
+    <div id="list"></div>
+    <div id="rtfoot">✦ Marionetta · relationship ledger ✦</div>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+var raw=g('rtraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+var rels=(d.relationships||[]).slice();
+rels.sort(function(a,b){return (b.closeness||0)-(a.closeness||0)});
+
+function tierInfo(c){
+  c=parseFloat(c)||0;
+  if(c<20)return{lbl:'Severed'};
+  if(c<40)return{lbl:'Frayed'};
+  if(c<60)return{lbl:'Loose Thread'};
+  if(c<80)return{lbl:'Bound'};
+  return{lbl:'Unbreakable'};
+}
+function warmthColor(w){
+  w=(w||'neutral').toLowerCase();
+  if(w==='warm')return getComputedStyle(document.documentElement).getPropertyValue('--warm').trim();
+  if(w==='hostile')return getComputedStyle(document.documentElement).getPropertyValue('--hostile').trim();
+  return getComputedStyle(document.documentElement).getPropertyValue('--neutral').trim();
+}
+
+function stringSVG(closeness,warmth){
+  var c=Math.max(0,Math.min(100,parseFloat(closeness)||0));
+  var sag=(100-c)/100*13+2; // 2px (taut) to 15px (slack) sag
+  var col=warmthColor(warmth);
+  var dash=(warmth==='hostile')?'3,3':'none';
+  var midY=10+sag;
+  return '<svg viewBox="0 0 300 22" preserveAspectRatio="none">'+
+    '<path d="M10,10 Q150,'+midY+' 290,10" fill="none" stroke="'+col+'" stroke-width="1.6" stroke-dasharray="'+dash+'" opacity=".85"/>'+
+    '<circle class="anchor" cx="10" cy="10" r="3"/>'+
+    '<circle class="anchor" cx="290" cy="10" r="3" fill="'+col+'"/>'+
+  '</svg>';
+}
+
+var listEl=g('list');
+if(rels.length){
+  listEl.innerHTML=rels.map(function(r){
+    var tier=tierInfo(r.closeness);
+    var col=warmthColor(r.warmth);
+    var initial=(r.name||'?').trim().charAt(0).toUpperCase();
+    var avatarInner=r.img?
+      '<img src="https://files.catbox.moe/'+esc(r.img)+'" alt="'+esc(r.name)+'" onerror="this.style.display=\'none\'">':
+      '';
+    var moments=(r.moments||[]);
+    var momentsH=moments.length?
+      '<div class="moments">'+moments.map(function(m){return '<div class="moment-row"><span class="moment-mark">❦</span><span class="moment-txt">'+esc(m)+'</span></div>';}).join('')+'</div>':'';
+    return '<div class="thread">'+
+      '<div class="thread-top">'+
+        '<div class="thr-avatar"><div class="thr-med">'+avatarInner+'<div class="thr-mono">'+esc(initial)+'</div></div></div>'+
+        '<div class="thr-name-wrap">'+
+          '<div class="thr-name">'+esc(r.name||'Unknown')+'</div>'+
+          (r.status?'<div class="thr-status" style="color:'+col+';border-color:'+col+'66;background:'+col+'14">'+esc(r.status)+'</div>':'')+
+        '</div>'+
+        '<div class="thr-tier" style="color:'+col+'">'+tier.lbl+'<br><span style="color:var(--mu);font-size:8px">'+(r.closeness!=null?r.closeness:0)+'/100</span></div>'+
+      '</div>'+
+      '<div class="string-wrap">'+stringSVG(r.closeness,r.warmth)+'</div>'+
+      (r.note?'<div class="thr-note">'+esc(r.note)+'</div>':'')+
+      momentsH+
+    '</div>';
+  }).join('');
+}else{
+  listEl.innerHTML='<div class="empty-note">No threads have been tied yet.</div>';
+}
+
+var mast=g('mast');
+if(mast)mast.addEventListener('click',function(){g('rtwin').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Marionetta Relationship Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marionetta Relationship Tracker System",
+      "content": "## MARIONETTA RELATIONSHIP TRACKER SYSTEM\n\nYou are running the Marionetta relationship tracker. After EVERY response you write, append a relationships block on its own line with no extra text around it:\n\n<MARIONETTA_RELATIONSHIPS>\n{JSON}\n</MARIONETTA_RELATIONSHIPS>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies. Include every named character the player has a relationship with so far — not just the ones present in the current scene.\n\n---\n\n### RELATIONSHIP JSON SCHEMA\n\n```json\n{\n  \"relationships\": [\n    {\n      \"name\": \"Sahed\",\n      \"img\": \"abc123.jpg\",\n      \"status\": \"Confidant\",\n      \"closeness\": 82,\n      \"warmth\": \"warm\",\n      \"note\": \"He's the only one who understands what she carries. She trusts him with things she's told no one else.\",\n      \"moments\": [\n        \"First met backstage, hiding from a Kalgratti patrol\",\n        \"He never asked about her third eye\"\n      ]\n    }\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `name` | required |\n| `img` | catbox.moe filename for a small portrait; omit entirely if none — a monogram initial is shown automatically |\n| `status` | a short role/label for the bond: Confidant, Friend, Rival, Ally, Hunter, Romantic Interest, Stranger, Family, Enemy, etc. — free text |\n| `closeness` | 0-100. Drives both the tier label and how taut the \"string\" between them is drawn (100 = taut/unbreakable, 0 = slack/severed) |\n| `warmth` | `\"warm\"` \\| `\"neutral\"` \\| `\"hostile\"` — sets the string's color; `\"hostile\"` also renders the string frayed/dashed |\n| `note` | one to two sentences describing the current state of the bond, present tense |\n| `moments` | optional array of short past-tense highlights — key turning points in the relationship. 0-3 is typical |\n\n### CLOSENESS TIERS (for reference — computed automatically from `closeness`)\n| Range | Tier |\n|---|---|\n| 0-19 | Severed |\n| 20-39 | Frayed |\n| 40-59 | Loose Thread |\n| 60-79 | Bound |\n| 80-100 | Unbreakable |\n\n---\n\n### OUTPUT RULES\n• Copy the full array from the previous block and modify only what changed; add new entries as new named characters form a bond with the player.\n• `closeness` should move gradually — a few points per meaningful scene, not huge jumps, unless something dramatic just happened (a betrayal, a rescue, a confession).\n• `warmth` can flip (e.g. warm to hostile) when a relationship is fundamentally broken — a betrayal, a death, a revealed lie — not from ordinary friction.\n• Add to `moments` only for scenes that would matter to the character looking back — not every conversation.\n• Do not invent relationships the player hasn't actually had a scene with yet.",
+      "constant": true,
+      "order": 89,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
