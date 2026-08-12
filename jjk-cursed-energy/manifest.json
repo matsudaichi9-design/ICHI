@@ -1,0 +1,10 @@
+{
+    "display_name": "JJK Cursed Energy System",
+    "version": "1.0.0",
+    "author": "ICHI",
+    "description": "ระบบพลังจิต/เทคนิคต่อสู้สำหรับโลก Jujutsu Kaisen — คุมพลังจิต เกรดนักไล่ล่าคำสาป เทคนิคคำสาป การขยายอาณาเขต คำสาบานผูกมัด และสถิติการต่อสู้ พร้อมสรุป+ส่งออกเข้าแชท",
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css"
+}
