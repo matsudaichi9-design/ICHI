@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond',serif;font-size:13.5px}
+:root{
+  --acc:#8B1A2B;--acc-rgb:139,26,43;--accd:rgba(139,26,43,.13);--accb:rgba(139,26,43,.4);
+  --gold:#9C8A4A;--gold-rgb:156,138,74;
+  --bg:#0A0706;--pan:#180E0F;--pan2:#201213;--pan3:#2A1719;
+  --tx:#E8DDD0;--tx2:#A08A82;--mu:#5C4A46;
+  --bd:rgba(156,138,74,.22);--bd2:rgba(255,255,255,.05);
+  --r:5px;--r2:3px;
+  --fh:'IM Fell English SC',serif;
+}
+#lomwrap{max-width:475px;margin:8px auto;background:linear-gradient(160deg,var(--pan) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;position:relative;
+  box-shadow:0 16px 48px rgba(0,0,0,.65),inset 0 0 0 1px rgba(156,138,74,.06);animation:lomi .3s ease both}
+@keyframes lomi{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+#lomwrap::before{content:'';position:absolute;inset:5px;border:1px solid rgba(156,138,74,.12);border-radius:3px;pointer-events:none;z-index:2}
+
+/* HEADER */
+#lom-head{position:relative;padding:17px 20px 14px;cursor:pointer;user-select:none;border-bottom:1px solid var(--bd)}
+.lom-hd-row{display:flex;align-items:center;gap:13px}
+#lom-sigil{width:42px;height:42px;flex-shrink:0}
+.lom-hd-txt{flex:1;min-width:0}
+#lom-title{font-family:var(--fh);font-size:19px;letter-spacing:2.5px;color:var(--tx);line-height:1.1}
+#lom-subtitle{font-size:10.5px;font-style:italic;color:var(--tx2);letter-spacing:.4px;margin-top:3px}
+#lom-tier-badge{flex-shrink:0;font-family:var(--fh);font-size:10px;letter-spacing:1px;padding:5px 11px;border-radius:99px;white-space:nowrap;text-align:center}
+#lom-chev{position:absolute;bottom:-2px;right:20px;font-size:9px;color:var(--mu);transition:transform .3s}
+#lomwrap.closed #lom-chev{transform:rotate(180deg)}
+#lombody{max-height:2600px;overflow:hidden;transition:max-height .35s ease}
+#lomwrap.closed #lombody{max-height:0}
+
+/* TABS */
+#lomtabs{display:flex;background:rgba(0,0,0,.22);border-bottom:1px solid var(--bd2);overflow-x:auto}
+#lomtabs::-webkit-scrollbar{display:none}
+.lomtab{flex:1;min-width:0;padding:9px 3px 8px;text-align:center;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;user-select:none}
+.lomtab svg{display:block;margin:0 auto 3px;opacity:.5}
+.lomtab span{font-family:var(--fh);font-size:8.5px;letter-spacing:.8px;color:var(--mu);text-transform:uppercase}
+.lomtab:hover span{color:var(--tx2)}
+.lomtab.on{border-bottom-color:var(--acc);background:var(--accd)}
+.lomtab.on svg{opacity:1}
+.lomtab.on span{color:var(--tx)}
+.lompane{display:none;padding:17px 20px 18px}
+.lompane.on{display:block}
+
+.lom-sec{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.lom-sec:not(:first-child){margin-top:18px}
+.lom-sec svg{flex-shrink:0;opacity:.75}
+.lom-sec .t{font-family:var(--fh);font-size:12px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.lom-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+
+/* IDENTITY */
+#id-name{font-family:var(--fh);font-size:23px;letter-spacing:1px;color:var(--tx);line-height:1.2}
+#id-alias{font-size:12.5px;font-style:italic;color:var(--tx2);margin-top:4px}
+.lom-igrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:14px}
+.lom-icard{background:var(--pan2);border:1px solid var(--bd2);border-radius:var(--r2);padding:7px 9px}
+.lom-icard.full{grid-column:1/-1}
+.lom-icard-l{font-family:var(--fh);font-size:8px;letter-spacing:1px;color:var(--mu);text-transform:uppercase;margin-bottom:3px}
+.lom-icard-v{font-size:12.5px;color:var(--tx)}
+
+/* THE PATH */
+#tier-plate{background:var(--pan2);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px;margin-bottom:14px;
+  display:flex;align-items:center;gap:12px}
+#tier-plate-ic{width:30px;height:30px;flex-shrink:0}
+#tier-plate-nm{font-family:var(--fh);font-size:15px;letter-spacing:1px;color:var(--tx)}
+#tier-plate-ds{font-size:10.5px;color:var(--tx2);margin-top:2px;line-height:1.4}
+
+#path-card{position:relative;background:linear-gradient(160deg,var(--pan3),var(--pan2));border:1px solid var(--accb);
+  border-radius:6px;padding:16px 16px 14px;text-align:center;overflow:hidden}
+#path-card::before,#path-card::after{content:'';position:absolute;width:16px;height:16px;border:1px solid var(--gold);opacity:.5}
+#path-card::before{top:6px;left:6px;border-right:none;border-bottom:none}
+#path-card::after{bottom:6px;right:6px;border-left:none;border-top:none}
+#path-seq-ring{width:52px;height:52px;margin:0 auto 8px;position:relative}
+#path-seq-num{font-family:var(--fh);font-size:20px;color:var(--acc)}
+#path-name{font-family:var(--fh);font-size:17px;letter-spacing:1.5px;color:var(--tx);margin-top:2px}
+#path-seq-title{font-size:11px;font-style:italic;color:var(--gold);margin-top:3px;letter-spacing:.3px}
+
+.lom-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.6;background:var(--pan2);
+  border-left:2px solid var(--acc);border-radius:0 var(--r2) var(--r2) 0;padding:9px 12px;margin-bottom:11px}
+.lom-note .lbl{display:block;font-family:var(--fh);font-size:8.5px;letter-spacing:1px;color:var(--mu);
+  font-style:normal;text-transform:uppercase;margin-bottom:4px}
+
+/* TAGS */
+.lom-tags{display:flex;flex-wrap:wrap;gap:6px}
+.lom-tag{font-size:11px;color:var(--tx);background:var(--pan2);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+
+/* VITALS — vial gauges */
+.lom-vial-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 8px;justify-items:center}
+.lom-vial-unit{display:flex;flex-direction:column;align-items:center;width:100%}
+.lom-vial{width:22px;height:56px;position:relative;margin-bottom:6px}
+.lom-vial-cap{width:12px;height:6px;background:var(--gold);border-radius:2px 2px 0 0;margin:0 auto}
+.lom-vial-neck{width:8px;height:5px;background:var(--pan3);margin:0 auto;border-left:1px solid var(--bd);border-right:1px solid var(--bd)}
+.lom-vial-body{width:22px;height:45px;border-radius:3px 3px 8px 8px;border:1px solid var(--bd);background:rgba(255,255,255,.02);
+  overflow:hidden;position:relative}
+.lom-vial-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#c22a3e,var(--acc) 60%,#5a0f1a);
+  box-shadow:inset 0 2px 4px rgba(255,255,255,.12)}
+.lom-vial-lbl{font-family:var(--fh);font-size:7.5px;letter-spacing:.4px;color:var(--tx2);text-transform:uppercase;
+  text-align:center;line-height:1.25;min-height:19px}
+.lom-vial-val{font-family:var(--fh);font-size:10px;color:var(--gold);margin-top:2px}
+
+.lom-empty{font-size:11.5px;color:var(--mu);font-style:italic;text-align:center;padding:16px 0}
+#lomfoot{padding:11px 20px;font-size:10.5px;font-style:italic;letter-spacing:.4px;color:var(--tx2);
+  text-align:center;border-top:1px solid var(--bd2);background:rgba(0,0,0,.22)}
+</style>
+</head>
+<body>
+<textarea id="lomraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lomwrap">
+  <div id="lom-head">
+    <div class="lom-hd-row">
+      <svg id="lom-sigil" viewBox="0 0 42 42" fill="none">
+        <circle cx="21" cy="21" r="19" stroke="#9C8A4A" stroke-width="1"/>
+        <circle cx="21" cy="21" r="14" stroke="#9C8A4A" stroke-width=".6" opacity=".6"/>
+        <path d="M21 7 L23.5 18 L34 21 L23.5 24 L21 35 L18.5 24 L8 21 L18.5 18 Z" stroke="#8B1A2B" stroke-width="1" fill="none"/>
+        <circle cx="21" cy="21" r="2.3" fill="#8B1A2B"/>
+      </svg>
+      <div class="lom-hd-txt">
+        <div id="lom-title">SEALED REGISTRY</div>
+        <div id="lom-subtitle">A Beyonder's Private Ledger</div>
+      </div>
+      <div id="lom-tier-badge">—</div>
+    </div>
+    <div id="lom-chev">&#9650;</div>
+  </div>
+
+  <div id="lombody">
+    <div id="lomtabs">
+      <div class="lomtab on" data-t="identity">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3 L14 9 L20 9 L15 13 L17 19 L12 15 L7 19 L9 13 L4 9 L10 9 Z" stroke="#9C8A4A" stroke-width="1.3"/></svg>
+        <span>Identity</span>
+      </div>
+      <div class="lomtab" data-t="path">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 13 L16 13" stroke="#9C8A4A" stroke-width="1.3" stroke-linecap="round"/></svg>
+        <span>The Path</span>
+      </div>
+      <div class="lomtab" data-t="body">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 3 H15 M10 3 V9 L5 18 A3 3 0 0 0 8 21 H16 A3 3 0 0 0 19 18 L14 9 V3" stroke="#9C8A4A" stroke-width="1.3"/></svg>
+        <span>Spirit</span>
+      </div>
+      <div class="lomtab" data-t="affil">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="#9C8A4A" stroke-width="1.3"/><circle cx="12" cy="12" r="2.3" fill="#9C8A4A"/></svg>
+        <span>Ties</span>
+      </div>
+      <div class="lomtab" data-t="persona">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z M5 6 L14 9 L19 6" stroke="#9C8A4A" stroke-width="1.2"/></svg>
+        <span>Persona</span>
+      </div>
+      <div class="lomtab" data-t="vitals">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M10 3 H14 M11 3 V8 L6 17 A3 3 0 0 0 9 21 H15 A3 3 0 0 0 18 17 L13 8 V3" stroke="#9C8A4A" stroke-width="1.3"/><path d="M7.5 16 H16.5" stroke="#9C8A4A" stroke-width="1"/></svg>
+        <span>Vitals</span>
+      </div>
+    </div>
+
+    <div class="lompane on" data-p="identity">
+      <div id="id-name">Unnamed</div>
+      <div id="id-alias"></div>
+      <div class="lom-igrid">
+        <div class="lom-icard"><div class="lom-icard-l">Age</div><div class="lom-icard-v" id="f-age">—</div></div>
+        <div class="lom-icard"><div class="lom-icard-l">Origin</div><div class="lom-icard-v" id="f-origin">—</div></div>
+        <div class="lom-icard"><div class="lom-icard-l">Occupation</div><div class="lom-icard-v" id="f-occ">—</div></div>
+      </div>
+    </div>
+
+    <div class="lompane" data-p="path">
+      <div id="tier-plate">
+        <svg id="tier-plate-ic" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="12" stroke="#9C8A4A" stroke-width="1"/><path d="M15 8 V15 L19 18" stroke="#9C8A4A" stroke-width="1.2"/></svg>
+        <div><div id="tier-plate-nm">—</div><div id="tier-plate-ds"></div></div>
+      </div>
+      <div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3 L14 9 L20 9 L15 13 L17 19 L12 15 L7 19 L9 13 L4 9 L10 9 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Pathway</span><span class="ln"></span></div>
+      <div id="path-card">
+        <div id="path-seq-ring"><div id="path-seq-num">—</div></div>
+        <div id="path-name">—</div>
+        <div id="path-seq-title">—</div>
+      </div>
+    </div>
+
+    <div class="lompane" data-p="body">
+      <div id="sb-quality-wrap"></div>
+      <div id="sb-char-wrap"></div>
+      <div id="sb-origin-wrap"></div>
+    </div>
+
+    <div class="lompane" data-p="affil">
+      <div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Organization</span><span class="ln"></span></div>
+      <div class="lom-igrid" style="grid-template-columns:1fr 1fr">
+        <div class="lom-icard"><div class="lom-icard-l">Affiliation</div><div class="lom-icard-v" id="f-org">—</div></div>
+        <div class="lom-icard"><div class="lom-icard-l">Mentor / Contact</div><div class="lom-icard-v" id="f-mentor">—</div></div>
+      </div>
+      <div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Known Aliases</span><span class="ln"></span></div>
+      <div id="aliases-wrap"></div>
+    </div>
+
+    <div class="lompane" data-p="persona">
+      <div id="persona-wrap"></div>
+      <div id="scene-wrap"></div>
+    </div>
+
+    <div class="lompane" data-p="vitals">
+      <div class="lom-sec"><span class="t">Vital Measures</span><span class="ln"></span></div>
+      <div class="lom-vial-grid" id="vitals-grid"></div>
+    </div>
+
+    <div id="lomfoot">The ink is set. What is written cannot easily be unwritten.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function hexRgb(h){h=h||'#8B1A2B';try{return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}catch(e){return '139,26,43'}}
+
+var raw=g('lomraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var acc=d.charColor||'#8B1A2B';
+var root=document.documentElement;
+root.style.setProperty('--acc',acc);
+var rgb=hexRgb(acc);
+root.style.setProperty('--acc-rgb',rgb);
+root.style.setProperty('--accd','rgba('+rgb+',.13)');
+root.style.setProperty('--accb','rgba('+rgb+',.4)');
+
+var TIER_INFO={
+  'Mortal':{color:'#6A7A8A',desc:'No power of their own — yet. The world of the Beyonder is a rumor they have only glimpsed.'},
+  'Free Beyonder':{color:'#8B1A2B',desc:'A Sequence 9 sorcerer operating alone, unclaimed by Church or cult — access to the black market only.'},
+  'Church Unit':{color:'#9C8A4A',desc:'A Sequence 9 sorcerer bound to a local Church branch — duties and protection both apply, in equal, uneasy measure.'},
+  'Cult Member':{color:'#5A2A5A',desc:'A Sequence 9 sorcerer affiliated with an underground cult — power bought at a high, and rising, risk.'}
+};
+
+/* HEADER */
+var tier=d.tier||'';
+var tierInfo=TIER_INFO[tier];
+var tb=g('lom-tier-badge');
+if(tierInfo){
+  tb.textContent=tier;
+  tb.style.color=tierInfo.color;
+  tb.style.background=tierInfo.color+'22';
+  tb.style.border='1px solid '+tierInfo.color+'66';
+}else{
+  tb.textContent='Unregistered';
+  tb.style.color='var(--mu)';
+  tb.style.background='transparent';
+  tb.style.border='1px solid var(--bd2)';
+}
+
+/* IDENTITY */
+g('id-name').textContent=d.name||'Unnamed';
+g('id-alias').textContent=d.alias?'also known as "'+d.alias+'"':'';
+g('f-age').textContent=d.age!=null&&d.age!==''?d.age:'—';
+g('f-origin').textContent=d.origin||'—';
+g('f-occ').textContent=d.occupation||'—';
+
+/* THE PATH */
+if(tierInfo){
+  g('tier-plate-nm').textContent=tier;
+  g('tier-plate-ds').textContent=tierInfo.desc;
+}else{
+  g('tier-plate-nm').textContent='Unregistered';
+  g('tier-plate-ds').textContent='No standing has yet been declared in the Beyonder world.';
+}
+g('path-seq-num').textContent=d.sequence!=null&&d.sequence!==''?'Seq. '+d.sequence:'—';
+g('path-name').textContent=d.pathway||'No Pathway';
+g('path-seq-title').textContent=d.sequenceTitle||'';
+
+/* SPIRITUAL BODY */
+var sb=d.spiritualBody||{};
+function noteBlock(label,val){
+  return val?('<div class="lom-note"><span class="lbl">'+esc(label)+'</span>'+esc(val)+'</div>'):'';
+}
+var sbHtml=
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 3 H15 M10 3 V9 L5 18 A3 3 0 0 0 8 21 H16 A3 3 0 0 0 19 18 L14 9 V3" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Constitution</span><span class="ln"></span></div>'+
+  (noteBlock('Spiritual Body Quality',sb.quality)||'<div class="lom-empty">Quality not yet assessed.</div>')+
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 8 L20 10 L14 12 L12 18 L10 12 L4 10 L10 8 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Beyonder Characteristic</span><span class="ln"></span></div>'+
+  (noteBlock('',sb.characteristic)||'<div class="lom-empty">None manifested.</div>')+
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 19 L12 6 L20 19 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Potion Origin</span><span class="ln"></span></div>'+
+  (noteBlock('',sb.potionOrigin)||'<div class="lom-empty">Not yet written.</div>');
+g('sb-quality-wrap').outerHTML='<div id="sb-quality-wrap">'+sbHtml+'</div>';
+
+/* AFFILIATIONS */
+var af=d.affiliation||{};
+g('f-org').parentElement; // no-op guard
+document.getElementById('f-org').textContent=af.org||'None — walks alone';
+document.getElementById('f-mentor').textContent=af.mentor||'—';
+var aliases=af.secretAliases||[];
+var aliasesEl=g('aliases-wrap');
+if(aliases.length){
+  aliasesEl.innerHTML='<div class="lom-tags">'+aliases.map(function(a){return '<span class="lom-tag">'+esc(a)+'</span>';}).join('')+'</div>';
+}else{
+  aliasesEl.innerHTML='<div class="lom-empty">No second name has been claimed.</div>';
+}
+
+/* PERSONA */
+var personaHtml=
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="#9C8A4A" stroke-width="1.2"/><path d="M5 21 C5 16 8 14 12 14 C16 14 19 16 19 21" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Appearance</span><span class="ln"></span></div>'+
+  (noteBlock('',d.appearance)||'<div class="lom-empty">Not yet described.</div>')+
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 21 C12 21 4 15 4 9.5 A4.5 4.5 0 0 1 12 6.5 A4.5 4.5 0 0 1 20 9.5 C20 15 12 21 12 21 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Nature</span><span class="ln"></span></div>'+
+  (noteBlock('',d.nature)||'<div class="lom-empty">Not yet revealed.</div>')+
+  '<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z M5 6 L14 9 L19 6" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">History</span><span class="ln"></span></div>'+
+  (noteBlock('',d.history)||'<div class="lom-empty">A page yet unwritten.</div>');
+g('persona-wrap').innerHTML=personaHtml;
+g('scene-wrap').innerHTML=d.openingScene?
+  ('<div class="lom-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12 H20 M14 6 L20 12 L14 18" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Opening Scene</span><span class="ln"></span></div><div class="lom-note"><span class="lbl">Where the ledger opens</span>'+esc(d.openingScene)+'</div>')
+  :'';
+
+/* VITALS */
+var STATS=[
+  ['spiritualResilience','Spiritual\\nResilience'],
+  ['reasoning','Reasoning &\\nDeduction'],
+  ['willpower','Willpower'],
+  ['combat','Physical\\nCombat'],
+  ['occultKnowledge','Occult\\nKnowledge'],
+  ['guile','Guile &\\nDeception'],
+  ['resources','Resources']
+];
+var stats=d.stats||{};
+var grid=g('vitals-grid');
+grid.innerHTML=STATS.map(function(s){
+  var v=parseInt(stats[s[0]],10);if(isNaN(v))v=10;
+  var pct=Math.max(4,Math.min(100,Math.round(v/100*100)));
+  var lbl=s[1].split('\\n').join('<br>');
+  return '<div class="lom-vial-unit">'+
+    '<div class="lom-vial"><div class="lom-vial-cap"></div><div class="lom-vial-neck"></div>'+
+    '<div class="lom-vial-body"><div class="lom-vial-fill" style="height:'+pct+'%"></div></div></div>'+
+    '<div class="lom-vial-lbl">'+lbl+'</div><div class="lom-vial-val">'+v+'</div>'+
+  '</div>';
+}).join('');
+
+/* TABS + COLLAPSE */
+document.querySelectorAll('.lomtab').forEach(function(t){
+  t.addEventListener('click',function(){
+    var target=this.getAttribute('data-t');
+    document.querySelectorAll('.lomtab').forEach(function(x){x.classList.toggle('on',x===t)});
+    document.querySelectorAll('.lompane').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-p')===target)});
+  });
+});
+var head=g('lom-head');
+if(head)head.addEventListener('click',function(){g('lomwrap').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>
