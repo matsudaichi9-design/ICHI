@@ -13,14 +13,27 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
   --bg:#08060F;--pan:#120E1E;--pan2:#1A1430;--pan3:#241C3E;
   --tx:#E9E2F5;--tx2:#9A8FBF;--mu:#524C78;
   --bd:rgba(201,168,76,.22);--bd2:rgba(255,255,255,.05);
-  --r:8px;--r2:4px;--fh:'Cinzel Decorative',serif;
+  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;
 }
-#dfwrap{max-width:480px;margin:8px auto;position:relative}
-#df{position:relative;background:linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);border:1px solid var(--bd);
-  border-radius:var(--r);overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.7),inset 0 0 0 1px rgba(201,168,76,.05);
-  animation:dfi .3s ease both}
+@keyframes acspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+@keyframes acspinrev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+#dfwrap{max-width:480px;margin:10px auto;position:relative}
+#dfwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
+  box-shadow:0 0 0 1px var(--accb),0 0 22px 2px rgba(139,95,191,.4),0 0 42px 7px rgba(201,168,76,.14),0 0 60px 10px rgba(143,216,208,.08);
+  animation:acaura 4s ease-in-out infinite}
+@keyframes acaura{0%,100%{opacity:.75}50%{opacity:1}}
+#df{position:relative;z-index:1;background:
+    radial-gradient(ellipse 140% 55% at 50% -8%,rgba(139,95,191,.22),transparent 60%),
+    linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
+  box-shadow:0 24px 70px rgba(0,0,0,.75),inset 0 0 0 1px rgba(201,168,76,.06);animation:dfi .3s ease both}
 @keyframes dfi{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-#df::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+#df-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;filter:blur(7px);
+  background:
+    radial-gradient(ellipse 60% 38% at 18% 10%,rgba(139,95,191,.28),transparent 70%),
+    radial-gradient(ellipse 50% 34% at 88% 16%,rgba(143,216,208,.16),transparent 70%),
+    radial-gradient(ellipse 58% 42% at 45% 100%,rgba(201,168,76,.14),transparent 70%)}
+#df::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
     radial-gradient(1.4px 1.4px at 10% 14%,rgba(233,226,245,.85),transparent),
     radial-gradient(1px 1px at 26% 58%,rgba(233,226,245,.55),transparent),
@@ -30,44 +43,47 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
     radial-gradient(1px 1px at 86% 50%,rgba(233,226,245,.5),transparent),
     radial-gradient(1.5px 1.5px at 18% 78%,rgba(233,226,245,.65),transparent),
     radial-gradient(1px 1px at 52% 85%,rgba(233,226,245,.45),transparent),
-    radial-gradient(1.2px 1.2px at 91% 80%,rgba(233,226,245,.6),transparent);
+    radial-gradient(1.2px 1.2px at 91% 80%,rgba(233,226,245,.6),transparent),
+    radial-gradient(1.3px 1.3px at 34% 30%,rgba(233,226,245,.55),transparent);
   animation:dftwinkle 5.5s ease-in-out infinite}
-@keyframes dftwinkle{0%,100%{opacity:.5}50%{opacity:1}}
-.df-corner{position:absolute;width:32px;height:32px;z-index:2;opacity:.85;pointer-events:none}
-.df-corner.tl{top:6px;left:6px}
-.df-corner.tr{top:6px;right:6px;transform:scaleX(-1)}
-.df-corner.bl{bottom:6px;left:6px;transform:scaleY(-1)}
-.df-corner.br{bottom:6px;right:6px;transform:scale(-1,-1)}
+@keyframes dftwinkle{0%,100%{opacity:.45}50%{opacity:1}}
+.df-corner{position:absolute;width:44px;height:44px;z-index:2;opacity:.9;pointer-events:none}
+.df-corner.tl{top:7px;left:7px}
+.df-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
+.df-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}
+.df-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
 
 /* HEADER */
-#df-head{position:relative;z-index:1;padding:20px 24px 16px;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
-.df-hd-row{display:flex;align-items:center;gap:14px}
-#df-avatar{position:relative;width:54px;height:54px;flex-shrink:0;border-radius:50%;overflow:hidden;
+#df-head{position:relative;z-index:1;padding:21px 25px 17px;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.df-hd-row{display:flex;align-items:center;gap:15px}
+#df-avatar{position:relative;width:56px;height:56px;flex-shrink:0;border-radius:50%;overflow:hidden;
   background:radial-gradient(circle at 35% 30%,#241a3a,#08060F);border:1.5px solid var(--accb);
-  box-shadow:0 0 18px -3px var(--acc);display:flex;align-items:center;justify-content:center}
+  box-shadow:0 0 20px -3px var(--acc);display:flex;align-items:center;justify-content:center}
 #df-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
-.df-hd-txt{flex:1;min-width:0;padding-right:58px}
-#df-name{font-family:var(--fh);font-size:17px;letter-spacing:.8px;color:var(--tx);line-height:1.2;
-  text-shadow:0 0 14px rgba(139,95,191,.4)}
+.df-hd-txt{flex:1;min-width:0;padding-right:60px}
+#df-name{font-family:var(--fh);font-size:18px;letter-spacing:.8px;line-height:1.2;
+  background:linear-gradient(100deg,var(--tx) 15%,#F3E4FF 35%,var(--gold) 55%,var(--tx) 80%);
+  background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:dfshimmer 8s linear infinite;filter:drop-shadow(0 0 10px rgba(139,95,191,.4))}
+@keyframes dfshimmer{0%{background-position:0% center}100%{background-position:220% center}}
 #df-alias{font-size:11px;font-style:italic;color:var(--tx2);margin-top:4px}
 #df-tier-badge{display:inline-block;margin-top:7px;font-family:var(--fh);font-size:8.5px;letter-spacing:.8px;
   padding:4px 9px;border-radius:99px;white-space:nowrap}
-#df-chev{position:absolute;bottom:-2px;right:24px;font-size:9px;color:var(--mu);transition:transform .3s}
+#df-chev{position:absolute;bottom:-2px;right:25px;font-size:9px;color:var(--mu);transition:transform .3s}
 #dfwrap.closed #df-chev{transform:rotate(180deg)}
 #dfbody{max-height:2800px;overflow:hidden;transition:max-height .35s ease}
 #dfwrap.closed #dfbody{max-height:0}
 
-/* ASTRAL SEAL (replaces ink stamp) */
-#df-seal{position:absolute;top:14px;right:16px;width:56px;height:56px;z-index:2;pointer-events:none;
-  animation:dfsealspin 40s linear infinite}
-@keyframes dfsealspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+/* ASTRAL SEAL */
+#df-seal-wrap{position:absolute;top:12px;right:14px;width:56px;height:56px;z-index:2;pointer-events:none}
+#df-seal{width:100%;height:100%}
+.seal-outer{transform-origin:28px 28px;animation:acspin 26s linear infinite}
+.seal-mid{transform-origin:28px 28px;animation:acspinrev 15s linear infinite}
 
-.df-body-inner{position:relative;z-index:1;padding:19px 24px 6px}
-.df-sec{display:flex;align-items:center;gap:9px;margin:0 0 13px}
+.df-body-inner{position:relative;z-index:1;padding:19px 25px 6px}
+.df-sec{display:flex;align-items:center;gap:8px;margin:0 0 13px}
 .df-sec:not(:first-child){margin-top:20px}
-.df-sec .dots{display:flex;gap:3px;flex-shrink:0}
-.df-sec .dots i{width:3px;height:3px;border-radius:50%;background:var(--gold);display:block}
-.df-sec .dots i:nth-child(2){width:4px;height:4px;margin-top:-.5px}
+.df-sec svg{flex-shrink:0}
 .df-sec .t{font-family:var(--fh);font-size:10.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
 .df-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
 
@@ -76,19 +92,18 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 .df-icard-l{font-family:var(--fh);font-size:7.5px;letter-spacing:1px;color:var(--mu);text-transform:uppercase;margin-bottom:4px}
 .df-icard-v{font-size:12px;color:var(--tx);line-height:1.35}
 
-/* STANDING */
 #df-tier-plate{background:var(--pan2);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px;margin-bottom:14px;
   display:flex;align-items:center;gap:12px}
 #df-tier-ic{width:15px;height:15px;flex-shrink:0}
 #df-tier-nm{font-family:var(--fh);font-size:11.5px;letter-spacing:.6px;color:var(--tx)}
 #df-tier-ds{font-size:10px;color:var(--tx2);margin-top:2px;line-height:1.4}
 
-/* ASCENSION LADDER (read-only display) */
 #df-ladder-wrap{display:flex;gap:16px;align-items:flex-start;padding:16px 14px;background:var(--pan2);
   border:1px solid var(--bd);border-radius:6px}
 #df-ladder-rail{display:flex;flex-direction:column-reverse;align-items:center;flex-shrink:0;padding:2px 0}
 .df-lnode{width:8px;height:8px;border-radius:50%;background:var(--pan3);border:1px solid var(--bd)}
-.df-lnode.on{width:15px;height:15px;background:var(--acc);border-color:var(--tx);box-shadow:0 0 12px 1px var(--acc)}
+@keyframes dfnodepulse{0%,100%{box-shadow:0 0 12px 1px var(--acc)}50%{box-shadow:0 0 20px 5px var(--acc)}}
+.df-lnode.on{width:15px;height:15px;background:var(--acc);border-color:var(--tx);animation:dfnodepulse 2.2s ease-in-out infinite}
 .df-lseg{width:1px;height:10px;background:linear-gradient(180deg,var(--bd),var(--acc))}
 #df-seq{font-family:var(--fh);font-size:15px;color:var(--acc);text-shadow:0 0 10px var(--accb)}
 #df-path-nm{font-family:var(--fh);font-size:14px;letter-spacing:1px;color:var(--tx);margin-top:3px}
@@ -103,36 +118,70 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 
 .df-empty{font-size:11px;color:var(--mu);font-style:italic;text-align:center;padding:12px 0}
 
-/* ASTRAL DIALS (read-only) */
 .df-dial-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;justify-items:center}
 .df-dial-unit{display:flex;flex-direction:column;align-items:center;width:100%}
 .df-dial-ring{position:relative;width:48px;height:48px}
 .df-dial-ring svg{width:48px;height:48px;transform:rotate(-90deg)}
 .df-dtrack{fill:none;stroke:var(--pan3);stroke-width:4}
-.df-dfill{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;filter:drop-shadow(0 0 3px var(--acc))}
+@keyframes dfdialpulse{0%,100%{filter:drop-shadow(0 0 3px var(--acc))}50%{filter:drop-shadow(0 0 7px var(--acc))}}
+.df-dfill{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;animation:dfdialpulse 2.6s ease-in-out infinite}
 .df-dval{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:11px;color:var(--tx)}
 .df-dlbl{font-family:var(--fh);font-size:6.7px;letter-spacing:.3px;color:var(--tx2);text-transform:uppercase;text-align:center;margin-top:7px;line-height:1.3;min-height:16px}
 
 #dffoot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:13px 24px;font-size:9.5px;letter-spacing:.5px;color:var(--mu);border-top:1px solid var(--bd2);background:rgba(0,0,0,.24)}
+  padding:13px 25px;font-size:9.5px;letter-spacing:.5px;color:var(--mu);border-top:1px solid var(--bd2);background:rgba(0,0,0,.26)}
 #dffoot .mid{font-family:var(--fh);text-transform:uppercase;letter-spacing:2px;color:var(--tx2);font-style:normal}
 </style>
 </head>
 <body>
 <textarea id="dfraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
 <div id="dfwrap"><div id="df">
-  <svg class="df-corner tl" viewBox="0 0 32 32" fill="none"><path d="M2 30 Q2 2 30 2 M2 19 Q2 8 11 8 M8 30 Q8 21 19 21" stroke="#C9A84C" stroke-width="1"/><circle cx="2" cy="30" r="1.3" fill="#C9A84C"/></svg>
-  <svg class="df-corner tr" viewBox="0 0 32 32" fill="none"><path d="M2 30 Q2 2 30 2 M2 19 Q2 8 11 8 M8 30 Q8 21 19 21" stroke="#C9A84C" stroke-width="1"/><circle cx="2" cy="30" r="1.3" fill="#C9A84C"/></svg>
-  <svg class="df-corner bl" viewBox="0 0 32 32" fill="none"><path d="M2 30 Q2 2 30 2 M2 19 Q2 8 11 8 M8 30 Q8 21 19 21" stroke="#C9A84C" stroke-width="1"/><circle cx="2" cy="30" r="1.3" fill="#C9A84C"/></svg>
-  <svg class="df-corner br" viewBox="0 0 32 32" fill="none"><path d="M2 30 Q2 2 30 2 M2 19 Q2 8 11 8 M8 30 Q8 21 19 21" stroke="#C9A84C" stroke-width="1"/><circle cx="2" cy="30" r="1.3" fill="#C9A84C"/></svg>
+  <div id="df-nebula"></div>
+  <svg class="df-corner tl" viewBox="0 0 44 44" fill="none">
+    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+  </svg>
+  <svg class="df-corner tr" viewBox="0 0 44 44" fill="none">
+    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+  </svg>
+  <svg class="df-corner bl" viewBox="0 0 44 44" fill="none">
+    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+  </svg>
+  <svg class="df-corner br" viewBox="0 0 44 44" fill="none">
+    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+  </svg>
 
   <div id="df-head">
-    <svg id="df-seal" viewBox="0 0 56 56" fill="none">
-      <circle cx="28" cy="28" r="25" stroke="#C9A84C" stroke-width=".7" opacity=".55"/>
-      <circle cx="28" cy="28" r="19" stroke="#8B5FBF" stroke-width=".6" opacity=".7"/>
-      <path d="M28 8 L31 22 L45 25 L31 28 L28 42 L25 28 L11 25 L25 22 Z" fill="none" stroke="#C9A0F0" stroke-width="1"/>
-      <circle cx="28" cy="28" r="2.6" fill="#F0E8FF"/>
-    </svg>
+    <div id="df-seal-wrap">
+      <svg id="df-seal" viewBox="0 0 56 56" fill="none">
+        <defs><radialGradient id="dfstarg" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#D4B8F5"/><stop offset="100%" stop-color="#4A2E70"/></radialGradient></defs>
+        <g class="seal-outer">
+          <circle cx="28" cy="28" r="25" stroke="#C9A84C" stroke-width=".6" opacity=".5"/>
+          <line x1="28" y1="3" x2="28" y2="7" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
+          <line x1="28" y1="49" x2="28" y2="53" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
+          <line x1="3" y1="28" x2="7" y2="28" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
+          <line x1="49" y1="28" x2="53" y2="28" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
+        </g>
+        <g class="seal-mid">
+          <circle cx="28" cy="28" r="19" stroke="#8B5FBF" stroke-width=".55" opacity=".6"/>
+          <circle cx="28" cy="9" r="1" fill="#8B5FBF"/><circle cx="47" cy="28" r="1" fill="#8B5FBF"/>
+          <circle cx="28" cy="47" r="1" fill="#8B5FBF"/><circle cx="9" cy="28" r="1" fill="#8B5FBF"/>
+        </g>
+        <path d="M28 8 L31.5 22 L45 25 L31.5 28 L28 42 L24.5 28 L11 25 L24.5 22 Z" fill="url(#dfstarg)" stroke="#F0E8FF" stroke-width=".9"/>
+        <circle cx="28" cy="28" r="3" fill="#F5F0FF"/>
+      </svg>
+    </div>
     <div class="df-hd-row">
       <div id="df-avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="#8B5FBF" stroke-width="1.3"/><path d="M5 21 C5 16 8 14 12 14 C16 14 19 16 19 21" stroke="#8B5FBF" stroke-width="1.3"/></svg></div>
       <div class="df-hd-txt">
@@ -146,14 +195,14 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 
   <div id="dfbody">
     <div class="df-body-inner">
-      <div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Particulars</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Particulars</span><span class="ln"></span></div>
       <div class="df-igrid">
         <div class="df-icard"><div class="df-icard-l">Age</div><div class="df-icard-v" id="f-age">&mdash;</div></div>
         <div class="df-icard"><div class="df-icard-l">Origin</div><div class="df-icard-v" id="f-origin">&mdash;</div></div>
         <div class="df-icard"><div class="df-icard-l">Occupation</div><div class="df-icard-v" id="f-occ">&mdash;</div></div>
       </div>
 
-      <div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Ascension</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Ascension</span><span class="ln"></span></div>
       <div id="df-tier-plate">
         <svg id="df-tier-ic" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="#8B5FBF" stroke-width="1.1"/><circle cx="7.5" cy="7.5" r="1.7" fill="#8B5FBF"/></svg>
         <div><div id="df-tier-nm">&mdash;</div><div id="df-tier-ds"></div></div>
@@ -172,7 +221,7 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
       <div id="persona-wrap"></div>
       <div id="scene-wrap"></div>
 
-      <div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Vital Measures</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Vital Measures</span><span class="ln"></span></div>
       <div class="df-dial-grid" id="vitals-grid"></div>
     </div>
 
@@ -261,7 +310,7 @@ rail.innerHTML=lh;
 /* SPIRITUAL BODY */
 var sb=d.spiritualBody||{};
 function noteBlock(val){return val?('<div class="df-note">'+esc(val)+'</div>'):'';}
-var spiritHtml='<div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Spiritual Body</span><span class="ln"></span></div>';
+var spiritHtml='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Spiritual Body</span><span class="ln"></span></div>';
 spiritHtml+=noteBlock(sb.quality)||'<div class="df-empty">Quality not yet assessed.</div>';
 if(sb.characteristic){spiritHtml+=noteBlock(sb.characteristic);}
 if(sb.potionOrigin){spiritHtml+=noteBlock(sb.potionOrigin);}
@@ -269,7 +318,7 @@ g('spirit-wrap').innerHTML=spiritHtml;
 
 /* TIES */
 var af=d.affiliation||{};
-var tiesHtml='<div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Ties</span><span class="ln"></span></div>';
+var tiesHtml='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Ties</span><span class="ln"></span></div>';
 tiesHtml+='<div class="df-igrid" style="grid-template-columns:1fr 1fr">'+
   '<div class="df-icard"><div class="df-icard-l">Affiliation</div><div class="df-icard-v">'+esc(af.org||'None — walks alone')+'</div></div>'+
   '<div class="df-icard"><div class="df-icard-l">Mentor</div><div class="df-icard-v">'+esc(af.mentor||'—')+'</div></div>'+
@@ -283,7 +332,7 @@ g('ties-wrap').innerHTML=tiesHtml;
 /* PERSONA */
 var personaHtml='';
 if(d.appearance||d.nature||d.history){
-  personaHtml+='<div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Persona</span><span class="ln"></span></div>';
+  personaHtml+='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Persona</span><span class="ln"></span></div>';
   personaHtml+=noteBlock(d.appearance);
   personaHtml+=noteBlock(d.nature);
   personaHtml+=noteBlock(d.history);
@@ -291,7 +340,7 @@ if(d.appearance||d.nature||d.history){
 g('persona-wrap').innerHTML=personaHtml;
 
 g('scene-wrap').innerHTML=d.openingScene?
-  ('<div class="df-sec"><span class="dots"><i></i><i></i><i></i></span><span class="t">Opening Scene</span><span class="ln"></span></div><div class="df-note">'+esc(d.openingScene)+'</div>')
+  ('<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Opening Scene</span><span class="ln"></span></div><div class="df-note">'+esc(d.openingScene)+'</div>')
   :'';
 
 /* VITALS */
