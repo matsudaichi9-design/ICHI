@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond',serif;font-size:13.5px}
+:root{
+  --acc:#8B1A2B;--acc-rgb:139,26,43;--accd:rgba(139,26,43,.14);--accb:rgba(139,26,43,.42);
+  --gold:#9C8A4A;--glow:#E0A868;
+  --bg:#0A0706;--pan:#170D0E;--pan2:#1F1112;--pan3:#2A1719;
+  --tx:#EDE2D4;--tx2:#A08A82;--mu:#5C4A46;
+  --bd:rgba(156,138,74,.24);--bd2:rgba(255,255,255,.05);
+  --r:6px;--r2:3px;--fh:'IM Fell English SC',serif;
+}
+#dfwrap{max-width:480px;margin:8px auto;position:relative}
+#df{position:relative;background:linear-gradient(165deg,var(--pan) 0%,var(--bg) 100%);border:1px solid var(--bd);
+  border-radius:var(--r);overflow:hidden;box-shadow:0 18px 54px rgba(0,0,0,.68),inset 0 0 0 1px rgba(156,138,74,.06);
+  animation:dfi .3s ease both}
+@keyframes dfi{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+#df::before{content:'';position:absolute;inset:5px;border:1px solid rgba(156,138,74,.1);border-radius:3px;pointer-events:none;z-index:3}
+#df-circle{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:320px;height:320px;opacity:.045;pointer-events:none;z-index:0}
+#df::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.35;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E")}
+
+/* HEADER */
+#df-head{position:relative;z-index:1;padding:19px 22px 15px;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.df-hd-row{display:flex;align-items:center;gap:13px}
+#df-avatar{position:relative;width:52px;height:52px;flex-shrink:0;border-radius:50%;overflow:hidden;
+  background:radial-gradient(circle at 35% 30%,#3a1a1e,#0A0706);border:1.5px solid var(--accb);
+  box-shadow:0 0 16px -3px var(--acc);display:flex;align-items:center;justify-content:center}
+#df-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.df-hd-txt{flex:1;min-width:0;padding-right:56px}
+#df-name{font-family:var(--fh);font-size:20px;letter-spacing:1px;color:var(--tx);line-height:1.15;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#df-alias{font-size:11.5px;font-style:italic;color:var(--tx2);margin-top:3px}
+#df-tier-badge{display:inline-block;margin-top:7px;font-family:var(--fh);font-size:9px;letter-spacing:.8px;padding:4px 9px;
+  border-radius:99px;white-space:nowrap;text-align:center}
+#df-chev{position:absolute;bottom:-2px;right:22px;font-size:9px;color:var(--mu);transition:transform .3s}
+#dfwrap.closed #df-chev{transform:rotate(180deg)}
+#dfbody{max-height:2600px;overflow:hidden;transition:max-height .35s ease}
+#dfwrap.closed #dfbody{max-height:0}
+
+/* STAMP */
+#df-stamp{position:absolute;top:10px;right:8px;width:60px;height:60px;opacity:.8;mix-blend-mode:multiply;
+  transform:rotate(11deg);pointer-events:none;z-index:2}
+
+.df-body-inner{position:relative;z-index:1;padding:18px 22px 6px}
+.df-sec{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.df-sec:not(:first-child){margin-top:19px}
+.df-sec svg{flex-shrink:0;opacity:.8}
+.df-sec .t{font-family:var(--fh);font-size:11.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.df-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+
+.df-igrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.df-icard{background:var(--pan2);border:1px solid var(--bd2);border-radius:var(--r2);padding:7px 9px}
+.df-icard-l{font-family:var(--fh);font-size:7.8px;letter-spacing:1px;color:var(--mu);text-transform:uppercase;margin-bottom:3px}
+.df-icard-v{font-size:12px;color:var(--tx);line-height:1.35}
+
+/* TIER + PATH PLATE */
+#df-tier-plate{background:var(--pan2);border:1px solid var(--bd);border-radius:var(--r2);padding:11px 13px;margin-bottom:13px;
+  display:flex;align-items:center;gap:11px}
+#df-tier-ic{width:26px;height:26px;flex-shrink:0}
+#df-tier-nm{font-family:var(--fh);font-size:13.5px;letter-spacing:.5px;color:var(--tx)}
+#df-tier-ds{font-size:10px;color:var(--tx2);margin-top:1px;line-height:1.4}
+
+#df-path-card{position:relative;background:linear-gradient(160deg,var(--pan3),var(--pan2));border:1px solid var(--accb);
+  border-radius:6px;padding:14px 14px 12px;text-align:center;overflow:hidden}
+#df-path-card::before,#df-path-card::after{content:'';position:absolute;width:14px;height:14px;border:1px solid var(--gold);opacity:.5}
+#df-path-card::before{top:6px;left:6px;border-right:none;border-bottom:none}
+#df-path-card::after{bottom:6px;right:6px;border-left:none;border-top:none}
+#df-seq{font-family:var(--fh);font-size:18px;color:var(--acc)}
+#df-path-nm{font-family:var(--fh);font-size:16px;letter-spacing:1.4px;color:var(--tx);margin-top:2px}
+#df-seq-title{font-size:10.5px;font-style:italic;color:var(--gold);margin-top:3px}
+
+.df-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.6;background:var(--pan2);
+  border-left:2px solid var(--acc);border-radius:0 var(--r2) var(--r2) 0;padding:9px 12px;margin-bottom:10px}
+
+.df-tags{display:flex;flex-wrap:wrap;gap:6px}
+.df-tag{font-size:11px;color:var(--tx);background:var(--pan2);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+
+.df-empty{font-size:11px;color:var(--mu);font-style:italic;text-align:center;padding:12px 0}
+
+/* VIALS */
+.df-vial-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 6px;justify-items:center}
+.df-vial-unit{display:flex;flex-direction:column;align-items:center;width:100%}
+.df-vial{width:20px;height:50px;position:relative;margin-bottom:5px}
+.df-vial-cap{width:11px;height:5px;background:var(--gold);border-radius:2px 2px 0 0;margin:0 auto}
+.df-vial-neck{width:7px;height:4px;background:var(--pan3);margin:0 auto;border-left:1px solid var(--bd);border-right:1px solid var(--bd)}
+.df-vial-body{width:20px;height:41px;border-radius:3px 3px 7px 7px;border:1px solid var(--bd);background:rgba(255,255,255,.02);overflow:hidden;position:relative}
+.df-vial-fill{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(180deg,#c22a3e,var(--acc) 60%,#5a0f1a);box-shadow:inset 0 2px 4px rgba(255,255,255,.12)}
+.df-vial-lbl{font-family:var(--fh);font-size:7px;letter-spacing:.3px;color:var(--tx2);text-transform:uppercase;text-align:center;line-height:1.2;min-height:17px}
+.df-vial-val{font-family:var(--fh);font-size:9.5px;color:var(--gold);margin-top:2px}
+
+#dffoot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:12px 22px;font-size:9.5px;letter-spacing:.5px;color:var(--mu);border-top:1px solid var(--bd2);background:rgba(0,0,0,.2)}
+#dffoot .mid{font-family:var(--fh);text-transform:uppercase;letter-spacing:2px;color:var(--tx2);font-style:normal}
+</style>
+</head>
+<body>
+<textarea id="dfraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="dfwrap"><div id="df">
+  <svg id="df-circle" viewBox="0 0 320 320" fill="none">
+    <circle cx="160" cy="160" r="140" stroke="#9C8A4A" stroke-width="1"/>
+    <circle cx="160" cy="160" r="110" stroke="#9C8A4A" stroke-width=".6"/>
+    <circle cx="160" cy="160" r="80" stroke="#8B1A2B" stroke-width=".6"/>
+    <path d="M160 20 L160 300 M20 160 L300 160 M62 62 L258 258 M258 62 L62 258" stroke="#9C8A4A" stroke-width=".4"/>
+  </svg>
+
+  <div id="df-head">
+    <svg id="df-stamp" viewBox="0 0 100 100">
+      <defs><path id="df-stamp-arc" d="M 10,50 A 40,40 0 1,1 90,50" fill="none"/></defs>
+      <circle cx="50" cy="50" r="47" stroke="#8B1A2B" stroke-width="1.6" fill="none"/>
+      <circle cx="50" cy="50" r="40" stroke="#8B1A2B" stroke-width=".8" fill="none"/>
+      <text font-family="IM Fell English SC,serif" font-size="6.6" font-weight="700" fill="#8B1A2B" letter-spacing="1.5">
+        <textPath href="#df-stamp-arc" startOffset="2">SEALED &#8226; BEYONDER REGISTRY</textPath>
+      </text>
+      <text x="50" y="47" text-anchor="middle" font-family="IM Fell English SC,serif" font-size="10.5" fill="#8B1A2B">ON</text>
+      <text x="50" y="60" text-anchor="middle" font-family="IM Fell English SC,serif" font-size="10.5" fill="#8B1A2B">FILE</text>
+    </svg>
+    <div class="df-hd-row">
+      <div id="df-avatar"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="#9C8A4A" stroke-width="1.3"/><path d="M5 21 C5 16 8 14 12 14 C16 14 19 16 19 21" stroke="#9C8A4A" stroke-width="1.3"/></svg></div>
+      <div class="df-hd-txt">
+        <div id="df-name">Unnamed</div>
+        <div id="df-alias"></div>
+        <div id="df-tier-badge">&mdash;</div>
+      </div>
+    </div>
+    <div id="df-chev">&#9650;</div>
+  </div>
+
+  <div id="dfbody">
+    <div class="df-body-inner">
+      <div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 3 L14 9 L20 9 L15 13 L17 19 L12 15 L7 19 L9 13 L4 9 L10 9 Z" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Particulars</span><span class="ln"></span></div>
+      <div class="df-igrid">
+        <div class="df-icard"><div class="df-icard-l">Age</div><div class="df-icard-v" id="f-age">&mdash;</div></div>
+        <div class="df-icard"><div class="df-icard-l">Origin</div><div class="df-icard-v" id="f-origin">&mdash;</div></div>
+        <div class="df-icard"><div class="df-icard-l">Occupation</div><div class="df-icard-v" id="f-occ">&mdash;</div></div>
+      </div>
+
+      <div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 13 L16 13" stroke="#9C8A4A" stroke-width="1.2" stroke-linecap="round"/></svg><span class="t">Standing</span><span class="ln"></span></div>
+      <div id="df-tier-plate">
+        <svg id="df-tier-ic" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="10.5" stroke="#9C8A4A" stroke-width="1"/><path d="M13 7 V13 L16 15.5" stroke="#9C8A4A" stroke-width="1.1"/></svg>
+        <div><div id="df-tier-nm">&mdash;</div><div id="df-tier-ds"></div></div>
+      </div>
+      <div id="df-path-card">
+        <div id="df-seq">&mdash;</div>
+        <div id="df-path-nm">&mdash;</div>
+        <div id="df-seq-title"></div>
+      </div>
+
+      <div id="spirit-wrap"></div>
+      <div id="ties-wrap"></div>
+      <div id="persona-wrap"></div>
+      <div id="scene-wrap"></div>
+
+      <div class="df-sec"><span class="t">Vital Measures</span><span class="ln"></span></div>
+      <div class="df-vial-grid" id="vitals-grid"></div>
+    </div>
+
+    <div id="dffoot"><span id="foot-file">File &mdash;</span><span class="mid">Sealed Registry</span><span id="foot-seq">&mdash;</span></div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function hexRgb(h){h=h||'#8B1A2B';try{return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}catch(e){return '139,26,43'}}
+
+var raw=g('dfraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var acc=d.charColor||'#8B1A2B';
+var root=document.documentElement;
+root.style.setProperty('--acc',acc);
+var rgb=hexRgb(acc);
+root.style.setProperty('--acc-rgb',rgb);
+root.style.setProperty('--accd','rgba('+rgb+',.14)');
+root.style.setProperty('--accb','rgba('+rgb+',.42)');
+
+var TIER_INFO={
+  'Mortal':{color:'#6A7A8A',desc:'No power of their own — yet. The Beyonder world is a rumor glimpsed, not entered.'},
+  'Free Beyonder':{color:'#8B1A2B',desc:'A Sequence 9 sorcerer operating alone, unclaimed by Church or cult — the black market only.'},
+  'Church Unit':{color:'#9C8A4A',desc:'A Sequence 9 sorcerer bound to a local Church branch — duties and protection both apply.'},
+  'Cult Member':{color:'#6A3A7A',desc:'A Sequence 9 sorcerer affiliated with an underground cult — power bought at a rising risk.'}
+};
+
+/* HEADER */
+g('df-name').textContent=d.name||'Unnamed';
+g('df-alias').textContent=d.alias?'also known as "'+d.alias+'"':'';
+if(d.avatar){
+  var img=document.createElement('img');
+  img.src='https://files.catbox.moe/'+d.avatar;
+  img.onerror=function(){this.style.display='none'};
+  g('df-avatar').appendChild(img);
+}
+var tier=d.tier||'';
+var tierInfo=TIER_INFO[tier];
+var tb=g('df-tier-badge');
+if(tierInfo){
+  tb.textContent=tier;
+  tb.style.color=tierInfo.color;
+  tb.style.background=tierInfo.color+'22';
+  tb.style.border='1px solid '+tierInfo.color+'66';
+}else{
+  tb.textContent='Unregistered';
+  tb.style.color='var(--mu)';
+  tb.style.border='1px solid var(--bd2)';
+}
+
+/* PARTICULARS */
+g('f-age').textContent=d.age!=null&&d.age!==''?d.age:'—';
+g('f-origin').textContent=d.origin||'—';
+g('f-occ').textContent=d.occupation||'—';
+
+/* STANDING */
+if(tierInfo){
+  g('df-tier-nm').textContent=tier;
+  g('df-tier-ds').textContent=tierInfo.desc;
+}else{
+  g('df-tier-nm').textContent='Unregistered';
+  g('df-tier-ds').textContent='No standing has yet been declared.';
+}
+g('df-seq').textContent=d.sequence!=null&&d.sequence!==''?'Seq. '+d.sequence:'—';
+g('df-path-nm').textContent=d.pathway||'No Pathway';
+g('df-seq-title').textContent=d.sequenceTitle||'';
+
+/* SPIRITUAL BODY */
+var sb=d.spiritualBody||{};
+function noteBlock(val){return val?('<div class="df-note">'+esc(val)+'</div>'):'';}
+var spiritHtml='<div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M9 3 H15 M10 3 V9 L5 18 A3 3 0 0 0 8 21 H16 A3 3 0 0 0 19 18 L14 9 V3" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Spiritual Body</span><span class="ln"></span></div>';
+spiritHtml+=noteBlock(sb.quality)||'<div class="df-empty">Quality not yet assessed.</div>';
+if(sb.characteristic){spiritHtml+=noteBlock(sb.characteristic);}
+if(sb.potionOrigin){spiritHtml+=noteBlock(sb.potionOrigin);}
+g('spirit-wrap').innerHTML=spiritHtml;
+
+/* TIES */
+var af=d.affiliation||{};
+var tiesHtml='<div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Ties</span><span class="ln"></span></div>';
+tiesHtml+='<div class="df-igrid" style="grid-template-columns:1fr 1fr">'+
+  '<div class="df-icard"><div class="df-icard-l">Affiliation</div><div class="df-icard-v">'+esc(af.org||'None — walks alone')+'</div></div>'+
+  '<div class="df-icard"><div class="df-icard-l">Mentor</div><div class="df-icard-v">'+esc(af.mentor||'—')+'</div></div>'+
+'</div>';
+var aliases=af.secretAliases||[];
+if(aliases.length){
+  tiesHtml+='<div style="margin-top:9px" class="df-tags">'+aliases.map(function(a){return '<span class="df-tag">'+esc(a)+'</span>';}).join('')+'</div>';
+}
+g('ties-wrap').innerHTML=tiesHtml;
+
+/* PERSONA */
+var personaHtml='';
+if(d.appearance||d.nature||d.history){
+  personaHtml+='<div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z M5 6 L14 9 L19 6" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Persona</span><span class="ln"></span></div>';
+  personaHtml+=noteBlock(d.appearance);
+  personaHtml+=noteBlock(d.nature);
+  personaHtml+=noteBlock(d.history);
+}
+g('persona-wrap').innerHTML=personaHtml;
+
+g('scene-wrap').innerHTML=d.openingScene?
+  ('<div class="df-sec"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12 H20 M14 6 L20 12 L14 18" stroke="#9C8A4A" stroke-width="1.2"/></svg><span class="t">Opening Scene</span><span class="ln"></span></div><div class="df-note">'+esc(d.openingScene)+'</div>')
+  :'';
+
+/* VITALS */
+var STATS=[
+  ['spiritualResilience','Spiritual Resilience'],['reasoning','Reasoning & Deduction'],['willpower','Willpower'],
+  ['combat','Physical Combat'],['occultKnowledge','Occult Knowledge'],['guile','Guile & Deception'],['resources','Resources']
+];
+var stats=d.stats||{};
+g('vitals-grid').innerHTML=STATS.map(function(s){
+  var v=parseInt(stats[s[0]],10);if(isNaN(v))v=10;
+  var pct=Math.max(4,Math.min(100,v));
+  return '<div class="df-vial-unit"><div class="df-vial"><div class="df-vial-cap"></div><div class="df-vial-neck"></div>'+
+    '<div class="df-vial-body"><div class="df-vial-fill" style="height:'+pct+'%"></div></div></div>'+
+    '<div class="df-vial-lbl">'+s[1]+'</div><div class="df-vial-val">'+v+'</div></div>';
+}).join('');
+
+/* FOOTER */
+g('foot-file').textContent='File — '+(d.name?d.name.split(' ')[0]:'Unnamed');
+g('foot-seq').textContent=d.pathway?(d.pathway+' Seq.'+(d.sequence!=null?d.sequence:'9')):'Unregistered';
+
+/* COLLAPSE */
+var head=g('df-head');
+if(head)head.addEventListener('click',function(){g('dfwrap').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>
