@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
+:root{
+  --ac:#8B5FBF;--ac-rgb:139,95,191;
+  --tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;
+  --bd:rgba(192,160,80,.22);--bd2:rgba(255,255,255,.05);
+  --r:9px;--r2:5px;--fh:'Cinzel Decorative',Georgia,serif;
+}
+#skwrap{max-width:460px;margin:8px auto;position:relative}
+#skwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.45),0 0 18px 1px rgba(var(--ac-rgb),.28);
+  animation:skaura 3.2s ease-in-out infinite}
+@keyframes skaura{0%,100%{opacity:.7}50%{opacity:1}}
+#sk{position:relative;z-index:1;background:
+    radial-gradient(ellipse 120% 90% at 15% 0%,rgba(var(--ac-rgb),.14),transparent 65%),
+    linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
+  box-shadow:0 14px 34px rgba(0,0,0,.75),inset 0 0 0 1px rgba(255,255,255,.03);
+  animation:ski .3s cubic-bezier(.2,.8,.3,1.15) both}
+@keyframes ski{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+
+#sk-row{display:flex;align-items:center;gap:11px;padding:11px 13px;position:relative}
+#sk-row.clickable{cursor:pointer}
+
+.sk-icon-wrap{position:relative;width:38px;height:38px;flex-shrink:0}
+.sk-burst{position:absolute;top:50%;left:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--ac-rgb),.9),transparent 70%);
+  animation:skburst 1.1s ease-out 1 both;pointer-events:none}
+@keyframes skburst{0%{transform:scale(0);opacity:1}70%{opacity:.45}100%{transform:scale(15);opacity:0}}
+.sk-icon-badge{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.3),var(--ac) 78%);
+  border:1.3px solid rgba(255,255,255,.5);box-shadow:0 0 12px -1px var(--ac),0 0 22px -6px var(--ac);
+  position:relative;color:#180F14}
+
+.sk-text{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sk-name{font-size:14px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.2px}
+.sk-type{font-size:10.5px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-style:italic}
+
+.sk-cost{flex-shrink:0;display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;
+  background:rgba(var(--ac-rgb),.12);border:1px solid rgba(var(--ac-rgb),.4)}
+.sk-cost svg{flex-shrink:0}
+.sk-cost-val{font-family:var(--fh);font-size:12px;color:var(--ac);white-space:nowrap;line-height:1}
+.sk-cost-unit{font-size:8.5px;color:var(--tx2);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap}
+
+.sk-chev-btn{flex-shrink:0;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd2);color:var(--mu);transition:transform .3s,color .2s}
+#skwrap.open .sk-chev-btn{transform:rotate(180deg);color:var(--ac)}
+
+#sk-desc{max-height:0;overflow:hidden;transition:max-height .32s ease}
+#skwrap.open #sk-desc{max-height:320px}
+.sk-desc-inner{padding:0 15px 12px 62px;font-size:11.5px;color:var(--tx2);line-height:1.6;font-style:italic;
+  border-top:1px solid var(--bd2);margin:0 13px;padding-top:10px}
+</style>
+</head>
+<body>
+<textarea id="skraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="skwrap"><div id="sk">
+  <div id="sk-row">
+    <div class="sk-icon-wrap">
+      <div class="sk-burst"></div>
+      <div class="sk-icon-badge">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1" opacity=".45" fill="none"/>
+          <path d="M12 4 L13.6 10.4 L20 12 L13.6 13.6 L12 20 L10.4 13.6 L4 12 L10.4 10.4 Z" fill="currentColor"/>
+          <circle cx="12" cy="12" r="1.5" fill="#fff" opacity=".85"/>
+        </svg>
+      </div>
+    </div>
+    <div class="sk-text">
+      <div class="sk-name" id="sk-name">Unknown Technique</div>
+      <div class="sk-type" id="sk-type"></div>
+    </div>
+    <div class="sk-cost" id="sk-cost" style="display:none">
+      <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M7 0 L2 7 H5.5 L4.5 12 L10 5 H6.5 Z" fill="var(--ac)"/></svg>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;line-height:1.1">
+        <span class="sk-cost-val" id="sk-cost-val"></span>
+        <span class="sk-cost-unit" id="sk-cost-unit"></span>
+      </div>
+    </div>
+    <div class="sk-chev-btn" id="sk-chev" style="display:none">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 3 L5 6.5 L8.5 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
+  <div id="sk-desc"><div class="sk-desc-inner" id="sk-desc-text"></div></div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+var raw=g('skraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+if(d.charColor){
+  document.documentElement.style.setProperty('--ac',d.charColor);
+  var h=d.charColor.replace('#','');
+  if(h.length===6){
+    var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+    document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+  }
+}
+
+g('sk-name').textContent=d.skillName||'Unknown Technique';
+g('sk-type').textContent=d.abilityType||'';
+g('sk-type').style.display=d.abilityType?'block':'none';
+
+if(d.costValue!=null&&d.costValue!==''){
+  g('sk-cost').style.display='flex';
+  g('sk-cost-val').textContent=d.costValue;
+  g('sk-cost-unit').textContent=d.costUnit||'';
+  g('sk-cost-unit').style.display=d.costUnit?'block':'none';
+}
+
+var row=g('sk-row');
+if(d.description){
+  g('sk-desc-text').textContent=d.description;
+  g('sk-chev').style.display='flex';
+  row.classList.add('clickable');
+  row.addEventListener('click',function(){g('skwrap').classList.toggle('open')});
+}
+})();
+</script>
+</body>
+</html>
