@@ -3,67 +3,83 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-webkit-tap-highlight-color:transparent}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px;-webkit-tap-highlight-color:transparent}
 :root{
   --acc:#8B5FBF;--acc-rgb:139,95,191;--accd:rgba(139,95,191,.15);--accb:rgba(139,95,191,.45);
-  --gold:#C9A84C;--spirit:#8FD8D0;
-  --bg:#08060F;--pan:#120E1E;--pan2:#1A1430;--pan3:#241C3E;
-  --tx:#E9E2F5;--tx2:#9A8FBF;--mu:#524C78;
-  --bd:rgba(201,168,76,.22);--bd2:rgba(255,255,255,.05);
-  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;
+  --gold:#C0A050;--spirit:#7CC9C0;
+  --bg:#030207;--pan:#0D0916;--pan2:#150F26;--pan3:#1E1633;
+  --tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bd:rgba(192,160,80,.2);--bd2:rgba(255,255,255,.04);
+  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
 }
 @keyframes acspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes acspinrev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
 #acwrap{max-width:480px;margin:10px auto;position:relative}
-/* rotating glow border ring */
 #acwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
-  box-shadow:0 0 0 1px var(--accb),0 0 22px 2px rgba(139,95,191,.4),0 0 42px 7px rgba(201,168,76,.14),0 0 60px 10px rgba(143,216,208,.08);
-  animation:acaura 4s ease-in-out infinite}
-@keyframes acaura{0%,100%{opacity:.75}50%{opacity:1}}
+  box-shadow:0 0 0 1px var(--accb),0 0 22px 2px rgba(139,95,191,.38),0 0 42px 7px rgba(192,160,80,.12),0 0 60px 10px rgba(124,201,192,.07);
+  animation:acaura 4.5s ease-in-out infinite}
+@keyframes acaura{0%,100%{opacity:.7}50%{opacity:1}}
 #ac{position:relative;z-index:1;background:
-    radial-gradient(ellipse 140% 55% at 50% -8%,rgba(139,95,191,.22),transparent 60%),
+    radial-gradient(ellipse 130% 50% at 50% -6%,rgba(139,95,191,.16),transparent 58%),
+    radial-gradient(ellipse 100% 60% at 50% 108%,rgba(0,0,0,.5),transparent 60%),
     linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
   border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
-  box-shadow:0 24px 70px rgba(0,0,0,.75),inset 0 0 0 1px rgba(201,168,76,.06);animation:aci .3s ease both}
+  box-shadow:0 26px 76px rgba(0,0,0,.82),inset 0 0 0 1px rgba(192,160,80,.05),inset 0 0 60px rgba(0,0,0,.5);
+  animation:aci .3s ease both}
 @keyframes aci{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-/* nebula wash */
-#ac-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;filter:blur(7px);
+#ac-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;filter:blur(8px);
   background:
-    radial-gradient(ellipse 60% 38% at 18% 10%,rgba(139,95,191,.28),transparent 70%),
-    radial-gradient(ellipse 50% 34% at 88% 16%,rgba(143,216,208,.16),transparent 70%),
-    radial-gradient(ellipse 58% 42% at 45% 100%,rgba(201,168,76,.14),transparent 70%)}
-/* starfield */
+    radial-gradient(ellipse 55% 34% at 16% 8%,rgba(139,95,191,.22),transparent 70%),
+    radial-gradient(ellipse 46% 30% at 90% 14%,rgba(124,201,192,.11),transparent 70%),
+    radial-gradient(ellipse 55% 40% at 45% 102%,rgba(192,160,80,.1),transparent 70%)}
 #ac::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    radial-gradient(1.4px 1.4px at 12% 18%,rgba(233,226,245,.9),transparent),
-    radial-gradient(1px 1px at 28% 62%,rgba(233,226,245,.6),transparent),
-    radial-gradient(1.6px 1.6px at 46% 12%,rgba(233,226,245,.8),transparent),
-    radial-gradient(1px 1px at 63% 44%,rgba(233,226,245,.5),transparent),
-    radial-gradient(1.3px 1.3px at 78% 22%,rgba(233,226,245,.85),transparent),
-    radial-gradient(1px 1px at 88% 58%,rgba(233,226,245,.55),transparent),
-    radial-gradient(1.5px 1.5px at 20% 82%,rgba(233,226,245,.7),transparent),
-    radial-gradient(1px 1px at 55% 88%,rgba(233,226,245,.5),transparent),
-    radial-gradient(1.2px 1.2px at 92% 84%,rgba(233,226,245,.65),transparent),
-    radial-gradient(1.3px 1.3px at 35% 32%,rgba(233,226,245,.6),transparent),
-    radial-gradient(1px 1px at 70% 72%,rgba(233,226,245,.5),transparent);
+    radial-gradient(1.4px 1.4px at 12% 18%,rgba(228,220,242,.85),transparent),
+    radial-gradient(1px 1px at 28% 62%,rgba(228,220,242,.55),transparent),
+    radial-gradient(1.6px 1.6px at 46% 12%,rgba(228,220,242,.75),transparent),
+    radial-gradient(1px 1px at 63% 44%,rgba(228,220,242,.45),transparent),
+    radial-gradient(1.3px 1.3px at 78% 22%,rgba(228,220,242,.8),transparent),
+    radial-gradient(1px 1px at 88% 58%,rgba(228,220,242,.5),transparent),
+    radial-gradient(1.5px 1.5px at 20% 82%,rgba(228,220,242,.65),transparent),
+    radial-gradient(1px 1px at 55% 88%,rgba(228,220,242,.45),transparent),
+    radial-gradient(1.2px 1.2px at 92% 84%,rgba(228,220,242,.6),transparent),
+    radial-gradient(1.3px 1.3px at 35% 32%,rgba(228,220,242,.55),transparent),
+    radial-gradient(1px 1px at 70% 72%,rgba(228,220,242,.45),transparent);
   animation:actwinkle 5s ease-in-out infinite}
-@keyframes actwinkle{0%,100%{opacity:.5}50%{opacity:1}}
-/* ornate corner flourishes */
-.ac-corner{position:absolute;width:44px;height:44px;z-index:2;opacity:.9;pointer-events:none}
+@keyframes actwinkle{0%,100%{opacity:.45}50%{opacity:.95}}
+/* floating embers */
+.ac-ember{position:absolute;width:2.3px;height:2.3px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 6px 1.5px var(--gold);opacity:0;pointer-events:none;z-index:1;bottom:6%;
+  animation:acember 8s ease-in infinite}
+.ac-ember.v{background:var(--spirit);box-shadow:0 0 6px 1.5px var(--spirit)}
+@keyframes acember{0%{opacity:0;transform:translate(0,0)}8%{opacity:.85}75%{opacity:.4}100%{opacity:0;transform:translate(var(--ex,10px),-320px)}}
+/* shooting star */
+.ac-shoot{position:absolute;top:6%;left:-12%;width:64px;height:1.3px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  opacity:0;transform:rotate(20deg);z-index:1;pointer-events:none;animation:acshoot 11s ease-in infinite}
+@keyframes acshoot{0%,88%{opacity:0;left:-12%}89%{opacity:1}94%{opacity:0;left:118%}100%{opacity:0;left:118%}}
+.ac-corner{position:absolute;width:44px;height:44px;z-index:2;opacity:.85;pointer-events:none}
 .ac-corner.tl{top:7px;left:7px}
 .ac-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
 .ac-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}
 .ac-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
 
+/* LANG TOGGLE */
+#ac-lang{position:absolute;top:14px;right:16px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#ac-lang b{font-family:var(--fh);font-size:8.5px;letter-spacing:.5px;padding:4px 8px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700;transition:all .2s}
+#ac-lang b.on{color:#F5F0FF;background:linear-gradient(135deg,var(--acc),#5A3E8A);box-shadow:0 0 10px -2px var(--acc)}
+
 /* HEADER */
 #ac-head{position:relative;z-index:1;padding:26px 26px 18px;text-align:center;border-bottom:1px solid var(--bd)}
 #ac-glow{position:absolute;top:-50px;left:50%;transform:translateX(-50%);width:260px;height:260px;
-  background:radial-gradient(circle,rgba(139,95,191,.25),transparent 65%);pointer-events:none;
+  background:radial-gradient(circle,rgba(139,95,191,.22),transparent 65%);pointer-events:none;
   animation:acpulse 4.5s ease-in-out infinite}
-@keyframes acpulse{0%,100%{opacity:.65;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
+@keyframes acpulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.1)}}
 #ac-sigil-wrap{width:96px;height:96px;position:relative;z-index:1;margin:0 auto 14px}
 #ac-sigil{width:100%;height:100%;display:block}
 .ring-outer{transform-origin:48px 48px;animation:acspin 55s linear infinite}
@@ -73,20 +89,24 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
 .ac-spark{position:absolute;top:-2px;left:50%;width:4.5px;height:4.5px;margin-left:-2.25px;border-radius:50%;
   background:#F0E8FF;box-shadow:0 0 9px 2.5px var(--acc)}
 .ac-spark.g{background:var(--gold);box-shadow:0 0 9px 2.5px var(--gold)}
-#ac-title{font-family:var(--fh);font-size:22px;letter-spacing:2px;position:relative;z-index:1;
+#ac-title{font-size:21px;letter-spacing:2px;position:relative;z-index:1;
   background:linear-gradient(100deg,var(--tx) 15%,#F3E4FF 32%,var(--gold) 50%,#F3E4FF 68%,var(--tx) 85%);
   background-size:260% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
-  animation:acshimmer 7s linear infinite;filter:drop-shadow(0 0 14px rgba(139,95,191,.55))}
+  animation:acshimmer 7s linear infinite;filter:drop-shadow(0 0 14px rgba(139,95,191,.5))}
+#ac-title[lang-mode="en"]{font-family:var(--fh)}
+#ac-title[lang-mode="th"]{font-family:var(--fth);font-size:19px;letter-spacing:.5px}
 @keyframes acshimmer{0%{background-position:0% center}100%{background-position:260% center}}
 #ac-subtitle{font-size:11px;font-style:italic;color:var(--tx2);letter-spacing:.4px;margin-top:7px;position:relative;z-index:1}
+[lang-mode="th"] #ac-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 /* TABS */
-#actabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid var(--bd2);overflow-x:auto;position:relative;z-index:1}
+#actabs{display:flex;background:rgba(0,0,0,.35);border-bottom:1px solid var(--bd2);overflow-x:auto;position:relative;z-index:1}
 #actabs::-webkit-scrollbar{display:none}
-.actab{flex:1;min-width:0;padding:11px 3px 9px;text-align:center;cursor:pointer;transition:all .18s;user-select:none}
+.actab{flex:1;min-width:0;padding:11px 2px 9px;text-align:center;cursor:pointer;transition:all .18s;user-select:none}
 .actab .ic-badge{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;
   margin:0 auto 5px;background:var(--pan2);border:1px solid var(--bd2);transition:all .2s}
-.actab span{font-family:var(--fh);font-size:7.6px;letter-spacing:.5px;color:var(--mu);text-transform:uppercase}
+.actab span{font-family:var(--fh);font-size:7.4px;letter-spacing:.5px;color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] .actab span{font-family:'Noto Serif Thai',serif;font-size:8.6px;letter-spacing:0;text-transform:none}
 .actab:hover span{color:var(--tx2)}
 .actab.on .ic-badge{background:var(--accd);border-color:var(--accb);box-shadow:0 0 16px -3px var(--acc),inset 0 0 10px -4px var(--acc)}
 .actab.on span{color:var(--tx)}
@@ -97,20 +117,24 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
 .ac-sec:not(:first-child){margin-top:20px}
 .ac-sec svg{flex-shrink:0}
 .ac-sec .t{font-family:var(--fh);font-size:11px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .ac-sec .t{font-family:'Noto Serif Thai',serif;font-size:12.5px;letter-spacing:.3px}
 .ac-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
 
 /* FIELDS */
 .ac-fld{margin-bottom:14px}
 .ac-lbl{font-family:var(--fh);font-size:8.5px;letter-spacing:1px;color:var(--tx2);text-transform:uppercase;margin-bottom:6px;display:block}
+[lang-mode="th"] .ac-lbl{font-family:'Noto Serif Thai',serif;font-size:10px;letter-spacing:0;text-transform:none}
 .ac-fld input[type=text],.ac-fld input[type=number],.ac-fld textarea,.ac-fld select{
   width:100%;background:var(--pan2);border:1px solid var(--bd2);border-radius:var(--r2);
-  color:var(--tx);font-family:'Spectral',serif;font-size:13.5px;font-style:italic;padding:9px 12px;outline:none;
+  color:var(--tx);font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px;font-style:italic;padding:9px 12px;outline:none;
   transition:border-color .15s,box-shadow .15s}
+[lang-mode="th"] .ac-fld input,[lang-mode="th"] .ac-fld textarea,[lang-mode="th"] .ac-fld select{font-style:normal}
 .ac-fld input:focus,.ac-fld textarea:focus,.ac-fld select:focus{border-color:var(--accb);box-shadow:0 0 0 3px var(--accd)}
-.ac-fld textarea{resize:vertical;min-height:52px;line-height:1.55}
-.ac-fld select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0L5 6L10 0' fill='%23C9A84C'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:30px;font-style:normal}
+.ac-fld textarea{resize:vertical;min-height:52px;line-height:1.6}
+.ac-fld select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0L5 6L10 0' fill='%23C0A050'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:30px;font-style:normal}
 .ac-name-input{font-family:var(--fh)!important;font-size:16px!important;font-style:normal!important;letter-spacing:.8px;
   background:transparent!important;border:none!important;border-bottom:1px solid var(--bd)!important;border-radius:0!important;padding:5px 2px 9px!important}
+[lang-mode="th"] .ac-name-input{font-family:'Noto Serif Thai',serif!important;font-size:15px!important}
 .ac-row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
 
 /* SWATCHES */
@@ -125,7 +149,9 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
   transition:all .2s;user-select:none;position:relative;overflow:hidden}
 .tier-plate .tglyph{width:14px;height:14px;margin-bottom:6px;opacity:.7}
 .tier-plate .tn{font-family:var(--fh);font-size:10.5px;letter-spacing:.6px;color:var(--tx)}
+[lang-mode="th"] .tier-plate .tn{font-family:'Noto Serif Thai',serif;font-size:11.5px}
 .tier-plate .td{font-size:10px;color:var(--tx2);line-height:1.4;margin-top:4px}
+[lang-mode="th"] .tier-plate .td{font-family:'Noto Serif Thai',serif;font-size:10.5px}
 .tier-plate.on{border-color:var(--tp-color,var(--acc));background:var(--tp-bg,var(--accd));box-shadow:0 0 18px -5px var(--tp-color,var(--acc)),inset 0 0 20px -8px var(--tp-color,var(--acc))}
 
 /* ASCENSION LADDER */
@@ -136,12 +162,16 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
   position:relative;z-index:1;transition:all .2s}
 @keyframes acnodepulse{0%,100%{box-shadow:0 0 12px 1px var(--acc)}50%{box-shadow:0 0 20px 5px var(--acc)}}
 .ladder-node.on{width:15px;height:15px;background:var(--acc);border-color:var(--tx);animation:acnodepulse 2.2s ease-in-out infinite}
-.ladder-seg{width:1px;height:11px;background:linear-gradient(180deg,var(--bd),var(--acc))}
+@keyframes acsegpulse{0%,100%{opacity:.55}50%{opacity:1}}
+.ladder-seg{width:1px;height:11px;background:linear-gradient(180deg,var(--bd),var(--acc));animation:acsegpulse 2.6s ease-in-out infinite}
 #ladder-info{flex:1;min-width:0;padding-top:2px}
 #pp-seq{font-family:var(--fh);font-size:15px;color:var(--acc);text-shadow:0 0 10px var(--accb)}
 #pp-name{font-family:var(--fh);font-size:14px;letter-spacing:1px;color:var(--tx);margin-top:3px}
+[lang-mode="th"] #pp-seq,[lang-mode="th"] #pp-name{font-family:'Noto Serif Thai',serif}
 #pp-title{font-size:10.5px;font-style:italic;color:var(--gold);margin-top:3px}
+[lang-mode="th"] #pp-title{font-family:'Noto Serif Thai',serif;font-style:normal}
 #pp-hint{font-size:9.5px;color:var(--mu);margin-top:8px;line-height:1.5}
+[lang-mode="th"] #pp-hint{font-family:'Noto Serif Thai',serif;font-size:10px}
 
 /* DYNAMIC LIST */
 .ac-list-item{display:flex;gap:7px;align-items:center;margin-bottom:8px}
@@ -151,9 +181,10 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
 .ac-list-rm:hover{color:var(--acc);border-color:var(--accb)}
 .ac-add-btn{width:100%;padding:10px;border:1.5px dashed var(--bd);background:transparent;color:var(--tx2);font-size:10px;
   letter-spacing:1.4px;text-transform:uppercase;font-family:var(--fh);cursor:pointer;border-radius:var(--r2);transition:all .2s}
+[lang-mode="th"] .ac-add-btn{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:0;text-transform:none}
 .ac-add-btn:hover{color:var(--gold);border-color:var(--gold)}
 
-/* ASTRAL DIALS (stats) */
+/* ASTRAL DIALS */
 #dial-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;justify-items:center}
 .dial-unit{display:flex;flex-direction:column;align-items:center;width:100%}
 .dial-ring-wrap{position:relative;width:54px;height:54px}
@@ -165,83 +196,97 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
   border:none!important;text-align:center;font-family:var(--fh)!important;font-size:12px!important;font-style:normal!important;
   color:var(--tx)!important;padding:0!important;outline:none;-moz-appearance:textfield}
 .dial-input::-webkit-inner-spin-button,.dial-input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
-.dial-lbl{font-family:var(--fh);font-size:6.9px;letter-spacing:.3px;color:var(--tx2);text-transform:uppercase;text-align:center;margin-top:7px;line-height:1.3;min-height:17px}
+.dial-lbl{font-family:var(--fh);font-size:6.7px;letter-spacing:.3px;color:var(--tx2);text-transform:uppercase;text-align:center;margin-top:7px;line-height:1.3;min-height:17px}
+[lang-mode="th"] .dial-lbl{font-family:'Noto Serif Thai',serif;font-size:8.5px;letter-spacing:0;text-transform:none}
 
 /* FOOTER */
 #ac-foot{position:relative;z-index:1;padding:17px 25px 21px}
 #ac-go{width:100%;padding:14px;border:none;border-radius:var(--r2);cursor:pointer;position:relative;overflow:hidden;
   font-family:var(--fh);font-size:12.5px;letter-spacing:2.6px;color:#F5F0FF;
-  background:linear-gradient(160deg,#A87FE0,var(--acc) 55%,#4A2E70);
-  box-shadow:0 10px 26px -6px rgba(139,95,191,.6),inset 0 1px 0 rgba(255,255,255,.18);transition:filter .15s}
-#ac-go::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);
+  background:linear-gradient(160deg,#8A64C4,var(--acc) 55%,#3A2456);
+  box-shadow:0 10px 26px -6px rgba(139,95,191,.55),inset 0 1px 0 rgba(255,255,255,.15);transition:filter .15s}
+[lang-mode="th"] #ac-go{font-family:'Noto Serif Thai',serif;font-size:13px;letter-spacing:.5px}
+#ac-go::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.32) 50%,transparent 70%);
   background-size:260% 100%;animation:acshimmer 3.2s linear infinite}
-#ac-go:hover{filter:brightness(1.14)}
-#ac-go:active{filter:brightness(.92)}
+#ac-go:hover{filter:brightness(1.12)}
+#ac-go:active{filter:brightness(.9)}
 #ac-note{font-size:10px;color:var(--mu);text-align:center;margin-top:10px;font-style:italic;line-height:1.5}
+[lang-mode="th"] #ac-note{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 .ac-nav{display:flex;justify-content:space-between;margin-top:19px}
 .ac-nb{font-family:var(--fh);font-size:10px;letter-spacing:1.2px;color:var(--tx2);cursor:pointer;padding:6px 4px;transition:color .15s}
+[lang-mode="th"] .ac-nb{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:0}
 .ac-nb:hover{color:var(--gold)}
 .ac-nb.ghost{visibility:hidden}
 
 /* OVERLAY */
-#ac-over{position:absolute;inset:0;background:rgba(4,3,8,.94);display:none;align-items:center;justify-content:center;
+#ac-over{position:absolute;inset:0;background:rgba(2,1,5,.95);display:none;align-items:center;justify-content:center;
   flex-direction:column;gap:14px;z-index:10;border-radius:var(--r)}
 #ac-over.on{display:flex}
 #ac-over-sigil{width:48px;height:48px;animation:acspin 1.6s linear infinite}
 #ac-over-txt{font-family:var(--fh);font-size:11px;letter-spacing:2.8px;color:var(--gold)}
+[lang-mode="th"] #ac-over-txt{font-family:'Noto Serif Thai',serif;font-size:13px;letter-spacing:0}
 </style>
 </head>
 <body>
 <div id="acwrap"><div id="ac">
   <div id="ac-nebula"></div>
+  <div class="ac-ember" style="left:14%;--ex:8px;animation-delay:0s"></div>
+  <div class="ac-ember v" style="left:32%;--ex:-14px;animation-delay:1.6s"></div>
+  <div class="ac-ember" style="left:58%;--ex:16px;animation-delay:3.1s"></div>
+  <div class="ac-ember v" style="left:78%;--ex:-10px;animation-delay:4.4s"></div>
+  <div class="ac-ember" style="left:22%;--ex:12px;animation-delay:5.8s"></div>
+  <div class="ac-ember v" style="left:88%;--ex:-6px;animation-delay:2.3s"></div>
+  <div class="ac-shoot"></div>
   <svg class="ac-corner tl" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="ac-corner tr" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="ac-corner bl" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="ac-corner br" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
+
+  <div id="ac-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
 
   <div id="ac-head">
     <div id="ac-glow"></div>
     <div id="ac-sigil-wrap">
       <svg id="ac-sigil" viewBox="0 0 96 96" fill="none">
-        <defs><radialGradient id="acstarg" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#D4B8F5"/><stop offset="100%" stop-color="#4A2E70"/></radialGradient></defs>
+        <defs><radialGradient id="acstarg" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#D4B8F5"/><stop offset="100%" stop-color="#3A2456"/></radialGradient></defs>
         <g class="ring-outer">
-          <circle cx="48" cy="48" r="44" stroke="#C9A84C" stroke-width=".6" opacity=".4"/>
-          <line x1="48" y1="4" x2="48" y2="10" stroke="#C9A84C" stroke-width="1" opacity=".7"/>
-          <line x1="48" y1="86" x2="48" y2="92" stroke="#C9A84C" stroke-width="1" opacity=".7"/>
-          <line x1="4" y1="48" x2="10" y2="48" stroke="#C9A84C" stroke-width="1" opacity=".7"/>
-          <line x1="86" y1="48" x2="92" y2="48" stroke="#C9A84C" stroke-width="1" opacity=".7"/>
-          <line x1="15.6" y1="15.6" x2="19.7" y2="19.7" stroke="#C9A84C" stroke-width=".8" opacity=".5"/>
-          <line x1="76.3" y1="15.6" x2="72.2" y2="19.7" stroke="#C9A84C" stroke-width=".8" opacity=".5"/>
-          <line x1="15.6" y1="80.3" x2="19.7" y2="76.2" stroke="#C9A84C" stroke-width=".8" opacity=".5"/>
-          <line x1="76.3" y1="80.3" x2="72.2" y2="76.2" stroke="#C9A84C" stroke-width=".8" opacity=".5"/>
+          <circle cx="48" cy="48" r="44" stroke="#C0A050" stroke-width=".6" opacity=".38"/>
+          <line x1="48" y1="4" x2="48" y2="10" stroke="#C0A050" stroke-width="1" opacity=".65"/>
+          <line x1="48" y1="86" x2="48" y2="92" stroke="#C0A050" stroke-width="1" opacity=".65"/>
+          <line x1="4" y1="48" x2="10" y2="48" stroke="#C0A050" stroke-width="1" opacity=".65"/>
+          <line x1="86" y1="48" x2="92" y2="48" stroke="#C0A050" stroke-width="1" opacity=".65"/>
+          <line x1="15.6" y1="15.6" x2="19.7" y2="19.7" stroke="#C0A050" stroke-width=".8" opacity=".45"/>
+          <line x1="76.3" y1="15.6" x2="72.2" y2="19.7" stroke="#C0A050" stroke-width=".8" opacity=".45"/>
+          <line x1="15.6" y1="80.3" x2="19.7" y2="76.2" stroke="#C0A050" stroke-width=".8" opacity=".45"/>
+          <line x1="76.3" y1="80.3" x2="72.2" y2="76.2" stroke="#C0A050" stroke-width=".8" opacity=".45"/>
         </g>
         <g class="ring-mid">
-          <circle cx="48" cy="48" r="34" stroke="#8B5FBF" stroke-width=".5" opacity=".55"/>
+          <circle cx="48" cy="48" r="34" stroke="#8B5FBF" stroke-width=".5" opacity=".5"/>
           <circle cx="48" cy="14" r="1.4" fill="#8B5FBF"/><circle cx="82" cy="48" r="1.4" fill="#8B5FBF"/>
           <circle cx="48" cy="82" r="1.4" fill="#8B5FBF"/><circle cx="14" cy="48" r="1.4" fill="#8B5FBF"/>
-          <circle cx="72" cy="24" r="1" fill="#8FD8D0"/><circle cx="72" cy="72" r="1" fill="#8FD8D0"/>
-          <circle cx="24" cy="72" r="1" fill="#8FD8D0"/><circle cx="24" cy="24" r="1" fill="#8FD8D0"/>
+          <circle cx="72" cy="24" r="1" fill="#7CC9C0"/><circle cx="72" cy="72" r="1" fill="#7CC9C0"/>
+          <circle cx="24" cy="72" r="1" fill="#7CC9C0"/><circle cx="24" cy="24" r="1" fill="#7CC9C0"/>
         </g>
         <path d="M48 12 L53.5 39.5 L82 48 L53.5 56.5 L48 84 L42.5 56.5 L14 48 L42.5 39.5 Z" fill="url(#acstarg)" stroke="#F0E8FF" stroke-width="1"/>
         <circle cx="48" cy="48" r="5" fill="#F5F0FF"/>
@@ -249,47 +294,47 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
       <div class="ac-orbit"><span class="ac-spark"></span></div>
       <div class="ac-orbit o2"><span class="ac-spark g"></span></div>
     </div>
-    <div id="ac-title">THE ASTRAL LEDGER</div>
-    <div id="ac-subtitle">Chart Your Ascension &mdash; Written Beneath a Borrowed Sky</div>
+    <div id="ac-title" lang-mode="en" data-en="THE ASTRAL LEDGER" data-th="บันทึกใต้เงาดารา">THE ASTRAL LEDGER</div>
+    <div id="ac-subtitle" data-en="Chart Your Ascension &mdash; Written Beneath a Borrowed Sky" data-th="จารึกวิถีสู่เทพภาวะ ใต้ท้องนภาที่มิใช่ของตน">Chart Your Ascension &mdash; Written Beneath a Borrowed Sky</div>
   </div>
 
   <div id="actabs">
-    <div class="actab on" data-t="t1"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" stroke="#C9A0F0" stroke-width="1.3"/></svg></span><span>Identity</span></div>
-    <div class="actab" data-t="t2"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" stroke="#C9A0F0" stroke-width="1.2"/><circle cx="12" cy="18" r="2" stroke="#C9A0F0" stroke-width="1.2"/><path d="M12 8 V16" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span>Ascension</span></div>
-    <div class="actab" data-t="t3"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3 C8 7 6 10 6 14 A6 6 0 0 0 18 14 C18 10 16 7 12 3 Z" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span>Spirit</span></div>
-    <div class="actab" data-t="t4"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12 A8 8 0 0 1 20 12 M4 12 A8 8 0 0 0 20 12" stroke="#C9A0F0" stroke-width="1.2"/><circle cx="12" cy="12" r="1.6" fill="#C9A0F0"/></svg></span><span>Ties</span></div>
-    <div class="actab" data-t="t5"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z M5 6 L14 9 L19 6" stroke="#C9A0F0" stroke-width="1.15"/></svg></span><span>Persona</span></div>
-    <div class="actab" data-t="t6"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#C9A0F0" stroke-width="1.2"/><path d="M12 6 V12 L16 15" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span>Vitals</span></div>
+    <div class="actab on" data-t="t1"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z" stroke="#C9A0F0" stroke-width="1.3"/></svg></span><span data-en="Identity" data-th="อัตลักษณ์">Identity</span></div>
+    <div class="actab" data-t="t2"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2" stroke="#C9A0F0" stroke-width="1.2"/><circle cx="12" cy="18" r="2" stroke="#C9A0F0" stroke-width="1.2"/><path d="M12 8 V16" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span data-en="Ascension" data-th="เลื่อนขั้น">Ascension</span></div>
+    <div class="actab" data-t="t3"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3 C8 7 6 10 6 14 A6 6 0 0 0 18 14 C18 10 16 7 12 3 Z" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span data-en="Spirit" data-th="กายจิต">Spirit</span></div>
+    <div class="actab" data-t="t4"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12 A8 8 0 0 1 20 12 M4 12 A8 8 0 0 0 20 12" stroke="#C9A0F0" stroke-width="1.2"/><circle cx="12" cy="12" r="1.6" fill="#C9A0F0"/></svg></span><span data-en="Ties" data-th="สายสัมพันธ์">Ties</span></div>
+    <div class="actab" data-t="t5"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M5 20 L5 6 L14 3 L19 6 L19 20 Z M5 6 L14 9 L19 6" stroke="#C9A0F0" stroke-width="1.15"/></svg></span><span data-en="Persona" data-th="ประวัติ">Persona</span></div>
+    <div class="actab" data-t="t6"><span class="ic-badge"><svg width="15" height="15" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#C9A0F0" stroke-width="1.2"/><path d="M12 6 V12 L16 15" stroke="#C9A0F0" stroke-width="1.2"/></svg></span><span data-en="Vitals" data-th="พลังชีพ">Vitals</span></div>
   </div>
 
   <div class="acpanel on" data-p="t1">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Identity</span><span class="ln"></span></div>
-    <div class="ac-fld"><span class="ac-lbl">Name</span><input type="text" id="f-name" class="ac-name-input" placeholder="The name written on the first page&#8230;"></div>
-    <div class="ac-fld"><span class="ac-lbl">Alias / Persona</span><input type="text" id="f-alias" placeholder="A second name, if one is kept&#8230;"></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Identity" data-th="อัตลักษณ์">Identity</span><span class="ln"></span></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Name" data-th="ชื่อ">Name</span><input type="text" id="f-name" class="ac-name-input" data-pen="The name written on the first page&#8230;" data-pth="ชื่อที่จารึกไว้บนหน้าแรก&#8230;" placeholder="The name written on the first page&#8230;"></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Alias / Persona" data-th="นามแฝง / ตัวตนอีกด้าน">Alias / Persona</span><input type="text" id="f-alias" data-pen="A second name, if one is kept&#8230;" data-pth="นามที่สอง หากมีเก็บไว้&#8230;" placeholder="A second name, if one is kept&#8230;"></div>
     <div class="ac-row3">
-      <div class="ac-fld"><span class="ac-lbl">Age (18+)</span><input type="number" id="f-age" min="18" value="18"></div>
-      <div class="ac-fld"><span class="ac-lbl">Origin</span><input type="text" id="f-origin" placeholder="Loen &#8212; Tingen"></div>
-      <div class="ac-fld"><span class="ac-lbl">Occupation</span><input type="text" id="f-occ" placeholder="A day job&#8230;"></div>
+      <div class="ac-fld"><span class="ac-lbl" data-en="Age (18+)" data-th="อายุ (18 ปีขึ้นไป)">Age (18+)</span><input type="number" id="f-age" min="18" value="18"></div>
+      <div class="ac-fld"><span class="ac-lbl" data-en="Origin" data-th="ถิ่นกำเนิด">Origin</span><input type="text" id="f-origin" data-pen="Loen &#8212; Tingen" data-pth="โลเอน &#8212; ทิงเง็น" placeholder="Loen &#8212; Tingen"></div>
+      <div class="ac-fld"><span class="ac-lbl" data-en="Occupation" data-th="อาชีพ">Occupation</span><input type="text" id="f-occ" data-pen="A day job&#8230;" data-pth="งานประจำวัน&#8230;" placeholder="A day job&#8230;"></div>
     </div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Starlight</span><span class="ln"></span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Starlight" data-th="แสงดารา">Starlight</span><span class="ln"></span></div>
     <div id="ac-swatches">
       <div class="ac-sw on" data-c="#8B5FBF" style="background:#8B5FBF;color:#8B5FBF"></div>
       <div class="ac-sw" data-c="#B0473F" style="background:#B0473F;color:#B0473F"></div>
       <div class="ac-sw" data-c="#3F6FA8" style="background:#3F6FA8;color:#3F6FA8"></div>
       <div class="ac-sw" data-c="#4F8F6B" style="background:#4F8F6B;color:#4F8F6B"></div>
-      <div class="ac-sw" data-c="#C9A84C" style="background:#C9A84C;color:#C9A84C"></div>
-      <div class="ac-sw" data-c="#8FD8D0" style="background:#8FD8D0;color:#8FD8D0"></div>
+      <div class="ac-sw" data-c="#C0A050" style="background:#C0A050;color:#C0A050"></div>
+      <div class="ac-sw" data-c="#7CC9C0" style="background:#7CC9C0;color:#7CC9C0"></div>
       <div class="ac-sw" data-c="#C4568C" style="background:#C4568C;color:#C4568C"></div>
       <div class="ac-sw" data-c="#7A7A94" style="background:#7A7A94;color:#7A7A94"></div>
       <input type="text" id="ac-hex" value="#8B5FBF">
     </div>
-    <div class="ac-nav"><span class="ac-nb ghost">&#8249;</span><span class="ac-nb" data-next="t2">Next &#8250;</span></div>
+    <div class="ac-nav"><span class="ac-nb ghost">&#8249;</span><span class="ac-nb" data-next="t2" data-en="Next &#8250;" data-th="ถัดไป &#8250;">Next &#8250;</span></div>
   </div>
 
   <div class="acpanel" data-p="t2">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Standing</span><span class="ln"></span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Standing" data-th="สถานะ">Standing</span><span class="ln"></span></div>
     <div id="tier-grid"></div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Pathway</span><span class="ln"></span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Pathway" data-th="เส้นทาง">Pathway</span><span class="ln"></span></div>
     <div class="ac-fld"><select id="f-pathway"></select></div>
     <div id="ladder-wrap">
       <div id="ladder-rail"></div>
@@ -297,60 +342,60 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px;-
         <div id="pp-seq">&mdash;</div>
         <div id="pp-name">No Pathway</div>
         <div id="pp-title"></div>
-        <div id="pp-hint">Tap a star to set your Sequence. 9 is where every newcomer begins.</div>
+        <div id="pp-hint" data-en="Tap a star to set your Sequence. 9 is where every newcomer begins." data-th="แตะดาวดวงหนึ่งเพื่อกำหนดลำดับของคุณ ลำดับ 9 คือจุดเริ่มต้นของทุกคน">Tap a star to set your Sequence. 9 is where every newcomer begins.</div>
       </div>
     </div>
-    <div class="ac-nav"><span class="ac-nb" data-next="t1">&#8249; Back</span><span class="ac-nb" data-next="t3">Next &#8250;</span></div>
+    <div class="ac-nav"><span class="ac-nb" data-next="t1" data-en="&#8249; Back" data-th="&#8249; ย้อนกลับ">&#8249; Back</span><span class="ac-nb" data-next="t3" data-en="Next &#8250;" data-th="ถัดไป &#8250;">Next &#8250;</span></div>
   </div>
 
   <div class="acpanel" data-p="t3">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Spiritual Body</span><span class="ln"></span></div>
-    <div class="ac-fld"><span class="ac-lbl">Quality</span><textarea id="f-sbquality" placeholder="How well the body takes to a potion&#8230;"></textarea></div>
-    <div class="ac-fld"><span class="ac-lbl">Beyonder Characteristic</span><textarea id="f-sbchar" placeholder="A manifested trait, if any &#8212; most Sequence 9s have none yet"></textarea></div>
-    <div class="ac-fld"><span class="ac-lbl">Potion Origin</span><textarea id="f-sborigin" placeholder="How the first formula was found, bought, or stolen&#8230;"></textarea></div>
-    <div class="ac-nav"><span class="ac-nb" data-next="t2">&#8249; Back</span><span class="ac-nb" data-next="t4">Next &#8250;</span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Spiritual Body" data-th="กายจิต">Spiritual Body</span><span class="ln"></span></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Quality" data-th="คุณภาพ">Quality</span><textarea id="f-sbquality" data-pen="How well the body takes to a potion&#8230;" data-pth="ร่างกายรับโอสถได้ดีเพียงใด&#8230;" placeholder="How well the body takes to a potion&#8230;"></textarea></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Beyonder Characteristic" data-th="คุณลักษณะผู้วิเศษ">Beyonder Characteristic</span><textarea id="f-sbchar" data-pen="A manifested trait, if any &#8212; most Sequence 9s have none yet" data-pth="คุณลักษณะที่ปรากฏ หากมี &#8212; ส่วนใหญ่ลำดับ 9 ยังไม่มี" placeholder="A manifested trait, if any &#8212; most Sequence 9s have none yet"></textarea></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Potion Origin" data-th="ที่มาของโอสถ">Potion Origin</span><textarea id="f-sborigin" data-pen="How the first formula was found, bought, or stolen&#8230;" data-pth="สูตรแรกได้มาอย่างไร พบเจอ ซื้อ หรือขโมยมา&#8230;" placeholder="How the first formula was found, bought, or stolen&#8230;"></textarea></div>
+    <div class="ac-nav"><span class="ac-nb" data-next="t2" data-en="&#8249; Back" data-th="&#8249; ย้อนกลับ">&#8249; Back</span><span class="ac-nb" data-next="t4" data-en="Next &#8250;" data-th="ถัดไป &#8250;">Next &#8250;</span></div>
   </div>
 
   <div class="acpanel" data-p="t4">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Organization</span><span class="ln"></span></div>
-    <div class="ac-fld"><span class="ac-lbl">Affiliation</span><input type="text" id="f-org" placeholder="A Church, a cult, or none at all&#8230;"></div>
-    <div class="ac-fld"><span class="ac-lbl">Mentor / Contact</span><input type="text" id="f-mentor" placeholder="Someone who knows what they are&#8230;"></div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Known Aliases</span><span class="ln"></span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Organization" data-th="สังกัด">Organization</span><span class="ln"></span></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Affiliation" data-th="สังกัด">Affiliation</span><input type="text" id="f-org" data-pen="A Church, a cult, or none at all&#8230;" data-pth="โบสถ์ ลัทธิ หรือไม่สังกัดใดเลย&#8230;" placeholder="A Church, a cult, or none at all&#8230;"></div>
+    <div class="ac-fld"><span class="ac-lbl" data-en="Mentor / Contact" data-th="พี่เลี้ยง / ผู้ติดต่อ">Mentor / Contact</span><input type="text" id="f-mentor" data-pen="Someone who knows what they are&#8230;" data-pth="ใครสักคนที่รู้ว่าพวกเขาคือใคร&#8230;" placeholder="Someone who knows what they are&#8230;"></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Known Aliases" data-th="นามแฝงที่รู้จัก">Known Aliases</span><span class="ln"></span></div>
     <div id="alias-list"></div>
-    <button class="ac-add-btn" id="alias-add">+ Add Alias</button>
-    <div class="ac-nav"><span class="ac-nb" data-next="t3">&#8249; Back</span><span class="ac-nb" data-next="t5">Next &#8250;</span></div>
+    <button class="ac-add-btn" id="alias-add" data-en="+ Add Alias" data-th="+ เพิ่มนามแฝง">+ Add Alias</button>
+    <div class="ac-nav"><span class="ac-nb" data-next="t3" data-en="&#8249; Back" data-th="&#8249; ย้อนกลับ">&#8249; Back</span><span class="ac-nb" data-next="t5" data-en="Next &#8250;" data-th="ถัดไป &#8250;">Next &#8250;</span></div>
   </div>
 
   <div class="acpanel" data-p="t5">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Appearance</span><span class="ln"></span></div>
-    <div class="ac-fld"><textarea id="f-app" placeholder="What walks into the room&#8230;"></textarea></div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Nature</span><span class="ln"></span></div>
-    <div class="ac-fld"><textarea id="f-nat" placeholder="Temperament; the line they won't cross&#8230;"></textarea></div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">History</span><span class="ln"></span></div>
-    <div class="ac-fld"><textarea id="f-hist" placeholder="Threads to canon, or a clean original past&#8230;"></textarea></div>
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Opening Scene</span><span class="ln"></span></div>
-    <div class="ac-fld"><textarea id="f-scene" placeholder="Where the ledger opens&#8230;"></textarea></div>
-    <div class="ac-nav"><span class="ac-nb" data-next="t4">&#8249; Back</span><span class="ac-nb" data-next="t6">Next &#8250;</span></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Appearance" data-th="รูปลักษณ์">Appearance</span><span class="ln"></span></div>
+    <div class="ac-fld"><textarea id="f-app" data-pen="What walks into the room&#8230;" data-pth="สิ่งที่ก้าวเข้ามาในห้อง&#8230;" placeholder="What walks into the room&#8230;"></textarea></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Nature" data-th="อุปนิสัย">Nature</span><span class="ln"></span></div>
+    <div class="ac-fld"><textarea id="f-nat" data-pen="Temperament; the line they won't cross&#8230;" data-pth="อารมณ์และนิสัย เส้นที่พวกเขาจะไม่ก้าวข้าม&#8230;" placeholder="Temperament; the line they won't cross&#8230;"></textarea></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="History" data-th="ประวัติ">History</span><span class="ln"></span></div>
+    <div class="ac-fld"><textarea id="f-hist" data-pen="Threads to canon, or a clean original past&#8230;" data-pth="เส้นสายที่โยงกับเรื่องราวเดิม หรืออดีตที่สร้างขึ้นใหม่&#8230;" placeholder="Threads to canon, or a clean original past&#8230;"></textarea></div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Opening Scene" data-th="ฉากเริ่มต้น">Opening Scene</span><span class="ln"></span></div>
+    <div class="ac-fld"><textarea id="f-scene" data-pen="Where the ledger opens&#8230;" data-pth="ที่ซึ่งบันทึกนี้เริ่มต้น&#8230;" placeholder="Where the ledger opens&#8230;"></textarea></div>
+    <div class="ac-nav"><span class="ac-nb" data-next="t4" data-en="&#8249; Back" data-th="&#8249; ย้อนกลับ">&#8249; Back</span><span class="ac-nb" data-next="t6" data-en="Next &#8250;" data-th="ถัดไป &#8250;">Next &#8250;</span></div>
   </div>
 
   <div class="acpanel" data-p="t6">
-    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Vital Measures</span><span class="ln"></span></div>
-    <div style="font-size:10px;color:var(--mu);font-style:italic;margin:-4px 0 14px">Type a value into each ring, 0&#8211;100. Blank = 10, an ordinary human baseline.</div>
+    <div class="ac-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Vital Measures" data-th="หน่วยวัดพลังชีพ">Vital Measures</span><span class="ln"></span></div>
+    <div style="font-size:10px;color:var(--mu);font-style:italic;margin:-4px 0 14px" data-en="Type a value into each ring, 0&#8211;100. Blank = 10, an ordinary human baseline." data-th="พิมพ์ค่าลงในวงแหวนแต่ละวง 0&#8211;100 เว้นว่าง = 10 ระดับมนุษย์ธรรมดา">Type a value into each ring, 0&#8211;100. Blank = 10, an ordinary human baseline.</div>
     <div id="dial-grid"></div>
-    <div class="ac-nav"><span class="ac-nb" data-next="t5">&#8249; Back</span><span class="ac-nb ghost">&#8250;</span></div>
+    <div class="ac-nav"><span class="ac-nb" data-next="t5" data-en="&#8249; Back" data-th="&#8249; ย้อนกลับ">&#8249; Back</span><span class="ac-nb ghost">&#8250;</span></div>
   </div>
 
   <div id="ac-foot">
-    <button id="ac-go">SEAL BENEATH THE STARS</button>
-    <div id="ac-note">Leave anything blank and the world will fill in the rest. All characters are adults (18+).</div>
+    <button id="ac-go" data-en="SEAL BENEATH THE STARS" data-th="ผนึกใต้แสงดารา">SEAL BENEATH THE STARS</button>
+    <div id="ac-note" data-en="Leave anything blank and the world will fill in the rest. All characters are adults (18+)." data-th="เว้นว่างช่องใดก็ได้ โลกจะเติมเต็มส่วนที่เหลือให้เอง ตัวละครทุกตัวเป็นผู้ใหญ่ (18 ปีขึ้นไป)">Leave anything blank and the world will fill in the rest. All characters are adults (18+).</div>
   </div>
 
   <div id="ac-over">
     <svg id="ac-over-sigil" viewBox="0 0 48 48" fill="none">
-      <circle cx="24" cy="24" r="21" stroke="#C9A84C" stroke-width="1"/>
+      <circle cx="24" cy="24" r="21" stroke="#C0A050" stroke-width="1"/>
       <path d="M24 6 L27 21 L42 24 L27 27 L24 42 L21 27 L6 24 L21 21 Z" stroke="#8B5FBF" stroke-width="1.1" fill="none"/>
     </svg>
-    <div id="ac-over-txt">CHARTING YOUR ASCENSION&#8230;</div>
+    <div id="ac-over-txt" data-en="CHARTING YOUR ASCENSION&#8230;" data-th="กำลังจารึกวิถีเลื่อนขั้น&#8230;">CHARTING YOUR ASCENSION&#8230;</div>
   </div>
 </div></div>
 
@@ -360,25 +405,39 @@ function g(id){return document.getElementById(id)}
 function gv(id){var e=g(id);return e?(e.value||'').trim():''}
 function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 
-var PATHWAYS=['Fool','Door','Error','Sun','Tyrant','White Tower','Visionary','Hanged Man','Darkness','Death',
-  'Twilight Giant','Red Priest','Demoness','Paragon','Hermit','Mother','Moon','Chained','Abyss','Justiciar',
-  'Black Emperor','Wheel of Fortune'];
+var L='en';
+
+var PATHWAYS=[
+  ['Fool','ผู้โง่เขลา'],['Door','ประตู'],['Error','ข้อผิดพลาด'],['Sun','ดวงอาทิตย์'],['Tyrant','ทรราช'],
+  ['White Tower','หอคอยสีขาว'],['Visionary','ผู้ร่ายจินตนาการ'],['Hanged Man','แฮงแมน'],['Darkness','ความมืด'],
+  ['Death','ความตาย'],['Twilight Giant','ยักษ์พลบค่ำ'],['Red Priest','นักบวชแดง'],['Demoness','แม่มด'],
+  ['Paragon','ปราชญ์'],['Hermit','ฤาษี'],['Mother','มารดา'],['Moon','ดวงจันทร์'],['Chained','ผู้ถูกล่ามโซ่'],
+  ['Abyss','อเวจี'],['Justiciar','ผู้พิพากษา'],['Black Emperor','จักรพรรดิมืด'],['Wheel of Fortune','วงล้อแห่งโชคชะตา']
+];
 var SEQ9_TITLE={
-  'Fool':'Seer','Door':'Apprentice','Error':'Marauder','Sun':'Bard','Tyrant':'Sailor','White Tower':'Reader',
-  'Visionary':'Spectator','Hanged Man':'Secrets Supplicant','Darkness':'Sleepless','Death':'Corpse Collector',
-  'Twilight Giant':'Warrior','Red Priest':'Hunter','Demoness':'Assassin','Paragon':'Savant','Hermit':'Mystery Pryer',
-  'Mother':'Planter','Moon':'Apothecary','Chained':'Prisoner','Abyss':'Criminal','Justiciar':'Arbiter',
-  'Black Emperor':'Lawyer','Wheel of Fortune':'Monster'
+  'Fool':['Seer','ผู้หยั่งรู้'],'Door':['Apprentice','นักเรียนฝึกหัด'],'Error':['Marauder','หัวขโมย'],
+  'Sun':['Bard','นักขับขาน'],'Tyrant':['Sailor','กลาสี'],'White Tower':['Reader','ผู้รักการอ่าน'],
+  'Visionary':['Spectator','ผู้ชม'],'Hanged Man':['Secrets Supplicant','ผู้วิงวอนความลับ'],
+  'Darkness':['Sleepless','ผู้ไร้หลับ'],'Death':['Corpse Collector','คนเก็บศพ'],
+  'Twilight Giant':['Warrior','นักรบ'],'Red Priest':['Hunter','นายพราน'],'Demoness':['Assassin','นักฆ่า'],
+  'Paragon':['Savant','ผู้รอบรู้'],'Hermit':['Mystery Pryer','ผู้สอดส่องความลับ'],'Mother':['Planter','ชาวนา'],
+  'Moon':['Apothecary','เภสัชกร'],'Chained':['Prisoner','นักโทษ'],'Abyss':['Criminal','อาชญากร'],
+  'Justiciar':['Arbiter','ผู้ตัดสิน'],'Black Emperor':['Lawyer','ทนายความ'],'Wheel of Fortune':['Monster','สัตว์ประหลาด']
 };
 var TIERS=[
-  {id:'Mortal',color:'#7A7A94',desc:'No power of their own — yet.'},
-  {id:'Free Beyonder',color:'#8B5FBF',desc:'Seq.9, alone. Black market only.'},
-  {id:'Church Unit',color:'#C9A84C',desc:'Seq.9, bound to a local Church.'},
-  {id:'Cult Member',color:'#C4568C',desc:'Seq.9, an underground cult. High risk.'}
+  {id:'Mortal',color:'#7A7A94',en:'Mortal',th:'มรรตัย',enDesc:'No power of their own — yet.',thDesc:'ยังไม่มีพลังเป็นของตนเอง'},
+  {id:'Free Beyonder',color:'#8B5FBF',en:'Free Beyonder',th:'ผู้วิเศษอิสระ',enDesc:'Seq.9, alone. Black market only.',thDesc:'ลำดับ 9 ผู้โดดเดี่ยว เข้าถึงได้เพียงตลาดมืด'},
+  {id:'Church Unit',color:'#C0A050',en:'Church Unit',th:'หน่วยสังกัดโบสถ์',enDesc:'Seq.9, bound to a local Church.',thDesc:'ลำดับ 9 สังกัดโบสถ์ท้องถิ่น'},
+  {id:'Cult Member',color:'#C4568C',en:'Cult Member',th:'สมาชิกลัทธิ',enDesc:'Seq.9, an underground cult. High risk.',thDesc:'ลำดับ 9 สังกัดลัทธิใต้ดิน เสี่ยงสูง'}
 ];
 var STATS=[
-  ['spiritualResilience','Spirit. Resilience'],['reasoning','Reasoning'],['willpower','Willpower'],
-  ['combat','Combat'],['occultKnowledge','Occult Know.'],['guile','Guile'],['resources','Resources']
+  ['spiritualResilience','Spirit. Resilience','ความทนทานจิต'],
+  ['reasoning','Reasoning','ไหวพริบ'],
+  ['willpower','Willpower','เจตจำนง'],
+  ['combat','Combat','การต่อสู้'],
+  ['occultKnowledge','Occult Know.','ความรู้ลี้ลับ'],
+  ['guile','Guile','เล่ห์เหลี่ยม'],
+  ['resources','Resources','ทรัพยากร']
 ];
 
 var curColor='#8B5FBF';
@@ -406,18 +465,23 @@ var TIER_GLYPH='<svg class="tglyph" viewBox="0 0 14 14" fill="none"><circle cx="
 function renderTiers(){
   g('tier-grid').innerHTML=TIERS.map(function(t){
     var on=(t.id===curTier);
+    var nm=L==='th'?t.th:t.en, ds=L==='th'?t.thDesc:t.enDesc;
     return '<div class="tier-plate'+(on?' on':'')+'" data-tier="'+t.id+'" style="--tp-color:'+t.color+';--tp-bg:'+t.color+'1c;color:'+t.color+'">'+TIER_GLYPH+
-      '<div class="tn" style="color:var(--tx)">'+t.id+'</div><div class="td">'+t.desc+'</div></div>';
+      '<div class="tn" style="color:var(--tx)">'+nm+'</div><div class="td">'+ds+'</div></div>';
   }).join('');
   qa('.tier-plate').forEach(function(p){
     p.addEventListener('click',function(){curTier=p.getAttribute('data-tier');renderTiers()});
   });
 }
-renderTiers();
 
 /* PATHWAY SELECT */
 var sel=g('f-pathway');
-sel.innerHTML='<option value="">No Pathway (Mortal)</option>'+PATHWAYS.map(function(p){return '<option value="'+p+'">'+p+'</option>'}).join('');
+function renderPathwaySelect(){
+  var cur=sel.value;
+  sel.innerHTML='<option value="">'+(L==='th'?'ไม่มีเส้นทาง (มรรตัย)':'No Pathway (Mortal)')+'</option>'+
+    PATHWAYS.map(function(p){return '<option value="'+p[0]+'">'+(L==='th'?p[1]:p[0])+'</option>'}).join('');
+  sel.value=cur;
+}
 
 /* ASCENSION LADDER (Seq 9 at bottom rising to 0 at top) */
 function renderLadder(){
@@ -434,20 +498,23 @@ function renderLadder(){
 }
 function updatePreview(){
   var p=sel.value;
-  g('pp-seq').textContent=p?('Sequence '+curSeq):'—';
-  g('pp-name').textContent=p||'No Pathway';
-  g('pp-title').textContent=p?(curSeq===9?(SEQ9_TITLE[p]||''):'a title yet unwritten'):'';
+  var pLabel=p?(L==='th'?(PATHWAYS.filter(function(x){return x[0]===p})[0]||[p,p])[1]:p):(L==='th'?'ไม่มีเส้นทาง':'No Pathway');
+  g('pp-seq').textContent=p?((L==='th'?'ลำดับ ':'Sequence ')+curSeq):'—';
+  g('pp-name').textContent=pLabel;
+  var titlePair=p?SEQ9_TITLE[p]:null;
+  if(!p){g('pp-title').textContent='';}
+  else if(curSeq===9&&titlePair){g('pp-title').textContent=L==='th'?titlePair[1]:titlePair[0];}
+  else{g('pp-title').textContent=L==='th'?'ยศที่ยังไม่ถูกจารึก':'a title yet unwritten';}
 }
 sel.addEventListener('change',updatePreview);
-renderLadder();
-updatePreview();
 
 /* ALIAS LIST */
 function addAlias(){
   aliasCount++;
   var row=document.createElement('div');
   row.className='ac-list-item';
-  row.innerHTML='<input type="text" placeholder="A name used elsewhere&#8230;">'+
+  var ph=L==='th'?'นามที่ใช้ในที่อื่น&#8230;':'A name used elsewhere&#8230;';
+  row.innerHTML='<input type="text" class="alias-inp" data-pen="A name used elsewhere&#8230;" data-pth="นามที่ใช้ในที่อื่น&#8230;" placeholder="'+ph+'">'+
     '<div class="ac-list-rm">&times;</div>';
   row.querySelector('.ac-list-rm').addEventListener('click',function(){row.remove()});
   g('alias-list').appendChild(row);
@@ -469,7 +536,8 @@ function renderDials(){
   wrap.innerHTML=STATS.map(function(s){
     var v=statVals[s[0]]!=null?statVals[s[0]]:10;
     statVals[s[0]]=v;
-    return '<div class="dial-unit">'+ringSvg(s[0],v)+'<div class="dial-lbl">'+s[1]+'</div></div>';
+    var lbl=L==='th'?s[2]:s[1];
+    return '<div class="dial-unit">'+ringSvg(s[0],v)+'<div class="dial-lbl">'+lbl+'</div></div>';
   }).join('');
   STATS.forEach(function(s){
     var inp=g('dv-'+s[0]);
@@ -482,7 +550,34 @@ function renderDials(){
     });
   });
 }
-renderDials();
+
+/* LANGUAGE TOGGLE */
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null){
+      if(el.tagName==='BUTTON'||el.tagName==='SPAN'||el.tagName==='DIV'){el.innerHTML=v;}
+      else{el.textContent=v;}
+    }
+  });
+  qa('[data-pen]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-pth'):el.getAttribute('data-pen');
+    if(v!=null)el.setAttribute('placeholder',v.replace(/&#8230;/g,'…').replace(/&#8212;/g,'—'));
+  });
+  qa('.alias-inp').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-pth'):el.getAttribute('data-pen');
+    if(v!=null)el.setAttribute('placeholder',v.replace(/&#8230;/g,'…'));
+  });
+  renderTiers();
+  renderPathwaySelect();
+  updatePreview();
+  renderDials();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
 
 /* TABS */
 qa('.actab').forEach(function(t){
@@ -524,13 +619,14 @@ g('ac-go').addEventListener('click',function(){
   qa('#alias-list input').forEach(function(inp){var v=inp.value.trim();if(v)aliases.push(v)});
 
   var pathway=gv('f-pathway');
+  var titlePair=pathway?SEQ9_TITLE[pathway]:null;
   var data={
     charColor:curColor,
     name:gv('f-name'),alias:gv('f-alias'),age:gv('f-age'),origin:gv('f-origin'),occupation:gv('f-occ'),
     tier:curTier,
     pathway:pathway,
     sequence:pathway?curSeq:null,
-    sequenceTitle:pathway?(curSeq===9?(SEQ9_TITLE[pathway]||''):''):'',
+    sequenceTitle:pathway&&curSeq===9&&titlePair?titlePair[0]:'',
     spiritualBody:{quality:gv('f-sbquality'),characteristic:gv('f-sbchar'),potionOrigin:gv('f-sborigin')},
     affiliation:{org:gv('f-org'),mentor:gv('f-mentor'),secretAliases:aliases},
     appearance:gv('f-app'),nature:gv('f-nat'),history:gv('f-hist'),openingScene:gv('f-scene'),
@@ -541,6 +637,12 @@ g('ac-go').addEventListener('click',function(){
   var txt=oT+'\n'+JSON.stringify(data,null,2)+'\n'+cT;
   setTimeout(function(){sendToST(txt)},600);
 });
+
+renderTiers();
+renderPathwaySelect();
+renderLadder();
+updatePreview();
+renderDials();
 })();
 </script>
 </body>

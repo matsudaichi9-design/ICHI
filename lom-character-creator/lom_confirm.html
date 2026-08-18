@@ -3,78 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
 :root{
   --acc:#8B5FBF;--acc-rgb:139,95,191;--accd:rgba(139,95,191,.15);--accb:rgba(139,95,191,.45);
-  --gold:#C9A84C;--spirit:#8FD8D0;
-  --bg:#08060F;--pan:#120E1E;--pan2:#1A1430;--pan3:#241C3E;
-  --tx:#E9E2F5;--tx2:#9A8FBF;--mu:#524C78;
-  --bd:rgba(201,168,76,.22);--bd2:rgba(255,255,255,.05);
-  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;
+  --gold:#C0A050;--spirit:#7CC9C0;
+  --bg:#030207;--pan:#0D0916;--pan2:#150F26;--pan3:#1E1633;
+  --tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bd:rgba(192,160,80,.2);--bd2:rgba(255,255,255,.04);
+  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
 }
 @keyframes acspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
 @keyframes acspinrev{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
 #dfwrap{max-width:480px;margin:10px auto;position:relative}
 #dfwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
-  box-shadow:0 0 0 1px var(--accb),0 0 22px 2px rgba(139,95,191,.4),0 0 42px 7px rgba(201,168,76,.14),0 0 60px 10px rgba(143,216,208,.08);
-  animation:acaura 4s ease-in-out infinite}
-@keyframes acaura{0%,100%{opacity:.75}50%{opacity:1}}
+  box-shadow:0 0 0 1px var(--accb),0 0 22px 2px rgba(139,95,191,.38),0 0 42px 7px rgba(192,160,80,.12),0 0 60px 10px rgba(124,201,192,.07);
+  animation:acaura 4.5s ease-in-out infinite}
+@keyframes acaura{0%,100%{opacity:.7}50%{opacity:1}}
 #df{position:relative;z-index:1;background:
-    radial-gradient(ellipse 140% 55% at 50% -8%,rgba(139,95,191,.22),transparent 60%),
+    radial-gradient(ellipse 130% 50% at 50% -6%,rgba(139,95,191,.16),transparent 58%),
+    radial-gradient(ellipse 100% 60% at 50% 108%,rgba(0,0,0,.5),transparent 60%),
     linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
   border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
-  box-shadow:0 24px 70px rgba(0,0,0,.75),inset 0 0 0 1px rgba(201,168,76,.06);animation:dfi .3s ease both}
+  box-shadow:0 26px 76px rgba(0,0,0,.82),inset 0 0 0 1px rgba(192,160,80,.05),inset 0 0 60px rgba(0,0,0,.5);
+  animation:dfi .3s ease both}
 @keyframes dfi{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
-#df-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.6;filter:blur(7px);
+#df-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;filter:blur(8px);
   background:
-    radial-gradient(ellipse 60% 38% at 18% 10%,rgba(139,95,191,.28),transparent 70%),
-    radial-gradient(ellipse 50% 34% at 88% 16%,rgba(143,216,208,.16),transparent 70%),
-    radial-gradient(ellipse 58% 42% at 45% 100%,rgba(201,168,76,.14),transparent 70%)}
+    radial-gradient(ellipse 55% 34% at 16% 8%,rgba(139,95,191,.22),transparent 70%),
+    radial-gradient(ellipse 46% 30% at 90% 14%,rgba(124,201,192,.11),transparent 70%),
+    radial-gradient(ellipse 55% 40% at 45% 102%,rgba(192,160,80,.1),transparent 70%)}
 #df::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:
-    radial-gradient(1.4px 1.4px at 10% 14%,rgba(233,226,245,.85),transparent),
-    radial-gradient(1px 1px at 26% 58%,rgba(233,226,245,.55),transparent),
-    radial-gradient(1.6px 1.6px at 44% 9%,rgba(233,226,245,.75),transparent),
-    radial-gradient(1px 1px at 61% 38%,rgba(233,226,245,.45),transparent),
-    radial-gradient(1.3px 1.3px at 76% 16%,rgba(233,226,245,.8),transparent),
-    radial-gradient(1px 1px at 86% 50%,rgba(233,226,245,.5),transparent),
-    radial-gradient(1.5px 1.5px at 18% 78%,rgba(233,226,245,.65),transparent),
-    radial-gradient(1px 1px at 52% 85%,rgba(233,226,245,.45),transparent),
-    radial-gradient(1.2px 1.2px at 91% 80%,rgba(233,226,245,.6),transparent),
-    radial-gradient(1.3px 1.3px at 34% 30%,rgba(233,226,245,.55),transparent);
+    radial-gradient(1.4px 1.4px at 10% 14%,rgba(228,220,242,.8),transparent),
+    radial-gradient(1px 1px at 26% 58%,rgba(228,220,242,.5),transparent),
+    radial-gradient(1.6px 1.6px at 44% 9%,rgba(228,220,242,.7),transparent),
+    radial-gradient(1px 1px at 61% 38%,rgba(228,220,242,.4),transparent),
+    radial-gradient(1.3px 1.3px at 76% 16%,rgba(228,220,242,.75),transparent),
+    radial-gradient(1px 1px at 86% 50%,rgba(228,220,242,.45),transparent),
+    radial-gradient(1.5px 1.5px at 18% 78%,rgba(228,220,242,.6),transparent),
+    radial-gradient(1px 1px at 52% 85%,rgba(228,220,242,.4),transparent),
+    radial-gradient(1.2px 1.2px at 91% 80%,rgba(228,220,242,.55),transparent),
+    radial-gradient(1.3px 1.3px at 34% 30%,rgba(228,220,242,.5),transparent);
   animation:dftwinkle 5.5s ease-in-out infinite}
-@keyframes dftwinkle{0%,100%{opacity:.45}50%{opacity:1}}
-.df-corner{position:absolute;width:44px;height:44px;z-index:2;opacity:.9;pointer-events:none}
+@keyframes dftwinkle{0%,100%{opacity:.4}50%{opacity:.95}}
+.df-ember{position:absolute;width:2.3px;height:2.3px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 6px 1.5px var(--gold);opacity:0;pointer-events:none;z-index:1;bottom:6%;animation:dfember 8s ease-in infinite}
+.df-ember.v{background:var(--spirit);box-shadow:0 0 6px 1.5px var(--spirit)}
+@keyframes dfember{0%{opacity:0;transform:translate(0,0)}8%{opacity:.85}75%{opacity:.4}100%{opacity:0;transform:translate(var(--ex,10px),-320px)}}
+.df-shoot{position:absolute;top:6%;left:-12%;width:64px;height:1.3px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  opacity:0;transform:rotate(20deg);z-index:1;pointer-events:none;animation:dfshoot 11s ease-in infinite}
+@keyframes dfshoot{0%,88%{opacity:0;left:-12%}89%{opacity:1}94%{opacity:0;left:118%}100%{opacity:0;left:118%}}
+.df-corner{position:absolute;width:44px;height:44px;z-index:2;opacity:.85;pointer-events:none}
 .df-corner.tl{top:7px;left:7px}
 .df-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
 .df-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}
 .df-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
 
+#df-lang{position:absolute;top:14px;right:14px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#df-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700;transition:all .2s}
+#df-lang b.on{color:#F5F0FF;background:linear-gradient(135deg,var(--acc),#5A3E8A);box-shadow:0 0 10px -2px var(--acc)}
+
 /* HEADER */
 #df-head{position:relative;z-index:1;padding:21px 25px 17px;border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
-.df-hd-row{display:flex;align-items:center;gap:15px}
+.df-hd-row{display:flex;align-items:center;gap:15px;padding-right:44px}
 #df-avatar{position:relative;width:56px;height:56px;flex-shrink:0;border-radius:50%;overflow:hidden;
-  background:radial-gradient(circle at 35% 30%,#241a3a,#08060F);border:1.5px solid var(--accb);
+  background:radial-gradient(circle at 35% 30%,#241a3a,#030207);border:1.5px solid var(--accb);
   box-shadow:0 0 20px -3px var(--acc);display:flex;align-items:center;justify-content:center}
 #df-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
-.df-hd-txt{flex:1;min-width:0;padding-right:60px}
-#df-name{font-family:var(--fh);font-size:18px;letter-spacing:.8px;line-height:1.2;
+.df-hd-txt{flex:1;min-width:0}
+#df-name{font-size:18px;letter-spacing:.8px;line-height:1.2;
   background:linear-gradient(100deg,var(--tx) 15%,#F3E4FF 35%,var(--gold) 55%,var(--tx) 80%);
   background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
   animation:dfshimmer 8s linear infinite;filter:drop-shadow(0 0 10px rgba(139,95,191,.4))}
+#df-name[lang-mode="en"]{font-family:var(--fh)}
+#df-name[lang-mode="th"]{font-family:var(--fth);font-size:16px}
 @keyframes dfshimmer{0%{background-position:0% center}100%{background-position:220% center}}
 #df-alias{font-size:11px;font-style:italic;color:var(--tx2);margin-top:4px}
+[lang-mode="th"] #df-alias{font-family:'Noto Serif Thai',serif;font-style:normal}
 #df-tier-badge{display:inline-block;margin-top:7px;font-family:var(--fh);font-size:8.5px;letter-spacing:.8px;
   padding:4px 9px;border-radius:99px;white-space:nowrap}
+[lang-mode="th"] #df-tier-badge{font-family:'Noto Serif Thai',serif;font-size:10px}
 #df-chev{position:absolute;bottom:-2px;right:25px;font-size:9px;color:var(--mu);transition:transform .3s}
 #dfwrap.closed #df-chev{transform:rotate(180deg)}
 #dfbody{max-height:2800px;overflow:hidden;transition:max-height .35s ease}
 #dfwrap.closed #dfbody{max-height:0}
 
-/* ASTRAL SEAL */
 #df-seal-wrap{position:absolute;top:12px;right:14px;width:56px;height:56px;z-index:2;pointer-events:none}
 #df-seal{width:100%;height:100%}
 .seal-outer{transform-origin:28px 28px;animation:acspin 26s linear infinite}
@@ -85,18 +104,22 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 .df-sec:not(:first-child){margin-top:20px}
 .df-sec svg{flex-shrink:0}
 .df-sec .t{font-family:var(--fh);font-size:10.5px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .df-sec .t{font-family:'Noto Serif Thai',serif;font-size:12.5px;letter-spacing:.3px}
 .df-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
 
 .df-igrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .df-icard{background:var(--pan2);border:1px solid var(--bd2);border-radius:var(--r2);padding:8px 9px}
 .df-icard-l{font-family:var(--fh);font-size:7.5px;letter-spacing:1px;color:var(--mu);text-transform:uppercase;margin-bottom:4px}
+[lang-mode="th"] .df-icard-l{font-family:'Noto Serif Thai',serif;font-size:9px;letter-spacing:0;text-transform:none}
 .df-icard-v{font-size:12px;color:var(--tx);line-height:1.35}
 
 #df-tier-plate{background:var(--pan2);border:1px solid var(--bd);border-radius:var(--r2);padding:12px 14px;margin-bottom:14px;
   display:flex;align-items:center;gap:12px}
 #df-tier-ic{width:15px;height:15px;flex-shrink:0}
 #df-tier-nm{font-family:var(--fh);font-size:11.5px;letter-spacing:.6px;color:var(--tx)}
+[lang-mode="th"] #df-tier-nm{font-family:'Noto Serif Thai',serif;font-size:13px}
 #df-tier-ds{font-size:10px;color:var(--tx2);margin-top:2px;line-height:1.4}
+[lang-mode="th"] #df-tier-ds{font-family:'Noto Serif Thai',serif;font-size:10.5px}
 
 #df-ladder-wrap{display:flex;gap:16px;align-items:flex-start;padding:16px 14px;background:var(--pan2);
   border:1px solid var(--bd);border-radius:6px}
@@ -104,19 +127,25 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 .df-lnode{width:8px;height:8px;border-radius:50%;background:var(--pan3);border:1px solid var(--bd)}
 @keyframes dfnodepulse{0%,100%{box-shadow:0 0 12px 1px var(--acc)}50%{box-shadow:0 0 20px 5px var(--acc)}}
 .df-lnode.on{width:15px;height:15px;background:var(--acc);border-color:var(--tx);animation:dfnodepulse 2.2s ease-in-out infinite}
-.df-lseg{width:1px;height:10px;background:linear-gradient(180deg,var(--bd),var(--acc))}
+@keyframes dfsegpulse{0%,100%{opacity:.55}50%{opacity:1}}
+.df-lseg{width:1px;height:10px;background:linear-gradient(180deg,var(--bd),var(--acc));animation:dfsegpulse 2.6s ease-in-out infinite}
 #df-seq{font-family:var(--fh);font-size:15px;color:var(--acc);text-shadow:0 0 10px var(--accb)}
 #df-path-nm{font-family:var(--fh);font-size:14px;letter-spacing:1px;color:var(--tx);margin-top:3px}
+[lang-mode="th"] #df-seq,[lang-mode="th"] #df-path-nm{font-family:'Noto Serif Thai',serif}
 #df-seq-title{font-size:10.5px;font-style:italic;color:var(--gold);margin-top:3px}
+[lang-mode="th"] #df-seq-title{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 .df-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;background:var(--pan2);
   border-left:2px solid var(--acc);border-radius:0 var(--r2) var(--r2) 0;padding:10px 13px;margin-bottom:10px}
+[lang-mode="th"] .df-note{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 .df-tags{display:flex;flex-wrap:wrap;gap:6px}
 .df-tag{font-size:11px;color:var(--tx);background:var(--pan2);border:1px solid var(--bd);border-radius:2px;
   padding:3px 10px;font-style:italic}
+[lang-mode="th"] .df-tag{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 .df-empty{font-size:11px;color:var(--mu);font-style:italic;text-align:center;padding:12px 0}
+[lang-mode="th"] .df-empty{font-family:'Noto Serif Thai',serif;font-style:normal}
 
 .df-dial-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;justify-items:center}
 .df-dial-unit{display:flex;flex-direction:column;align-items:center;width:100%}
@@ -127,54 +156,65 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 .df-dfill{fill:none;stroke:var(--acc);stroke-width:4;stroke-linecap:round;animation:dfdialpulse 2.6s ease-in-out infinite}
 .df-dval{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--fh);font-size:11px;color:var(--tx)}
 .df-dlbl{font-family:var(--fh);font-size:6.7px;letter-spacing:.3px;color:var(--tx2);text-transform:uppercase;text-align:center;margin-top:7px;line-height:1.3;min-height:16px}
+[lang-mode="th"] .df-dlbl{font-family:'Noto Serif Thai',serif;font-size:8.5px;letter-spacing:0;text-transform:none}
 
 #dffoot{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:13px 25px;font-size:9.5px;letter-spacing:.5px;color:var(--mu);border-top:1px solid var(--bd2);background:rgba(0,0,0,.26)}
+  padding:13px 25px;font-size:9.5px;letter-spacing:.5px;color:var(--mu);border-top:1px solid var(--bd2);background:rgba(0,0,0,.28)}
 #dffoot .mid{font-family:var(--fh);text-transform:uppercase;letter-spacing:2px;color:var(--tx2);font-style:normal}
+[lang-mode="th"] #dffoot{font-family:'Noto Serif Thai',serif}
+[lang-mode="th"] #dffoot .mid{font-family:'Noto Serif Thai',serif;letter-spacing:.3px}
 </style>
 </head>
 <body>
 <textarea id="dfraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
 <div id="dfwrap"><div id="df">
   <div id="df-nebula"></div>
+  <div class="df-ember" style="left:14%;--ex:8px;animation-delay:0s"></div>
+  <div class="df-ember v" style="left:32%;--ex:-14px;animation-delay:1.6s"></div>
+  <div class="df-ember" style="left:58%;--ex:16px;animation-delay:3.1s"></div>
+  <div class="df-ember v" style="left:78%;--ex:-10px;animation-delay:4.4s"></div>
+  <div class="df-ember" style="left:22%;--ex:12px;animation-delay:5.8s"></div>
+  <div class="df-shoot"></div>
   <svg class="df-corner tl" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="df-corner tr" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="df-corner bl" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
   <svg class="df-corner br" viewBox="0 0 44 44" fill="none">
-    <path d="M2 41 Q2 2 41 2" stroke="#C9A84C" stroke-width="1"/>
-    <path d="M2 27 Q2 12 17 12" stroke="#C9A84C" stroke-width=".7" opacity=".8"/>
+    <path d="M2 41 Q2 2 41 2" stroke="#C0A050" stroke-width="1"/>
+    <path d="M2 27 Q2 12 17 12" stroke="#C0A050" stroke-width=".7" opacity=".8"/>
     <path d="M12 41 Q12 27 27 27" stroke="#8B5FBF" stroke-width=".7" opacity=".7"/>
-    <circle cx="2" cy="41" r="1.6" fill="#C9A84C"/><circle cx="17" cy="12" r="1.1" fill="#C9A84C"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
+    <circle cx="2" cy="41" r="1.6" fill="#C0A050"/><circle cx="17" cy="12" r="1.1" fill="#C0A050"/><circle cx="27" cy="27" r="1" fill="#8B5FBF"/>
   </svg>
+
+  <div id="df-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
 
   <div id="df-head">
     <div id="df-seal-wrap">
       <svg id="df-seal" viewBox="0 0 56 56" fill="none">
-        <defs><radialGradient id="dfstarg" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#D4B8F5"/><stop offset="100%" stop-color="#4A2E70"/></radialGradient></defs>
+        <defs><radialGradient id="dfstarg" cx="50%" cy="45%" r="65%"><stop offset="0%" stop-color="#D4B8F5"/><stop offset="100%" stop-color="#3A2456"/></radialGradient></defs>
         <g class="seal-outer">
-          <circle cx="28" cy="28" r="25" stroke="#C9A84C" stroke-width=".6" opacity=".5"/>
-          <line x1="28" y1="3" x2="28" y2="7" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
-          <line x1="28" y1="49" x2="28" y2="53" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
-          <line x1="3" y1="28" x2="7" y2="28" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
-          <line x1="49" y1="28" x2="53" y2="28" stroke="#C9A84C" stroke-width=".9" opacity=".7"/>
+          <circle cx="28" cy="28" r="25" stroke="#C0A050" stroke-width=".6" opacity=".48"/>
+          <line x1="28" y1="3" x2="28" y2="7" stroke="#C0A050" stroke-width=".9" opacity=".65"/>
+          <line x1="28" y1="49" x2="28" y2="53" stroke="#C0A050" stroke-width=".9" opacity=".65"/>
+          <line x1="3" y1="28" x2="7" y2="28" stroke="#C0A050" stroke-width=".9" opacity=".65"/>
+          <line x1="49" y1="28" x2="53" y2="28" stroke="#C0A050" stroke-width=".9" opacity=".65"/>
         </g>
         <g class="seal-mid">
-          <circle cx="28" cy="28" r="19" stroke="#8B5FBF" stroke-width=".55" opacity=".6"/>
+          <circle cx="28" cy="28" r="19" stroke="#8B5FBF" stroke-width=".55" opacity=".55"/>
           <circle cx="28" cy="9" r="1" fill="#8B5FBF"/><circle cx="47" cy="28" r="1" fill="#8B5FBF"/>
           <circle cx="28" cy="47" r="1" fill="#8B5FBF"/><circle cx="9" cy="28" r="1" fill="#8B5FBF"/>
         </g>
@@ -195,14 +235,14 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 
   <div id="dfbody">
     <div class="df-body-inner">
-      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Particulars</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Particulars" data-th="รายละเอียดส่วนตัว">Particulars</span><span class="ln"></span></div>
       <div class="df-igrid">
-        <div class="df-icard"><div class="df-icard-l">Age</div><div class="df-icard-v" id="f-age">&mdash;</div></div>
-        <div class="df-icard"><div class="df-icard-l">Origin</div><div class="df-icard-v" id="f-origin">&mdash;</div></div>
-        <div class="df-icard"><div class="df-icard-l">Occupation</div><div class="df-icard-v" id="f-occ">&mdash;</div></div>
+        <div class="df-icard"><div class="df-icard-l" data-en="Age" data-th="อายุ">Age</div><div class="df-icard-v" id="f-age">&mdash;</div></div>
+        <div class="df-icard"><div class="df-icard-l" data-en="Origin" data-th="ถิ่นกำเนิด">Origin</div><div class="df-icard-v" id="f-origin">&mdash;</div></div>
+        <div class="df-icard"><div class="df-icard-l" data-en="Occupation" data-th="อาชีพ">Occupation</div><div class="df-icard-v" id="f-occ">&mdash;</div></div>
       </div>
 
-      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Ascension</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Ascension" data-th="เลื่อนขั้น">Ascension</span><span class="ln"></span></div>
       <div id="df-tier-plate">
         <svg id="df-tier-ic" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="7.5" r="6" stroke="#8B5FBF" stroke-width="1.1"/><circle cx="7.5" cy="7.5" r="1.7" fill="#8B5FBF"/></svg>
         <div><div id="df-tier-nm">&mdash;</div><div id="df-tier-ds"></div></div>
@@ -221,11 +261,11 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
       <div id="persona-wrap"></div>
       <div id="scene-wrap"></div>
 
-      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Vital Measures</span><span class="ln"></span></div>
+      <div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Vital Measures" data-th="หน่วยวัดพลังชีพ">Vital Measures</span><span class="ln"></span></div>
       <div class="df-dial-grid" id="vitals-grid"></div>
     </div>
 
-    <div id="dffoot"><span id="foot-file">File &mdash;</span><span class="mid">Astral Ledger</span><span id="foot-seq">&mdash;</span></div>
+    <div id="dffoot"><span id="foot-file">File &mdash;</span><span class="mid" id="foot-mid" data-en="Astral Ledger" data-th="บันทึกใต้เงาดารา">Astral Ledger</span><span id="foot-seq">&mdash;</span></div>
   </div>
 </div></div>
 
@@ -234,6 +274,9 @@ html,body{background:transparent;font-family:'Spectral',serif;font-size:13.5px}
 function g(id){return document.getElementById(id)}
 function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 function hexRgb(h){h=h||'#8B5FBF';try{return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}catch(e){return '139,95,191'}}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
 
 var raw=g('dfraw');var d=null;
 if(raw&&raw.value.trim()){
@@ -250,120 +293,183 @@ root.style.setProperty('--acc-rgb',rgb);
 root.style.setProperty('--accd','rgba('+rgb+',.15)');
 root.style.setProperty('--accb','rgba('+rgb+',.45)');
 
-var TIER_INFO={
-  'Mortal':{color:'#7A7A94',desc:'No power of their own — yet. The Beyonder world is a rumor glimpsed, not entered.'},
-  'Free Beyonder':{color:'#8B5FBF',desc:'A Sequence 9 sorcerer operating alone, unclaimed by Church or cult — the black market only.'},
-  'Church Unit':{color:'#C9A84C',desc:'A Sequence 9 sorcerer bound to a local Church branch — duties and protection both apply.'},
-  'Cult Member':{color:'#C4568C',desc:'A Sequence 9 sorcerer affiliated with an underground cult — power bought at a rising risk.'}
+var PATHWAYS_TH={
+  'Fool':'ผู้โง่เขลา','Door':'ประตู','Error':'ข้อผิดพลาด','Sun':'ดวงอาทิตย์','Tyrant':'ทรราช',
+  'White Tower':'หอคอยสีขาว','Visionary':'ผู้ร่ายจินตนาการ','Hanged Man':'แฮงแมน','Darkness':'ความมืด',
+  'Death':'ความตาย','Twilight Giant':'ยักษ์พลบค่ำ','Red Priest':'นักบวชแดง','Demoness':'แม่มด',
+  'Paragon':'ปราชญ์','Hermit':'ฤาษี','Mother':'มารดา','Moon':'ดวงจันทร์','Chained':'ผู้ถูกล่ามโซ่',
+  'Abyss':'อเวจี','Justiciar':'ผู้พิพากษา','Black Emperor':'จักรพรรดิมืด','Wheel of Fortune':'วงล้อแห่งโชคชะตา'
 };
+var SEQ9_TITLE_TH={
+  'Seer':'ผู้หยั่งรู้','Apprentice':'นักเรียนฝึกหัด','Marauder':'หัวขโมย','Bard':'นักขับขาน','Sailor':'กลาสี',
+  'Reader':'ผู้รักการอ่าน','Spectator':'ผู้ชม','Secrets Supplicant':'ผู้วิงวอนความลับ','Sleepless':'ผู้ไร้หลับ',
+  'Corpse Collector':'คนเก็บศพ','Warrior':'นักรบ','Hunter':'นายพราน','Assassin':'นักฆ่า','Savant':'ผู้รอบรู้',
+  'Mystery Pryer':'ผู้สอดส่องความลับ','Planter':'ชาวนา','Apothecary':'เภสัชกร','Prisoner':'นักโทษ',
+  'Criminal':'อาชญากร','Arbiter':'ผู้ตัดสิน','Lawyer':'ทนายความ','Monster':'สัตว์ประหลาด'
+};
+var TIER_INFO={
+  'Mortal':{color:'#7A7A94',en:'Mortal',th:'มรรตัย',enDesc:'No power of their own — yet. The Beyonder world is a rumor glimpsed, not entered.',thDesc:'ยังไม่มีพลังเป็นของตนเอง โลกของผู้วิเศษเป็นเพียงข่าวลือที่แว่วผ่านหู มิใช่สิ่งที่ได้ก้าวเข้าไป'},
+  'Free Beyonder':{color:'#8B5FBF',en:'Free Beyonder',th:'ผู้วิเศษอิสระ',enDesc:'A Sequence 9 sorcerer operating alone, unclaimed by Church or cult — the black market only.',thDesc:'ผู้วิเศษลำดับ 9 ผู้โดดเดี่ยว ไม่สังกัดโบสถ์หรือลัทธิใด เข้าถึงได้เพียงตลาดมืด'},
+  'Church Unit':{color:'#C0A050',en:'Church Unit',th:'หน่วยสังกัดโบสถ์',enDesc:'A Sequence 9 sorcerer bound to a local Church branch — duties and protection both apply.',thDesc:'ผู้วิเศษลำดับ 9 สังกัดสาขาโบสถ์ท้องถิ่น ทั้งหน้าที่และความคุ้มครองผูกพันกัน'},
+  'Cult Member':{color:'#C4568C',en:'Cult Member',th:'สมาชิกลัทธิ',enDesc:'A Sequence 9 sorcerer affiliated with an underground cult — power bought at a rising risk.',thDesc:'ผู้วิเศษลำดับ 9 สังกัดลัทธิใต้ดิน พลังที่ได้มาแลกด้วยความเสี่ยงที่เพิ่มขึ้นทุกขณะ'}
+};
+var STATS=[
+  ['spiritualResilience','Spirit. Resilience','ความทนทานจิต'],['reasoning','Reasoning','ไหวพริบ'],
+  ['willpower','Willpower','เจตจำนง'],['combat','Combat','การต่อสู้'],
+  ['occultKnowledge','Occult Know.','ความรู้ลี้ลับ'],['guile','Guile','เล่ห์เหลี่ยม'],['resources','Resources','ทรัพยากร']
+];
+var STR={
+  unnamed:['Unnamed','ไม่มีชื่อ'],unregistered:['Unregistered','ยังไม่ได้ลงทะเบียน'],
+  akaPrefix:['also known as "','หรือที่รู้จักในนาม "'],akaSuffix:['"','"'],
+  noStanding:['No standing has yet been declared.','ยังไม่ได้ประกาศสถานะ'],
+  noPathway:['No Pathway','ไม่มีเส้นทาง'],
+  qualityEmpty:['Quality not yet assessed.','ยังไม่ได้ประเมินคุณภาพ'],
+  noneWalksAlone:['None — walks alone','ไม่มี — เดินทางเพียงลำพัง'],
+  dash:['—','—'],
+  unwrittenTitle:['a title yet unwritten','ยศที่ยังไม่ถูกจารึก'],
+  filePrefix:['File — ','แฟ้ม — ']
+};
+function t(pair){return L==='th'?pair[1]:pair[0]}
 
-/* HEADER */
-g('df-name').textContent=d.name||'Unnamed';
-g('df-alias').textContent=d.alias?'also known as "'+d.alias+'"':'';
+/* HEADER (fixed once per data load, re-applied on language toggle) */
+function renderHeader(){
+  g('df-name').textContent=d.name||t(STR.unnamed);
+  g('df-alias').textContent=d.alias?(t(STR.akaPrefix)+d.alias+t(STR.akaSuffix)):'';
+  var tier=d.tier||'';
+  var tierInfo=TIER_INFO[tier];
+  var tb=g('df-tier-badge');
+  if(tierInfo){
+    tb.textContent=t([tierInfo.en,tierInfo.th]);
+    tb.style.color=tierInfo.color;
+    tb.style.background=tierInfo.color+'22';
+    tb.style.border='1px solid '+tierInfo.color+'66';
+  }else{
+    tb.textContent=t(STR.unregistered);
+    tb.style.color='var(--mu)';
+    tb.style.border='1px solid var(--bd2)';
+  }
+}
 if(d.avatar){
   var img=document.createElement('img');
   img.src='https://files.catbox.moe/'+d.avatar;
   img.onerror=function(){this.style.display='none'};
   g('df-avatar').appendChild(img);
 }
-var tier=d.tier||'';
-var tierInfo=TIER_INFO[tier];
-var tb=g('df-tier-badge');
-if(tierInfo){
-  tb.textContent=tier;
-  tb.style.color=tierInfo.color;
-  tb.style.background=tierInfo.color+'22';
-  tb.style.border='1px solid '+tierInfo.color+'66';
-}else{
-  tb.textContent='Unregistered';
-  tb.style.color='var(--mu)';
-  tb.style.border='1px solid var(--bd2)';
-}
 
 /* PARTICULARS */
-g('f-age').textContent=d.age!=null&&d.age!==''?d.age:'—';
-g('f-origin').textContent=d.origin||'—';
-g('f-occ').textContent=d.occupation||'—';
-
-/* STANDING */
-if(tierInfo){
-  g('df-tier-nm').textContent=tier;
-  g('df-tier-ds').textContent=tierInfo.desc;
-}else{
-  g('df-tier-nm').textContent='Unregistered';
-  g('df-tier-ds').textContent='No standing has yet been declared.';
+function renderParticulars(){
+  g('f-age').textContent=d.age!=null&&d.age!==''?d.age:t(STR.dash);
+  g('f-origin').textContent=d.origin||t(STR.dash);
+  g('f-occ').textContent=d.occupation||t(STR.dash);
 }
+
+/* STANDING + LADDER */
 var seq=d.sequence!=null&&d.sequence!==''?parseInt(d.sequence,10):null;
-g('df-seq').textContent=(d.pathway&&seq!=null)?('Sequence '+seq):'—';
-g('df-path-nm').textContent=d.pathway||'No Pathway';
-g('df-seq-title').textContent=d.sequenceTitle||'';
+function renderStanding(){
+  var tier=d.tier||'';
+  var tierInfo=TIER_INFO[tier];
+  if(tierInfo){
+    g('df-tier-nm').textContent=t([tierInfo.en,tierInfo.th]);
+    g('df-tier-ds').textContent=t([tierInfo.enDesc,tierInfo.thDesc]);
+  }else{
+    g('df-tier-nm').textContent=t(STR.unregistered);
+    g('df-tier-ds').textContent=t(STR.noStanding);
+  }
+  var pathTh=d.pathway?(PATHWAYS_TH[d.pathway]||d.pathway):null;
+  g('df-seq').textContent=(d.pathway&&seq!=null)?((L==='th'?'ลำดับ ':'Sequence ')+seq):t(STR.dash);
+  g('df-path-nm').textContent=d.pathway?(L==='th'?pathTh:d.pathway):t(STR.noPathway);
+  if(!d.sequenceTitle){g('df-seq-title').textContent='';}
+  else if(seq===9){g('df-seq-title').textContent=L==='th'?(SEQ9_TITLE_TH[d.sequenceTitle]||d.sequenceTitle):d.sequenceTitle;}
+  else{g('df-seq-title').textContent=d.sequenceTitle;}
 
-var rail=g('df-ladder-rail');
-var lh='';
-var activeSeq=(seq!=null?seq:-1);
-for(var s=0;s<=9;s++){
-  lh+='<div class="df-lnode'+(s===activeSeq?' on':'')+'"></div>';
-  if(s<9)lh+='<div class="df-lseg"></div>';
+  var rail=g('df-ladder-rail');
+  var lh='';
+  var activeSeq=(seq!=null?seq:-1);
+  for(var s=0;s<=9;s++){
+    lh+='<div class="df-lnode'+(s===activeSeq?' on':'')+'"></div>';
+    if(s<9)lh+='<div class="df-lseg"></div>';
+  }
+  rail.innerHTML=lh;
 }
-rail.innerHTML=lh;
 
-/* SPIRITUAL BODY */
-var sb=d.spiritualBody||{};
 function noteBlock(val){return val?('<div class="df-note">'+esc(val)+'</div>'):'';}
-var spiritHtml='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Spiritual Body</span><span class="ln"></span></div>';
-spiritHtml+=noteBlock(sb.quality)||'<div class="df-empty">Quality not yet assessed.</div>';
-if(sb.characteristic){spiritHtml+=noteBlock(sb.characteristic);}
-if(sb.potionOrigin){spiritHtml+=noteBlock(sb.potionOrigin);}
-g('spirit-wrap').innerHTML=spiritHtml;
 
-/* TIES */
-var af=d.affiliation||{};
-var tiesHtml='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Ties</span><span class="ln"></span></div>';
-tiesHtml+='<div class="df-igrid" style="grid-template-columns:1fr 1fr">'+
-  '<div class="df-icard"><div class="df-icard-l">Affiliation</div><div class="df-icard-v">'+esc(af.org||'None — walks alone')+'</div></div>'+
-  '<div class="df-icard"><div class="df-icard-l">Mentor</div><div class="df-icard-v">'+esc(af.mentor||'—')+'</div></div>'+
-'</div>';
-var aliases=af.secretAliases||[];
-if(aliases.length){
-  tiesHtml+='<div style="margin-top:9px" class="df-tags">'+aliases.map(function(a){return '<span class="df-tag">'+esc(a)+'</span>';}).join('')+'</div>';
+function renderSpirit(){
+  var sb=d.spiritualBody||{};
+  var h='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(['Spiritual Body','กายจิต'])+'</span><span class="ln"></span></div>';
+  h+=noteBlock(sb.quality)||('<div class="df-empty">'+t(STR.qualityEmpty)+'</div>');
+  if(sb.characteristic)h+=noteBlock(sb.characteristic);
+  if(sb.potionOrigin)h+=noteBlock(sb.potionOrigin);
+  g('spirit-wrap').innerHTML=h;
 }
-g('ties-wrap').innerHTML=tiesHtml;
 
-/* PERSONA */
-var personaHtml='';
-if(d.appearance||d.nature||d.history){
-  personaHtml+='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Persona</span><span class="ln"></span></div>';
-  personaHtml+=noteBlock(d.appearance);
-  personaHtml+=noteBlock(d.nature);
-  personaHtml+=noteBlock(d.history);
+function renderTies(){
+  var af=d.affiliation||{};
+  var h='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(['Ties','สายสัมพันธ์'])+'</span><span class="ln"></span></div>';
+  h+='<div class="df-igrid" style="grid-template-columns:1fr 1fr">'+
+    '<div class="df-icard"><div class="df-icard-l">'+t(['Affiliation','สังกัด'])+'</div><div class="df-icard-v">'+esc(af.org||t(STR.noneWalksAlone))+'</div></div>'+
+    '<div class="df-icard"><div class="df-icard-l">'+t(['Mentor','พี่เลี้ยง'])+'</div><div class="df-icard-v">'+esc(af.mentor||t(STR.dash))+'</div></div>'+
+  '</div>';
+  var aliases=af.secretAliases||[];
+  if(aliases.length){
+    h+='<div style="margin-top:9px" class="df-tags">'+aliases.map(function(a){return '<span class="df-tag">'+esc(a)+'</span>';}).join('')+'</div>';
+  }
+  g('ties-wrap').innerHTML=h;
 }
-g('persona-wrap').innerHTML=personaHtml;
 
-g('scene-wrap').innerHTML=d.openingScene?
-  ('<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C9A84C"/></svg><span class="t">Opening Scene</span><span class="ln"></span></div><div class="df-note">'+esc(d.openingScene)+'</div>')
-  :'';
+function renderPersona(){
+  var h='';
+  if(d.appearance||d.nature||d.history){
+    h+='<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(['Persona','ประวัติ'])+'</span><span class="ln"></span></div>';
+    h+=noteBlock(d.appearance);
+    h+=noteBlock(d.nature);
+    h+=noteBlock(d.history);
+  }
+  g('persona-wrap').innerHTML=h;
+  g('scene-wrap').innerHTML=d.openingScene?
+    ('<div class="df-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(['Opening Scene','ฉากเริ่มต้น'])+'</span><span class="ln"></span></div><div class="df-note">'+esc(d.openingScene)+'</div>')
+    :'';
+}
 
-/* VITALS */
-var STATS=[
-  ['spiritualResilience','Spirit. Resilience'],['reasoning','Reasoning'],['willpower','Willpower'],
-  ['combat','Combat'],['occultKnowledge','Occult Know.'],['guile','Guile'],['resources','Resources']
-];
-var stats=d.stats||{};
-var R=20,CIRC=2*Math.PI*R;
-g('vitals-grid').innerHTML=STATS.map(function(s){
-  var v=parseInt(stats[s[0]],10);if(isNaN(v))v=10;
-  v=Math.max(0,Math.min(100,v));
-  var off=CIRC-(v/100)*CIRC;
-  return '<div class="df-dial-unit"><div class="df-dial-ring"><svg viewBox="0 0 48 48">'+
-    '<circle class="df-dtrack" cx="24" cy="24" r="'+R+'"/>'+
-    '<circle class="df-dfill" cx="24" cy="24" r="'+R+'" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+off+'"/></svg>'+
-    '<div class="df-dval">'+v+'</div></div>'+
-    '<div class="df-dlbl">'+s[1]+'</div></div>';
-}).join('');
+function renderVitals(){
+  var stats=d.stats||{};
+  var R=20,CIRC=2*Math.PI*R;
+  g('vitals-grid').innerHTML=STATS.map(function(s){
+    var v=parseInt(stats[s[0]],10);if(isNaN(v))v=10;
+    v=Math.max(0,Math.min(100,v));
+    var off=CIRC-(v/100)*CIRC;
+    var lbl=L==='th'?s[2]:s[1];
+    return '<div class="df-dial-unit"><div class="df-dial-ring"><svg viewBox="0 0 48 48">'+
+      '<circle class="df-dtrack" cx="24" cy="24" r="'+R+'"/>'+
+      '<circle class="df-dfill" cx="24" cy="24" r="'+R+'" stroke-dasharray="'+CIRC+'" stroke-dashoffset="'+off+'"/></svg>'+
+      '<div class="df-dval">'+v+'</div></div>'+
+      '<div class="df-dlbl">'+lbl+'</div></div>';
+  }).join('');
+}
 
-/* FOOTER */
-g('foot-file').textContent='File — '+(d.name?d.name.split(' ')[0]:'Unnamed');
-g('foot-seq').textContent=d.pathway?(d.pathway+' Seq.'+(seq!=null?seq:9)):'Unregistered';
+function renderFooter(){
+  g('foot-file').textContent=t(STR.filePrefix)+(d.name?d.name.split(' ')[0]:t(STR.unnamed));
+  g('foot-seq').textContent=d.pathway?((L==='th'?(PATHWAYS_TH[d.pathway]||d.pathway):d.pathway)+' Seq.'+(seq!=null?seq:9)):t(STR.unregistered);
+}
+
+function renderAll(){
+  renderHeader();renderParticulars();renderStanding();renderSpirit();renderTies();renderPersona();renderVitals();renderFooter();
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.textContent=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
 
 /* COLLAPSE */
 var head=g('df-head');
