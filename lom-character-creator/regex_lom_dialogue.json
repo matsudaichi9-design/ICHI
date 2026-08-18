@@ -1,0 +1,18 @@
+{
+    "id": "lom-dialogue",
+    "scriptName": "Lord of the Mysteries — Dialogue",
+    "findRegex": "/\\[LOM_SAY\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap\" rel=\"stylesheet\"/><div style=\"position:relative;max-width:500px;margin:6px auto 16px;background:rgba(15,9,16,.55);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 18px;color:#E4DCF2;font:14px/1.65 'Spectral','Noto Serif Thai',serif;box-shadow:0 6px 18px rgba(0,0,0,.45),0 0 15px -7px $1;\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 12 12\" fill=\"$1\" style=\"position:absolute;top:8px;right:10px;opacity:.16;\"><path d=\"M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z\"/></svg><span style=\"position:absolute;width:13px;height:13px;top:-1px;left:-1px;border-top:2px solid $1;border-left:2px solid $1;border-top-left-radius:10px;\"></span><span style=\"position:absolute;width:13px;height:13px;top:-1px;right:-1px;border-top:2px solid $1;border-right:2px solid $1;border-top-right-radius:10px;\"></span><span style=\"position:absolute;width:13px;height:13px;bottom:-1px;left:-1px;border-bottom:2px solid $1;border-left:2px solid $1;border-bottom-left-radius:10px;\"></span><span style=\"position:absolute;width:13px;height:13px;bottom:-1px;right:-1px;border-bottom:2px solid $1;border-right:2px solid $1;border-bottom-right-radius:10px;\"></span>$2</div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}
