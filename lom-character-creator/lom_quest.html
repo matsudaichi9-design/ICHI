@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --qc:#C0A050;--qc-rgb:192,160,80;
+  --gold:#C0A050;--tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;
+  --bd:rgba(192,160,80,.22);
+  --fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
+}
+#qwrap{max-width:450px;margin:22px auto 12px;position:relative}
+#qwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:8px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--qc-rgb),.45),0 0 20px 2px rgba(var(--qc-rgb),.28);
+  animation:qaura 3.2s ease-in-out infinite}
+@keyframes qaura{0%,100%{opacity:.7}50%{opacity:1}}
+#q{position:relative;z-index:1;background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:8px;overflow:visible;
+  box-shadow:0 20px 50px rgba(0,0,0,.8),inset 0 0 40px rgba(0,0,0,.45);
+  animation:qi .35s cubic-bezier(.2,.8,.3,1.15) both}
+@keyframes qi{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+
+#q-tab{position:absolute;top:-15px;left:24px;padding:5px 13px;border-radius:5px 5px 0 0;
+  background:var(--qc);display:flex;align-items:center;gap:6px;box-shadow:0 -2px 12px -3px var(--qc);z-index:2}
+#q-tab svg{flex-shrink:0}
+#q-tab span{font-family:var(--fh);font-size:9px;letter-spacing:1.6px;color:#100A08;text-transform:uppercase}
+[lang-mode="th"] #q-tab span{font-family:'Noto Serif Thai',serif;font-size:10px;letter-spacing:.3px}
+#q-perf{height:0;border-top:1.5px dashed rgba(var(--qc-rgb),.35);margin:0 18px}
+
+#q-body{position:relative;z-index:1;padding:18px 22px 18px}
+#q-name{font-family:var(--fh);font-size:17px;letter-spacing:1px;color:var(--tx);
+  background:linear-gradient(100deg,var(--tx) 15%,#fff 35%,var(--qc) 55%,#fff 75%,var(--tx) 92%);
+  background-size:240% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:qshimmer 6s linear infinite;filter:drop-shadow(0 0 10px rgba(var(--qc-rgb),.4))}
+[lang-mode="th"] #q-name{font-family:var(--fth);font-size:15.5px;letter-spacing:.3px}
+@keyframes qshimmer{0%{background-position:0% center}100%{background-position:240% center}}
+#q-giver{font-size:10.5px;color:var(--tx2);font-style:italic;margin-top:5px}
+[lang-mode="th"] #q-giver{font-family:'Noto Serif Thai',serif;font-style:normal}
+#q-giver b{color:var(--qc);font-style:normal;font-weight:600}
+
+#q-desc{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;background:var(--pan);
+  border-left:2px solid var(--qc);border-radius:0 5px 5px 0;padding:10px 13px;margin-top:13px}
+[lang-mode="th"] #q-desc{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+.q-sec{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.q-sec svg{flex-shrink:0}
+.q-sec .t{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--qc);text-transform:uppercase}
+[lang-mode="th"] .q-sec .t{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.3px}
+.q-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+
+.q-obj{display:flex;align-items:flex-start;gap:9px;padding:6px 0}
+.q-obj-mark{width:15px;height:15px;border-radius:50%;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;
+  border:1.3px solid var(--mu);background:rgba(255,255,255,.02)}
+.q-obj.done .q-obj-mark{border-color:var(--qc);background:var(--qc)}
+.q-obj-text{font-size:12.5px;color:var(--tx);line-height:1.5}
+[lang-mode="th"] .q-obj-text{font-family:'Noto Serif Thai',serif}
+.q-obj.done .q-obj-text{color:var(--mu);text-decoration:line-through;text-decoration-color:rgba(139,132,184,.5)}
+#q-obj-empty{font-size:11px;font-style:italic;color:var(--mu)}
+[lang-mode="th"] #q-obj-empty{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+.q-tags{display:flex;flex-wrap:wrap;gap:6px}
+.q-tag{font-size:11px;color:var(--tx);background:var(--pan);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+[lang-mode="th"] .q-tag{font-family:'Noto Serif Thai',serif;font-style:normal}
+#qwrap.completed .q-tag{border-color:rgba(var(--qc-rgb),.5);color:var(--qc)}
+
+#q-foot{position:relative;z-index:1;padding:11px 22px 16px;text-align:right;font-size:9px;
+  letter-spacing:1px;color:var(--mu);border-top:1px solid rgba(255,255,255,.04);margin-top:2px;text-transform:uppercase}
+[lang-mode="th"] #q-foot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+
+#q-lang{position:absolute;top:8px;right:12px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#q-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#q-lang b.on{color:#fff;background:linear-gradient(135deg,var(--qc),#5a4620);box-shadow:0 0 8px -2px var(--qc)}
+</style>
+</head>
+<body>
+<textarea id="qraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="qwrap"><div id="q">
+  <div id="q-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+  <div id="q-tab">
+    <svg id="q-tab-icon" width="11" height="11" viewBox="0 0 16 16" fill="none"></svg>
+    <span id="q-tab-status">NEW QUEST</span>
+  </div>
+  <div style="height:9px"></div>
+  <div id="q-perf"></div>
+
+  <div id="q-body">
+    <div id="q-name">Unnamed Quest</div>
+    <div id="q-giver" style="display:none"><span data-en="Given by " data-th="ได้รับจาก ">Given by </span><b id="q-giver-name"></b></div>
+
+    <div id="desc-wrap"></div>
+
+    <div class="q-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--qc)"/></svg><span class="t" data-en="Objectives" data-th="เป้าหมาย">Objectives</span><span class="ln"></span></div>
+    <div id="obj-wrap"></div>
+
+    <div id="rewards-wrap"></div>
+  </div>
+
+  <div id="q-foot" data-en="The Astral Ledger — Dispatch Recorded" data-th="บันทึกใต้เงาดารา — บันทึกภารกิจแล้ว">The Astral Ledger — Dispatch Recorded</div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('qraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var STATUS={
+  'new':{color:'#C0A050',en:'New Quest',th:'ภารกิจใหม่',
+    icon:'<path d="M4 2 H10 L12 4.5 V14 H4 Z" stroke="#100A08" stroke-width="1.2" fill="none" stroke-linejoin="round"/><path d="M10 2 V4.5 H12" stroke="#100A08" stroke-width="1.2" fill="none" stroke-linejoin="round"/><line x1="6" y1="8" x2="10" y2="8" stroke="#100A08" stroke-width="1"/><line x1="6" y1="10.5" x2="10" y2="10.5" stroke="#100A08" stroke-width="1"/>'},
+  'updated':{color:'#5EC2C2',en:'Quest Updated',th:'ภารกิจคืบหน้า',
+    icon:'<path d="M8 2 A6 6 0 1 1 2.6 5.5" stroke="#100A08" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M2 2 V5.5 H5.5" stroke="#100A08" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'},
+  'completed':{color:'#7FBF7F',en:'Quest Complete',th:'ภารกิจสำเร็จ',
+    icon:'<path d="M3 8.5 L6.5 12 L13 4.5" stroke="#100A08" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'},
+  'failed':{color:'#C4523A',en:'Quest Failed',th:'ภารกิจล้มเหลว',
+    icon:'<line x1="4" y1="4" x2="12" y2="12" stroke="#100A08" stroke-width="1.6" stroke-linecap="round"/><line x1="12" y1="4" x2="4" y2="12" stroke="#100A08" stroke-width="1.6" stroke-linecap="round"/>'}
+};
+function statusOf(k){return STATUS[k]||STATUS['new']}
+function t(pair){return L==='th'?pair[1]:pair[0]}
+
+function renderAll(){
+  var st=statusOf(d.status);
+  document.documentElement.style.setProperty('--qc',st.color);
+  var h=st.color.replace('#','');
+  var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+  document.documentElement.style.setProperty('--qc-rgb',r+','+gg+','+b);
+
+  g('qwrap').classList.toggle('completed',d.status==='completed');
+  g('q-tab-icon').innerHTML=st.icon;
+  g('q-tab-status').textContent=t([st.en,st.th]);
+
+  g('q-name').textContent=d.questName||(L==='th'?'ภารกิจไม่มีชื่อ':'Unnamed Quest');
+
+  if(d.questGiver){
+    g('q-giver').style.display='block';
+    g('q-giver-name').textContent=d.questGiver;
+  }else{
+    g('q-giver').style.display='none';
+  }
+
+  var descHtml='';
+  if(d.description){descHtml='<div id="q-desc">'+esc(d.description)+'</div>';}
+  g('desc-wrap').innerHTML=descHtml;
+  var descEl=document.getElementById('q-desc');
+
+  var objs=d.objectives||[];
+  var objHtml='';
+  if(objs.length){
+    objHtml=objs.map(function(o){
+      var done=!!o.done;
+      return '<div class="q-obj'+(done?' done':'')+'"><div class="q-obj-mark">'+
+        (done?'<svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6.5 L4.8 9 L10 3" stroke="#100A08" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>':'')+
+        '</div><div class="q-obj-text">'+esc(o.text||'')+'</div></div>';
+    }).join('');
+  }else{
+    objHtml='<div id="q-obj-empty">'+(L==='th'?'ยังไม่มีเป้าหมายที่ระบุไว้':'No specific objectives recorded.')+'</div>';
+  }
+  g('obj-wrap').innerHTML=objHtml;
+
+  var rewards=d.rewards||[];
+  var rewHtml='';
+  if(rewards.length){
+    rewHtml='<div class="q-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--qc)"/></svg><span class="t">'+
+      (L==='th'?'รางวัล':'Rewards')+'</span><span class="ln"></span></div><div class="q-tags">'+
+      rewards.map(function(x){return '<span class="q-tag">'+esc(x)+'</span>';}).join('')+'</div>';
+  }
+  g('rewards-wrap').innerHTML=rewHtml;
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
+})();
+</script>
+</body>
+</html>
