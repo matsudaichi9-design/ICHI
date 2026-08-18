@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Tarot Set Reward)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Tarot Set Reward — The Fifth Card's Boon",
+      "content": "## LORD OF THE MYSTERIES — TAROT SET REWARD (5-card completion item)\n\nThis is the dedicated reveal for the special ITEM granted when a character's Tarot card collection reaches 5 (see the Tarot Card System entry). It is a companion to, not a replacement for, `<LOM_TAROT>` — post both, in order, in the same reply that completes the set:\n\n1. First, the normal `<LOM_TAROT>` block for the 5th card itself, with `cardsCollected: 5` and its own `rewardName`/`rewardDescription` fields filled in as a short teaser (per the Tarot Card System entry's existing rules).\n2. Immediately after, this tag for the full reveal of the actual item:\n\n<LOM_TAROT_REWARD>\n{JSON}\n</LOM_TAROT_REWARD>\n\nOnly use this tag for the tarot 5-card milestone reward specifically — a regular item pickup still belongs in `<LOM_ITEM>` instead.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#C0A050\",\n  \"itemName\": \"The Sealed Hand\",\n  \"image\": \"abc123.jpg\",\n  \"description\": \"A cold, folded thing that was not there a moment ago — five card-shapes pressed into a single sealed relic, warm only in fog.\",\n  \"properties\": [\"Grants one true premonition per year\", \"Cannot be sold or given away\", \"Warm to the touch only in fog\"],\n  \"cardNames\": [\"The Fool\", \"The Hanged Man\", \"Death\", \"The Star\", \"The World\"]\n}\n```\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `itemName` | should generally match (or clearly follow from) the `rewardName` already given in the completing `<LOM_TAROT>` post |\n| `image` | optional catbox filename; omit for the default astral sigil |\n| `properties` | UNLIMITED short tags — concrete effects, same spirit as `<LOM_ITEM>`'s properties field |\n| `cardNames` | optional but encouraged — the 5 card names that formed this particular hand (in the order drawn), shown as a small remembrance row on the card |\n\n### OUTPUT RULES\n• Only fire this alongside a 5th-card `<LOM_TAROT>` completion — never on its own.\n• Make the reward proportionate to a genuine milestone (five successful draws) — this should feel notably more significant than an average `<LOM_ITEM>` pickup.\n• After this reward is granted, the character's card count resets to 0 for the next set of five (per the Tarot Card System entry).",
+      "constant": true,
+      "order": 100,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
