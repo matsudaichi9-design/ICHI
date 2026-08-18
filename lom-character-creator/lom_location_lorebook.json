@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Cartography)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Location Discovered — The Map Unfolds",
+      "content": "## LORD OF THE MYSTERIES — NEW LOCATION DISCOVERED NOTIFICATION\n\nWhenever {{user}}'s character(s) arrive at or discover a new, named location worth tracking — a district, building, ruin, camp, landmark, or other notable place, not just any room or street corner — post this tag:\n\n<LOM_LOCATION>\n{JSON}\n</LOM_LOCATION>\n\n---\n\n### THIS TAG WORKS DIFFERENTLY FROM THE OTHER NOTIFICATIONS — READ CAREFULLY\n\nEvery other Astral Ledger notification (advancement, item, monster) fires **once**, at the moment it happens. This one is **persistent for as long as the scene stays in that location**:\n\n1. **Placement — always last.** This tag must always be the very last thing in your reply, after all narrative text, with nothing following it.\n2. **Repeat it every message.** For as long as the characters remain in this same location, re-post the exact same `<LOM_LOCATION>` tag (same JSON, unless updated per rule 3) at the bottom of every single reply — not just the first time they arrive. This keeps the location's mini-map visibly \"pinned\" on screen the whole time the scene is there.\n3. **Update in place, don't re-discover.** If the party explores further and turns up a new marked zone within the *same* location (a hidden room, a new stall, a new danger), just add it to the `zones` array and keep re-posting the updated JSON — don't treat it as a brand new location.\n4. **Stop only on departure.** The moment the characters actually leave this location for somewhere else, stop posting this tag. If they arrive somewhere new and notable, start a fresh `<LOM_LOCATION>` block for that new place instead.\n5. Don't post this for every trivial room or transient stop — reserve it for places worth the party actually remembering (a district, a dungeon, a camp, a notable building), the same judgment call you'd use for a real bestiary or item entry.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"locationName\": \"Backlund Fogbound Market\",\n  \"locationType\": \"District — Trade Hub\",\n  \"description\": \"A sprawling night market that only opens under fog, its stalls lit by pale gas lamps and stranger things. Vendors here trade in more than coin.\",\n  \"mapImage\": \"abc123.jpg\",\n  \"resourceType\": \"Trade Hub\",\n  \"resources\": [\"Rare potion reagents\", \"Forbidden pamphlets\", \"Sealed letters\"],\n  \"monstersPresent\": true,\n  \"monsterNote\": \"Pickpocket wraiths are known to slip between the stalls after midnight.\",\n  \"monsterTypes\": [\"Fog Wraith\"],\n  \"zones\": [\n    {\"x\": 15, \"y\": 78, \"type\": \"entrance\", \"label\": \"Fog Gate\"},\n    {\"x\": 40, \"y\": 35, \"type\": \"resource\", \"label\": \"Reagent Row\"},\n    {\"x\": 62, \"y\": 60, \"type\": \"market\",   \"label\": \"Coin Alley\"},\n    {\"x\": 82, \"y\": 25, \"type\": \"danger\",   \"label\": \"The Hollow Stalls\"},\n    {\"x\": 50, \"y\": 15, \"type\": \"landmark\", \"label\": \"The Fogless Fountain\"}\n  ]\n}\n```\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `locationType` | optional short tag — district/ruins/sanctuary/dungeon/etc, or omit |\n| `mapImage` | optional catbox filename for an actual map image as the map background; omit for the default stylized star-chart backdrop, which is the normal state for most locations |\n| `resourceType` | free text — this world doesn't use a fixed category, describe it naturally: \"Farming Ground\", \"Trade Hub\", \"Both\", or omit if the place has nothing notable to gather or trade |\n| `resources` | UNLIMITED short tags — concrete things obtainable here (materials, rare goods, ingredients); omit/leave empty if nothing notable |\n| `monstersPresent` | boolean — whether hostile creatures are known to linger in or near this location |\n| `monsterNote` | optional flavor line about the threat, shown only if `monstersPresent` is true |\n| `monsterTypes` | optional tags naming the creature type(s), ideally matching names used in a `<LOM_MONSTER>` bestiary entry if one exists for them |\n| `zones` | array of marked points on the mini-map. `x`/`y` are percentages (0-100) of position within the map (keep roughly 8-92 to avoid crowding the edges). `type` is one of: `entrance`, `resource`, `market`, `danger`, `landmark`, `other` — each renders with its own icon and color. `label` is the short name shown under the pin. Leave the array empty if no specific zones are worth marking yet. |\n\n### OUTPUT RULES\n• Rate/describe honestly — don't invent resources, monsters, or zones that haven't actually been established or discovered in the story.\n• If a zone's nature turns out to be different than first assumed (e.g. a suspected `danger` zone turns out empty), it's fine to adjust its `type` or remove it in a later update while still in the same location.\n• This notification is about **place**, not people or things — a notable NPC or item found here still gets its own separate notification if warranted.",
+      "constant": true,
+      "order": 93,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
