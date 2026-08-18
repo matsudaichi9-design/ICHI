@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Bestiary)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Monster Detected — The Astral Ledger",
+      "content": "## LORD OF THE MYSTERIES — ENEMY / MONSTER DETECTED NOTIFICATION\n\nWhenever {{user}}'s character genuinely encounters a named, notable monster, hostile Beyonder, eldritch entity, or other dangerous being worth logging as a bestiary threat — post this tag, on its own line, once, the moment the encounter is confirmed (the creature is seen clearly, identified, or engages):\n\n<LOM_MONSTER>\n{JSON}\n</LOM_MONSTER>\n\nThis is a one-time detection notification for a genuine threat — not for every mook, background rat, or non-hostile NPC. Use it for something the party would actually want a bestiary entry for.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"monsterName\": \"The Weeping Tailor\",\n  \"classification\": \"Sequence 6 — Beyonder-touched\",\n  \"dangerLevel\": 5.5,\n  \"description\": \"Once a master seamstress of Backlund, now a gaunt figure stitching living shadows into cloth that binds whoever wears it.\",\n  \"traits\": [\"Shadow-stitching\", \"Nocturnal\", \"Draws power from sorrow\", \"Avoids mirrors\"],\n  \"weaknessHint\": \"It flinches whenever a needle it did not thread itself is brought near its work.\",\n  \"weakness\": \"Its power falters if a needle it never touched is pressed to its stitching.\",\n  \"weaknessRevealed\": false\n}\n```\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `dangerLevel` | numeric, **0 (harmless) to 10 (world-ending)** — drives the card's entire color scheme, from pale white/gold at the low end through amber, orange, and blood-red at the top. Rate it honestly by what the creature can actually do to characters of the current story's power level, not by how scary the prose sounds. `9` and up triggers an intensified \"critical\" pulse effect on the card — reserve that for truly apex threats. |\n| `classification` | optional short tag — Sequence number if it's a Beyonder or Sequence-touched creature, a taxonomy label, or omit entirely for an unclassified natural horror |\n| `traits` | UNLIMITED short tags — these are **openly observable** behaviors/traits (how it hunts, moves, what it looks like doing), always shown, NOT secret |\n| `weaknessHint` | optional, always-visible clue text — a suspicious detail, a rumor, something a character might notice or overhear, WITHOUT actually stating the weakness. Omit if no clue has surfaced yet. |\n| `weakness` | the actual, real weakness — write this field in every time you have one in mind, but see the reveal rule below; it will not be displayed unless `weaknessRevealed` is true |\n| `weaknessRevealed` | boolean — see the mechanic below, this is the field that controls whether `weakness` is actually shown to the player |\n\n### THE WEAKNESS MECHANIC — READ CAREFULLY\nThis is the core feature of this notification and must be tracked consistently across the whole story:\n\n1. **By default, `weaknessRevealed` is `false`.** The card shows a locked/unknown state. You may optionally supply `weaknessHint` as flavor — a hintable clue the player could act on, but it never states the weakness outright.\n2. **The weakness becomes revealed only through actual in-story play** — the player character investigates, experiments, researches, receives it from a reliable source, or otherwise genuinely discovers it through narrative action. Never reveal it just because a scene felt climactic, and never invent a discovery that didn't happen on the page.\n3. **Once revealed, remember it by monster TYPE, not just this one individual.** If the player later encounters a *different* monster of the same species/kind (e.g. another Weeping Tailor, another member of the same eldritch bloodline, another creature sharing the same core nature) — treat that type's weakness as already known. Post the notification for the new encounter with `weaknessRevealed: true` and the same `weakness` text immediately, without requiring the player to re-discover it. A wholly different monster type always starts locked again, even if it happens to share superficial traits.\n4. **Do not fabricate a weakness the player hasn't actually found.** If the story hasn't reached that discovery yet, leave `weaknessRevealed: false` (and `weakness` may be omitted or left prepared-but-unused) rather than guessing early.\n\n### OUTPUT RULES\n• Only fire this for a genuinely notable, named threat — not for every random encounter or disposable mook.\n• Keep `dangerLevel` consistent for the same monster type across multiple appearances (don't rate the same species differently encounter to encounter without in-story reason).\n• If a previously-encountered monster type reappears, you may re-fire this tag for the new individual — carry over `weaknessRevealed`/`weakness` per the mechanic above, but `traits`/`description` can be re-tailored to the specific individual if it differs from the type norm.",
+      "constant": true,
+      "order": 92,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
