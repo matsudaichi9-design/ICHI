@@ -80,6 +80,19 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
 .do-tag{font-size:11px;color:var(--tx);background:var(--pan);border:1px solid var(--bd2);border-radius:2px;padding:3px 10px}
 [lang-mode="th"] .do-tag{font-family:'Noto Serif Thai',serif}
 
+.do-litem{padding:8px 0;border-bottom:1px solid var(--bd2)}
+.do-litem:last-child{border-bottom:none}
+.do-litem .n{font-size:12.5px;font-weight:600;color:var(--tx)}
+[lang-mode="th"] .do-litem .n{font-family:'Noto Serif Thai',serif}
+.do-litem .d{font-size:11px;color:var(--tx2);font-style:italic;margin-top:3px;line-height:1.5}
+[lang-mode="th"] .do-litem .d{font-family:'Noto Serif Thai',serif;font-style:normal}
+.do-kv{padding:7px 0;border-bottom:1px solid var(--bd2)}
+.do-kv:last-child{border-bottom:none}
+.do-kv .k{font-family:var(--fd);font-size:8px;letter-spacing:1.4px;color:var(--sv);text-transform:uppercase}
+[lang-mode="th"] .do-kv .k{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:.2px}
+.do-kv .v{font-size:11.5px;color:var(--tx);margin-top:2px}
+[lang-mode="th"] .do-kv .v{font-family:'Noto Serif Thai',serif}
+
 #dofoot{position:relative;z-index:1;padding:12px 24px 18px;text-align:center;font-size:9px;
   letter-spacing:.8px;color:var(--mu);border-top:1px solid var(--bd2);margin-top:8px;text-transform:uppercase}
 [lang-mode="th"] #dofoot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
@@ -107,9 +120,12 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
     <div class="do-body">
       <div id="age-appearance-wrap"></div>
       <div id="specialty-wrap"></div>
-      <div id="ability-wrap"></div>
+      <div id="abilities-wrap"></div>
+      <div id="gear-wrap"></div>
+      <div id="traits-wrap"></div>
       <div id="legend-wrap"></div>
       <div id="motive-wrap"></div>
+      <div id="extra-wrap"></div>
     </div>
 
     <div id="dofoot" data-en="This file exists in no official record" data-th="เอกสารฉบับนี้ไม่มีอยู่ในบันทึกทางการใดๆ">This file exists in no official record</div>
@@ -162,26 +178,55 @@ function renderAll(){
   }
   g('specialty-wrap').innerHTML=specHtml;
 
+  var secIcon='<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg>';
+  function secHead(en,th){return '<div class="do-sec">'+secIcon+'<span class="t">'+(L==='th'?th:en)+'</span><span class="ln"></span></div>';}
+
+  var abilities=d.abilities||[];
   var abHtml='';
-  if(d.ability){
-    abHtml='<div class="do-sec"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
-      (L==='th'?'ความสามารถประจำตัว':'Signature Ability')+'</span><span class="ln"></span></div><div class="do-note">'+esc(d.ability)+'</div>';
+  if(abilities.length){
+    abHtml=secHead('Abilities','ความสามารถ')+abilities.map(function(a){
+      return '<div class="do-litem"><div class="n">'+esc(a.name||'')+'</div>'+(a.description?'<div class="d">'+esc(a.description)+'</div>':'')+'</div>';
+    }).join('');
   }
-  g('ability-wrap').innerHTML=abHtml;
+  g('abilities-wrap').innerHTML=abHtml;
+
+  var gear=d.gear||[];
+  var gearHtml='';
+  if(gear.length){
+    gearHtml=secHead('Gear &amp; Equipment','อุปกรณ์และของประจำตัว')+gear.map(function(x){
+      return '<div class="do-litem"><div class="n">'+esc(x.name||'')+'</div>'+(x.description?'<div class="d">'+esc(x.description)+'</div>':'')+'</div>';
+    }).join('');
+  }
+  g('gear-wrap').innerHTML=gearHtml;
+
+  var traits=d.traits||[];
+  var traitsHtml='';
+  if(traits.length){
+    traitsHtml=secHead('Traits &amp; Quirks','นิสัยและลักษณะเฉพาะ')+'<div class="do-tags">'+
+      traits.map(function(t){return '<span class="do-tag">'+esc(t)+'</span>';}).join('')+'</div>';
+  }
+  g('traits-wrap').innerHTML=traitsHtml;
 
   var legHtml='';
   if(d.legend){
-    legHtml='<div class="do-sec"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
-      (L==='th'?'ตำนานที่เล่าขาน':'The Legend')+'</span><span class="ln"></span></div><div class="do-note legend">'+esc(d.legend)+'</div>';
+    legHtml=secHead('The Legend','ตำนานที่เล่าขาน')+'<div class="do-note legend">'+esc(d.legend)+'</div>';
   }
   g('legend-wrap').innerHTML=legHtml;
 
   var motHtml='';
   if(d.motive){
-    motHtml='<div class="do-sec"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
-      (L==='th'?'แรงจูงใจที่แท้จริง':'True Motive')+'</span><span class="ln"></span></div><div class="do-note">'+esc(d.motive)+'</div>';
+    motHtml=secHead('True Motive','แรงจูงใจที่แท้จริง')+'<div class="do-note">'+esc(d.motive)+'</div>';
   }
   g('motive-wrap').innerHTML=motHtml;
+
+  var extra=d.extra||[];
+  var extraHtml='';
+  if(extra.length){
+    extraHtml=secHead('Additional Notes','ข้อมูลเพิ่มเติม')+extra.map(function(x){
+      return '<div class="do-kv"><div class="k">'+esc(x.label||'')+'</div><div class="v">'+esc(x.value||'')+'</div></div>';
+    }).join('');
+  }
+  g('extra-wrap').innerHTML=extraHtml;
 }
 
 function setLang(lang){

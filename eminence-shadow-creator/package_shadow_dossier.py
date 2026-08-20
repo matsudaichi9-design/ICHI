@@ -75,11 +75,25 @@ The form submits a `<SHADOW_DOSSIER>{json}</SHADOW_DOSSIER>` block back into the
   "codename": "Iota",
   "codenameGlyph": "\\u0399",
   "specialty": "Stealth & Infiltration",
-  "ability": "Can suppress her presence to the point of being unnoticed even in direct eye contact, for up to ten minutes.",
+  "abilities": [
+    {"name": "Presence Erasure", "description": "Can suppress her presence to the point of being unnoticed even in direct eye contact, for up to ten minutes."},
+    {"name": "Silent Step", "description": "Moves without a sound on any surface."}
+  ],
+  "gear": [
+    {"name": "Twin Fog Blades", "description": "A matched pair of short blades treated with a numbing agent."}
+  ],
+  "traits": ["Stoic", "Insomniac", "Secretly Kind", "Distrustful of authority"],
   "legend": "They say she was the sole survivor of a village erased by the Cult in a single night — and that she walked out of the ashes already knowing every one of their faces.",
-  "motive": "To find out whether the boy who saved her that night was real, or another story she told herself to survive."
+  "motive": "To find out whether the boy who saved her that night was real, or another story she told herself to survive.",
+  "extra": [{"label": "Blood Type", "value": "AB"}]
 }
 ```
+
+### FIELD NOTES
+- `abilities` and `gear` are both open-ended arrays of `{name, description}` — the form lets the player add as many of each as the character actually has (or none at all). If the story later grants a new ability or item, feel free to describe that character as having gained it even though it won't retroactively appear on this already-submitted dossier — track ongoing changes the same way `<LOM_STATUS>`-style tracking would, in prose or your own notes.
+- `traits` is a flat array of short quirk/personality tags.
+- `extra` is a fully open-ended array of `{label, value}` pairs for anything the player wanted to record that didn't fit elsewhere.
+- Any of these arrays may be empty or absent — the dossier simply omits a section with nothing in it.
 
 ### CANON NOTES — IMPORTANT
 - **The Seven Shadows already exist and are already named.** Alpha (commander-in-chief, first seat), Beta (operations), Gamma (finance and business), Delta (ferocious close-combat instinct), Epsilon (elegant perfectionist, slime manipulation), Zeta (secret long-term missions and experiments), and Eta (mad scientist, weapons and tech) are all established named characters. A newly created character is **never** one of these seven and should never be assigned their letters (Α–Η) as a codename.

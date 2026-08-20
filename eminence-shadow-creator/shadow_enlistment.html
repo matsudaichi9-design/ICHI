@@ -24,7 +24,6 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
   box-shadow:0 24px 60px rgba(0,0,0,.85);animation:sei .35s cubic-bezier(.2,.8,.3,1.1) both}
 @keyframes sei{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 
-/* drifting shadow smoke */
 #se-smoke{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.5}
 .se-blob{position:absolute;border-radius:50%;filter:blur(30px);background:radial-gradient(circle,rgba(var(--ac-rgb),.16),transparent 70%);
   animation:sedrift 22s ease-in-out infinite}
@@ -52,11 +51,11 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
 #se-subtitle{font-size:11px;font-style:italic;color:var(--tx2);margin-top:6px}
 [lang-mode="th"] #se-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
 
-/* TABS */
-#setabs{display:flex;margin:16px 26px 0;border-bottom:1px solid var(--bd2);position:relative;z-index:1}
-.setab{flex:1;text-align:center;padding:0 0 9px;cursor:pointer;position:relative}
-.setab span{font-family:var(--fd);font-size:9px;letter-spacing:1px;color:var(--mu);text-transform:uppercase}
-[lang-mode="th"] .setab span{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:0}
+#setabs{display:flex;margin:16px 22px 0;border-bottom:1px solid var(--bd2);position:relative;z-index:1;overflow-x:auto}
+#setabs::-webkit-scrollbar{display:none}
+.setab{flex:1;min-width:76px;text-align:center;padding:0 2px 9px;cursor:pointer;position:relative}
+.setab span{font-family:var(--fd);font-size:8px;letter-spacing:.8px;color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] .setab span{font-family:'Noto Serif Thai',serif;font-size:9.6px;letter-spacing:0}
 .setab.on span{color:var(--ac)}
 .setab::after{content:'';position:absolute;left:20%;right:20%;bottom:-1px;height:2px;background:var(--ac);
   transform:scaleX(0);transition:transform .25s;box-shadow:0 0 8px -1px var(--ac)}
@@ -64,6 +63,7 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
 
 .sepanel{display:none;padding:20px 26px 6px;position:relative;z-index:1}
 .sepanel.on{display:block}
+.se-scroll{max-height:320px;overflow-y:auto;padding-right:2px}
 
 .se-field{margin-bottom:15px}
 .se-label{font-family:var(--fd);font-size:8.5px;letter-spacing:1.6px;color:var(--sv);text-transform:uppercase;margin-bottom:6px;display:block}
@@ -73,10 +73,9 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
   transition:border-color .2s,box-shadow .2s}
 [lang-mode="th"] .se-input,[lang-mode="th"] .se-textarea{font-family:'Noto Serif Thai',serif}
 .se-input:focus,.se-textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 2px rgba(var(--ac-rgb),.18)}
-.se-textarea{resize:vertical;min-height:60px;line-height:1.55}
+.se-textarea{resize:vertical;min-height:52px;line-height:1.55}
 .se-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* codename grid */
 #se-greek{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .se-glyph{aspect-ratio:1;border-radius:50%;border:1.3px solid var(--bd2);background:rgba(0,0,0,.3);
   display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:17px;color:var(--tx2);
@@ -86,7 +85,6 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
   box-shadow:0 0 14px -2px var(--ac)}
 .se-glyph small{position:absolute;bottom:3px;font-family:'EB Garamond',serif;font-size:6.5px;letter-spacing:.3px;color:inherit;opacity:.8;text-transform:uppercase}
 
-/* pill picker */
 .se-pills{display:flex;flex-wrap:wrap;gap:7px}
 .se-pill{padding:6px 13px;border-radius:99px;border:1px solid var(--bd2);background:rgba(0,0,0,.28);
   color:var(--tx2);font-size:11.5px;cursor:pointer;transition:all .18s}
@@ -94,10 +92,39 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
 .se-pill:hover{border-color:rgba(var(--ac-rgb),.5)}
 .se-pill.on{border-color:var(--ac);color:#fff;background:rgba(var(--ac-rgb),.22);box-shadow:0 0 10px -3px var(--ac)}
 
-/* swatches */
 #se-swatches{display:flex;gap:8px;flex-wrap:wrap}
 .se-sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
 .se-sw.on{border-color:#fff;box-shadow:0 0 10px -1px currentColor,0 0 0 2px var(--bg)}
+
+/* repeatable rows */
+.se-rrow{position:relative;background:rgba(0,0,0,.22);border:1px solid var(--bd2);border-radius:5px;
+  padding:10px 34px 10px 11px;margin-bottom:9px}
+.se-rrow .se-input,.se-rrow .se-textarea{margin-bottom:7px}
+.se-rrow .se-input:last-child,.se-rrow .se-textarea:last-child{margin-bottom:0}
+.se-rdel{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:1px solid var(--bd2);
+  background:rgba(0,0,0,.3);color:var(--tx2);cursor:pointer;font-size:12px;line-height:1;display:flex;
+  align-items:center;justify-content:center;transition:all .15s}
+.se-rdel:hover{border-color:var(--ac);color:var(--ac)}
+.se-add{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;border:1px dashed rgba(var(--ac-rgb),.5);
+  background:rgba(var(--ac-rgb),.06);color:var(--ac);font-family:var(--fd);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;transition:all .18s}
+[lang-mode="th"] .se-add{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+.se-add:hover{background:rgba(var(--ac-rgb),.14)}
+.se-empty-hint{font-size:10.5px;font-style:italic;color:var(--mu);margin-bottom:9px}
+[lang-mode="th"] .se-empty-hint{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+/* trait tag chips */
+#se-trait-input-row{display:flex;gap:8px;margin-bottom:9px}
+#se-trait-input-row .se-input{flex:1}
+.se-tagbtn{flex-shrink:0;padding:0 16px;border-radius:4px;border:1px solid var(--ac);background:rgba(var(--ac-rgb),.16);
+  color:var(--ac);font-family:var(--fd);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+[lang-mode="th"] .se-tagbtn{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+#se-trait-chips{display:flex;flex-wrap:wrap;gap:7px}
+.se-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 8px 5px 12px;border-radius:99px;
+  background:rgba(var(--ac-rgb),.14);border:1px solid rgba(var(--ac-rgb),.4);color:var(--tx);font-size:11.5px}
+[lang-mode="th"] .se-chip{font-family:'Noto Serif Thai',serif}
+.se-chip b{cursor:pointer;color:var(--tx2);font-weight:400}
+.se-chip b:hover{color:var(--ac)}
 
 .se-nav{display:flex;justify-content:space-between;padding:18px 26px 22px;position:relative;z-index:1}
 .se-nb{font-family:var(--fd);font-size:9.5px;letter-spacing:1.2px;padding:9px 18px;border-radius:4px;cursor:pointer;
@@ -129,7 +156,9 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
   <div id="setabs">
     <div class="setab on" data-t="t1"><span data-en="Identity" data-th="ตัวตน">Identity</span></div>
     <div class="setab" data-t="t2"><span data-en="Codename" data-th="นามรหัส">Codename</span></div>
-    <div class="setab" data-t="t3"><span data-en="Legend" data-th="ตำนาน">Legend</span></div>
+    <div class="setab" data-t="t3"><span data-en="Abilities" data-th="ความสามารถ">Abilities</span></div>
+    <div class="setab" data-t="t4"><span data-en="Gear &amp; Traits" data-th="อุปกรณ์และนิสัย">Gear &amp; Traits</span></div>
+    <div class="setab" data-t="t5"><span data-en="Legend" data-th="ตำนาน">Legend</span></div>
   </div>
 
   <!-- TAB 1: IDENTITY -->
@@ -164,17 +193,39 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
       <label class="se-label" data-en="Specialty" data-th="ความถนัด">Specialty</label>
       <div class="se-pills" id="se-specialty"></div>
     </div>
+  </div>
+
+  <!-- TAB 3: ABILITIES (repeatable) -->
+  <div class="sepanel" data-p="t3">
     <div class="se-field">
-      <label class="se-label" data-en="Signature Ability" data-th="ความสามารถประจำตัว">Signature Ability</label>
-      <textarea class="se-textarea" id="f-ability" data-pen="What can they actually do?" data-pth="พวกเขาทำอะไรได้บ้างจริงๆ?" placeholder="What can they actually do?"></textarea>
+      <label class="se-label" data-en="Abilities — add as many as this character actually has" data-th="ความสามารถ &#8212; เพิ่มได้เท่าที่ตัวละครมีจริง">Abilities</label>
+      <div class="se-scroll" id="se-ability-list"></div>
+      <div class="se-add" id="se-ability-add" data-en="+ Add Ability" data-th="+ เพิ่มความสามารถ">+ Add Ability</div>
     </div>
   </div>
 
-  <!-- TAB 3: LEGEND -->
-  <div class="sepanel" data-p="t3">
+  <!-- TAB 4: GEAR & TRAITS -->
+  <div class="sepanel" data-p="t4">
+    <div class="se-field">
+      <label class="se-label" data-en="Gear &amp; Equipment" data-th="อุปกรณ์และของประจำตัว">Gear &amp; Equipment</label>
+      <div class="se-scroll" id="se-gear-list"></div>
+      <div class="se-add" id="se-gear-add" data-en="+ Add Gear" data-th="+ เพิ่มอุปกรณ์">+ Add Gear</div>
+    </div>
+    <div class="se-field" style="margin-top:18px">
+      <label class="se-label" data-en="Traits &amp; Quirks" data-th="นิสัยและลักษณะเฉพาะ">Traits &amp; Quirks</label>
+      <div id="se-trait-input-row">
+        <input class="se-input" id="f-trait-input" type="text" data-pen="Type a trait and press Add..." data-pth="พิมพ์ลักษณะนิสัยแล้วกด เพิ่ม..." placeholder="Type a trait and press Add...">
+        <div class="se-tagbtn" id="se-trait-add" data-en="Add" data-th="เพิ่ม">Add</div>
+      </div>
+      <div id="se-trait-chips"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: LEGEND -->
+  <div class="sepanel" data-p="t5">
     <div class="se-field">
       <label class="se-label" data-en="The Legend (their exaggerated, half-believed origin)" data-th="ตำนาน (เรื่องราวกำเนิดสุดเว่อร์ที่พวกเขาเชื่อครึ่งไม่เชื่อครึ่ง)">The Legend</label>
-      <textarea class="se-textarea" id="f-legend" data-pen="The dramatic story they tell about themselves..." data-pth="เรื่องราวสุดดราม่าที่พวกเขาเล่าเกี่ยวกับตัวเอง..." placeholder="The dramatic story they tell about themselves..." style="min-height:80px"></textarea>
+      <textarea class="se-textarea" id="f-legend" data-pen="The dramatic story they tell about themselves..." data-pth="เรื่องราวสุดดราม่าที่พวกเขาเล่าเกี่ยวกับตัวเอง..." placeholder="The dramatic story they tell about themselves..." style="min-height:70px"></textarea>
     </div>
     <div class="se-field">
       <label class="se-label" data-en="What Do They Actually Want?" data-th="สิ่งที่พวกเขาต้องการจริงๆ">What Do They Actually Want?</label>
@@ -183,6 +234,11 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
     <div class="se-field">
       <label class="se-label" data-en="Sigil Color" data-th="สีประจำตัว">Sigil Color</label>
       <div id="se-swatches"></div>
+    </div>
+    <div class="se-field" style="margin-top:18px">
+      <label class="se-label" data-en="Anything Else? (custom fields)" data-th="ข้อมูลอื่นๆ (กำหนดเอง)">Anything Else?</label>
+      <div class="se-scroll" id="se-extra-list"></div>
+      <div class="se-add" id="se-extra-add" data-en="+ Add Field" data-th="+ เพิ่มข้อมูล">+ Add Field</div>
     </div>
   </div>
 
@@ -199,7 +255,7 @@ function g(id){return document.getElementById(id)}
 function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
 
 var L='en';
-var TABS=['t1','t2','t3'];
+var TABS=['t1','t2','t3','t4','t5'];
 var curIdx=0;
 
 var GREEK=[['Θ','Theta'],['Ι','Iota'],['Κ','Kappa'],['Λ','Lambda'],['Μ','Mu'],
@@ -245,6 +301,58 @@ qa('.se-sw').forEach(function(el){
     selectedColor=el.getAttribute('data-c');
   });
 });
+
+/* ---- generic repeatable two-field row group (name + description) ---- */
+function makeRowGroup(listId, addBtnId, nameEn, namePh, descEn, descPh, namePhTh, descPhTh){
+  var list=g(listId);
+  function addRow(nameVal,descVal){
+    var row=document.createElement('div');
+    row.className='se-rrow';
+    row.innerHTML='<input class="se-input rr-name" type="text" placeholder="'+(L==='th'?namePhTh:namePh)+'" value="'+(nameVal||'').replace(/"/g,'&quot;')+'">'+
+      '<textarea class="se-textarea rr-desc" placeholder="'+(L==='th'?descPhTh:descPh)+'">'+(descVal||'')+'</textarea>'+
+      '<div class="se-rdel">&times;</div>';
+    row.querySelector('.se-rdel').addEventListener('click',function(){row.remove()});
+    list.appendChild(row);
+  }
+  g(addBtnId).addEventListener('click',function(){addRow('','')});
+  return {addRow:addRow, list:list};
+}
+var abilityGroup=makeRowGroup('se-ability-list','se-ability-add',
+  'Ability name','Ability name','What does it do?','What does it do?','ชื่อความสามารถ','ทำอะไรได้บ้าง?');
+var gearGroup=makeRowGroup('se-gear-list','se-gear-add',
+  'Item name','Item name','What is it / what does it do?','What is it / what does it do?','ชื่อไอเทม','คืออะไร/ทำอะไรได้บ้าง?');
+abilityGroup.addRow('','');
+gearGroup.addRow('','');
+
+/* ---- trait chips ---- */
+var traits=[];
+function renderTraits(){
+  g('se-trait-chips').innerHTML=traits.map(function(t,i){
+    return '<span class="se-chip">'+t+'<b data-i="'+i+'">&times;</b></span>';
+  }).join('');
+  qa('#se-trait-chips b').forEach(function(b){
+    b.addEventListener('click',function(){traits.splice(parseInt(b.getAttribute('data-i')),1);renderTraits();});
+  });
+}
+function addTrait(){
+  var v=g('f-trait-input').value.trim();
+  if(v){traits.push(v);g('f-trait-input').value='';renderTraits();}
+}
+g('se-trait-add').addEventListener('click',addTrait);
+g('f-trait-input').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addTrait();}});
+
+/* ---- generic repeatable label/value row group ---- */
+var extraList=g('se-extra-list');
+function addExtraRow(labelVal,valueVal){
+  var row=document.createElement('div');
+  row.className='se-rrow';
+  row.innerHTML='<input class="se-input rr-label" type="text" placeholder="'+(L==='th'?'ชื่อหัวข้อ':'Field label')+'" value="'+(labelVal||'').replace(/"/g,'&quot;')+'">'+
+    '<input class="se-input rr-value" type="text" placeholder="'+(L==='th'?'รายละเอียด':'Field value')+'" value="'+(valueVal||'').replace(/"/g,'&quot;')+'">'+
+    '<div class="se-rdel">&times;</div>';
+  row.querySelector('.se-rdel').addEventListener('click',function(){row.remove()});
+  extraList.appendChild(row);
+}
+g('se-extra-add').addEventListener('click',function(){addExtraRow('','')});
 
 /* TABS */
 qa('.setab').forEach(function(t){
@@ -307,6 +415,17 @@ function sendToST(text){
   return false;
 }
 
+function readRows(listEl){
+  return qa('.se-rrow',listEl).map(function(row){
+    return {name:row.querySelector('.rr-name').value.trim(),description:row.querySelector('.rr-desc').value.trim()};
+  }).filter(function(x){return x.name||x.description});
+}
+function readExtraRows(){
+  return qa('.se-rrow',extraList).map(function(row){
+    return {label:row.querySelector('.rr-label').value.trim(),value:row.querySelector('.rr-value').value.trim()};
+  }).filter(function(x){return x.label||x.value});
+}
+
 function submit(){
   var name=g('f-name').value.trim();
   if(!name){toast(L==='th'?'กรุณากรอกชื่อจริง':'Please enter a true name');go('t1');return;}
@@ -321,9 +440,12 @@ function submit(){
     codename:selectedGreek[1],
     codenameGlyph:selectedGreek[0],
     specialty:selectedSpecialty?selectedSpecialty[0]:'',
-    ability:g('f-ability').value.trim(),
+    abilities:readRows(abilityGroup.list),
+    gear:readRows(gearGroup.list),
+    traits:traits.slice(),
     legend:g('f-legend').value.trim(),
-    motive:g('f-motive').value.trim()
+    motive:g('f-motive').value.trim(),
+    extra:readExtraRows()
   };
   var txt='<SHADOW_DOSSIER>\n'+JSON.stringify(data)+'\n</SHADOW_DOSSIER>';
   var ok=sendToST(txt);
