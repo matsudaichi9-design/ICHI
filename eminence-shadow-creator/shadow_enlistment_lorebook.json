@@ -1,0 +1,39 @@
+{
+  "name": "The Eminence in Shadow — Shadow Garden Enlistment",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Shadow Garden Enlistment & Dossier Flow",
+      "content": "## THE EMINENCE IN SHADOW — SHADOW GARDEN ENLISTMENT & DOSSIER FLOW\n\nTwo tags work together for creating a new character in this setting — a prospective Shadow Garden operative (or an ordinary bystander who gets pulled in, if the story goes that way).\n\n### STEP 1 — Open the form\nWhen {{user}} wants to create a new character, post this tag alone, with nothing inside it:\n\n<SHADOW_ENLIST></SHADOW_ENLIST>\n\nThis renders a real, fillable enlistment form. Do not fabricate the character's details yourself and do not put JSON inside this tag — the player fills it out and it submits on its own.\n\n### STEP 2 — Receive the confirmation\nThe form submits a `<SHADOW_DOSSIER>{json}</SHADOW_DOSSIER>` block back into the chat by itself. When you see one arrive, treat it as the character now being real in the story — narrate their arrival at Shadow Garden's hideout (or wherever fits the scene) accordingly. Do not re-post `<SHADOW_ENLIST>` again for the same character afterward — Step 1 only happens once, at creation.\n\n---\n\n### JSON SCHEMA (produced automatically by the form — reference only)\n\n```json\n{\n  \"charColor\": \"#A32638\",\n  \"name\": \"Elena Voss\",\n  \"age\": \"17\",\n  \"persona\": \"Ordinary Millennium Academy transfer student\",\n  \"appearance\": \"Silver-grey hair kept in a braid, sharp violet eyes, a small burn scar on her left hand she never explains.\",\n  \"codename\": \"Iota\",\n  \"codenameGlyph\": \"\\u0399\",\n  \"specialty\": \"Stealth & Infiltration\",\n  \"ability\": \"Can suppress her presence to the point of being unnoticed even in direct eye contact, for up to ten minutes.\",\n  \"legend\": \"They say she was the sole survivor of a village erased by the Cult in a single night — and that she walked out of the ashes already knowing every one of their faces.\",\n  \"motive\": \"To find out whether the boy who saved her that night was real, or another story she told herself to survive.\"\n}\n```\n\n### CANON NOTES — IMPORTANT\n- **The Seven Shadows already exist and are already named.** Alpha (commander-in-chief, first seat), Beta (operations), Gamma (finance and business), Delta (ferocious close-combat instinct), Epsilon (elegant perfectionist, slime manipulation), Zeta (secret long-term missions and experiments), and Eta (mad scientist, weapons and tech) are all established named characters. A newly created character is **never** one of these seven and should never be assigned their letters (Α–Η) as a codename.\n- That's why the enlistment form's codename picker starts at **Θ (Theta)** and continues through the Greek alphabet — a new operative is a rank-and-file recruit or aspirant within Shadow Garden, using the same naming convention without claiming an already-occupied seat.\n- **Cid Kagenou (\"Shadow\")** leads the organization from the shadows and is, in-universe, extremely reluctant to reveal himself directly — a newly enlisted character would likely be recruited, tested, or observed by an existing Shadow Garden member (or by Shadow himself in disguise) rather than meeting \"Shadow\" plainly and immediately. Keep first contact suitably mysterious.\n- `legend` is meant to capture this series' signature comedy — an overly dramatic, half-mythologized backstory a character has come to believe about themselves (often seeded by Cid's own theatrics) that may not be entirely true. Play into that tone when it comes up in the story, without necessarily confirming or denying it outright.\n- `persona` is their mundane, everyday-life cover identity (student, shopkeeper, etc.) — most Shadow Garden members maintain one, mirroring how Cid himself poses as an unremarkable student.",
+      "constant": true,
+      "order": 0,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
