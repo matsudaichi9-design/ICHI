@@ -181,13 +181,32 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
       <label class="se-label" data-en="Appearance" data-th="รูปลักษณ์">Appearance</label>
       <textarea class="se-textarea" id="f-appearance" data-pen="Hair, eyes, build, notable features..." data-pth="ทรงผม สีตา รูปร่าง จุดเด่น..." placeholder="Hair, eyes, build, notable features..."></textarea>
     </div>
+    <div class="se-field">
+      <label class="se-label" data-en="Race / Species" data-th="เผ่าพันธุ์">Race / Species</label>
+      <div class="se-pills" id="se-race"></div>
+    </div>
+    <div class="se-field" id="se-clan-field" style="display:none">
+      <label class="se-label" data-en="Clan" data-th="เผ่า">Clan</label>
+      <input class="se-input" id="f-clan" type="text" data-pen="e.g. Wolf Clan, Golden Leopard Clan" data-pth="เช่น เผ่าหมาป่า, เผ่าเสือดาวทอง" placeholder="e.g. Wolf Clan, Golden Leopard Clan">
+    </div>
   </div>
 
   <!-- TAB 2: CODENAME -->
   <div class="sepanel" data-p="t2">
     <div class="se-field">
-      <label class="se-label" data-en="Select a Designation (Θ and beyond — the Seven Shadows' seats are already claimed)" data-th="เลือกนามรหัส (ตั้งแต่ Θ เป็นต้นไป &#8212; ตำแหน่งเจ็ดเงามีเจ้าของแล้ว)">Select a Designation</label>
+      <label class="se-label" data-en="Designation Type" data-th="ประเภทนามรหัส">Designation Type</label>
+      <div class="se-pills" id="se-desig-type">
+        <div class="se-pill on" data-v="greek" data-en="Greek Letter" data-th="ตัวอักษรกรีก">Greek Letter</div>
+        <div class="se-pill" data-v="numeric" data-en="Numeric Designation" data-th="รหัสตัวเลข">Numeric Designation</div>
+      </div>
+    </div>
+    <div class="se-field" id="se-greek-field">
+      <label class="se-label" data-en="Select a Letter (Θ and beyond — the Seven Shadows' seats are already claimed)" data-th="เลือกตัวอักษร (ตั้งแต่ Θ เป็นต้นไป &#8212; ตำแหน่งเจ็ดเงามีเจ้าของแล้ว)">Select a Letter</label>
       <div id="se-greek"></div>
+    </div>
+    <div class="se-field" id="se-numeric-field" style="display:none">
+      <label class="se-label" data-en="Choose a Number (Shadow Garden has grown large enough that later recruits are numbered rather than lettered — e.g. 559, 664, 665, 666, 712)" data-th="เลือกหมายเลข (สวนเงาขยายใหญ่ขึ้นจนสมาชิกรุ่นหลังใช้หมายเลขแทนตัวอักษร &#8212; เช่น 559, 664, 665, 666, 712)">Choose a Number</label>
+      <input class="se-input" id="f-numeric" type="text" data-pen="e.g. 713" data-pth="เช่น 713" placeholder="e.g. 713">
     </div>
     <div class="se-field">
       <label class="se-label" data-en="Specialty" data-th="ความถนัด">Specialty</label>
@@ -223,6 +242,10 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
 
   <!-- TAB 5: LEGEND -->
   <div class="sepanel" data-p="t5">
+    <div class="se-field">
+      <label class="se-label" data-en="How Were They Found? (most every operative was personally rescued by Shadow from something dire)" data-th="พวกเขาถูกพบได้อย่างไร (สมาชิกเกือบทุกคนถูก Shadow ช่วยชีวิตจากสถานการณ์ร้ายแรงด้วยตัวเอง)">How Were They Found?</label>
+      <textarea class="se-textarea" id="f-recruitment" data-pen="The circumstances of their rescue and recruitment..." data-pth="สถานการณ์ตอนที่ถูกช่วยเหลือและรับเข้าสวนเงา..." placeholder="The circumstances of their rescue and recruitment..."></textarea>
+    </div>
     <div class="se-field">
       <label class="se-label" data-en="The Legend (their exaggerated, half-believed origin)" data-th="ตำนาน (เรื่องราวกำเนิดสุดเว่อร์ที่พวกเขาเชื่อครึ่งไม่เชื่อครึ่ง)">The Legend</label>
       <textarea class="se-textarea" id="f-legend" data-pen="The dramatic story they tell about themselves..." data-pth="เรื่องราวสุดดราม่าที่พวกเขาเล่าเกี่ยวกับตัวเอง..." placeholder="The dramatic story they tell about themselves..." style="min-height:70px"></textarea>
@@ -272,10 +295,39 @@ qa('.se-glyph').forEach(function(el){
   });
 });
 
+/* designation type: greek letter vs numeric (both attested for Numbers-tier operatives) */
+var desigType='greek';
+qa('#se-desig-type .se-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#se-desig-type .se-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    desigType=el.getAttribute('data-v');
+    g('se-greek-field').style.display=(desigType==='greek')?'block':'none';
+    g('se-numeric-field').style.display=(desigType==='numeric')?'block':'none';
+  });
+});
+
+var RACES=[
+  ['Human','มนุษย์'],['Elf','เอลฟ์'],['Beastkin','บีสต์คิน'],['Vampire','แวมไพร์'],['Other','อื่นๆ']
+];
+var selectedRace=null;
+g('se-race').innerHTML=RACES.map(function(x,i){
+  return '<div class="se-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#se-race .se-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#se-race .se-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedRace=RACES[parseInt(el.getAttribute('data-i'))];
+    g('se-clan-field').style.display=(selectedRace[0]==='Beastkin')?'block':'none';
+  });
+});
+
 var SPECIALTIES=[
-  ['Swordsmanship','การต่อสู้ด้วยดาบ'],['Elemental Magic','เวทมนตร์ธาตุ'],['Stealth & Infiltration','การแฝงตัวและแทรกซึม'],
-  ['Alchemy & Poison','การเล่นแร่แปรธาตุและยาพิษ'],['Engineering & Devices','วิศวกรรมและอุปกรณ์'],
-  ['Espionage & Intel','การจารกรรมและข่าวกรอง'],['Investigation','การสืบสวน'],['Other','อื่นๆ']
+  ['Combat & Swordsmanship','การต่อสู้และดาบ'],['Precision Magic & Infiltration','เวทมนตร์ละเอียดและการแทรกซึม'],
+  ['Business & Finance','ธุรกิจและการเงิน'],['Intelligence & Research','ข่าวกรองและการวิจัย'],
+  ['Exploration & Espionage','การสำรวจและจารกรรม'],['Engineering & R&D','วิศวกรรมและการวิจัยพัฒนา'],
+  ['Investigation','การสืบสวน'],['Other','อื่นๆ']
 ];
 var selectedSpecialty=null;
 g('se-specialty').innerHTML=SPECIALTIES.map(function(x,i){
@@ -429,7 +481,18 @@ function readExtraRows(){
 function submit(){
   var name=g('f-name').value.trim();
   if(!name){toast(L==='th'?'กรุณากรอกชื่อจริง':'Please enter a true name');go('t1');return;}
-  if(!selectedGreek){toast(L==='th'?'กรุณาเลือกนามรหัส':'Please select a codename designation');go('t2');return;}
+
+  var codename,codenameGlyph;
+  if(desigType==='greek'){
+    if(!selectedGreek){toast(L==='th'?'กรุณาเลือกนามรหัส':'Please select a codename designation');go('t2');return;}
+    codename=selectedGreek[1];
+    codenameGlyph=selectedGreek[0];
+  }else{
+    var num=g('f-numeric').value.trim();
+    if(!num){toast(L==='th'?'กรุณาระบุหมายเลข':'Please enter a numeric designation');go('t2');return;}
+    codename=num;
+    codenameGlyph=num;
+  }
 
   var data={
     charColor:selectedColor,
@@ -437,12 +500,16 @@ function submit(){
     age:g('f-age').value.trim(),
     persona:g('f-persona').value.trim(),
     appearance:g('f-appearance').value.trim(),
-    codename:selectedGreek[1],
-    codenameGlyph:selectedGreek[0],
+    race:selectedRace?selectedRace[0]:'',
+    clan:(selectedRace&&selectedRace[0]==='Beastkin')?g('f-clan').value.trim():'',
+    designationType:desigType,
+    codename:codename,
+    codenameGlyph:codenameGlyph,
     specialty:selectedSpecialty?selectedSpecialty[0]:'',
     abilities:readRows(abilityGroup.list),
     gear:readRows(gearGroup.list),
     traits:traits.slice(),
+    recruitment:g('f-recruitment').value.trim(),
     legend:g('f-legend').value.trim(),
     motive:g('f-motive').value.trim(),
     extra:readExtraRows()

@@ -123,6 +123,7 @@ html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',ser
       <div id="abilities-wrap"></div>
       <div id="gear-wrap"></div>
       <div id="traits-wrap"></div>
+      <div id="recruitment-wrap"></div>
       <div id="legend-wrap"></div>
       <div id="motive-wrap"></div>
       <div id="extra-wrap"></div>
@@ -157,11 +158,13 @@ function renderAll(){
   }
 
   g('do-glyph').textContent=d.codenameGlyph||'?';
-  g('do-codename').textContent=d.codename?(L==='th'?'นามรหัส '+d.codename:'Designation '+d.codename):'';
+  var isNumeric=d.designationType==='numeric';
+  g('do-codename').textContent=d.codename?(isNumeric?(L==='th'?'หมายเลข '+d.codename:'No. '+d.codename):(L==='th'?'นามรหัส '+d.codename:'Designation '+d.codename)):'';
   g('do-name').textContent=d.name||(L==='th'?'ผู้ปฏิบัติการไร้นาม':'Unnamed Operative');
   g('do-persona').textContent=d.persona?(L==='th'?'ภายนอกรู้จักในนาม: '+d.persona:'Known publicly as: '+d.persona):'';
 
   var meta=[];
+  if(d.race)meta.push(esc(d.race)+(d.clan?' ('+esc(d.clan)+')':''));
   if(d.age)meta.push((L==='th'?'อายุ ':'Age ')+esc(d.age));
   if(d.appearance)meta.push(esc(d.appearance));
   var aaHtml='';
@@ -206,6 +209,12 @@ function renderAll(){
       traits.map(function(t){return '<span class="do-tag">'+esc(t)+'</span>';}).join('')+'</div>';
   }
   g('traits-wrap').innerHTML=traitsHtml;
+
+  var recHtml='';
+  if(d.recruitment){
+    recHtml=secHead('How They Were Found','วิธีที่พวกเขาถูกพบตัว')+'<div class="do-note">'+esc(d.recruitment)+'</div>';
+  }
+  g('recruitment-wrap').innerHTML=recHtml;
 
   var legHtml='';
   if(d.legend){
