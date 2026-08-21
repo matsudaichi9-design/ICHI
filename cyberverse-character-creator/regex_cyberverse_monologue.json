@@ -1,0 +1,18 @@
+{
+    "id": "cyberverse-monologue",
+    "scriptName": "Cyberverse Monologue",
+    "findRegex": "/\\[NEURO\\|(.*?)\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap\" rel=\"stylesheet\"/><div style=\"max-width:500px;margin:9px auto 14px;font-family:'Rajdhani',sans-serif;\"><div style=\"display:flex;align-items:center;gap:7px;margin-bottom:7px;\"><span style=\"height:1px;width:20px;background:linear-gradient(90deg,$2,transparent);flex-shrink:0;\"></span><span style=\"font-family:'Share Tech Mono',monospace;font-size:8px;letter-spacing:2.2px;color:$2;opacity:.8;white-space:nowrap;\">$1 · NEURAL LOG</span><span style=\"width:4px;height:4px;border-radius:50%;background:$2;opacity:.7;flex-shrink:0;box-shadow:0 0 4px $2;\"></span></div><div style=\"position:relative;padding:10px 13px;background:rgba(8,10,18,.55);border-left:3px solid $2;border-radius:0 4px 4px 0;\"><div style=\"font-style:italic;color:#aab8cc;font-size:13.5px;line-height:1.62;font-family:'Rajdhani',sans-serif;\">$3</div></div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}

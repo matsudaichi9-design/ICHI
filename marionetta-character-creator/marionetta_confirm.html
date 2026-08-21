@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Cormorant Garamond',serif;font-size:15px}
+:root{
+  --bg:#140D07;--pan:#1F150C;--pan2:#2A1D11;
+  --acc:#7A1220;--acc-rgb:122,18,32;
+  --gold:#B8862E;--goldd:rgba(184,134,46,.14);
+  --ink:#E8D9B8;--ink2:#B8A585;--mu:#7A6448;
+  --bd:rgba(184,134,46,.28);--bd2:rgba(255,255,255,.06);
+}
+#poster{max-width:460px;margin:6px auto;background:radial-gradient(ellipse at 50% 0%,var(--pan) 0%,var(--bg) 70%);position:relative;border-radius:2px;box-shadow:0 16px 55px rgba(0,0,0,.82);animation:pin .35s ease both;overflow:hidden}
+@keyframes pin{from{opacity:0;transform:translateY(-6px) scale(.99)}to{opacity:1;transform:none}}
+#poster::before{content:'';position:absolute;inset:10px;border:1px solid var(--bd);pointer-events:none;z-index:3}
+#poster::after{content:'';position:absolute;inset:14px;border:1px solid var(--bd2);pointer-events:none;z-index:3}
+.rosette{position:absolute;width:20px;height:20px;color:var(--gold);font-size:15px;display:flex;align-items:center;justify-content:center;z-index:4;opacity:.75}
+.r-tl{top:12px;left:12px}.r-tr{top:12px;right:12px}.r-bl{bottom:12px;left:12px}.r-br{bottom:12px;right:12px}
+
+#pcontent{position:relative;z-index:2;padding:34px 28px 26px;text-align:center}
+
+#masthead{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+#pname{font-family:'UnifrakturMaguntia',cursive;font-size:34px;line-height:1.15;color:var(--ink);text-shadow:0 0 22px rgba(var(--acc-rgb),.4);word-break:break-word}
+#prole{font-size:13px;font-style:italic;color:var(--ink2);margin-top:6px}
+
+#medallion{width:74px;height:74px;border-radius:50%;margin:18px auto 14px;border:2px solid var(--gold);background:radial-gradient(circle at 35% 30%,rgba(var(--acc-rgb),.55),rgba(var(--acc-rgb),.25) 70%);display:flex;align-items:center;justify-content:center;font-size:30px;box-shadow:0 4px 14px rgba(0,0,0,.4),inset 0 0 14px rgba(0,0,0,.3)}
+
+#tagline{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-bottom:22px}
+.tag-flag{font-size:9.5px;letter-spacing:1px;text-transform:uppercase;color:var(--ink2);padding:3px 9px;border:1px solid var(--bd2);border-radius:2px;background:var(--pan2)}
+
+.p-rule{display:flex;align-items:center;gap:8px;margin:20px 0 14px}
+.p-rule::before,.p-rule::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.p-rule span{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);white-space:nowrap}
+
+#billing{text-align:left;max-width:330px;margin:0 auto}
+.bill-row{display:flex;align-items:baseline;gap:6px;padding:5px 0}
+.bill-nm{font-size:12px;color:var(--ink2);white-space:nowrap;flex-shrink:0}
+.bill-dots{flex:1;border-bottom:1px dotted var(--bd);transform:translateY(-3px);min-width:10px}
+.bill-lvl{font-size:11px;font-weight:600;white-space:nowrap;flex-shrink:0}
+
+#engagement{text-align:left;max-width:340px;margin:0 auto;font-size:12.5px;color:var(--ink2);line-height:1.7}
+#engagement p{margin-bottom:10px}
+#engagement .lbl{font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mu);display:block;margin-bottom:3px}
+
+#pullquote{font-family:'Dancing Script',cursive;font-size:22px;color:var(--gold);line-height:1.4;margin:6px auto 0;max-width:320px;text-shadow:0 0 12px rgba(184,134,46,.25)}
+
+#stub-wrap{max-width:300px;margin:20px auto 0;position:relative}
+#stub{background:var(--pan2);border:1px dashed var(--bd);border-radius:3px;padding:12px 16px;text-align:center;cursor:pointer;transition:filter .3s;position:relative}
+#stub::before,#stub::after{content:'';position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--bg);transform:translateY(-50%)}
+#stub::before{left:-7px}#stub::after{right:-7px}
+#stub-lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu)}
+#stub-txt{font-size:12px;font-style:italic;color:var(--ink2);margin-top:5px;filter:blur(5px);transition:filter .4s;user-select:none}
+#stub.revealed #stub-txt{filter:blur(0)}
+#stub-hint{font-size:9px;color:var(--mu);margin-top:6px}
+#stub.revealed #stub-hint{display:none}
+
+#perf{max-width:320px;margin:8px auto 0;display:flex;align-items:center;gap:10px;text-align:left}
+#perf-ico{font-size:22px;flex-shrink:0}
+#perf-ttl{font-size:12.5px;font-weight:600;color:var(--ink)}
+#perf-desc{font-size:11px;color:var(--mu);font-style:italic;margin-top:2px}
+
+#pfoot{margin-top:26px;padding-top:16px;border-top:1px solid var(--bd2)}
+#admit{display:inline-block;padding:5px 16px;border:1.5px solid var(--gold);border-radius:2px;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);transform:rotate(-2deg)}
+#pfinegrid{display:flex;justify-content:center;gap:18px;margin-top:12px;font-size:9.5px;color:var(--mu);letter-spacing:.5px}
+.mc-empty{font-size:11px;color:var(--mu);font-style:italic}
+</style>
+</head>
+<body>
+<textarea id="mnraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="poster">
+  <div class="rosette r-tl">❦</div><div class="rosette r-tr">❦</div>
+  <div class="rosette r-bl">❦</div><div class="rosette r-br">❦</div>
+
+  <div id="pcontent">
+    <div id="masthead">✦ Now Appearing ✦</div>
+    <div id="pname">—</div>
+    <div id="prole"></div>
+
+    <div id="medallion">🎭</div>
+
+    <div id="tagline"></div>
+
+    <div class="p-rule"><span>The Billing</span></div>
+    <div id="billing"></div>
+
+    <div class="p-rule"><span>Special Engagement</span></div>
+    <div id="engagement"></div>
+    <div id="pullquote" style="display:none"></div>
+
+    <div id="stub-wrap" style="display:none">
+      <div id="stub">
+        <div id="stub-lbl">Sealed Confession</div>
+        <div id="stub-txt"></div>
+        <div id="stub-hint">tap to peel back the stub</div>
+      </div>
+    </div>
+
+    <div class="p-rule"><span>Tonight's Performance</span></div>
+    <div id="perf"></div>
+
+    <div id="pfoot">
+      <span id="admit">✦ Admit One ✦</span>
+      <div id="pfinegrid"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+var STATS=[
+  {id:'cunning',nm:'Cunning'},
+  {id:'agility',nm:'Agility & Grace'},
+  {id:'willpower',nm:'Willpower'},
+  {id:'mysticism',nm:'Mysticism'},
+  {id:'charisma',nm:'Stage Presence'},
+  {id:'force',nm:'Physical Force'}
+];
+
+var SCENARIOS={
+  ordinary:{ico:'🕯️',ttl:'Ordinary Life',desc:'Before the circus ever came to town.'},
+  opening:{ico:'🎪',ttl:'Opening Night',desc:'Nothing has been the same since.'},
+  bargain:{ico:'🖤',ttl:'The Bargain',desc:'A deal you cannot take back.'},
+  onrun:{ico:'🌘',ttl:'On the Run',desc:'Fleeing Kalgratti authorities.'},
+  backstage:{ico:'🎭',ttl:'Behind the Curtain',desc:'Among the troupe, between shows.'},
+  aspett:{ico:'🔬',ttl:'The Research Center',desc:"Inside Aspett's walls."}
+};
+
+function statLevel(v){
+  if(v<100)return{en:'Sideshow',color:'#7A6448'};
+  if(v<300)return{en:'Understudy',color:'#9A8060'};
+  if(v<500)return{en:'Featured Act',color:'#B09040'};
+  if(v<700)return{en:'Headliner',color:'#B8862E'};
+  if(v<850)return{en:'Star of the Show',color:'#A24868'};
+  if(v<980)return{en:'Legend',color:'#5A3E8A'};
+  if(v<1000)return{en:'Otherworldly',color:'#7A1220'};
+  return{en:'Beyond the Veil',color:'#FFD700'};
+}
+
+var raw=g('mnraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var acc=d.charColor||'#7A1220';
+document.documentElement.style.setProperty('--acc',acc);
+function hexRgb(h){return parseInt(h.slice(1,3),16)+','+parseInt(h.slice(3,5),16)+','+parseInt(h.slice(5,7),16)}
+try{document.documentElement.style.setProperty('--acc-rgb',hexRgb(acc))}catch(e){}
+
+var sp=d.species||'human';
+g('pname').textContent=d.name||'Unnamed';
+var roleLine=(sp==='ahkon'?"Ah'kon":'Human')+(d.role?' · '+d.role:'')+(d.alias?' · "'+d.alias+'"':'');
+g('prole').textContent=roleLine;
+g('medallion').textContent=(sp==='ahkon'?'👁':'🎭');
+
+var traits=d.traits||[];
+var tagEl=g('tagline');
+if(traits.length){
+  tagEl.innerHTML=traits.slice(0,4).map(function(t){return '<span class="tag-flag">'+esc(t)+'</span>';}).join('');
+}else{
+  tagEl.innerHTML='<span class="mc-empty">No traits recorded</span>';
+}
+
+/* BILLING */
+var billEl=g('billing');
+if(billEl){
+  var bh='';
+  STATS.forEach(function(s){
+    var v=(d.stats&&d.stats[s.id]!=null)?d.stats[s.id]:0;
+    var lv=statLevel(v);
+    bh+='<div class="bill-row"><span class="bill-nm">'+s.nm+'</span><span class="bill-dots"></span><span class="bill-lvl" style="color:'+lv.color+'">'+lv.en+'</span></div>';
+  });
+  billEl.innerHTML=bh;
+}
+
+/* ENGAGEMENT */
+var engEl=g('engagement');
+if(engEl){
+  var eh='';
+  if(d.personality)eh+='<p><span class="lbl">Personality</span>'+esc(d.personality)+'</p>';
+  if(d.background)eh+='<p><span class="lbl">Origin</span>'+esc(d.background)+'</p>';
+  var extras=[];
+  if(d.goal)extras.push('seeks '+d.goal.toLowerCase());
+  if(d.bond)extras.push('bound to '+d.bond.toLowerCase());
+  if(d.fear)extras.push('fears '+d.fear.toLowerCase());
+  if(extras.length)eh+='<p><span class="lbl">Known For</span>'+esc(extras.join(' · '))+'</p>';
+  if(!eh)eh='<div class="mc-empty">No dossier notes recorded.</div>';
+  engEl.innerHTML=eh;
+}
+
+if(d.quote){
+  var pq=g('pullquote');
+  pq.style.display='block';
+  pq.textContent='"'+d.quote+'"';
+}
+
+/* SECRET STUB */
+if(d.secret){
+  g('stub-wrap').style.display='block';
+  g('stub-txt').textContent=d.secret;
+  g('stub').addEventListener('click',function(){this.classList.toggle('revealed')});
+}
+
+/* PERFORMANCE */
+var perfEl=g('perf');
+if(perfEl){
+  var sc=d.scenario;var info=SCENARIOS[sc];
+  if(sc==='custom'){
+    perfEl.innerHTML='<span id="perf-ico">✏️</span><div><div id="perf-ttl">Custom Opening</div><div id="perf-desc">'+esc(d.scenarioCustom||'')+'</div></div>';
+  }else if(info){
+    perfEl.innerHTML='<span id="perf-ico">'+info.ico+'</span><div><div id="perf-ttl">'+info.ttl+'</div><div id="perf-desc">'+info.desc+'</div></div>';
+  }else{
+    perfEl.innerHTML='<div class="mc-empty">No performance scheduled</div>';
+  }
+}
+
+/* FINE PRINT FOOTER */
+var fineRows=[];
+if(d.nation)fineRows.push(d.nation);
+if(d.region)fineRows.push(d.region);
+if(sp==='ahkon'&&d.govStatus)fineRows.push(d.govStatus);
+if(sp==='human'&&d.occupation)fineRows.push(d.occupation);
+g('pfinegrid').textContent=fineRows.join('   ·   ');
+})();
+</script>
+</body>
+</html>

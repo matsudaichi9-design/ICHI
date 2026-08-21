@@ -1,0 +1,39 @@
+{
+  "name": "Marionetta Character Header",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marionetta Character Header — Format Instructions",
+      "content": "## MARIONETTA CHARACTER HEADER\n\nAt the very start of your response (before any narrative or dialogue), output a character header tag when the scene focuses on a specific character.\n\n### SYNTAX\n```\n[MARIONETTA|catbox_code|Character Name|#hexcolor]\n```\n\n- `catbox_code` — filename from files.catbox.moe (e.g. `abc123.jpg`). If no image is configured, write `_` and the marionette-strings placeholder will appear automatically.\n- `Character Name` — full name, alias in quotes optional (e.g. `Odile Marchetti \"The Vanishing Girl\"`)\n- `#hexcolor` — accent color for the character; use the guide below if not otherwise specified\n\n### COLOR GUIDE\n| Character type | Color |\n|---|---|\n| Human protagonist / neutral | `#B8862E` (antique gold) |\n| Ah'kon | `#5A3E8A` (mystic violet) |\n| Kalgratti official / military | `#3E5A82` (steel blue) |\n| Circus troupe / performer | `#7A1220` (wax red) |\n| Steinheimer / antagonist | `#7A1220` with a colder edge — pair with narration, not hue, to convey menace |\n| Researcher / Aspett staff | `#3E7A82` (clinical teal) |\n\n### WHEN TO OUTPUT\n- At the start of a response where YOU (the AI) are speaking or acting as a specific named character\n- When a scene begins and a particular character is the clear focus\n- When introducing a new character for the first time\n\n### RULES\n- Output it ONCE per response, on its own line, at the very top\n- Never repeat it mid-response\n- Do NOT output it for background/unnamed characters\n- Use the PLAYER CHARACTER's configured color if narrating from their POV\n- If the scene has no single focus character, omit the tag entirely\n\n### EXAMPLE\n```\n[MARIONETTA|abc123.jpg|Odile Marchetti|#5A3E8A]\n\nThe scarf shifted as she tilted her head, just enough to make you wonder what it hid. \"You're staring,\" she said, not unkindly.\n```",
+      "constant": true,
+      "order": 92,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

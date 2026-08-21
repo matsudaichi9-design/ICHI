@@ -1,0 +1,18 @@
+{
+    "id": "marionetta-character-header",
+    "scriptName": "Marionetta Character Header",
+    "findRegex": "/\\[MARIONETTA\\|(.*?)\\|(.*?)\\|(.*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,500;1,400;1,500&display=swap\" rel=\"stylesheet\"/><div style=\"position:relative;max-width:420px;margin:14px auto 10px;padding:9px 16px 11px;font-family:'Cormorant Garamond',serif;background:transparent;border-top:1px dashed rgba(184,134,46,.28);border-bottom:1px dashed rgba(184,134,46,.28);\"><div style=\"position:absolute;top:-8px;left:0;color:$3;font-size:12px;opacity:.6;\">❦</div><div style=\"position:absolute;top:-8px;right:0;color:$3;font-size:12px;opacity:.6;transform:scaleX(-1);\">❦</div><div style=\"position:relative;display:flex;align-items:center;gap:14px;padding-top:4px;\"><div style=\"position:relative;width:54px;height:54px;flex-shrink:0;\"><div style=\"position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);width:20px;height:12px;background:$3;opacity:.85;border-radius:45% 55% 40% 60%/60% 60% 40% 40%;z-index:0;\"></div><div style=\"position:absolute;inset:0;border-radius:50%;overflow:hidden;z-index:1;border:2px solid $3;background:#0F0A06;box-shadow:0 0 14px -2px $3,inset 0 0 10px -4px $3;\"><div style=\"position:absolute;inset:0;background:radial-gradient(circle at 50% 32%,rgba(184,134,46,.16),#0F0A06 72%);z-index:1;pointer-events:none;\"></div><div style=\"position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;\"><svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\" fill=\"none\"><line x1=\"6\" y1=\"6\" x2=\"20\" y2=\"6\" stroke=\"$3\" stroke-width=\"1.4\"/><line x1=\"9\" y1=\"6\" x2=\"6\" y2=\"19\" stroke=\"$3\" stroke-width=\"1.1\" opacity=\".85\"/><line x1=\"13\" y1=\"6\" x2=\"13\" y2=\"19\" stroke=\"$3\" stroke-width=\"1.1\" opacity=\".85\"/><line x1=\"17\" y1=\"6\" x2=\"20\" y2=\"19\" stroke=\"$3\" stroke-width=\"1.1\" opacity=\".85\"/><circle cx=\"6\" cy=\"20\" r=\"1.5\" fill=\"$3\"/><circle cx=\"13\" cy=\"20\" r=\"1.5\" fill=\"$3\"/><circle cx=\"20\" cy=\"20\" r=\"1.5\" fill=\"$3\"/></svg></div><img src=\"https://files.catbox.moe/$1\" alt=\"$2\" style=\"position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;background:#0F0A06;z-index:3;\" onerror=\"this.style.display='none'\"/></div></div><div style=\"flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;\"><span style=\"font-family:'UnifrakturMaguntia',cursive;font-size:19px;color:#E8D9B8;letter-spacing:.5px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 0 14px -2px $3;\">$2</span><span style=\"font-size:11px;font-style:italic;color:#B8A585;letter-spacing:.3px;\"><span style=\"color:$3;opacity:.75;\">❦</span> Bound to the Stage <span style=\"color:$3;opacity:.75;\">❦</span></span></div></div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 2
+}

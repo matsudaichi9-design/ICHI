@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',serif;font-size:14px}
+:root{
+  --ac:#A32638;--ac-rgb:163,38,56;
+  --sv:#B9BCC8;--tx:#E9E6EC;--tx2:#8B8894;--mu:#403A44;
+  --bg:#07060A;--pan:#0F0D13;--pan2:#17131C;--pan3:#1F1A26;
+  --bd:rgba(163,38,56,.32);--bd2:rgba(255,255,255,.05);
+  --fd:'Black Ops One',sans-serif;--fth:'Noto Serif Thai',serif;
+}
+#dowrap{max-width:460px;margin:16px auto;position:relative}
+#dowrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:8px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.5),0 0 26px 3px rgba(var(--ac-rgb),.32);
+  animation:doaura 3s ease-in-out infinite}
+@keyframes doaura{0%,100%{opacity:.7}50%{opacity:1}}
+#do{position:relative;z-index:1;background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:8px;overflow:hidden;cursor:pointer;
+  box-shadow:0 24px 60px rgba(0,0,0,.85);animation:doi .38s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes doi{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}
+
+#do-smoke{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.5}
+.do-blob{position:absolute;border-radius:50%;filter:blur(30px);background:radial-gradient(circle,rgba(var(--ac-rgb),.16),transparent 70%);
+  animation:dodrift 22s ease-in-out infinite}
+.do-blob:nth-child(1){width:220px;height:220px;top:-60px;left:-60px}
+.do-blob:nth-child(2){width:180px;height:180px;bottom:-50px;right:-40px;animation-delay:-8s;background:radial-gradient(circle,rgba(20,16,26,.5),transparent 70%)}
+@keyframes dodrift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-16px) scale(1.1)}}
+
+#do-stamp{position:absolute;top:50px;right:-58px;z-index:2;pointer-events:none;
+  transform:rotate(34deg);font-family:var(--fd);font-size:11px;letter-spacing:3px;color:rgba(var(--ac-rgb),.4);
+  border:2px solid rgba(var(--ac-rgb),.4);padding:4px 58px;text-transform:uppercase;white-space:nowrap}
+
+#do-lang{position:absolute;top:11px;right:13px;z-index:4;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#do-lang b{font-family:var(--fd);font-size:7px;letter-spacing:.4px;padding:3px 6px;border-radius:99px;color:var(--mu)}
+#do-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#4a0f16);box-shadow:0 0 8px -2px var(--ac)}
+
+#do-head{position:relative;z-index:1;padding:20px 24px 4px;text-align:center}
+#do-eyebrow{font-family:var(--fd);font-size:8px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #do-eyebrow{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:1px}
+#do-title{font-family:var(--fd);font-size:16px;letter-spacing:1.6px;margin-top:8px;color:var(--tx);
+  text-shadow:0 0 16px rgba(var(--ac-rgb),.5);text-transform:uppercase}
+[lang-mode="th"] #do-title{font-family:'Noto Serif Thai',serif;font-size:15px;letter-spacing:.2px;font-weight:700}
+#do-chev{position:absolute;bottom:2px;right:22px;font-size:9px;color:var(--mu);transition:transform .3s}
+#dowrap.closed #do-chev{transform:rotate(180deg)}
+#dobody{max-height:1400px;overflow:hidden;transition:max-height .35s ease}
+#dowrap.closed #dobody{max-height:0}
+
+#do-medal-wrap{width:104px;height:104px;margin:16px auto 0;position:relative}
+#do-medal-ring{position:absolute;inset:-6px;border-radius:50%;border:1px dashed rgba(var(--ac-rgb),.4)}
+#do-medal{width:100%;height:100%;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.12),var(--pan3) 70%);
+  border:2px solid var(--ac);box-shadow:0 0 24px -2px var(--ac),inset 0 0 20px -6px var(--ac);
+  display:flex;align-items:center;justify-content:center}
+#do-glyph{font-family:var(--fd);font-size:46px;color:var(--tx);text-shadow:0 0 16px var(--ac)}
+#do-codename{text-align:center;font-family:var(--fd);font-size:10px;letter-spacing:2.4px;color:var(--ac);
+  text-transform:uppercase;margin-top:9px}
+[lang-mode="th"] #do-codename{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.2px}
+
+#do-name{font-size:19px;text-align:center;margin-top:8px;color:var(--tx);font-weight:600}
+[lang-mode="th"] #do-name{font-family:'Noto Serif Thai',serif}
+#do-persona{text-align:center;font-size:11px;font-style:italic;color:var(--tx2);margin-top:3px}
+[lang-mode="th"] #do-persona{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+.do-body{position:relative;z-index:1;padding:8px 24px 4px}
+.do-sec{display:flex;align-items:center;gap:8px;margin:15px 0 9px}
+.do-sec .t{font-family:var(--fd);font-size:9px;letter-spacing:2px;color:var(--sv);text-transform:uppercase}
+[lang-mode="th"] .do-sec .t{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+.do-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.do-note{font-size:12px;color:var(--tx2);line-height:1.65;background:var(--pan);
+  border-left:2px solid var(--ac);border-radius:0 4px 4px 0;padding:10px 13px}
+[lang-mode="th"] .do-note{font-family:'Noto Serif Thai',serif}
+.do-note.legend{font-style:italic;position:relative}
+[lang-mode="th"] .do-note.legend{font-style:normal}
+.do-tags{display:flex;flex-wrap:wrap;gap:6px}
+.do-tag{font-size:11px;color:var(--tx);background:var(--pan);border:1px solid var(--bd2);border-radius:2px;padding:3px 10px}
+[lang-mode="th"] .do-tag{font-family:'Noto Serif Thai',serif}
+
+.do-litem{padding:8px 0;border-bottom:1px solid var(--bd2)}
+.do-litem:last-child{border-bottom:none}
+.do-litem .n{font-size:12.5px;font-weight:600;color:var(--tx)}
+[lang-mode="th"] .do-litem .n{font-family:'Noto Serif Thai',serif}
+.do-litem .d{font-size:11px;color:var(--tx2);font-style:italic;margin-top:3px;line-height:1.5}
+[lang-mode="th"] .do-litem .d{font-family:'Noto Serif Thai',serif;font-style:normal}
+.do-kv{padding:7px 0;border-bottom:1px solid var(--bd2)}
+.do-kv:last-child{border-bottom:none}
+.do-kv .k{font-family:var(--fd);font-size:8px;letter-spacing:1.4px;color:var(--sv);text-transform:uppercase}
+[lang-mode="th"] .do-kv .k{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:.2px}
+.do-kv .v{font-size:11.5px;color:var(--tx);margin-top:2px}
+[lang-mode="th"] .do-kv .v{font-family:'Noto Serif Thai',serif}
+
+#dofoot{position:relative;z-index:1;padding:12px 24px 18px;text-align:center;font-size:9px;
+  letter-spacing:.8px;color:var(--mu);border-top:1px solid var(--bd2);margin-top:8px;text-transform:uppercase}
+[lang-mode="th"] #dofoot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="doraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="dowrap"><div id="do">
+  <div id="do-smoke"><div class="do-blob"></div><div class="do-blob"></div></div>
+  <div id="do-stamp">CLASSIFIED</div>
+  <div id="do-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="do-head">
+    <div id="do-eyebrow" data-en="SHADOW GARDEN &#8212; PERSONNEL FILE" data-th="สวนเงา &#8212; เอกสารประจำตัวสมาชิก">SHADOW GARDEN &#8212; PERSONNEL FILE</div>
+    <div id="do-title" data-en="ENLISTMENT CONFIRMED" data-th="ยืนยันการสมัครแล้ว">ENLISTMENT CONFIRMED</div>
+    <div id="do-chev">&#9650;</div>
+  </div>
+
+  <div id="dobody">
+    <div id="do-medal-wrap"><div id="do-medal-ring"></div><div id="do-medal"><span id="do-glyph">&#920;</span></div></div>
+    <div id="do-codename"></div>
+    <div id="do-name">Unnamed Operative</div>
+    <div id="do-persona"></div>
+
+    <div class="do-body">
+      <div id="age-appearance-wrap"></div>
+      <div id="specialty-wrap"></div>
+      <div id="abilities-wrap"></div>
+      <div id="gear-wrap"></div>
+      <div id="traits-wrap"></div>
+      <div id="recruitment-wrap"></div>
+      <div id="legend-wrap"></div>
+      <div id="motive-wrap"></div>
+      <div id="extra-wrap"></div>
+    </div>
+
+    <div id="dofoot" data-en="This file exists in no official record" data-th="เอกสารฉบับนี้ไม่มีอยู่ในบันทึกทางการใดๆ">This file exists in no official record</div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('doraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function renderAll(){
+  if(d.charColor){
+    document.documentElement.style.setProperty('--ac',d.charColor);
+    var h=d.charColor.replace('#','');
+    if(h.length===6){
+      var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+      document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+    }
+  }
+
+  g('do-glyph').textContent=d.codenameGlyph||'?';
+  var isNumeric=d.designationType==='numeric';
+  g('do-codename').textContent=d.codename?(isNumeric?(L==='th'?'หมายเลข '+d.codename:'No. '+d.codename):(L==='th'?'นามรหัส '+d.codename:'Designation '+d.codename)):'';
+  g('do-name').textContent=d.name||(L==='th'?'ผู้ปฏิบัติการไร้นาม':'Unnamed Operative');
+  g('do-persona').textContent=d.persona?(L==='th'?'ภายนอกรู้จักในนาม: '+d.persona:'Known publicly as: '+d.persona):'';
+
+  var meta=[];
+  if(d.race)meta.push(esc(d.race)+(d.clan?' ('+esc(d.clan)+')':''));
+  if(d.age)meta.push((L==='th'?'อายุ ':'Age ')+esc(d.age));
+  if(d.appearance)meta.push(esc(d.appearance));
+  var aaHtml='';
+  if(meta.length){
+    aaHtml='<div class="do-sec"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
+      (L==='th'?'ตัวตน':'Identity')+'</span><span class="ln"></span></div><div class="do-note">'+meta.join(' &#8212; ')+'</div>';
+  }
+  g('age-appearance-wrap').innerHTML=aaHtml;
+
+  var specHtml='';
+  if(d.specialty){
+    specHtml='<div class="do-sec"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
+      (L==='th'?'ความถนัด':'Specialty')+'</span><span class="ln"></span></div><div class="do-tags"><span class="do-tag">'+esc(d.specialty)+'</span></div>';
+  }
+  g('specialty-wrap').innerHTML=specHtml;
+
+  var secIcon='<svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg>';
+  function secHead(en,th){return '<div class="do-sec">'+secIcon+'<span class="t">'+(L==='th'?th:en)+'</span><span class="ln"></span></div>';}
+
+  var abilities=d.abilities||[];
+  var abHtml='';
+  if(abilities.length){
+    abHtml=secHead('Abilities','ความสามารถ')+abilities.map(function(a){
+      return '<div class="do-litem"><div class="n">'+esc(a.name||'')+'</div>'+(a.description?'<div class="d">'+esc(a.description)+'</div>':'')+'</div>';
+    }).join('');
+  }
+  g('abilities-wrap').innerHTML=abHtml;
+
+  var gear=d.gear||[];
+  var gearHtml='';
+  if(gear.length){
+    gearHtml=secHead('Gear &amp; Equipment','อุปกรณ์และของประจำตัว')+gear.map(function(x){
+      return '<div class="do-litem"><div class="n">'+esc(x.name||'')+'</div>'+(x.description?'<div class="d">'+esc(x.description)+'</div>':'')+'</div>';
+    }).join('');
+  }
+  g('gear-wrap').innerHTML=gearHtml;
+
+  var traits=d.traits||[];
+  var traitsHtml='';
+  if(traits.length){
+    traitsHtml=secHead('Traits &amp; Quirks','นิสัยและลักษณะเฉพาะ')+'<div class="do-tags">'+
+      traits.map(function(t){return '<span class="do-tag">'+esc(t)+'</span>';}).join('')+'</div>';
+  }
+  g('traits-wrap').innerHTML=traitsHtml;
+
+  var recHtml='';
+  if(d.recruitment){
+    recHtml=secHead('How They Were Found','วิธีที่พวกเขาถูกพบตัว')+'<div class="do-note">'+esc(d.recruitment)+'</div>';
+  }
+  g('recruitment-wrap').innerHTML=recHtml;
+
+  var legHtml='';
+  if(d.legend){
+    legHtml=secHead('The Legend','ตำนานที่เล่าขาน')+'<div class="do-note legend">'+esc(d.legend)+'</div>';
+  }
+  g('legend-wrap').innerHTML=legHtml;
+
+  var motHtml='';
+  if(d.motive){
+    motHtml=secHead('True Motive','แรงจูงใจที่แท้จริง')+'<div class="do-note">'+esc(d.motive)+'</div>';
+  }
+  g('motive-wrap').innerHTML=motHtml;
+
+  var extra=d.extra||[];
+  var extraHtml='';
+  if(extra.length){
+    extraHtml=secHead('Additional Notes','ข้อมูลเพิ่มเติม')+extra.map(function(x){
+      return '<div class="do-kv"><div class="k">'+esc(x.label||'')+'</div><div class="v">'+esc(x.value||'')+'</div></div>';
+    }).join('');
+  }
+  g('extra-wrap').innerHTML=extraHtml;
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(e){e.stopPropagation();setLang('en')});
+g('lg-th').addEventListener('click',function(e){e.stopPropagation();setLang('th')});
+
+renderAll();
+
+var head=g('do-head');
+if(head)head.addEventListener('click',function(){g('dowrap').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>

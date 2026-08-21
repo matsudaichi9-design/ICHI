@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+
+.crd{
+  max-width:460px;margin:6px auto;position:relative;
+  background:#f0e8d0;border:1px solid rgba(28,20,8,.2);border-radius:2px;
+  color:#1c1408;font-family:'Courier Prime','Courier New',monospace;
+  box-shadow:2px 3px 14px rgba(28,20,8,.22),0 0 0 1px rgba(28,20,8,.05);
+  animation:cardapp .4s ease both;
+  background-image:
+    radial-gradient(ellipse at 12% 5%,rgba(210,190,140,.22) 0%,transparent 50%),
+    radial-gradient(ellipse at 90% 92%,rgba(160,140,90,.12) 0%,transparent 45%)
+}
+@keyframes cardapp{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* Folded corner */
+.crd::before{
+  content:'';position:absolute;top:0;right:0;width:0;height:0;z-index:4;pointer-events:none;
+  border-style:solid;border-width:0 20px 20px 0;border-color:transparent #d8d0b8 transparent transparent
+}
+
+/* ── TOP BAND ── */
+.ctop{
+  text-align:center;padding:20px 18px 16px;border-bottom:1px solid rgba(28,20,8,.12);
+  position:relative;overflow:hidden
+}
+.ctop::after{
+  content:'';position:absolute;bottom:0;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(28,20,8,.2),transparent)
+}
+
+/* Eye seal */
+.cseal{width:58px;height:58px;margin:0 auto 14px}
+.cseal svg{width:100%;height:100%;animation:sealpulse 4s ease-in-out infinite}
+@keyframes sealpulse{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* ID stamp */
+.c-id{
+  display:inline-block;padding:4px 18px;margin-bottom:8px;
+  border:1.5px solid rgba(139,26,26,.45);border-radius:1px;background:#f8f1df;
+  font-family:'Special Elite',monospace;font-size:16px;letter-spacing:5px;color:#8B1A1A;
+  text-shadow:.5px .5px 0 rgba(139,26,26,.2)
+}
+.c-tag{font-family:'Special Elite',monospace;font-size:7px;letter-spacing:4px;color:#9c8060;margin-bottom:6px;text-transform:uppercase}
+.c-name{font-family:'Special Elite',monospace;font-size:21px;color:#1c1408;letter-spacing:2px;line-height:1.15;margin-bottom:3px}
+.c-alias{font-family:'Special Elite',monospace;font-size:8.5px;color:#9c8060;letter-spacing:2px;margin-bottom:8px}
+
+/* Status badge */
+.c-status{
+  display:inline-block;padding:3px 14px;margin-top:2px;
+  font-family:'Special Elite',monospace;font-size:8px;letter-spacing:2px;
+  border:1px solid rgba(28,20,8,.25);border-radius:1px;background:#ece4cc;
+  color:#5c4a28;text-transform:uppercase
+}
+
+/* ── SEPARATOR ── */
+.sep{
+  height:1px;background:rgba(28,20,8,.1);margin:10px 0;position:relative
+}
+.sep::before{
+  content:'* * *';position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+  font-size:7px;color:#9c8060;background:#f0e8d0;padding:0 8px;letter-spacing:3px
+}
+
+/* ── BODY ── */
+.cbody{padding:0 14px 14px}
+
+/* Quote block */
+.qwrap{
+  padding:9px 12px 9px 18px;margin:12px 0 2px;
+  background:#f8f1df;border-left:2px solid #8B1A1A;
+  border-radius:0 2px 2px 0;position:relative
+}
+.qmark{
+  position:absolute;top:2px;left:5px;
+  font-family:'Courier Prime',serif;font-size:28px;color:#8B1A1A;opacity:.3;line-height:1
+}
+.qtext{font-size:13px;color:#5c4a28;font-style:italic;line-height:1.65;padding-left:4px}
+
+/* Section header */
+.sh{
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:2.5px;color:#9c8060;
+  text-transform:uppercase;margin:13px 0 8px;padding-bottom:4px;
+  border-bottom:1px dashed rgba(28,20,8,.15);display:flex;align-items:center;gap:6px
+}
+.sh::before{content:'—';font-size:8px;color:#8B1A1A;opacity:.5}
+
+/* Chips */
+.crow{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}
+.chip{
+  display:inline-flex;align-items:center;gap:3px;padding:3px 9px;
+  background:#f8f1df;border:1px solid rgba(28,20,8,.18);border-radius:1px;
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:.8px;color:#5c4a28
+}
+.clbl{color:#9c8060;font-size:6.5px;margin-right:2px}
+
+/* Stat dots */
+.srow{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.snm{font-family:'Special Elite',monospace;font-size:8px;letter-spacing:.7px;color:#5c4a28;min-width:90px;flex-shrink:0}
+.sdots{display:flex;gap:2px;flex:1}
+.sdot{
+  flex:1;height:8px;background:#ece4cc;border:1px solid rgba(28,20,8,.2);
+  border-radius:0
+}
+.sdot.on{background:#5c4a28;border-color:#5c4a28}
+.sdot.on.hi{background:#1c1408;border-color:#1c1408}
+.sv{font-family:'Special Elite',monospace;font-size:10px;color:#8B1A1A;min-width:16px;text-align:right}
+
+/* Skills */
+.skrow{display:flex;flex-wrap:wrap;gap:5px}
+.skitem{
+  font-size:11px;padding:3px 9px;
+  background:#f8f1df;border:1px solid rgba(28,20,8,.18);border-radius:1px;
+  color:#5c4a28;font-family:'Courier Prime',monospace
+}
+
+/* Collapsible */
+.coll-hdr{
+  cursor:pointer;display:flex;align-items:center;justify-content:space-between;
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:2px;color:#9c8060;
+  text-transform:uppercase;padding:8px 0 5px;border-bottom:1px dashed rgba(28,20,8,.12);
+  margin-top:10px;user-select:none
+}
+.coll-hdr::before{content:'—';font-size:8px;color:#8B1A1A;opacity:.5;margin-right:6px}
+.carr{color:#8B1A1A;opacity:.4;font-size:10px;transition:transform .3s;font-family:monospace}
+.coll.open .carr{transform:rotate(180deg)}
+.coll-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.coll.open .coll-body{max-height:600px}
+.lore-blk{
+  padding:8px 10px;margin-top:7px;
+  background:#f8f1df;border:1px solid rgba(28,20,8,.12);border-radius:1px;
+  font-size:13px;color:#5c4a28;line-height:1.65;font-style:italic
+}
+
+/* Destiny / key-value rows */
+.drow{
+  display:flex;align-items:baseline;gap:8px;padding:5px 0;
+  font-family:'Special Elite',monospace;font-size:8px;letter-spacing:1.2px;color:#9c8060;
+  border-bottom:1px dotted rgba(28,20,8,.1)
+}
+.drow:last-child{border-bottom:none}
+.dval{color:#1c1408;letter-spacing:.5px}
+.dval.red{color:#8B1A1A}
+
+/* Rank badge */
+.rank-badge{
+  display:inline-block;margin-top:6px;padding:3px 12px;
+  font-family:'Special Elite',monospace;font-size:8px;letter-spacing:1.5px;
+  border:1px solid rgba(28,20,8,.22);border-radius:1px;
+  background:#f8f1df;color:#5c4a28;text-transform:uppercase
+}
+
+/* ── FOOTER ── */
+.cfoot{
+  padding:8px 14px;border-top:1px solid rgba(28,20,8,.12);
+  background:rgba(28,20,8,.03);display:flex;align-items:center;justify-content:space-between
+}
+.cfl{font-family:'Special Elite',monospace;font-size:7px;letter-spacing:2px;color:#9c8060;text-transform:uppercase;font-style:italic}
+.cfr{font-family:'Special Elite',monospace;font-size:8px;color:#9c8060;opacity:.4;letter-spacing:3px}
+</style>
+</head>
+<body>
+<textarea id="tpnraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+
+<div class="crd" id="tpncrd">
+  <div class="ctop">
+    <div class="cseal" id="cseal"></div>
+    <div class="c-tag" id="ctag">GRACE FIELD HOUSE — CASE FILE</div>
+    <div class="c-id" id="cid">— — — — —</div>
+    <div class="c-name" id="cname">—</div>
+    <div class="c-alias" id="calias"></div>
+    <div class="c-status" id="cstatus">UNKNOWN</div>
+  </div>
+  <div class="cbody">
+    <div id="q_sec"></div>
+    <div id="chip_sec"></div>
+    <div id="stat_sec"></div>
+    <div id="sk_sec"></div>
+    <div id="lore_sec"></div>
+    <div id="dest_sec"></div>
+  </div>
+  <div class="cfoot">
+    <span class="cfl" id="cmotto">NEVER GIVE UP</span>
+    <span class="cfr" id="cbadge">✦ TPN ✦</span>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id);}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+/* Eye seal SVG */
+function eyeSvg(){
+  return '<svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">'
+   +'<circle cx="30" cy="30" r="27" stroke="#1c1408" stroke-width="1" opacity=".2"/>'
+   +'<circle cx="30" cy="30" r="23" stroke="#1c1408" stroke-width=".5" stroke-dasharray="2 3" opacity=".16"/>'
+   +'<path d="M10 30 Q20 15 30 15 Q40 15 50 30 Q40 45 30 45 Q20 45 10 30Z" stroke="#1c1408" stroke-width="1.2" fill="none" opacity=".65"/>'
+   +'<circle cx="30" cy="30" r="8.5" stroke="#1c1408" stroke-width="1" fill="none" opacity=".8"/>'
+   +'<circle cx="30" cy="30" r="4" fill="#1c1408" opacity=".75"/>'
+   +'<circle cx="32.2" cy="27.8" r="1.3" fill="#f0e8d0" opacity=".55"/>'
+   +'<line x1="22" y1="19" x2="20" y2="14" stroke="#1c1408" stroke-width=".7" opacity=".28"/>'
+   +'<line x1="26" y1="16" x2="25" y2="11" stroke="#1c1408" stroke-width=".7" opacity=".28"/>'
+   +'<line x1="30" y1="15" x2="30" y2="10" stroke="#1c1408" stroke-width=".7" opacity=".28"/>'
+   +'<line x1="34" y1="16" x2="35" y2="11" stroke="#1c1408" stroke-width=".7" opacity=".28"/>'
+   +'<line x1="38" y1="19" x2="40" y2="14" stroke="#1c1408" stroke-width=".7" opacity=".28"/>'
+   +'</svg>';
+}
+
+/* Status color */
+function statusColor(st){
+  var s=(st||'').toLowerCase();
+  if(/escaped|on the run/.test(s))return'#2a5c2a';
+  if(/recaptured|deceased/.test(s))return'#8B1A1A';
+  if(/active|in farm/.test(s))return'#5c4a28';
+  if(/hiding/.test(s))return'#4a4a2a';
+  return'#5c4a28';
+}
+
+/* Stat labels */
+var STAT_LABELS={
+  int:['Intelligence','สติปัญญา'],
+  phy:['Physical','ความแข็งแกร่ง'],
+  agi:['Agility','ความว่องไว'],
+  wil:['Willpower','เจตจำนง'],
+  team:['Teamwork','การทำงานเป็นทีม'],
+  stl:['Stealth','การซ่อนตัว']
+};
+
+/* ── PARSE ── */
+var raw=(g('tpnraw').value||'').replace(/<\/?TPN_CONFIRM>/gi,'').trim();
+var d={};try{d=JSON.parse(raw);}catch(e){}
+var TH=(d.lang==='th');
+
+/* ── SEAL ── */
+g('cseal').innerHTML=eyeSvg();
+
+/* ── HEADER ── */
+g('ctag').textContent=TH?'เกรซ ฟิลด์ เฮาส์ — แฟ้มคดี':'GRACE FIELD HOUSE — CASE FILE';
+g('cid').textContent=d.id_number||'— — — — —';
+g('cname').textContent=d.name||'—';
+
+if(d.alias&&d.alias.trim()){
+  g('calias').textContent='" '+d.alias+' "';
+  g('calias').style.display='block';
+}else{g('calias').style.display='none';}
+
+var stEl=g('cstatus');
+var stTxt=d.status||(TH?'ไม่ทราบ':'UNKNOWN');
+stEl.textContent=stTxt.toUpperCase();
+stEl.style.color=statusColor(stTxt);
+stEl.style.borderColor=statusColor(stTxt)+'66';
+
+/* ── QUOTE ── */
+if(d.quote&&d.quote.trim()){
+  g('q_sec').innerHTML='<div class="qwrap"><div class="qmark">&ldquo;</div><div class="qtext">'+esc(d.quote)+'</div></div>';
+}
+
+/* ── CHIPS ── */
+var chipMap=[
+  ['house','Farm','ฟาร์ม'],['role','Role','บทบาท'],
+  ['alliance','Alliance','กลุ่ม'],['age','Age','อายุ'],
+  ['gender','Gender','เพศ'],['rank','Rank','ลำดับ'],
+  ['years_at_farm','Years','ระยะเวลา'],['fate','Fate','ชะตา']
+];
+var chipHtml='<div class="sep"></div><div class="crow">';
+chipMap.forEach(function(cm){
+  var val=d[cm[0]];
+  if(val&&String(val).trim()){
+    chipHtml+='<div class="chip"><span class="clbl">'+(TH?cm[2]:cm[1])+'</span>'+esc(val)+'</div>';
+  }
+});
+chipHtml+='</div>';
+g('chip_sec').innerHTML=chipHtml;
+
+/* ── STATS ── */
+if(d.stats){
+  var sh='<div class="sh">'+(TH?'ผลการประเมิน':'Assessment Results')+'</div>';
+  ['int','phy','agi','wil','team','stl'].forEach(function(key){
+    var val=parseInt(d.stats[key])||0;
+    var lb=STAT_LABELS[key];
+    var nm=lb?(TH?lb[1]:lb[0]):key;
+    sh+='<div class="srow">'
+      +'<div class="snm">'+esc(nm)+'</div>'
+      +'<div class="sdots" id="sd_'+key+'" data-val="'+val+'"></div>'
+      +'<div class="sv">'+val+'</div>'
+      +'</div>';
+  });
+  g('stat_sec').innerHTML=sh;
+  ['int','phy','agi','wil','team','stl'].forEach(function(key){
+    var el=g('sd_'+key);if(!el)return;
+    var val=parseInt(el.getAttribute('data-val'))||0;
+    for(var i=1;i<=10;i++){
+      var dot=document.createElement('div');
+      dot.className='sdot'+(val>=i?' on':'')+(i>=9&&val>=i?' hi':'');
+      el.appendChild(dot);
+    }
+  });
+}
+
+/* ── SKILLS ── */
+if(d.skills&&d.skills.length){
+  var skH='<div class="sh">'+(TH?'ความสามารถ':'Capabilities')+'</div><div class="skrow">';
+  d.skills.forEach(function(s){skH+='<div class="skitem">'+esc(s)+'</div>';});
+  skH+='</div>';
+  g('sk_sec').innerHTML=skH;
+}
+
+/* ── COLLAPSIBLE LORE ── */
+function makeColl(id,enLabel,thLabel,content){
+  if(!content||!String(content).trim())return'';
+  var label=TH?thLabel:enLabel;
+  return'<div class="coll" id="'+id+'">'
+    +'<div class="coll-hdr" onclick="(function(){var e=document.getElementById(\''+id+'\');e.classList.toggle(\'open\');})()">'
+    +esc(label)
+    +'<span class="carr">▾</span></div>'
+    +'<div class="coll-body"><div class="lore-blk">'+esc(content)+'</div></div>'
+    +'</div>';
+}
+var lore='';
+lore+=makeColl('cl_bg','Background','ภูมิหลัง',d.background);
+lore+=makeColl('cl_app','Appearance','รูปลักษณ์',d.appearance);
+lore+=makeColl('cl_per','Personality','บุคลิกภาพ',d.personality);
+lore+=makeColl('cl_sec','Hidden Truth','ความจริงที่ซ่อน',d.secret);
+lore+=makeColl('cl_ex','Additional Notes','หมายเหตุ',d.extra);
+if(lore)g('lore_sec').innerHTML=lore;
+
+/* ── DESTINY ROW ── */
+var destHtml='';
+if(d.goal||d.fate){
+  destHtml+='<div class="sep"></div>';
+  if(d.goal)destHtml+='<div class="drow"><span>'+(TH?'เป้าหมาย':'Goal')+'</span><span class="dval">'+esc(d.goal)+'</span></div>';
+  if(d.fate)destHtml+='<div class="drow"><span>'+(TH?'ชะตากรรม':'Fate')+'</span><span class="dval red">'+esc(d.fate)+'</span></div>';
+}
+if(destHtml)g('dest_sec').innerHTML=destHtml;
+
+/* ── FOOTER ── */
+var motto=TH?'ไม่เคยยอมแพ้':'NEVER GIVE UP';
+g('cmotto').textContent=motto;
+
+})();
+</script>
+</body>
+</html>

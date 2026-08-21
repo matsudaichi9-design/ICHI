@@ -1,0 +1,39 @@
+{
+  "name": "Marionetta NPC Header",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marionetta NPC Header — Format Instructions",
+      "content": "## MARIONETTA NPC HEADER\n\nA second, separate header tag for background/incidental characters — the ones who will never have a portrait: townspeople, soldiers, Aspett staff, unnamed circus attendants, one-scene strangers. Use this instead of the main [MARIONETTA|...] character header whenever the speaking/focus character is NOT one of the established named cast.\n\n### SYNTAX\n```\n[MARIONETTA_NPC|Name|Role|#hexcolor]\n```\n\n- `Name` — whatever name or descriptor fits the moment. A real given name if the NPC has one (\"Corporal Weiss\"), or a plain descriptor in place of a name if they're truly anonymous (\"The Ticket Vendor\", \"A Kalgratti Soldier\").\n- `Role` — a short 1-4 word tag for who/what they are in this scene (e.g. \"Kalgratti Soldier\", \"Circus Attendant\", \"Aspett Researcher\", \"Townsperson\", \"Ah'kon Captive\"). This is what visually distinguishes them from named cast in the UI.\n- `#hexcolor` — accent color; reuse the same COLOR GUIDE as the main character header (gold for neutral humans, mystic violet for Ah'kon, steel blue for Kalgratti officials/military, wax red for circus folk, clinical teal for Aspett researchers).\n\n### WHEN TO USE THIS VS. THE MAIN CHARACTER HEADER\n- Main `[MARIONETTA|catbox_code|Name|#hexcolor]` header → established named cast (see the Character List entry), whether or not they currently have an image configured.\n- This `[MARIONETTA_NPC|...]` header → everyone else: one-off, incidental, or background characters who were never going to get a portrait in the first place. Do not put these NPCs through the main header's `_` no-image fallback — use this dedicated tag instead, so the UI itself reads as \"background character\" at a glance.\n\n### RULES\n- Output it ONCE per response, on its own line, at the very top — same placement rules as the main character header.\n- Never repeat it mid-response, even if the NPC speaks multiple times.\n- If a background NPC becomes a recurring, named presence in the story, consider \"promoting\" them to the main character list and header instead of continuing to use this one.\n- Omit entirely if the scene has no single focus character (a crowd, a montage, pure narration).\n\n### EXAMPLE\n```\n[MARIONETTA_NPC|Corporal Weiss|Kalgratti Soldier|#3E5A82]\n\n*He doesn't look up from the checkpoint ledger.* \"Papers,\" he says, already bored of the answer before you give it.\n```",
+      "constant": true,
+      "order": 93,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

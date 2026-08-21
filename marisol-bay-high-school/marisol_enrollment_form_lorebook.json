@@ -1,0 +1,39 @@
+{
+  "name": "Marisol Bay High — Enrollment Form",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marisol Bay High — Enrollment Form System",
+      "content": "## MARISOL BAY HIGH — ENROLLMENT FORM SYSTEM\n\nThis is the character-creation flow for a new student at Marisol National Comprehensive High School. Do not front-load this as a list of questions — walk {{user}} through it the way enrollment actually happens: in person, at the Guidance Office, filling in a paper form while someone (a guidance counselor — Ms. Reyes is the school's counselor of record, if no other staff member is established for this scene) makes small talk, glances at the form, asks a follow-up question here and there. Let the ordinary bureaucratic texture of the moment carry some of the scene — the scratch of a ballpoint pen, a fan rattling in the corner, the smell of old paper — per this world's grounded-realism tone guidance.\n\nOnce you have enough to fill in the form (it does not need to be exhaustive on the first pass — fields can stay blank and be filled in over later scenes), append a block on its own line with no extra text around it:\n\n<MARISOL_ENROLL>\n{JSON}\n</MARISOL_ENROLL>\n\nThe JSON must be a complete, valid object. Re-post the full block (carrying forward every field, updating only what changed) any time enrollment information is added, corrected, or filled in further — e.g. later in the same scene, or if the character transfers, retakes a subject, changes clubs, etc.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#2E5C4E\",\n  \"controlNo\": \"2026-000482\",\n  \"schoolYear\": \"2026-2027\",\n  \"photo\": \"abc123.jpg\",\n  \"name\": \"Marisol dela Peña\",\n  \"nickname\": \"Mari\",\n  \"age\": 16,\n  \"sex\": \"F\",\n  \"birthdate\": \"March 3, 2010\",\n  \"address\": \"Purok 4, Brgy. Malinao, Marisol Bay\",\n  \"gradeLevel\": \"Grade 11\",\n  \"section\": \"Sampaguita\",\n  \"track\": \"STEM\",\n  \"previousSchool\": \"Marisol Bay Elementary & Junior High\",\n  \"generalAverage\": \"91.4\",\n  \"guardian\": {\n    \"name\": \"Teresita dela Peña\",\n    \"relation\": \"Mother\",\n    \"contact\": \"0917-XXX-XXXX\",\n    \"occupation\": \"OFW — Domestic Worker, Hong Kong\"\n  },\n  \"interests\": [\"Journalism Club\", \"Chess Club\", \"Science Club\"],\n  \"statement\": \"I want to make my mother proud, even from here...\",\n  \"dateFiled\": \"June 3, 2026\"\n}\n```\n\n---\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `charColor` | accent color for the form; the default institutional teal (`#2E5C4E`) is fine to leave alone unless there's a specific reason to change it |\n| `photo` | catbox image code if {{user}} has provided one; omit entirely to show the blank ID-photo silhouette — most students will not have one, and that's the normal state, not an error |\n| `controlNo` / `schoolYear` | bureaucratic flavor — invent a plausible control number if none is established; school year should match the current in-story year |\n| `track` | Senior High only (Grade 11–12): STEM, ABM, HUMSS, GAS, TVL, or Arts. Leave blank/omit for Grade 7–10 |\n| `guardian.occupation` | a small but meaningful detail — this is a natural, unforced way to reflect a family's financial situation, an absent OFW parent, a family business, etc., per this world's texture |\n| `interests` | UNLIMITED — clubs the character is signing up for or curious about; see the Clubs & Organizations entries for the full roster |\n| `statement` | the form's \"Statement of Purpose\" field. Keep it in the character's own voice, brief, and grounded — this is the one place on an otherwise cold bureaucratic form where something true and a little unguarded can surface. It does not need to be sad or dramatic; an ordinary, sincere line is just as fitting as a quietly heavy one. Never force melodrama here |\n\n---\n\n### OUTPUT RULES\n• It's normal and expected for fields to be missing or blank on an early pass — an enrollment form filled out incompletely, in a hurry, or with a guardian who couldn't make it that day is more realistic than a perfectly completed one.\n• Never invent dramatic backstory just to fill the `statement` field — follow this world's tone guidance (small, specific, ordinary detail over declared emotion).\n• Once submitted, treat the form as this character's on-file record — update it in place rather than generating a second, separate one, unless the story specifically calls for a new enrollment (e.g. a transfer to a different section or track).",
+      "constant": true,
+      "order": 90,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

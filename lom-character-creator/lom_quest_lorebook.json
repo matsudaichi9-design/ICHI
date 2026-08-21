@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Quest Dispatch)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Quest System",
+      "content": "## LORD OF THE MYSTERIES — QUEST SYSTEM\n\nQuests can come from an NPC handing the character a task in a scene, from the story's own progression flagging an objective, or any other natural source. Post this tag whenever a quest is given, its objectives change, or it resolves:\n\n<LOM_QUEST>\n{JSON}\n</LOM_QUEST>\n\nThis tag is reused across a quest's whole lifecycle — post it again with updated fields whenever something about the SAME quest changes, using the same `questName` so the player can follow it as one continuous thread.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#C0A050\",\n  \"questName\": \"The Silent Toll\",\n  \"status\": \"new\",\n  \"questGiver\": \"Inspector Rudolph\",\n  \"description\": \"Something in Backlund's old bell tower has stopped the church clock at the same hour, every night, for a week.\",\n  \"objectives\": [\n    {\"text\": \"Investigate the bell tower at midnight\", \"done\": false},\n    {\"text\": \"Speak to the tower keeper\", \"done\": false}\n  ],\n  \"rewards\": [\"50 Pounds\", \"Access to the Church archive\"]\n}\n```\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `status` | one of exactly: `new` (just accepted), `updated` (an objective's state changed, or new objectives were added, while the quest is still ongoing), `completed` (fully resolved successfully), `failed` (resolved unsuccessfully or became impossible). Use these values exactly — they drive the card's color and icon. |\n| `questGiver` | optional — the NPC's name if one exists; omit for a quest that arose purely from circumstance/story progression rather than a specific person handing it out |\n| `objectives` | array of `{\"text\": \"...\", \"done\": true/false}` — always resend the FULL current list (not just what changed) so the card always shows the complete picture. Mark an objective `done:true` the moment it's genuinely achieved in the story. |\n| `rewards` | optional array of short reward tags — what completing the quest is expected to grant. Can be included from the `new` state onward (as a promise) and should still be shown on `completed` |\n| `charColor` | optional — defaults to a neutral gold if omitted; consider tying it to the quest-giver's own signature color if they have one |\n\n### OUTPUT RULES\n• On `updated`, resend every objective (not a diff) with their current `done` states — the card has no memory of the previous post.\n• Move to `completed` or `failed` only when the story has actually resolved the quest — don't mark it complete preemptively.\n• Keep using the exact same `questName` across a quest's `new` → `updated` → `completed`/`failed` posts; a different name will read as a different quest.\n• Not every minor errand needs this treatment — reserve it for tasks worth tracking, matching the same judgment call used for the other Astral Ledger notifications.",
+      "constant": true,
+      "order": 99,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cinzel:wght@400;600;700&family=Noto+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#060810}
+
+.fc{
+  --acc:#90aee0;--abg:rgba(144,174,224,.10);--abd:rgba(144,174,224,.30);
+  --fb:'EB Garamond',Georgia,serif;--fh:'Cinzel',serif;
+  max-width:440px;margin:10px auto;
+  background:linear-gradient(170deg,#0a0d1c 0%,#060810 55%,#080b18 100%);
+  border:1px solid var(--abd);border-radius:12px;overflow:hidden;
+  color:#cdc8e0;font-family:var(--fb);font-size:14px;
+  box-shadow:0 16px 40px rgba(0,0,0,.72),0 0 28px -12px var(--acc);
+  position:relative;
+}
+
+/* Starfield overlay */
+.fc::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1px 1px at 9% 14%,rgba(255,255,255,.5) 0%,transparent 100%),
+    radial-gradient(1px 1px at 76% 7%,rgba(255,255,255,.38) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 52% 22%,rgba(255,255,255,.32) 0%,transparent 100%),
+    radial-gradient(1px 1px at 88% 38%,rgba(255,255,255,.42) 0%,transparent 100%),
+    radial-gradient(1px 1px at 24% 60%,rgba(255,255,255,.28) 0%,transparent 100%),
+    radial-gradient(1px 1px at 64% 70%,rgba(255,255,255,.32) 0%,transparent 100%),
+    radial-gradient(1.5px 1.5px at 6% 80%,rgba(255,255,255,.38) 0%,transparent 100%),
+    radial-gradient(1px 1px at 40% 88%,rgba(255,255,255,.28) 0%,transparent 100%),
+    radial-gradient(1px 1px at 93% 85%,rgba(255,255,255,.35) 0%,transparent 100%);
+}
+
+/* All direct children above starfield */
+.fc > *{position:relative;z-index:1}
+.ch{position:relative;z-index:1}
+
+/* ═══ HEADER ═══ */
+.fh{
+  display:flex;align-items:center;gap:12px;
+  padding:16px 16px 13px;
+  background:linear-gradient(180deg,rgba(144,174,224,.07),transparent);
+  border-bottom:1px solid rgba(144,174,224,.10);
+}
+.seal{
+  width:44px;height:44px;flex-shrink:0;border-radius:50%;
+  border:1.5px solid var(--acc);
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle,var(--abg),transparent 70%);
+  position:relative;
+  animation:sealglow 3.2s ease-in-out infinite;
+}
+@keyframes sealglow{
+  0%,100%{box-shadow:0 0 6px -3px var(--acc),inset 0 0 5px -3px var(--acc)}
+  50%{box-shadow:0 0 18px -2px var(--acc),inset 0 0 12px -2px var(--acc)}
+}
+.seal::before{
+  content:'';position:absolute;inset:-6px;border-radius:50%;
+  border:1px dashed var(--acc);opacity:.28;
+  animation:orbspin 14s linear infinite;
+}
+.seal::after{
+  content:'';position:absolute;inset:-11px;border-radius:50%;
+  border:1px solid var(--acc);opacity:.10;
+}
+@keyframes orbspin{to{transform:rotate(360deg)}}
+.seal-sym{
+  font-family:var(--fh);font-size:16px;font-weight:600;
+  color:var(--acc);line-height:1;
+}
+.fh-info{flex:1;min-width:0}
+.fname{
+  font-family:var(--fh);font-size:16px;font-weight:600;
+  color:#eae4fa;letter-spacing:.8px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.fname-sub{
+  display:flex;align-items:center;gap:7px;margin-top:5px;
+}
+.frace{
+  font-size:8.5px;letter-spacing:2px;color:var(--acc);font-family:var(--fh);
+  text-transform:uppercase;border:1px solid var(--abd);border-radius:20px;
+  padding:2px 9px;background:var(--abg);
+}
+.fgender{font-size:11px;color:#7070a0;font-style:italic;}
+
+/* ═══ QUICK STRIP ═══ */
+.fstrip{
+  display:flex;border-bottom:1px solid rgba(144,174,224,.07);
+  background:rgba(0,0,0,.22);
+}
+.qstat{
+  flex:1;padding:7px 4px;text-align:center;
+  border-right:1px solid rgba(144,174,224,.06);
+}
+.qstat:last-child{border-right:none}
+.qlabel{display:block;font-size:7px;letter-spacing:1.5px;color:#4a4468;font-family:var(--fh);text-transform:uppercase;margin-bottom:2px}
+.qval{display:block;font-size:11px;color:#c0b8e0;font-family:var(--fh);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 2px}
+
+/* ═══ ACCORDION CHAPTERS ═══ */
+.ch{border-bottom:1px solid rgba(144,174,224,.07)}
+.ch:last-of-type{border-bottom:none}
+.ch-head{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 16px;cursor:pointer;user-select:none;
+  transition:background .15s;
+}
+.ch-head:hover{background:rgba(144,174,224,.04)}
+.ch.open .ch-head{background:rgba(144,174,224,.03)}
+.ch-num{
+  font-family:var(--fh);font-size:8.5px;letter-spacing:1px;
+  color:var(--acc);opacity:.65;flex-shrink:0;min-width:22px;
+}
+.ch-line{flex:1;height:1px;background:rgba(144,174,224,.08)}
+.ch-title{
+  font-family:var(--fh);font-size:9.5px;letter-spacing:2.5px;
+  color:#7070a0;text-transform:uppercase;
+  transition:color .2s;
+}
+.ch-head:hover .ch-title,.ch.open .ch-title{color:var(--acc)}
+.ch-arr{font-size:7px;color:#5050a0;opacity:.7;flex-shrink:0;transition:transform .25s}
+.ch.open .ch-arr{transform:rotate(180deg)}
+.ch-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1)}
+.ch.open .ch-body{max-height:1200px}
+.ch-in{padding:2px 16px 14px}
+
+/* ═══ FIELD GRID (Chronicles) ═══ */
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-bottom:8px}
+.ffield{display:flex;flex-direction:column;gap:2px}
+.ffl{font-size:7.5px;letter-spacing:1.5px;color:#4a4468;font-family:var(--fh);text-transform:uppercase}
+.ffv{font-size:13px;color:#cdc8e0;font-style:italic;line-height:1.3}
+.ffv.full{grid-column:1/-1}
+
+/* Backstory & Relationships */
+.lore-block{margin-top:10px}
+.lore-label{font-size:7.5px;letter-spacing:1.5px;color:#4a4468;font-family:var(--fh);text-transform:uppercase;margin-bottom:4px}
+.lore-text{font-size:12.5px;color:#a8a0c8;font-style:italic;line-height:1.6}
+
+/* ═══ ARCANA ═══ */
+.aff-row{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border:1px solid var(--abd);border-radius:8px;
+  background:var(--abg);margin-bottom:10px;
+}
+.aff-orb{
+  width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  border:1.5px solid var(--acc);
+  background:radial-gradient(circle,var(--abg),transparent);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:14px;color:var(--acc);
+  box-shadow:0 0 12px -4px var(--acc);
+}
+.aff-info{flex:1}
+.aff-name{font-family:var(--fh);font-size:12px;font-weight:600;color:var(--acc);letter-spacing:.5px}
+.aff-desc{font-size:10.5px;color:#7070a0;font-style:italic;margin-top:1px}
+.mbar-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.mbar-lbl{font-size:9px;letter-spacing:.5px;color:#5a5480;font-family:var(--fh);width:68px;flex-shrink:0}
+.mbar-wrap{flex:1;height:3px;background:rgba(144,174,224,.09);border-radius:2px;overflow:hidden}
+.mbar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--acc),rgba(255,255,255,.55));width:0%;transition:width .75s cubic-bezier(.4,0,.2,1)}
+.mbar-num{font-size:10px;font-family:var(--fh);color:var(--acc);width:28px;text-align:right;flex-shrink:0}
+.spec-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.spec-tag{font-size:9.5px;letter-spacing:.5px;font-family:var(--fh);color:var(--acc);border:1px solid var(--abd);background:var(--abg);border-radius:20px;padding:2px 10px}
+
+/* ═══ GRIMOIRE ═══ */
+.spell-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.spell-card{
+  padding:8px 10px;border:1px solid rgba(144,174,224,.09);border-radius:7px;
+  background:rgba(0,0,0,.22);
+  display:flex;flex-direction:column;gap:3px;
+}
+.spell-name{font-size:12.5px;color:#d0c8e8;font-style:italic;line-height:1.3}
+.spell-meta{display:flex;gap:5px;align-items:center}
+.spell-rank{font-family:var(--fh);font-size:9px;font-weight:700;color:var(--acc);letter-spacing:.5px}
+.spell-type{font-size:8.5px;color:#5a5480;font-style:italic}
+
+/* ═══ COMPANIONS ═══ */
+.party-card{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:9px 10px;border:1px solid rgba(144,174,224,.09);
+  border-radius:8px;background:rgba(0,0,0,.18);margin-bottom:6px;
+}
+.party-card:last-child{margin-bottom:0}
+.party-init{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  border:1px solid var(--abd);background:var(--abg);
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:11px;font-weight:600;color:var(--acc);
+}
+.party-body{flex:1;min-width:0}
+.party-name{font-family:var(--fh);font-size:12.5px;font-weight:600;color:#e0d8f4}
+.party-sub{font-size:10px;color:#7070a0;font-style:italic;margin-top:2px}
+.party-note{font-size:11.5px;color:#a098c0;margin-top:3px;line-height:1.45}
+
+/* ═══ SOUL ═══ */
+.soul-field{margin-bottom:10px}
+.soul-field:last-child{margin-bottom:0}
+.soul-lbl{font-size:7.5px;letter-spacing:1.5px;color:#4a4468;font-family:var(--fh);text-transform:uppercase;margin-bottom:4px}
+.soul-val{font-size:12.5px;color:#b8b0d0;font-style:italic;line-height:1.6}
+.trait-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.trait{font-size:10.5px;color:#9090b0;border:1px solid rgba(144,174,224,.10);border-radius:4px;padding:2px 8px;font-style:italic}
+.trait.strength{border-color:rgba(144,174,224,.18);color:#a8b8d8}
+.trait.weakness{border-color:rgba(200,140,140,.16);color:#c0a0a8}
+
+/* ═══ FOOTER ═══ */
+.ff{
+  display:flex;gap:1px;border-top:1px solid rgba(144,174,224,.07);
+  background:rgba(0,0,0,.28);
+}
+.ff-block{flex:1;padding:9px 14px}
+.ff-block+.ff-block{border-left:1px solid rgba(144,174,224,.07)}
+.fflbl{font-size:7px;letter-spacing:1.5px;color:#4a4468;font-family:var(--fh);text-transform:uppercase;margin-bottom:2px}
+.ffval{font-size:11.5px;color:#8a8098;font-style:italic;line-height:1.4}
+
+/* Empty */
+.empty{font-size:11px;color:#3a3458;font-style:italic;padding:2px 0}
+/* Ornament divider */
+.ornament{text-align:center;font-size:11px;color:var(--acc);opacity:.3;letter-spacing:4px;padding:6px 0 2px}
+</style>
+</head>
+<body>
+<textarea id="raw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+
+<div class="fc" id="fc">
+
+  <!-- HEADER -->
+  <div class="fh">
+    <div class="seal"><div class="seal-sym" id="seal_sym">✦</div></div>
+    <div class="fh-info">
+      <div class="fname" id="fname">—</div>
+      <div class="fname-sub">
+        <span class="frace" id="frace">—</span>
+        <span class="fgender" id="fgender"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK STRIP -->
+  <div class="fstrip">
+    <div class="qstat"><span class="qlabel" id="ql_rank">RANK</span><span class="qval" id="q_rank">—</span></div>
+    <div class="qstat"><span class="qlabel" id="ql_age">AGE</span><span class="qval" id="q_age">—</span></div>
+    <div class="qstat"><span class="qlabel" id="ql_era">ERA</span><span class="qval" id="q_era">—</span></div>
+    <div class="qstat"><span class="qlabel" id="ql_aff">AFFILIATION</span><span class="qval" id="q_aff">—</span></div>
+  </div>
+
+  <!-- § I CHRONICLES -->
+  <div class="ch open" id="ch1">
+    <div class="ch-head" onclick="tog('ch1')">
+      <span class="ch-num">§ I</span>
+      <span class="ch-line"></span>
+      <span class="ch-title" id="t1">CHRONICLES</span>
+      <span class="ch-line"></span>
+      <span class="ch-arr">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-in">
+        <div class="fgrid" id="chron_grid"></div>
+        <div id="lore_wrap"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- § II ARCANA -->
+  <div class="ch" id="ch2">
+    <div class="ch-head" onclick="tog('ch2')">
+      <span class="ch-num">§ II</span>
+      <span class="ch-line"></span>
+      <span class="ch-title" id="t2">ARCANA</span>
+      <span class="ch-line"></span>
+      <span class="ch-arr">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-in" id="arcana_in"></div>
+    </div>
+  </div>
+
+  <!-- § III GRIMOIRE -->
+  <div class="ch" id="ch3">
+    <div class="ch-head" onclick="tog('ch3')">
+      <span class="ch-num">§ III</span>
+      <span class="ch-line"></span>
+      <span class="ch-title" id="t3">GRIMOIRE</span>
+      <span class="ch-line"></span>
+      <span class="ch-arr">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-in">
+        <div class="spell-grid" id="spell_grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- § IV COMPANIONS -->
+  <div class="ch" id="ch4">
+    <div class="ch-head" onclick="tog('ch4')">
+      <span class="ch-num">§ IV</span>
+      <span class="ch-line"></span>
+      <span class="ch-title" id="t4">COMPANIONS</span>
+      <span class="ch-line"></span>
+      <span class="ch-arr">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-in" id="comp_in"></div>
+    </div>
+  </div>
+
+  <!-- § V SOUL -->
+  <div class="ch" id="ch5">
+    <div class="ch-head" onclick="tog('ch5')">
+      <span class="ch-num">§ V</span>
+      <span class="ch-line"></span>
+      <span class="ch-title" id="t5">SOUL</span>
+      <span class="ch-line"></span>
+      <span class="ch-arr">▼</span>
+    </div>
+    <div class="ch-body">
+      <div class="ch-in" id="soul_in"></div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="ff">
+    <div class="ff-block">
+      <div class="fflbl" id="fl_loc">LOCATION</div>
+      <div class="ffval" id="ff_loc">—</div>
+    </div>
+    <div class="ff-block">
+      <div class="fflbl" id="fl_obj">OBJECTIVE</div>
+      <div class="ffval" id="ff_obj">—</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function rgba(hex,a){
+    hex=String(hex||'#90aee0').replace('#','');
+    if(hex.length===3){hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];}
+    var n=parseInt(hex,16);if(isNaN(n))n=0x90aee0;
+    var r=(n>>16)&255,gg=(n>>8)&255,b=n&255;
+    return 'rgba('+r+','+gg+','+b+','+a+')';}
+
+  window.tog=function(id){var el=g(id);if(el)el.classList.toggle('open');};
+
+  /* ── Parse data ── */
+  var raw=(g('raw').value||'').replace(/<\/?FRIEREN_CONFIRM>/gi,'').trim();
+  var d={};try{d=JSON.parse(raw);}catch(e){}
+  var TH=(d.lang==='th');
+  var fc=g('fc');
+
+  /* ── Accent color ── */
+  var acc=d.mana_affinity_color||d.theme||'#90aee0';
+  fc.style.setProperty('--acc',acc);
+  fc.style.setProperty('--abg',rgba(acc,.10));
+  fc.style.setProperty('--abd',rgba(acc,.30));
+
+  /* ── Labels ── */
+  var L={
+    chronicles:TH?'บันทึก':'CHRONICLES',
+    arcana:TH?'เวทมนตร์':'ARCANA',
+    grimoire:TH?'คัมภีร์':'GRIMOIRE',
+    companions:TH?'เพื่อนร่วมทาง':'COMPANIONS',
+    soul:TH?'จิตวิญญาณ':'SOUL',
+    rank:TH?'อันดับ':'RANK',
+    age:TH?'อายุ':'AGE',
+    era:TH?'ยุค':'ERA',
+    affil:TH?'สังกัด':'AFFILIATION',
+    loc:TH?'สถานที่':'LOCATION',
+    obj:TH?'เป้าหมาย':'OBJECTIVE',
+  };
+  g('t1').textContent=L.chronicles;g('t2').textContent=L.arcana;
+  g('t3').textContent=L.grimoire;g('t4').textContent=L.companions;g('t5').textContent=L.soul;
+  g('ql_rank').textContent=L.rank;g('ql_age').textContent=L.age;
+  g('ql_era').textContent=L.era;g('ql_aff').textContent=L.affil;
+  g('fl_loc').textContent=L.loc;g('fl_obj').textContent=L.obj;
+
+  /* ── Affinity seal symbols ── */
+  var affKanji={fire:'炎',ice:'氷',lightning:'雷',wind:'風',earth:'土',dark:'闇',holy:'光',null:'無',ancient:'古'};
+  var affLabel={
+    fire:TH?'ไฟ · Fire':'Fire',ice:TH?'น้ำแข็ง · Ice':'Ice',
+    lightning:TH?'สายฟ้า · Lightning':'Lightning',wind:TH?'ลม · Wind':'Wind',
+    earth:TH?'ดิน · Earth':'Earth',dark:TH?'มืด · Dark':'Dark',
+    holy:TH?'แสง · Holy':'Holy',null:TH?'ว่างเปล่า · Null':'Null',
+    ancient:TH?'โบราณ · Ancient':'Ancient'
+  };
+
+  /* ── HEADER ── */
+  g('fname').textContent=d.name||'—';
+  g('frace').textContent=((d.race||'').toUpperCase())||'—';
+  if(d.gender)g('fgender').textContent=d.gender;
+  g('seal_sym').textContent=affKanji[d.mana_affinity]||'✦';
+
+  /* ── STRIP ── */
+  g('q_rank').textContent=d.rank||'—';
+  g('q_age').textContent=d.age||'—';
+  g('q_era').textContent=d.era||'—';
+  g('q_aff').textContent=d.affiliation||'—';
+
+  /* ══════════════════════════
+     § I  CHRONICLES
+  ══════════════════════════ */
+  var cfields=[
+    [TH?'ชื่อ':'Name',d.name],
+    [TH?'เผ่าพันธุ์':'Race',d.race],
+    [TH?'เพศ':'Gender',d.gender],
+    [TH?'อายุ':'Age',d.age],
+    [TH?'ยุคสมัย':'Era',d.era],
+    [TH?'อันดับ':'Rank',d.rank],
+    [TH?'สังกัด':'Affiliation',d.affiliation],
+    [TH?'ถิ่นกำเนิด':'Origin',d.origin_region],
+  ];
+  var h='';
+  cfields.forEach(function(f){
+    if(f[1])h+='<div class="ffield"><span class="ffl">'+esc(f[0])+'</span><span class="ffv">'+esc(f[1])+'</span></div>';
+  });
+  g('chron_grid').innerHTML=h||'<div class="empty">—</div>';
+
+  /* Backstory + relationships in lore section */
+  var lh='';
+  if(d.backstory){
+    lh+='<div class="lore-block"><div class="lore-label">'+(TH?'ประวัติ':'Backstory')+'</div>';
+    lh+='<div class="lore-text">'+esc(d.backstory)+'</div></div>';
+  }
+  if(d.relationships){
+    lh+='<div class="lore-block"><div class="lore-label">'+(TH?'ความสัมพันธ์':'Relationships')+'</div>';
+    lh+='<div class="lore-text">'+esc(d.relationships)+'</div></div>';
+  }
+  g('lore_wrap').innerHTML=lh;
+
+  /* ══════════════════════════
+     § II  ARCANA
+  ══════════════════════════ */
+  var ai=g('arcana_in');
+  var ah='';
+  if(d.mana_affinity){
+    ah+='<div class="aff-row">';
+    ah+='<div class="aff-orb">'+esc(affKanji[d.mana_affinity]||'✦')+'</div>';
+    ah+='<div class="aff-info">';
+    ah+='<div class="aff-name">'+(affLabel[d.mana_affinity]||esc(d.mana_affinity))+'</div>';
+    ah+='<div class="aff-desc">'+(TH?'ธาตุมานา · Mana Affinity':'Mana Affinity')+'</div>';
+    ah+='</div></div>';
+  }
+  var cap=parseInt(d.mana_capacity)||0,res=parseInt(d.mana_reserves)||0;
+  if(cap||res){
+    var capPct=Math.min(100,Math.round(cap/200*100));
+    var resPct=Math.min(100,Math.round(res/200*100));
+    ah+='<div class="mbar-row"><span class="mbar-lbl">'+(TH?'ความจุ':'Capacity')+'</span>';
+    ah+='<div class="mbar-wrap"><div class="mbar-fill" id="b_cap"></div></div>';
+    ah+='<span class="mbar-num">'+cap+'</span></div>';
+    ah+='<div class="mbar-row"><span class="mbar-lbl">'+(TH?'คลังสำรอง':'Reserves')+'</span>';
+    ah+='<div class="mbar-wrap"><div class="mbar-fill" id="b_res"></div></div>';
+    ah+='<span class="mbar-num">'+res+'</span></div>';
+  }
+  var specs=d.magic_specialty||[];
+  if(specs.length){
+    ah+='<div class="spec-row">';
+    specs.forEach(function(s){ah+='<span class="spec-tag">'+esc(s)+'</span>';});
+    ah+='</div>';
+  }
+  ai.innerHTML=ah||'<div class="empty">—</div>';
+  /* Animate mana bars */
+  setTimeout(function(){
+    var bc=g('b_cap'),br=g('b_res');
+    if(bc)bc.style.width=capPct+'%';
+    if(br)br.style.width=resPct+'%';
+  },150);
+
+  /* ══════════════════════════
+     § III  GRIMOIRE
+  ══════════════════════════ */
+  var sg=g('spell_grid');
+  var spells=d.spells||[];
+  if(spells.length){
+    var sh='';
+    spells.forEach(function(sp){
+      sh+='<div class="spell-card">';
+      sh+='<div class="spell-name">'+esc(sp.name||'—')+'</div>';
+      sh+='<div class="spell-meta">';
+      if(sp.rank)sh+='<span class="spell-rank">'+esc(sp.rank)+'</span>';
+      if(sp.type)sh+='<span class="spell-type">'+esc(sp.type)+'</span>';
+      sh+='</div></div>';
+    });
+    sg.innerHTML=sh;
+  }else{sg.innerHTML='<div class="empty">—</div>';}
+
+  /* ══════════════════════════
+     § IV  COMPANIONS
+  ══════════════════════════ */
+  var ci=g('comp_in');
+  var party=d.party||[];
+  if(party.length){
+    var ph='';
+    party.forEach(function(p){
+      var init=(p.name||'?').trim().charAt(0).toUpperCase();
+      ph+='<div class="party-card">';
+      ph+='<div class="party-init">'+esc(init)+'</div>';
+      ph+='<div class="party-body">';
+      ph+='<div class="party-name">'+esc(p.name||'—')+'</div>';
+      var sub=[p.role,p.race].filter(Boolean).join(' · ');
+      if(sub)ph+='<div class="party-sub">'+esc(sub)+'</div>';
+      if(p.note)ph+='<div class="party-note">'+esc(p.note)+'</div>';
+      ph+='</div></div>';
+    });
+    ci.innerHTML=ph;
+  }else{ci.innerHTML='<div class="empty">—</div>';}
+
+  /* ══════════════════════════
+     § V  SOUL
+  ══════════════════════════ */
+  var si=g('soul_in');
+  var sv='';
+  if(d.personality)sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'บุคลิก':'Personality')+'</div><div class="soul-val">'+esc(d.personality)+'</div></div>';
+  if(d.appearance)sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'รูปลักษณ์':'Appearance')+'</div><div class="soul-val">'+esc(d.appearance)+'</div></div>';
+  if(d.goals)sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'เป้าหมาย':'Goals')+'</div><div class="soul-val">'+esc(d.goals)+'</div></div>';
+  var strs=d.strengths||[];
+  if(strs.length){
+    sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'จุดแข็ง':'Strengths')+'</div><div class="trait-row">';
+    strs.forEach(function(s){sv+='<span class="trait strength">'+esc(s)+'</span>';});
+    sv+='</div></div>';
+  }
+  var wks=d.weaknesses||[];
+  if(wks.length){
+    sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'จุดอ่อน':'Weaknesses')+'</div><div class="trait-row">';
+    wks.forEach(function(w){sv+='<span class="trait weakness">'+esc(w)+'</span>';});
+    sv+='</div></div>';
+  }
+  if(d.notes)sv+='<div class="soul-field"><div class="soul-lbl">'+(TH?'บันทึก':'Notes')+'</div><div class="soul-val">'+esc(d.notes)+'</div></div>';
+  si.innerHTML=sv||'<div class="empty">—</div>';
+
+  /* ── FOOTER ── */
+  g('ff_loc').textContent=d.location||'—';
+  g('ff_obj').textContent=d.objective||'—';
+
+})();
+</script>
+</body>
+</html>

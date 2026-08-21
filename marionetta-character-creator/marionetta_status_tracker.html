@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Cormorant Garamond',serif;font-size:15px}
+:root{
+  --bg:#140D07;--pan:#1F150C;--pan2:#2A1D11;
+  --acc:#7A1220;--acc-rgb:122,18,32;
+  --gold:#B8862E;--goldd:rgba(184,134,46,.14);
+  --ink:#E8D9B8;--ink2:#B8A585;--mu:#7A6448;
+  --bd:rgba(184,134,46,.22);--bd2:rgba(255,255,255,.06);
+  --safe:#4A6B4A;--caution:#B8862E;--concern:#A24868;--danger:#7A1220;
+}
+#stwin{max-width:460px;margin:6px auto;background:var(--bg);border-radius:3px;overflow:hidden;border:1px solid var(--bd);box-shadow:0 14px 50px rgba(0,0,0,.8);position:relative;animation:sti .3s ease both}
+@keyframes sti{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+
+#mast{position:relative;padding:19px 20px 13px;text-align:center;background:linear-gradient(180deg,var(--pan) 0%,var(--bg) 100%);border-bottom:1px solid var(--bd);cursor:pointer;user-select:none}
+.corner-flourish{position:absolute;width:22px;height:22px;color:var(--gold);opacity:.5;font-size:16px;line-height:1}
+.cf-tl{top:8px;left:10px}.cf-tr{top:8px;right:10px;transform:scaleX(-1)}
+#trunk-ico{width:38px;height:38px;margin:0 auto 8px}
+#mast-title{font-family:'UnifrakturMaguntia',cursive;font-size:22px;color:var(--ink);letter-spacing:.5px;text-shadow:0 0 16px rgba(var(--acc-rgb),.3)}
+#mast-sub{font-size:11px;font-style:italic;color:var(--ink2);margin-top:4px}
+#chev{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--mu);transition:transform .3s}
+#stwin.closed #chev{transform:translateX(-50%) rotate(180deg)}
+#stbody{max-height:2400px;overflow:hidden;transition:max-height .4s ease}
+#stwin.closed #stbody{max-height:0}
+
+#navrib{display:flex;justify-content:center;gap:4px;padding:8px 10px;background:var(--pan);border-bottom:1px solid var(--bd2);flex-wrap:wrap}
+.nav-a{font-size:9.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mu);cursor:pointer;padding:3px 4px;transition:color .2s;user-select:none}
+.nav-a:hover{color:var(--ink2)}
+.nav-a.on{color:var(--gold)}
+.nav-sep{color:var(--bd);font-size:9px;align-self:center}
+
+#page{padding:6px 20px 18px;max-height:560px;overflow-y:auto}
+#page::-webkit-scrollbar{width:4px}
+#page::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+.leaf{padding:16px 0 4px;border-bottom:1px dashed var(--bd2)}
+.leaf:last-of-type{border-bottom:none}
+.leaf-hd{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.leaf-hd .lh-ico{font-size:14px}
+.leaf-hd .lh-txt{font-size:10.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:600}
+.leaf-hd::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--goldd),transparent)}
+
+/* RIBBON BARS */
+.ribbon{margin-bottom:11px}
+.ribbon-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.ribbon-lbl{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--mu)}
+.ribbon-val{font-size:11px;color:var(--ink2)}
+.ribbon-track{height:9px;border-radius:5px;background:var(--pan2);border:1px solid var(--bd2);overflow:hidden}
+.ribbon-fill{height:100%;border-radius:5px;transition:width .5s}
+.rf-hp{background:linear-gradient(90deg,#5A0E18,#A24868)}
+.rf-st{background:linear-gradient(90deg,#8A661E,#B8862E)}
+
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.badge{font-size:10.5px;padding:3px 10px;border-radius:2px;border:1px solid rgba(162,72,104,.4);color:#C88098;background:rgba(162,72,104,.1)}
+.badge.none{color:var(--mu);font-style:italic;border-color:transparent;background:transparent;padding-left:0}
+
+.lline{display:flex;align-items:baseline;gap:8px;margin-bottom:0}
+.lline-lbl{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mu);flex-shrink:0}
+.lline-dots{flex:1;border-bottom:1px dotted var(--bd);transform:translateY(-3px);min-width:8px}
+.lline-val{font-size:12.5px;color:var(--ink2);text-align:right;flex-shrink:0}
+
+/* FINE DETAILS */
+.detail-row{display:flex;align-items:flex-start;gap:8px;padding:4px 0;font-size:12px;color:var(--ink2);font-style:italic;line-height:1.5}
+.detail-mark{color:var(--gold);flex-shrink:0;margin-top:1px}
+
+/* ON PERSON */
+.pos-row{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--bd2)}
+.pos-row:last-child{border-bottom:none}
+.pos-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:7px}
+.pos-nm{font-size:13.5px;color:var(--ink);font-weight:600;display:inline}
+.pos-cond{font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;padding:1px 7px;border-radius:2px;margin-left:7px;border:1px solid}
+.pos-desc{font-size:11px;color:var(--mu);font-style:italic;margin-top:3px;line-height:1.45}
+
+/* TRUNK */
+.cat-block{margin-bottom:16px}
+.cat-lbl{display:flex;align-items:center;gap:6px;font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);padding-bottom:5px;border-bottom:1px solid var(--goldd);margin-bottom:8px;opacity:.9}
+.item-row{padding:6px 0}
+.item-top{display:flex;align-items:baseline;gap:6px}
+.item-nm{font-size:12.5px;color:var(--ink);flex-shrink:0}
+.item-dots{flex:1;border-bottom:1px dotted var(--bd2);transform:translateY(-3px);min-width:6px}
+.item-qty{font-size:11px;color:var(--gold);flex-shrink:0}
+.item-desc{font-size:10.5px;color:var(--mu);font-style:italic;margin-top:1px;line-height:1.4}
+
+.empty-note{font-size:12px;color:var(--mu);font-style:italic;text-align:center;padding:16px 0}
+#stfoot{padding:9px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);text-align:center;border-top:1px solid var(--bd2);background:var(--pan)}
+</style>
+</head>
+<body>
+<textarea id="straw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="stwin">
+  <div id="mast">
+    <div class="corner-flourish cf-tl">❦</div>
+    <div class="corner-flourish cf-tr">❦</div>
+    <svg id="trunk-ico" viewBox="0 0 38 38" fill="none">
+      <rect x="6" y="14" width="26" height="17" rx="1.5" stroke="#B8862E" stroke-width="1.4"/>
+      <path d="M13 14 V10 a2 2 0 0 1 2-2 h8 a2 2 0 0 1 2 2 v4" stroke="#B8862E" stroke-width="1.3"/>
+      <line x1="6" y1="21" x2="32" y2="21" stroke="#B8862E" stroke-width="1" opacity=".6"/>
+      <circle cx="19" cy="21" r="1.7" fill="#E8D9B8"/>
+    </svg>
+    <div id="mast-title">The Traveling Case</div>
+    <div id="mast-sub">Everything a soul carries says more than words do.</div>
+    <div id="chev">▲</div>
+  </div>
+
+  <div id="stbody">
+    <div id="navrib">
+      <span class="nav-a on" data-jump="leaf-condition">Condition</span><span class="nav-sep">✦</span>
+      <span class="nav-a" data-jump="leaf-details">Details</span><span class="nav-sep">✦</span>
+      <span class="nav-a" data-jump="leaf-person">On Person</span><span class="nav-sep">✦</span>
+      <span class="nav-a" data-jump="leaf-trunk">The Trunk</span>
+    </div>
+
+    <div id="page">
+      <div class="leaf" id="leaf-condition">
+        <div class="leaf-hd"><span class="lh-ico">🕯️</span><span class="lh-txt">Condition</span></div>
+        <div class="ribbon">
+          <div class="ribbon-top"><span class="ribbon-lbl">Health</span><span class="ribbon-val" id="hp-val">—</span></div>
+          <div class="ribbon-track"><div class="ribbon-fill rf-hp" id="hp-fill" style="width:0%"></div></div>
+        </div>
+        <div class="ribbon">
+          <div class="ribbon-top"><span class="ribbon-lbl">Stamina</span><span class="ribbon-val" id="st-val">—</span></div>
+          <div class="ribbon-track"><div class="ribbon-fill rf-st" id="st-fill" style="width:0%"></div></div>
+        </div>
+        <div id="conditions-badges" class="badges"></div>
+        <div class="lline"><span class="lline-lbl">Purse</span><span class="lline-dots"></span><span class="lline-val" id="v-purse">—</span></div>
+      </div>
+
+      <div class="leaf" id="leaf-details">
+        <div class="leaf-hd"><span class="lh-ico">✎</span><span class="lh-txt">Fine Details</span></div>
+        <div id="details-list"></div>
+      </div>
+
+      <div class="leaf" id="leaf-person">
+        <div class="leaf-hd"><span class="lh-ico">🎽</span><span class="lh-txt">On Their Person</span></div>
+        <div id="person-list"></div>
+      </div>
+
+      <div class="leaf" id="leaf-trunk">
+        <div class="leaf-hd"><span class="lh-ico">🧳</span><span class="lh-txt">The Trunk</span></div>
+        <div id="trunk-list"></div>
+      </div>
+    </div>
+
+    <div id="stfoot">✦ Marionetta · traveling case ledger ✦</div>
+  </div>
+</div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function pct(c,m){c=parseFloat(c);m=parseFloat(m);if(!(m>0))return 0;return Math.max(0,Math.min(100,Math.round(c/m*100)))}
+
+var raw=g('straw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function condColor(c){
+  c=(c||'').toLowerCase();
+  if(c==='pristine')return 'var(--safe)';
+  if(c==='worn')return 'var(--caution)';
+  if(c==='damaged')return 'var(--concern)';
+  if(c==='broken')return 'var(--danger)';
+  return 'var(--mu)';
+}
+
+/* VITALS */
+var hp=d.hp||{cur:0,max:100};var st=d.stamina||{cur:0,max:100};
+g('hp-fill').style.width=pct(hp.cur,hp.max)+'%';
+g('hp-val').textContent=esc(hp.cur)+' / '+esc(hp.max);
+g('st-fill').style.width=pct(st.cur,st.max)+'%';
+g('st-val').textContent=esc(st.cur)+' / '+esc(st.max);
+
+/* CONDITIONS */
+var condEl=g('conditions-badges');
+var conds=d.conditions||[];
+if(conds.length){
+  condEl.innerHTML=conds.map(function(c){return '<span class="badge">'+esc(c)+'</span>';}).join('');
+}else{
+  condEl.innerHTML='<span class="badge none">Nothing to report</span>';
+}
+
+/* PURSE */
+var purse=d.purse||{};
+g('v-purse').textContent=(purse.amount!=null?purse.amount:'—')+(purse.currency?' '+purse.currency:'');
+
+/* FINE DETAILS */
+var detEl=g('details-list');
+var details=d.details||[];
+if(details.length){
+  detEl.innerHTML=details.map(function(t){return '<div class="detail-row"><span class="detail-mark">✎</span><span>'+esc(t)+'</span></div>';}).join('');
+}else{
+  detEl.innerHTML='<div class="empty-note">Nothing worth noting, for now.</div>';
+}
+
+/* ON PERSON */
+var posEl=g('person-list');
+var onPerson=d.onPerson||[];
+if(onPerson.length){
+  posEl.innerHTML=onPerson.map(function(it){
+    var col=condColor(it.condition);
+    return '<div class="pos-row"><div class="pos-dot"></div><div>'+
+      '<span class="pos-nm">'+esc(it.name||'—')+'</span>'+
+      (it.condition?'<span class="pos-cond" style="color:'+col+';border-color:'+col+'66;background:'+col+'14">'+esc(it.condition)+'</span>':'')+
+      (it.desc?'<div class="pos-desc">'+esc(it.desc)+'</div>':'')+
+    '</div></div>';
+  }).join('');
+}else{
+  posEl.innerHTML='<div class="empty-note">Nothing carried on their person.</div>';
+}
+
+/* TRUNK — grouped by category, unlimited items */
+var trunkEl=g('trunk-list');
+var trunk=d.trunk||[];
+if(trunk.length){
+  var gr={};var order=[];
+  trunk.forEach(function(it){
+    var c=it.category||'Miscellany';
+    if(!gr[c]){gr[c]=[];order.push(c)}
+    gr[c].push(it);
+  });
+  var h='';
+  order.forEach(function(cat){
+    h+='<div class="cat-block"><div class="cat-lbl">🏷️ '+esc(cat)+'</div>';
+    gr[cat].forEach(function(it){
+      h+='<div class="item-row"><div class="item-top">'+
+        '<span class="item-nm">'+esc(it.name||'—')+'</span>'+
+        '<span class="item-dots"></span>'+
+        '<span class="item-qty">×'+esc(it.qty||1)+'</span>'+
+      '</div>'+
+      (it.desc?'<div class="item-desc">'+esc(it.desc)+'</div>':'')+
+      '</div>';
+    });
+    h+='</div>';
+  });
+  trunkEl.innerHTML=h;
+}else{
+  trunkEl.innerHTML='<div class="empty-note">The trunk sits empty.</div>';
+}
+
+/* NAV + COLLAPSE */
+document.querySelectorAll('.nav-a').forEach(function(a){
+  a.addEventListener('click',function(e){
+    e.stopPropagation();
+    var target=g(this.getAttribute('data-jump'));
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+var page=g('page');
+var leaves=document.querySelectorAll('.leaf');
+if(page)page.addEventListener('scroll',function(){
+  var best=null,bestDist=1e9;
+  leaves.forEach(function(l){
+    var dd=Math.abs(l.getBoundingClientRect().top-page.getBoundingClientRect().top-4);
+    if(dd<bestDist){bestDist=dd;best=l}
+  });
+  if(best)document.querySelectorAll('.nav-a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-jump')===best.id)});
+});
+
+var mast=g('mast');
+if(mast)mast.addEventListener('click',function(){g('stwin').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>

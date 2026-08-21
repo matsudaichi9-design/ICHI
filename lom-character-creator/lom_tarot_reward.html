@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --ac:#C0A050;--ac-rgb:192,160,80;
+  --tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;--pan3:#221629;
+  --bd:rgba(192,160,80,.3);
+  --fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
+}
+#trwrap{max-width:440px;margin:16px auto;position:relative}
+#trwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:12px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.6),0 0 30px 4px rgba(var(--ac-rgb),.45),0 0 60px 12px rgba(var(--ac-rgb),.2);
+  animation:traura 2s ease-in-out infinite}
+@keyframes traura{0%,100%{opacity:.8}50%{opacity:1}}
+#tr{position:relative;z-index:1;background:
+    radial-gradient(ellipse 140% 60% at 50% -10%,rgba(var(--ac-rgb),.22),transparent 60%),
+    linear-gradient(170deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--ac);border-radius:12px;overflow:hidden;
+  box-shadow:0 28px 70px rgba(0,0,0,.85),inset 0 0 60px rgba(0,0,0,.5);
+  animation:tri .45s cubic-bezier(.2,.75,.3,1.15) both}
+@keyframes tri{from{opacity:0;transform:translateY(-12px) scale(.96)}to{opacity:1;transform:none}}
+
+#tr-burst{position:absolute;top:170px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--ac-rgb),.95),transparent 70%);z-index:5;pointer-events:none;
+  animation:trburst 1.6s ease-out 1 both}
+@keyframes trburst{0%{transform:scale(0);opacity:1}70%{opacity:.4}100%{transform:scale(28);opacity:0}}
+
+#tr-lang{position:absolute;top:12px;right:13px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#tr-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#tr-lang b.on{color:#100A08;background:linear-gradient(135deg,var(--ac),#8a6f2e);box-shadow:0 0 10px -2px var(--ac)}
+
+#tr-head{position:relative;z-index:1;padding:22px 24px 4px;text-align:center}
+#tr-eyebrow{font-family:var(--fh);font-size:9px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #tr-eyebrow{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:1px}
+#tr-title{font-size:18px;letter-spacing:1.4px;margin-top:6px;
+  background:linear-gradient(100deg,var(--tx) 10%,#fff 28%,var(--ac) 50%,#fff 72%,var(--tx) 90%);
+  background-size:260% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:trshimmer 5s linear infinite;filter:drop-shadow(0 0 16px rgba(var(--ac-rgb),.6))}
+#tr-title[lang-mode="en"]{font-family:var(--fh)}
+#tr-title[lang-mode="th"]{font-family:var(--fth);font-size:16.5px;letter-spacing:.4px}
+@keyframes trshimmer{0%{background-position:0% center}100%{background-position:260% center}}
+#tr-subtitle{font-size:10.5px;font-style:italic;color:var(--tx2);margin-top:5px}
+[lang-mode="th"] #tr-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+#tr-fan{position:relative;height:64px;margin-top:18px}
+.tr-fcard{position:absolute;left:50%;top:6px;width:28px;height:40px;margin-left:-14px;border-radius:3px;
+  background:linear-gradient(160deg,rgba(var(--ac-rgb),.35),rgba(var(--ac-rgb),.08));
+  border:1px solid rgba(var(--ac-rgb),.6);box-shadow:0 4px 12px -4px rgba(0,0,0,.7),0 0 8px -2px var(--ac);
+  transform-origin:50% 130px}
+
+#tr-icon-wrap{width:92px;height:92px;margin:6px auto 0;position:relative;
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)}
+#tr-icon-bg{position:absolute;inset:0;background:
+    radial-gradient(circle at 35% 30%,rgba(255,255,255,.14),transparent 60%),
+    linear-gradient(160deg,var(--pan3),var(--pan));
+  border:2px solid var(--ac);box-shadow:0 0 26px -2px var(--ac),0 0 50px -10px var(--ac),inset 0 0 20px -6px var(--ac)}
+#tr-icon-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#tr-icon-fallback{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
+#tr-name{font-family:var(--fh);font-size:19px;letter-spacing:.8px;text-align:center;margin-top:15px;
+  background:linear-gradient(100deg,var(--tx) 10%,#fff 30%,var(--ac) 55%,#fff 78%,var(--tx) 95%);
+  background-size:240% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:trshimmer 6s linear infinite;filter:drop-shadow(0 0 14px rgba(var(--ac-rgb),.5))}
+[lang-mode="th"] #tr-name{font-family:'Noto Serif Thai',serif;font-weight:700}
+
+.tr-body{position:relative;z-index:1;padding:6px 24px 6px}
+.tr-sec{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
+.tr-sec svg{flex-shrink:0}
+.tr-sec .t{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--ac);text-transform:uppercase}
+[lang-mode="th"] .tr-sec .t{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.3px}
+.tr-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.tr-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;background:var(--pan);
+  border-left:2px solid var(--ac);border-radius:0 4px 4px 0;padding:10px 13px}
+[lang-mode="th"] .tr-note{font-family:'Noto Serif Thai',serif;font-style:normal}
+.tr-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tr-tag{font-size:11px;color:var(--tx);background:var(--pan);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+[lang-mode="th"] .tr-tag{font-family:'Noto Serif Thai',serif;font-style:normal}
+.tr-tag.card{color:var(--ac);border-color:rgba(var(--ac-rgb),.5);font-style:normal;font-family:var(--fh);font-size:9.5px;letter-spacing:.5px}
+
+#trfoot{position:relative;z-index:1;padding:13px 24px 20px;text-align:center;font-size:9.5px;
+  letter-spacing:.6px;color:var(--mu);border-top:1px solid rgba(255,255,255,.04);margin-top:8px;text-transform:uppercase}
+[lang-mode="th"] #trfoot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="trraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="trwrap"><div id="tr">
+  <div id="tr-burst"></div>
+  <div id="tr-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="tr-head">
+    <div id="tr-eyebrow" data-en="THE ASTRAL LEDGER" data-th="บันทึกใต้เงาดารา">THE ASTRAL LEDGER</div>
+    <div id="tr-title" lang-mode="en" data-en="THE FIFTH CARD'S BOON" data-th="ของขวัญจากไพ่ใบที่ห้า">THE FIFTH CARD'S BOON</div>
+    <div id="tr-subtitle" data-en="A Hand Completed, A Prize Claimed" data-th="ไพ่ครบมือ รางวัลจึงบังเกิด">A Hand Completed, A Prize Claimed</div>
+  </div>
+
+  <div id="tr-fan"></div>
+
+  <div id="tr-icon-wrap">
+    <div id="tr-icon-bg"></div>
+    <img id="tr-icon-img" alt="">
+    <div id="tr-icon-fallback">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <path d="M17 3 L20 14 L31 17 L20 20 L17 31 L14 20 L3 17 L14 14 Z" fill="var(--ac)" opacity=".9"/>
+        <circle cx="17" cy="17" r="3.4" fill="#fff" opacity=".9"/>
+      </svg>
+    </div>
+  </div>
+
+  <div id="tr-name">The Sealed Hand</div>
+
+  <div class="tr-body">
+    <div id="desc-wrap"></div>
+    <div id="props-wrap"></div>
+    <div id="cards-wrap"></div>
+  </div>
+
+  <div id="trfoot" data-en="Five fates converged &#8212; the ledger seals this moment" data-th="โชคชะตาทั้งห้าบรรจบกัน &#8212; บันทึกนี้จารึกช่วงเวลานี้ไว้">Five fates converged &#8212; the ledger seals this moment</div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('trraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function buildFan(){
+  var angles=[-22,-11,0,11,22];
+  var html='';
+  for(var i=0;i<5;i++){
+    var a=angles[i];
+    var y=Math.abs(a)*0.9;
+    html+='<div class="tr-fcard" style="transform:rotate('+a+'deg) translateY('+y+'px);z-index:'+(i<=2?i:4-i)+'"></div>';
+  }
+  g('tr-fan').innerHTML=html;
+}
+buildFan();
+
+function renderAll(){
+  if(d.charColor){
+    document.documentElement.style.setProperty('--ac',d.charColor);
+    var h=d.charColor.replace('#','');
+    if(h.length===6){
+      var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+      document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+    }
+  }
+
+  g('tr-name').textContent=d.itemName||(L==='th'?'ของรางวัลไร้นาม':'The Unnamed Prize');
+
+  var img=g('tr-icon-img');
+  if(d.image){img.src='https://files.catbox.moe/'+d.image;img.style.display='block';
+    img.onerror=function(){img.style.display='none';g('tr-icon-fallback').style.display='flex'};
+    img.onload=function(){g('tr-icon-fallback').style.display='none'};
+  }else{img.style.display='none';img.removeAttribute('src');g('tr-icon-fallback').style.display='flex';}
+
+  var descHtml='';
+  if(d.description){
+    descHtml='<div class="tr-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
+      (L==='th'?'รายละเอียด':'Description')+'</span><span class="ln"></span></div><div class="tr-note">'+esc(d.description)+'</div>';
+  }
+  g('desc-wrap').innerHTML=descHtml;
+
+  var props=d.properties||[];
+  var propsHtml='';
+  if(props.length){
+    propsHtml='<div class="tr-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
+      (L==='th'?'คุณสมบัติ':'Properties')+'</span><span class="ln"></span></div><div class="tr-tags">'+
+      props.map(function(x){return '<span class="tr-tag">'+esc(x)+'</span>';}).join('')+'</div>';
+  }
+  g('props-wrap').innerHTML=propsHtml;
+
+  var cards=d.cardNames||[];
+  var cardsHtml='';
+  if(cards.length){
+    cardsHtml='<div class="tr-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--ac)"/></svg><span class="t">'+
+      (L==='th'?'ไพ่ที่ประกอบกันเป็นมือนี้':'Drawn From')+'</span><span class="ln"></span></div><div class="tr-tags">'+
+      cards.map(function(x){return '<span class="tr-tag card">'+esc(x)+'</span>';}).join('')+'</div>';
+  }
+  g('cards-wrap').innerHTML=cardsHtml;
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Techniques)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Skill / Ability Used",
+      "content": "## LORD OF THE MYSTERIES — SKILL / ABILITY USED NOTIFICATION\n\nWhenever a character actually uses a named technique, Beyonder characteristic, spell, or combat move in the story — post this tag right at the point of use:\n\n<LOM_SKILL>\n{JSON}\n</LOM_SKILL>\n\nThis is a compact, frequent-use HUD element — unlike the other Astral Ledger notifications, it's meant to fire often (every notable skill use in a scene, potentially several times per reply if the character uses multiple techniques). Keep it lightweight: don't hesitate to use it, but don't fire it for pure flavor description that isn't an actual named ability being invoked (e.g. just \"she ran across the room\" doesn't need this).\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#8B5FBF\",\n  \"skillName\": \"Illusory Doppelganger\",\n  \"abilityType\": \"Fool Pathway — Sequence 7 Characteristic\",\n  \"costValue\": \"40\",\n  \"costUnit\": \"Spiritual Power\",\n  \"description\": \"Splits a fragment of the user's spirituality into a perfect illusory double, indistinguishable from the original at a glance, able to act independently for up to one minute before dissolving.\"\n}\n```\n\n### FIELD REFERENCE\n| Field | Notes |\n|---|---|\n| `charColor` | optional — hex color, ideally matching the caster's own signature color (from their `<LOM_CONFIRM>` dossier if they have one) so the card visually ties back to them; omit for a neutral default violet |\n| `skillName` | the move/technique's actual name — required for the card to mean anything, but if genuinely unnamed just describe it briefly (\"A Wild Slash\") rather than omitting |\n| `abilityType` | optional short line for what kind of ability this is — a Pathway + Sequence characteristic, a mundane combat technique, a passive trait, a ritual, etc. Omit if there's nothing meaningful to add |\n| `costValue` | optional — the resource spent. Free text, not strictly numeric: a plain number (\"40\"), a phrase (\"All Remaining\"), or omit entirely for a free/passive ability with no cost |\n| `costUnit` | optional — what `costValue` is measured in (\"Spiritual Power\", \"Stamina\", \"HP\", or anything the story uses); only shown alongside a `costValue` |\n| `description` | optional — what the ability actually does. If provided, the card shows a small toggle to expand/collapse it, so the compact bar can be used repeatedly in a scene without permanently cluttering the screen. Omit for very minor/repeated actions where a fresh explanation isn't needed. |\n\n### OUTPUT RULES\n• This tag is for a real, specific use of a named ability — not a generic combat action.\n• It's fine — expected, even — to post this tag multiple times in a single reply if the character uses several distinct techniques in sequence.\n• Don't invent a cost that hasn't been established for a given ability; if the story hasn't defined one, omit `costValue`/`costUnit` rather than guessing.\n• Reuse the same `skillName`/`abilityType`/cost values consistently for the same technique across multiple uses, unless the story specifically changes them (e.g. a weakened cast, an empowered version).",
+      "constant": true,
+      "order": 94,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

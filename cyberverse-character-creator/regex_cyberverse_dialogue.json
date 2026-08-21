@@ -1,0 +1,18 @@
+{
+    "id": "cyberverse-dialogue",
+    "scriptName": "Cyberverse Dialogue",
+    "findRegex": "/\\[VOX\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap\" rel=\"stylesheet\"/><div style=\"position:relative;max-width:500px;margin:8px auto 14px;padding:11px 15px 12px;border-radius:9px;overflow:hidden;border:1.5px solid $1;background:linear-gradient(160deg,rgba(12,14,24,.82),rgba(5,6,10,.9));font-family:'Rajdhani',sans-serif;font-size:14.5px;line-height:1.6;color:#dff6ff;box-shadow:0 0 16px -7px $1,0 4px 14px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);\"><div style=\"position:absolute;inset:0;pointer-events:none;opacity:.025;z-index:0;background:repeating-linear-gradient(0deg,#fff 0 1px,transparent 1px 3px);\"></div><div style=\"position:relative;z-index:1;display:flex;align-items:center;gap:6px;margin-bottom:6px;\"><span style=\"color:$1;font-size:9px;line-height:1;\">⬡</span><span style=\"font-family:'Share Tech Mono',monospace;font-size:7px;letter-spacing:2px;color:$1;opacity:.6;\">VOICE</span></div><div style=\"position:relative;z-index:1;\">$2</div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}

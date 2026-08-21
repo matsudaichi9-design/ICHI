@@ -1,0 +1,18 @@
+{
+    "id": "lom-dialogue",
+    "scriptName": "Lord of the Mysteries — Dialogue",
+    "findRegex": "/\\[LOM_SAY\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap\" rel=\"stylesheet\"/><div style=\"position:relative;max-width:490px;margin:14px auto 16px 46px;padding:14px 20px 14px 26px;background:radial-gradient(ellipse 140% 100% at 0% 0%,rgba(139,95,191,.08),transparent 60%),#100A14;border-radius:2px 10px 10px 2px;box-shadow:0 8px 22px -8px rgba(0,0,0,.7);font-family:'Spectral','Noto Serif Thai',serif;\"><span style=\"position:absolute;left:0;top:4px;bottom:4px;width:3px;border-radius:2px;background:linear-gradient(180deg,$1,rgba(139,95,191,.25));box-shadow:0 0 10px -2px $1;\"></span><span style=\"position:absolute;top:-9px;left:18px;width:18px;height:18px;border-radius:50%;background:#100A14;border:1.3px solid $1;display:flex;align-items:center;justify-content:center;box-shadow:0 0 8px -1px $1;\"><svg width=\"8\" height=\"8\" viewBox=\"0 0 12 12\" fill=\"$1\"><path d=\"M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z\"/></svg></span><div style=\"font-size:14px;line-height:1.68;color:#E4DCF2;\">$2</div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}

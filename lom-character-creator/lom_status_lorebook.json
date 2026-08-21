@@ -1,0 +1,39 @@
+{
+  "name": "Lord of the Mysteries — The Astral Ledger (Living Record / Status)",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "LOM Status Panel — The Living Record",
+      "content": "## LORD OF THE MYSTERIES — STATUS PANEL (THE LIVING RECORD)\n\nA persistent, always-present status HUD for {{user}}'s character, collapsed to a slim bar by default so it doesn't dominate the reply, expandable by the player into a full tabbed sheet.\n\n### PLACEMENT — READ CAREFULLY, THIS TAG WORKS LIKE <LOM_LOCATION>\n1. **Always last.** This tag must always be the very last thing in every one of your replies, after all narrative text and after any other Astral Ledger tag in that same reply.\n2. **Every single reply, no exceptions.** Post the FULL current `<LOM_STATUS>` block at the end of every reply for the rest of the story — even if nothing changed since the last message. This is what makes it a persistent status bar rather than an occasional notification.\n3. **Always resend the complete state**, not a diff — the card has no memory between messages. Carry forward every field from the previous post and only change what actually changed in the story.\n\n<LOM_STATUS>\n{JSON}\n</LOM_STATUS>\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#8B5FBF\",\n  \"character\": {\n    \"name\": \"Percy Alstreim\",\n    \"level\": \"Sequence 7 — Fool Pathway\",\n    \"appearance\": \"Tall, sharp-featured, dark hair kept short and neat.\",\n    \"outfit\": \"A grey wool coat, dockworker's boots, a silver pocket watch on a chain.\",\n    \"condition\": \"Lightly wounded — favoring the left arm.\",\n    \"funds\": \"120 Pounds\",\n    \"extra\": [{\"label\": \"Faction\", \"value\": \"Tingen Night Watch\"}]\n  },\n  \"abilities\": [\n    {\"name\": \"Spirit Vision\", \"description\": \"Can perceive residual emotion left on objects and in rooms.\"}\n  ],\n  \"locations\": [\n    {\"name\": \"Backlund Fogbound Market\", \"summary\": \"A night market that opens only in fog.\",\n     \"details\": \"Vendors here trade in more than coin — rare reagents, forbidden pamphlets. Pickpocket wraiths slip between the stalls after midnight.\"}\n  ],\n  \"inventory\": [\n    {\"name\": \"The Ashen Compass\", \"category\": \"Sealed Artifact\", \"tier\": \"Sequence 6\",\n     \"description\": \"A brass compass whose needle points toward whatever the holder fears most.\"}\n  ],\n  \"bestiary\": [\n    {\"name\": \"The Weeping Tailor\", \"dangerLevel\": 5.5, \"summary\": \"Stitches living shadows into cloth that binds the wearer.\"}\n  ],\n  \"extraTab\": {\n    \"title\": \"Reputation\",\n    \"items\": [{\"label\": \"Tingen Night Watch\", \"value\": \"Trusted\"}]\n  }\n}\n```\n\n### TAB REFERENCE\n| Tab | Fields | Notes |\n|---|---|---|\n| **Character** | `name`, `level`, `appearance`, `outfit`, `condition`, `funds`, `extra[]` | `level` should reflect their actual Sequence + Pathway (see the Sealed Registry system). `extra` is an open-ended array of `{label, value}` pairs for anything else worth tracking (a title, a faction rank, an affliction) — add or remove entries as the story calls for it. Any field left out entirely is simply not shown. |\n| **Abilities** | array of `{name, description}` | Every genuine ability/characteristic/technique the character currently has, in plain list form. Add a new entry the moment they gain one (e.g. after a `<LOM_SKILL>` first establishes it, or a Sequence advancement grants one) — don't wait to be asked. |\n| **Locations** | array of `{name, summary, details}` | Every location the character has actually discovered (this should track the same places that earned a `<LOM_LOCATION>` post). `summary` is the always-visible one-liner; `details` is the fuller text revealed when the player expands that entry. |\n| **Inventory** | array of `{name, category, tier, description}` | Every item currently in the character's possession (should stay in sync with items granted via `<LOM_ITEM>`/`<LOM_TAROT_REWARD>` and removed when lost/used/sold). `category` and `tier` are both free text — describe the item's kind and its power level however fits (a Sequence number, \"Common\"/\"Rare\", etc.) |\n| **Bestiary** | array of `{name, dangerLevel, summary}` | Every creature/threat the character has encountered (should track the same entities covered by `<LOM_MONSTER>`). `dangerLevel` (0-10) colors the entry's marker the same way it colors a full `<LOM_MONSTER>` card. |\n| **Reputation / extraTab** | `{title, items:[{label,value}]}` | Optional sixth tab, entirely your call — use it for whatever the story actually tracks that doesn't fit the other five (faction standing, notoriety, a relationship meter, active afflictions). Omit `extraTab` entirely if there's nothing that warrants it; the sixth tab then simply doesn't appear. |\n\n### OUTPUT RULES\n• Keep this in sync with the story's actual state — an item that's been lost or sold should drop out of `inventory`; a Sequence advancement should update `character.level` and add any new ability to the `abilities` list.\n• This is a summary index, not the place for extended prose — keep `summary`/`description` fields short, and use `details` (locations) or the item's own `<LOM_ITEM>` notification for anything longer.\n• Don't skip a reply's `<LOM_STATUS>` post because \"nothing changed\" — resend it unchanged. The player relies on it always being at the bottom of the page.",
+      "constant": true,
+      "order": 101,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

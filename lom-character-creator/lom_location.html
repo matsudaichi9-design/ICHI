@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --ac:#5EC2C2;--ac-rgb:94,194,194;
+  --gold:#C0A050;--danger:#C4523A;--tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;--pan3:#221629;
+  --bd:rgba(192,160,80,.2);--bd2:rgba(255,255,255,.04);
+  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
+}
+@keyframes lcspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+#lcwrap{max-width:440px;margin:12px auto;position:relative}
+#lcwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.5),0 0 26px 3px rgba(var(--ac-rgb),.35),0 0 48px 9px rgba(var(--ac-rgb),.13);
+  animation:lcaura 3s ease-in-out infinite}
+@keyframes lcaura{0%,100%{opacity:.75}50%{opacity:1}}
+#lc{position:relative;z-index:1;background:
+    radial-gradient(ellipse 140% 60% at 50% -10%,rgba(var(--ac-rgb),.16),transparent 60%),
+    radial-gradient(ellipse 100% 60% at 50% 108%,rgba(0,0,0,.55),transparent 60%),
+    linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
+  box-shadow:0 26px 76px rgba(0,0,0,.85),inset 0 0 0 1px rgba(192,160,80,.05),inset 0 0 60px rgba(0,0,0,.55);
+  animation:lci .4s cubic-bezier(.2,.8,.3,1.2) both}
+@keyframes lci{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+#lc-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;filter:blur(8px);
+  background:radial-gradient(ellipse 60% 42% at 50% 0%,rgba(var(--ac-rgb),.28),transparent 70%),
+    radial-gradient(ellipse 55% 40% at 15% 95%,rgba(0,0,0,.4),transparent 70%)}
+#lc::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 18%,rgba(228,220,242,.7),transparent),
+    radial-gradient(1px 1px at 28% 62%,rgba(228,220,242,.45),transparent),
+    radial-gradient(1.6px 1.6px at 46% 12%,rgba(228,220,242,.6),transparent),
+    radial-gradient(1px 1px at 63% 44%,rgba(228,220,242,.35),transparent),
+    radial-gradient(1.3px 1.3px at 78% 22%,rgba(228,220,242,.65),transparent),
+    radial-gradient(1px 1px at 88% 58%,rgba(228,220,242,.4),transparent),
+    radial-gradient(1.5px 1.5px at 20% 82%,rgba(228,220,242,.5),transparent),
+    radial-gradient(1px 1px at 55% 88%,rgba(228,220,242,.35),transparent);
+  animation:lctwinkle 5s ease-in-out infinite}
+@keyframes lctwinkle{0%,100%{opacity:.35}50%{opacity:.85}}
+.lc-ember{position:absolute;width:2.4px;height:2.4px;border-radius:50%;background:var(--ac);
+  box-shadow:0 0 7px 1.6px var(--ac);opacity:0;pointer-events:none;z-index:1;bottom:6%;animation:lcember 6s ease-in infinite}
+@keyframes lcember{0%{opacity:0;transform:translate(0,0)}8%{opacity:.9}75%{opacity:.4}100%{opacity:0;transform:translate(var(--ex,10px),-280px)}}
+.lc-corner{position:absolute;width:40px;height:40px;z-index:2;opacity:.85;pointer-events:none}
+.lc-corner.tl{top:7px;left:7px}
+.lc-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
+.lc-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}
+.lc-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
+.lc-corner path,.lc-corner circle{stroke:var(--ac)}
+.lc-corner circle{fill:var(--ac)}
+
+#lc-lang{position:absolute;top:12px;right:13px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#lc-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700;transition:all .2s}
+#lc-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#1F5A5A);box-shadow:0 0 10px -2px var(--ac)}
+
+#lc-head{position:relative;z-index:1;padding:22px 24px 4px;text-align:center;cursor:pointer;user-select:none}
+#lc-eyebrow{font-family:var(--fh);font-size:9px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #lc-eyebrow{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:1px}
+#lc-title{font-size:19px;letter-spacing:1.6px;margin-top:6px;position:relative;
+  background:linear-gradient(100deg,var(--tx) 12%,#fff 30%,var(--ac) 52%,#fff 72%,var(--tx) 88%);
+  background-size:260% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:lcshimmer 5.5s linear infinite;filter:drop-shadow(0 0 16px rgba(var(--ac-rgb),.55))}
+#lc-title[lang-mode="en"]{font-family:var(--fh)}
+#lc-title[lang-mode="th"]{font-family:var(--fth);font-size:17px;letter-spacing:.5px}
+@keyframes lcshimmer{0%{background-position:0% center}100%{background-position:260% center}}
+#lc-subtitle{font-size:10.5px;font-style:italic;color:var(--tx2);margin-top:5px}
+[lang-mode="th"] #lc-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
+#lc-chev{position:absolute;bottom:2px;right:24px;font-size:9px;color:var(--mu);transition:transform .3s}
+#lcwrap.closed #lc-chev{transform:rotate(180deg)}
+#lcbody{max-height:2200px;overflow:hidden;transition:max-height .35s ease}
+#lcwrap.closed #lcbody{max-height:0}
+
+#lc-place{position:relative;padding:14px 24px 4px;text-align:center}
+#lc-name{font-size:18px;letter-spacing:.6px;color:var(--tx);font-family:var(--fh)}
+[lang-mode="th"] #lc-name{font-family:'Noto Serif Thai',serif;font-weight:700}
+#lc-type{display:inline-block;margin-top:8px;font-family:var(--fh);font-size:9px;letter-spacing:1px;
+  padding:4px 11px;border-radius:99px;color:var(--ac);background:rgba(var(--ac-rgb),.12);border:1px solid rgba(var(--ac-rgb),.4)}
+[lang-mode="th"] #lc-type{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+[lang-mode="th"] #lc-type2{font-family:'Noto Serif Thai',serif !important;font-size:10.5px !important;letter-spacing:.2px !important}
+
+.lc-body-inner{position:relative;z-index:1;padding:14px 24px 6px}
+.lc-sec{display:flex;align-items:center;gap:8px;margin:0 0 11px}
+.lc-sec:not(:first-child){margin-top:18px}
+.lc-sec svg{flex-shrink:0}
+.lc-sec .t{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .lc-sec .t{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.3px}
+.lc-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.lc-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;background:var(--pan2);
+  border-left:2px solid var(--ac);border-radius:0 var(--r2) var(--r2) 0;padding:10px 13px}
+[lang-mode="th"] .lc-note{font-family:'Noto Serif Thai',serif;font-style:normal}
+.lc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.lc-tag{font-size:11px;color:var(--tx);background:var(--pan2);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+[lang-mode="th"] .lc-tag{font-family:'Noto Serif Thai',serif;font-style:normal}
+.lc-tag.danger{color:var(--danger);border-color:rgba(196,82,58,.4);background:rgba(196,82,58,.08)}
+
+/* MINI-MAP */
+#lc-mapwrap{position:relative;border-radius:var(--r2);overflow:hidden}
+#lc-map{position:relative;width:100%;aspect-ratio:8/5;overflow:hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%,rgba(var(--ac-rgb),.16),transparent 65%),
+    radial-gradient(ellipse 70% 60% at 15% 100%,rgba(0,0,0,.55),transparent 70%),
+    linear-gradient(160deg,var(--pan3) 0%,var(--pan) 100%);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.04),inset 0 0 46px rgba(0,0,0,.55)}
+#lc-map-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.68) saturate(.85);display:none}
+#lc-map-grid{position:absolute;inset:0;opacity:.1;pointer-events:none;
+  background-image:repeating-linear-gradient(0deg,var(--tx2) 0 1px,transparent 1px 32px),
+    repeating-linear-gradient(90deg,var(--tx2) 0 1px,transparent 1px 32px)}
+#lc-map-stars{position:absolute;inset:0;pointer-events:none;opacity:.55;
+  background-image:
+    radial-gradient(1.2px 1.2px at 8% 15%,rgba(255,255,255,.65),transparent),
+    radial-gradient(1px 1px at 22% 55%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.4px 1.4px at 38% 82%,rgba(255,255,255,.55),transparent),
+    radial-gradient(1px 1px at 55% 22%,rgba(255,255,255,.35),transparent),
+    radial-gradient(1.3px 1.3px at 68% 65%,rgba(255,255,255,.6),transparent),
+    radial-gradient(1px 1px at 82% 35%,rgba(255,255,255,.4),transparent),
+    radial-gradient(1.2px 1.2px at 92% 78%,rgba(255,255,255,.5),transparent);
+  animation:lctwinkle 6s ease-in-out infinite}
+#lc-compass{position:absolute;right:9px;bottom:9px;width:30px;height:30px;opacity:.32;pointer-events:none;z-index:1}
+#lc-map-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+#lc-map-pins{position:absolute;inset:0;z-index:2}
+.lc-pin{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px}
+.lc-pin-badge{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35),var(--pc) 75%);
+  border:1.3px solid rgba(255,255,255,.55);color:#180F14;
+  animation:lcpinpulse 2.6s ease-in-out infinite}
+@keyframes lcpinpulse{0%,100%{box-shadow:0 0 7px -1px var(--pc)}50%{box-shadow:0 0 15px 0 var(--pc)}}
+.lc-pin-label{font-size:8.3px;letter-spacing:.2px;color:var(--tx);background:rgba(5,2,6,.7);padding:1.5px 6px;
+  border-radius:99px;white-space:nowrap;max-width:98px;overflow:hidden;text-overflow:ellipsis;
+  border:1px solid rgba(255,255,255,.08)}
+[lang-mode="th"] .lc-pin-label{font-family:'Noto Serif Thai',serif}
+#lc-map-empty{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:0 20%;font-size:11px;font-style:italic;color:var(--mu);z-index:1}
+[lang-mode="th"] #lc-map-empty{font-family:'Noto Serif Thai',serif;font-style:normal}
+#lc-legend{display:flex;flex-wrap:wrap;gap:9px 14px;margin-top:10px;justify-content:center}
+.lc-leg{display:flex;align-items:center;gap:5px;font-size:8.8px;color:var(--tx2);letter-spacing:.2px}
+[lang-mode="th"] .lc-leg{font-family:'Noto Serif Thai',serif;font-size:10px}
+.lc-leg-dot{width:8px;height:8px;border-radius:50%;background:var(--pc);box-shadow:0 0 5px var(--pc);flex-shrink:0}
+
+.lc-threat-row{display:flex;align-items:flex-start;gap:10px}
+.lc-threat-icon{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border:1.3px solid rgba(255,255,255,.15)}
+.lc-threat-icon.on{background:rgba(196,82,58,.14);border-color:rgba(196,82,58,.5);box-shadow:0 0 12px -3px var(--danger)}
+.lc-threat-icon.off{background:rgba(var(--ac-rgb),.1);border-color:rgba(var(--ac-rgb),.4);box-shadow:0 0 12px -4px var(--ac)}
+.lc-threat-text{flex:1;font-size:12px;line-height:1.6;color:var(--tx2);font-style:italic}
+[lang-mode="th"] .lc-threat-text{font-family:'Noto Serif Thai',serif;font-style:normal}
+.lc-threat-text.on{color:var(--tx)}
+
+#lcfoot{position:relative;z-index:1;padding:13px 24px 20px;text-align:center;font-size:9.5px;
+  letter-spacing:.6px;color:var(--mu);border-top:1px solid var(--bd2);margin-top:8px;text-transform:uppercase}
+[lang-mode="th"] #lcfoot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="lcraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lcwrap"><div id="lc">
+  <div id="lc-nebula"></div>
+  <div class="lc-ember" style="left:16%;--ex:8px;animation-delay:0s"></div>
+  <div class="lc-ember" style="left:40%;--ex:-12px;animation-delay:1.4s"></div>
+  <div class="lc-ember" style="left:64%;--ex:14px;animation-delay:2.8s"></div>
+  <div class="lc-ember" style="left:82%;--ex:-8px;animation-delay:4.2s"></div>
+  <svg class="lc-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="lc-corner tr" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="lc-corner bl" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="lc-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+
+  <div id="lc-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="lc-head">
+    <div id="lc-eyebrow" data-en="THE ASTRAL LEDGER" data-th="บันทึกใต้เงาดารา">THE ASTRAL LEDGER</div>
+    <div id="lc-title" lang-mode="en" data-en="THE MAP UNFOLDS" data-th="แผนที่คลี่คลาย">THE MAP UNFOLDS</div>
+    <div id="lc-subtitle" data-en="A New Waypoint Charted" data-th="จุดหมายใหม่ถูกจารึกไว้">A New Waypoint Charted</div>
+    <div id="lc-chev">&#9650;</div>
+  </div>
+
+  <div id="lcbody">
+    <div id="lc-place">
+      <div id="lc-name">Unknown Waypoint</div>
+      <div id="lc-type"></div>
+    </div>
+
+    <div class="lc-body-inner">
+      <div id="desc-wrap"></div>
+
+      <div class="lc-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Charted Ground" data-th="แผนที่บริเวณนี้">Charted Ground</span><span class="ln"></span></div>
+      <div id="lc-mapwrap">
+        <div id="lc-map">
+          <img id="lc-map-img" alt="">
+          <div id="lc-map-grid"></div>
+          <div id="lc-map-stars"></div>
+          <svg id="lc-compass" viewBox="0 0 30 30" fill="none">
+            <circle cx="15" cy="15" r="12" stroke="var(--tx2)" stroke-width="1"/>
+            <path d="M15 4 L18 15 L15 26 L12 15 Z" fill="var(--tx2)" opacity=".7"/>
+            <path d="M4 15 L15 12 L26 15 L15 18 Z" fill="var(--tx2)" opacity=".4"/>
+          </svg>
+          <svg id="lc-map-lines" viewBox="0 0 100 100" preserveAspectRatio="none"></svg>
+          <div id="lc-map-pins"></div>
+          <div id="lc-map-empty" data-en="No notable zones have been charted here yet." data-th="ยังไม่มีการทำแผนที่โซนสำคัญในบริเวณนี้">No notable zones have been charted here yet.</div>
+        </div>
+        <div id="lc-legend"></div>
+      </div>
+
+      <div class="lc-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Resources &amp; Trade" data-th="ทรัพยากรและการค้า">Resources &amp; Trade</span><span class="ln"></span></div>
+      <div id="res-wrap"></div>
+
+      <div class="lc-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Nearby Threats" data-th="ภัยใกล้เคียง">Nearby Threats</span><span class="ln"></span></div>
+      <div id="threat-wrap"></div>
+    </div>
+
+    <div id="lcfoot" data-en="This ground stays charted while you remain &#8212; it fades only when you move on" data-th="แผนที่นี้จะยังปรากฏอยู่ตราบเท่าที่ท่านยังอยู่ ณ ที่แห่งนี้ &#8212; และจะเลือนลางไปเมื่อท่านจากไป">This ground stays charted while you remain &#8212; it fades only when you move on</div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+
+var L='en';
+
+var raw=g('lcraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var STR={
+  unknownPlace:['Unknown Waypoint','จุดหมายไม่ทราบชื่อ'],
+  noResource:['Nothing of particular value has been catalogued here yet.','ยังไม่มีการบันทึกสิ่งของมีค่าใดๆ ณ ที่แห่งนี้'],
+  noThreat:['No notable threats have been recorded in the area.','ยังไม่พบภัยอันตรายที่น่าจดบันทึกในบริเวณนี้'],
+  threatKnown:['Threats are known to linger nearby.','มีภัยอันตรายบางอย่างพบว่าซุ่มอยู่ใกล้เคียง']
+};
+function t(pair){return L==='th'?pair[1]:pair[0]}
+
+var ZONE_TYPES={
+  entrance:{color:'#B7AED0',en:'Entrance',th:'ทางเข้า',
+    icon:'<circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.3" fill="none"/><path d="M8 4 L9.4 8 L8 12 L6.6 8 Z" fill="currentColor"/>'},
+  resource:{color:'#D9B65C',en:'Resource',th:'แหล่งทรัพยากร',
+    icon:'<path d="M8 2 L13 6 L8 14 L3 6 Z" stroke="currentColor" stroke-width="1.1" fill="none"/><path d="M3 6 L13 6 M8 2 L5.5 6 L8 14 M8 2 L10.5 6 L8 14" stroke="currentColor" stroke-width=".5" opacity=".6"/>'},
+  market:{color:'#5EC2C2',en:'Trade',th:'จุดค้าขาย',
+    icon:'<rect x="3" y="9.2" width="10" height="2.3" rx="1" fill="currentColor" opacity=".9"/><rect x="4" y="6.3" width="8" height="2.3" rx="1" fill="currentColor" opacity=".7"/><rect x="5" y="3.4" width="6" height="2.3" rx="1" fill="currentColor" opacity=".5"/>'},
+  danger:{color:'#C4523A',en:'Danger',th:'อันตราย',
+    icon:'<path d="M8 2 L14.5 13.4 H1.5 Z" stroke="currentColor" stroke-width="1.2" fill="none" stroke-linejoin="round"/><line x1="8" y1="6.4" x2="8" y2="9.8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".9" fill="currentColor"/>'},
+  landmark:{color:'#9B6FD9',en:'Landmark',th:'จุดสังเกต',
+    icon:'<path d="M8 1 L9.3 6.7 L15 8 L9.3 9.3 L8 15 L6.7 9.3 L1 8 L6.7 6.7 Z" fill="currentColor"/>'},
+  other:{color:'#8F84B8',en:'Point of Interest',th:'จุดสนใจ',
+    icon:'<circle cx="8" cy="8" r="3.2" fill="currentColor"/>'}
+};
+function zoneType(k){return ZONE_TYPES[k]||ZONE_TYPES.other}
+
+function renderAll(){
+  g('lc-name').textContent=d.locationName||t(STR.unknownPlace);
+  g('lc-type').textContent=d.locationType||'';
+  g('lc-type').style.display=d.locationType?'inline-block':'none';
+
+  var descHtml='';
+  if(d.description){
+    descHtml='<div class="lc-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+
+      (L==='th'?'เกี่ยวกับสถานที่':'About This Place')+'</span><span class="ln"></span></div><div class="lc-note">'+esc(d.description)+'</div>';
+  }
+  g('desc-wrap').innerHTML=descHtml;
+
+  // resources
+  var resType=d.resourceType||'';
+  var resources=d.resources||[];
+  var resHtml='';
+  if(resType||resources.length){
+    if(resType)resHtml+='<div id="lc-type2" style="display:inline-block;margin-bottom:8px;font-family:var(--fh);font-size:9px;letter-spacing:1px;padding:4px 11px;border-radius:99px;color:var(--gold);background:rgba(192,160,80,.12);border:1px solid rgba(192,160,80,.4)">'+esc(resType)+'</div><br>';
+    if(resources.length)resHtml+='<div class="lc-tags">'+resources.map(function(x){return '<span class="lc-tag">'+esc(x)+'</span>';}).join('')+'</div>';
+  }else{
+    resHtml='<div class="lc-note" style="border-left-color:var(--mu)">'+t(STR.noResource)+'</div>';
+  }
+  g('res-wrap').innerHTML=resHtml;
+
+  // threats
+  var present=!!d.monstersPresent;
+  var threatHtml='<div class="lc-threat-row"><div class="lc-threat-icon '+(present?'on':'off')+'">'+
+    (present
+      ? '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2 L14.5 13.4 H1.5 Z" stroke="var(--danger)" stroke-width="1.2" fill="none" stroke-linejoin="round"/><line x1="8" y1="6.4" x2="8" y2="9.8" stroke="var(--danger)" stroke-width="1.3" stroke-linecap="round"/><circle cx="8" cy="11.5" r=".9" fill="var(--danger)"/></svg>'
+      : '<svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8.5 L6.5 12 L13 4.5" stroke="var(--ac)" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>')+
+    '</div><div class="lc-threat-text'+(present?' on':'')+'">'+
+    (present ? esc(d.monsterNote||t(STR.threatKnown)) : t(STR.noThreat))+
+    '</div></div>';
+  if(present&&d.monsterTypes&&d.monsterTypes.length){
+    threatHtml+='<div class="lc-tags" style="margin-top:9px">'+d.monsterTypes.map(function(x){return '<span class="lc-tag danger">'+esc(x)+'</span>';}).join('')+'</div>';
+  }
+  g('threat-wrap').innerHTML=threatHtml;
+
+  // map
+  var img=g('lc-map-img');
+  if(d.mapImage){img.src='https://files.catbox.moe/'+d.mapImage;img.style.display='block';img.onerror=function(){img.style.display='none'};}
+  else{img.style.display='none';img.removeAttribute('src');}
+
+  var zones=(d.zones||[]).map(function(z){
+    return {x:clamp(parseFloat(z.x)||0,6,94),y:clamp(parseFloat(z.y)||0,8,92),type:z.type,label:z.label||''};
+  });
+
+  var pinsEl=g('lc-map-pins');
+  var linesEl=g('lc-map-lines');
+  var emptyEl=g('lc-map-empty');
+  var legEl=g('lc-legend');
+
+  if(!zones.length){
+    pinsEl.innerHTML='';linesEl.innerHTML='';legEl.innerHTML='';
+    emptyEl.style.display='flex';
+  }else{
+    emptyEl.style.display='none';
+    pinsEl.innerHTML=zones.map(function(z){
+      var zt=zoneType(z.type);
+      return '<div class="lc-pin" style="left:'+z.x+'%;top:'+z.y+'%">'+
+        '<div class="lc-pin-badge" style="--pc:'+zt.color+'"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" style="color:'+zt.color+'">'+zt.icon+'</svg></div>'+
+        (z.label?'<div class="lc-pin-label">'+esc(z.label)+'</div>':'')+
+        '</div>';
+    }).join('');
+
+    if(zones.length>1){
+      var pts=zones.map(function(z){return z.x+','+z.y}).join(' ');
+      linesEl.innerHTML='<polyline points="'+pts+'" fill="none" stroke="var(--ac)" stroke-width=".5" stroke-dasharray="2,2" opacity=".4" vector-effect="non-scaling-stroke"/>';
+    }else{
+      linesEl.innerHTML='';
+    }
+
+    var seen={};var legItems=[];
+    zones.forEach(function(z){
+      var k=z.type&&ZONE_TYPES[z.type]?z.type:'other';
+      if(!seen[k]){seen[k]=true;legItems.push(k);}
+    });
+    legEl.innerHTML=legItems.map(function(k){
+      var zt=zoneType(k);
+      return '<div class="lc-leg"><div class="lc-leg-dot" style="--pc:'+zt.color+'"></div>'+t([zt.en,zt.th])+'</div>';
+    }).join('');
+  }
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
+
+var head=g('lc-head');
+if(head)head.addEventListener('click',function(){g('lcwrap').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>

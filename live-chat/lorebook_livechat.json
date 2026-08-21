@@ -1,0 +1,40 @@
+{
+    "entries": {
+        "0": {
+            "uid": 0,
+            "key": [
+                "live", "stream", "livestream", "streaming", "broadcast",
+                "ไลฟ์", "ถ่ายทอด", "สตรีม", "ไลฟ์สตรีม"
+            ],
+            "keysecondary": [],
+            "comment": "Live Chat Widget — Stream Output Instruction",
+            "content": "[LIVE STREAM WIDGET PROTOCOL]\nThis scene involves a live stream. At the very END of every response (after all narrative text), output EXACTLY these two lines — nothing else after them:\n\n<LC/>\nLCDATA:{\"title\":\"[stream title]\",\"status\":\"live\",\"viewers\":[number],\"chat\":[{\"user\":\"[name]\",\"color\":\"[hex]\",\"msg\":\"[message]\",\"badge\":\"[badge]\"},{\"user\":\"[name]\",\"color\":\"[hex]\",\"msg\":\"[message]\",\"badge\":\"\"}],\"donations\":[{\"user\":\"[name]\",\"amount\":[number],\"currency\":\"¥\",\"msg\":\"[message]\"}],\"top_donors\":[{\"rank\":1,\"user\":\"[name]\",\"total\":[number],\"currency\":\"¥\"},{\"rank\":2,\"user\":\"[name]\",\"total\":[number],\"currency\":\"¥\"}]}\n\nCRITICAL FORMAT RULES:\n• Line 1 must be exactly: <LC/> (nothing else on that line)\n• Line 2 must be exactly: LCDATA: followed immediately by the JSON (no space between LCDATA: and {)\n• The JSON must be on a SINGLE LINE — do NOT pretty-print or add line breaks inside the JSON\n• Do NOT wrap in code blocks, backticks, or any markdown formatting\n• Do NOT add any text, label, or comment before or after these two lines\n• These two lines must be the LAST thing in your response\n\nJSON field rules:\n• title — stream title matching current scene\n• status — \"live\" when streaming, \"offline\" when not\n• viewers — number that rises/falls with scene energy\n• chat — 6 to 15 messages reacting naturally to the narrative; use varied casual language and emojis\n• badge values: \"subscriber\" | \"moderator\" | \"vip\" | \"member\" | \"\" (empty string for no badge)\n• color — assign a consistent hex color per viewer name; keep it same across responses\n• donations — add 0 to 2 entries occasionally; omit the array entirely when no donations occur\n• top_donors — up to 5 entries; amounts accumulate across the session; omit if no donations yet",
+            "constant": false,
+            "selective": false,
+            "selectiveLogic": 0,
+            "addMemo": false,
+            "order": 100,
+            "position": 1,
+            "disable": false,
+            "excludeRecursion": false,
+            "preventRecursion": false,
+            "delayUntilRecursion": false,
+            "probability": 100,
+            "useProbability": false,
+            "depth": 4,
+            "group": "live-chat",
+            "groupOverride": false,
+            "groupWeight": 100,
+            "scanDepth": null,
+            "caseSensitive": null,
+            "automationId": "",
+            "role": null,
+            "vectorized": false,
+            "sticky": 0,
+            "cooldown": 0,
+            "delay": 0
+        }
+    },
+    "originalCharacterName": "",
+    "defaultConfig": {}
+}

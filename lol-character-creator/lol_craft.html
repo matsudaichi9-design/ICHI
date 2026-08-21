@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>LoL Craft</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#lolcrwin{
+  --acc:#C89B3C;--abg:rgba(200,155,60,.12);--abd:rgba(200,155,60,.28);
+  --bg:#07090d;--bg2:#0c0f16;--bg3:#12151e;--bg4:#1a1e28;--bg5:#222638;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#505048;--bd:rgba(200,155,60,.25);
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+  max-width:420px;margin:0 auto;overflow:hidden;
+  box-shadow:0 4px 28px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04);
+  color:var(--tx);
+}
+
+/* ─── HEADER ─── */
+#lolcrwin #lolcrhead{
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:linear-gradient(160deg,#0f1220 0%,#0a0d14 100%);
+  border-bottom:1px solid var(--bd);position:relative;
+}
+#lolcrwin #lolcrhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.35;
+}
+#lolcrwin #lolcrico{
+  width:32px;height:32px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--abg);border:1px solid var(--abd);
+  filter:drop-shadow(0 0 5px rgba(200,155,60,.4));
+}
+#lolcrwin #lolcrhdtxt{flex:1;min-width:0}
+#lolcrwin #lolcrtitle{
+  font-family:var(--fh);font-size:7.5px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--acc);opacity:.75;margin-bottom:2px;
+}
+#lolcrwin #lolcrintent{
+  font-family:var(--fh);font-size:13.5px;font-weight:600;
+  color:#f0e8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:.3px;
+}
+#lolcrwin #lolcrbadge{
+  font-family:var(--fh);font-size:9px;letter-spacing:1px;font-weight:600;
+  padding:4px 10px;border-radius:99px;flex-shrink:0;
+  background:var(--abg);border:1px solid var(--abd);color:var(--acc);
+  white-space:nowrap;
+}
+
+/* ─── BODY ─── */
+#lolcrwin #lolcrbody{padding:11px 13px}
+
+/* Section header */
+#lolcrwin .lolcr-sec{
+  font-family:var(--fh);font-size:7.5px;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--tx3);
+  margin-bottom:8px;display:flex;align-items:center;gap:7px;
+}
+#lolcrwin .lolcr-sec::after{content:'';flex:1;height:1px;background:var(--bg4)}
+
+/* Ingredient chips */
+#lolcrwin .lolcr-chips{display:flex;flex-wrap:wrap;gap:6px}
+#lolcrwin .lolcr-chip{
+  display:flex;align-items:center;gap:7px;
+  background:var(--bg3);border:1px solid var(--bg5);
+  border-left:2px solid var(--abd);border-radius:4px;
+  padding:6px 11px;
+}
+#lolcrwin .lolcr-chip-ico{font-size:11px;opacity:.7;flex-shrink:0}
+#lolcrwin .lolcr-chip-name{
+  font-family:var(--fh);font-size:10.5px;color:var(--tx2);letter-spacing:.3px;
+}
+#lolcrwin .lolcr-chip-qty{
+  font-family:var(--fh);font-size:10px;color:var(--acc);
+  font-weight:700;margin-left:3px;
+}
+
+/* ─── FOOTER ─── */
+#lolcrwin #lolcrfoot{
+  border-top:1px solid rgba(255,255,255,.05);padding:5px 13px;
+  font-family:var(--fh);font-size:7.5px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="lolcrraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lolcrwin">
+  <div id="lolcrhead">
+    <div id="lolcrico">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <rect x="3" y="1.5" width="5" height="4.5" rx="1" fill="#C89B3C" opacity=".9"/>
+        <rect x="1.5" y="3" width="8" height="2" rx="1" fill="#C89B3C" opacity=".6"/>
+        <line x1="7" y1="6" x2="13.5" y2="13.5" stroke="#C89B3C" stroke-width="2.2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div id="lolcrhdtxt">
+      <div id="lolcrtitle">CRAFTING REQUEST</div>
+      <div id="lolcrintent">—</div>
+    </div>
+    <div id="lolcrbadge">⚒ FORGE</div>
+  </div>
+  <div id="lolcrbody"></div>
+  <div id="lolcrfoot">RUNETERRA FORGE</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){if(v==null)return '';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  var rawEl=g('lolcrraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?LOL_CRAFT>/gi,'').trim();
+  var d={}; try{d=JSON.parse(raw);}catch(e){}
+
+  var TH=(d.lang==='th');
+  var ingredients=Array.isArray(d.ingredients)?d.ingredients:[];
+  var intent=d.intent||'';
+
+  var win=g('lolcrwin'); if(!win)return;
+
+  // Header intent
+  var it=g('lolcrintent');
+  if(it)it.textContent=intent||'—';
+
+  // Count badge
+  var badge=g('lolcrbadge');
+  if(badge)badge.textContent='⚒ '+ingredients.length+(TH?' รายการ':' item'+(ingredients.length!==1?'s':''));
+
+  var ft=g('lolcrfoot');
+  if(ft)ft.textContent=TH?'เตาหลอมแห่งรูนเทอร์รา':'RUNETERRA FORGE';
+
+  // Parse ingredient string: "Iron Ore ×2" → name="Iron Ore", qty="×2"
+  function parseIngr(s){
+    var m=String(s).match(/^(.*?)\s*(×\d+|\(\d+\)|\d+$)?\s*$/);
+    if(m)return {name:(m[1]||s).trim(),qty:m[2]||''};
+    return {name:s,qty:''};
+  }
+
+  function ingredIcon(name){
+    var n=(name||'').toLowerCase();
+    if(/ore|metal|iron|steel|copper|gold|silver|alloy/.test(n))return '◼';
+    if(/wood|timber|plank|branch|oak|pine/.test(n))return '◻';
+    if(/leather|hide|skin|fur|pelt/.test(n))return '◇';
+    if(/herb|flower|leaf|root|plant|seed|petal/.test(n))return '◈';
+    if(/crystal|gem|stone|rune|shard|quartz/.test(n))return '◆';
+    if(/bone|fang|claw|tooth|scale/.test(n))return '▲';
+    if(/cloth|silk|thread|fiber|linen/.test(n))return '◁';
+    if(/venom|poison|acid|toxin|gland/.test(n))return '⬡';
+    if(/scroll|paper|ink|tome|book/.test(n))return '▷';
+    return '◉';
+  }
+
+  // Build body
+  var body=g('lolcrbody'); if(!body)return;
+
+  if(!ingredients.length){
+    body.innerHTML='<div class="lolcr-sec">'+(TH?'ส่วนผสม':'INGREDIENTS')+'</div><div style="font-size:10px;color:var(--tx3);font-style:italic;padding:4px 0">'+(TH?'ไม่มีส่วนผสม':'No ingredients specified')+'</div>';
+    return;
+  }
+
+  var chips=ingredients.map(function(s){
+    var p=parseIngr(s);
+    var ico=ingredIcon(p.name);
+    return '<div class="lolcr-chip">'+
+      '<span class="lolcr-chip-ico">'+ico+'</span>'+
+      '<span class="lolcr-chip-name">'+esc(p.name)+'</span>'+
+      (p.qty?'<span class="lolcr-chip-qty">'+esc(p.qty)+'</span>':'')+
+    '</div>';
+  }).join('');
+
+  body.innerHTML=
+    '<div class="lolcr-sec">'+(TH?'ส่วนผสม':'INGREDIENTS')+'</div>'+
+    '<div class="lolcr-chips">'+chips+'</div>';
+})();
+</script>
+</body>
+</html>

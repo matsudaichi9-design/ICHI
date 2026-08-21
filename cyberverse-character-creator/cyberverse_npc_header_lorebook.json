@@ -1,0 +1,39 @@
+{
+  "name": "Cyberverse NPC Header",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Cyberverse NPC Header — Format Instructions",
+      "content": "## CYBERVERSE NPC HEADER SYSTEM\n\n### FORMAT\n[CYBERNPC|Name (Role)|#hexcolor]\n\nPlace at the very start of your response — before narrative or dialogue — when an NPC who is NOT a named/established character first appears or speaks in the current response.\n\n### WHEN TO USE\n• Street vendors, fixers-of-the-moment, bar patrons, gang grunts\n• Unnamed corpo security, drones' operators, ripperdocs without a recurring role\n• Any character introduced organically during the scene who has no portrait/ID on file\n• Do NOT use for characters in the established Character List — those use [CYBERID|catbox_code|Name|#hexcolor]\n• Do NOT use for {{user}}\n\n### COLOR GUIDE\nPick a color that fits the character's affiliation and vibe:\n• Unnamed corpo security / suits:      #5088D8 (steel corporate blue)\n• Gang muscle (generic/unaffiliated):  #C4432A (rust-red aggression)\n• Street vendor / fixer contact:       #8A7A5A (worn utilitarian brown)\n• Ripperdoc / med tech:                #4A9BA8 (clinical teal)\n• Netrunner-for-hire:                  #B070E0 (data-purple)\n• Nomad / drifter:                     #FF8C42 (dusty road orange)\n• Civilian / bystander:                #7898C8 (muted neutral blue-grey)\n\n### NAMING CONVENTION\nInclude a role descriptor after the name when no real name is known:\n  \"Corpo Security (Arasaka Plaza)\"\n  \"Ripperdoc (Back-Alley Clinic)\"\n  \"Maelstrom Grunt (Unnamed)\"\n  \"Fixer Contact (Watson District)\"\nIf given a real name/handle, use it directly: \"Ozob \"Ratchet\" Nkemdi (Fixer)\"\n\n### RESPONSE FORMAT\nStructure your response exactly like this:\n\n[CYBERNPC|Ripperdoc (Back-Alley Clinic)|#4A9BA8]\n\nThe old ripperdoc didn't look up from her tray of tools. \"Sit down, and don't bleed on my chair.\"\n\n### RULE\nUse [CYBERNPC] ONCE per NPC per response, placed immediately before their first appearance or spoken line. Never repeat the tag for the same character later in the same response.",
+      "constant": true,
+      "order": 91,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

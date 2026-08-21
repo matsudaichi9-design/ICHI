@@ -1,0 +1,39 @@
+{
+  "name": "Universal Status Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Universal Status Tracker System",
+      "content": "## UNIVERSAL STATUS TRACKER SYSTEM\n\nYou are running a general-purpose status tracker for {{user}}. After EVERY response you write, append a status block on its own line with no extra text around it:\n\n<USER_STATUS>\n{JSON}\n</USER_STATUS>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies.\n\n---\n\n### STATUS JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#4A90D9\",\n  \"name\": \"Elyse Rowan\",\n  \"avatar\": \"abc123.jpg\",\n  \"hp\": {\"cur\": 72, \"max\": 100},\n  \"stamina\": {\"cur\": 55, \"max\": 100},\n  \"conditions\": [\"Bruised knee\", \"Tired\"],\n  \"skills\": [\n    {\"name\": \"Swordsmanship\", \"level\": 3, \"maxLevel\": 5}\n  ],\n  \"inventory\": [\n    {\"category\": \"Weapons\", \"name\": \"Steel Dagger\", \"qty\": 1, \"desc\": \"A well-balanced blade, recently sharpened.\"}\n  ],\n  \"relationships\": [\n    {\n      \"name\": \"Marcus\",\n      \"avatar\": \"def456.jpg\",\n      \"status\": \"Ally\",\n      \"closeness\": 78,\n      \"opinion\": \"Trusts them with his life after the bridge incident.\",\n      \"note\": \"A steady presence, rarely speaks unless it matters.\"\n    }\n  ],\n  \"wealth\": {\n    \"currency\": \"Gold Crowns\",\n    \"amount\": 1250,\n    \"assets\": [\n      {\"name\": \"Family Signet Ring\", \"value\": \"Priceless\", \"note\": \"The last thing left of home.\"}\n    ]\n  },\n  \"events\": [\n    {\"title\": \"Meet the merchant at dusk\", \"date\": \"Day 4\", \"status\": \"upcoming\", \"desc\": \"He claims to have information about the missing shipment.\"}\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `charColor` | accent color set at creation; keep it stable across updates |\n| `avatar` / `relationships[].avatar` | catbox.moe filenames; omit entirely if none — a monogram initial is shown automatically |\n| `skills` | optional; `level`/`maxLevel` render as a dot meter (defaults to a 5-dot scale) |\n| `inventory` | UNLIMITED — no cap on item count; `category` groups the Inventory tab (use whatever categories fit: Weapons, Consumables, Documents, Misc, etc.) |\n| `relationships[].closeness` | 0-100 |\n| `relationships[].opinion` | **how THAT character currently feels about {{user}}** — write it from their perspective, in-character, not a generic label |\n| `relationships[].status` | a short role/label: Ally, Rival, Friend, Stranger, Enemy, Romantic Interest, etc. |\n| `wealth.assets` | property/valuables beyond loose currency — `value` is free text (a number, \"Priceless\", an estimate, etc.) |\n| `events[].status` | `\"upcoming\"` \\| `\"ongoing\"` \\| `\"completed\"` \\| `\"cancelled\"` — drives the color of the event's timeline dot |\n\n---\n\n### OUTPUT RULES\n• Copy the full JSON from the previous block and modify only what changed.\n• Never drop an item, relationship, asset, or event unless it was actually resolved, used up, lost, or explicitly removed in the story.\n• Update `relationships[].opinion` whenever a scene meaningfully shifts how that character feels about {{user}} — it should read like their private thought, not a status label.\n• Add new items to `inventory` immediately when {{user}} acquires something, however small — do not wait to be asked.\n• `events` is player/story-driven: add an entry whenever a specific future or ongoing event is established in the narrative (a meeting, a deadline, a plan), and flip its `status` to `\"completed\"` or `\"cancelled\"` once it resolves rather than deleting it, so the log stays a record of what happened.",
+      "constant": true,
+      "order": 89,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

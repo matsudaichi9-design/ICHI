@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Relation Delete</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#lodelwin{
+  --acc:#9B3030;--abg:rgba(155,48,48,.12);--abd:rgba(155,48,48,.3);
+  --bg:#07090d;--bg2:#0c0e14;--bg3:#120e0e;--bg4:#1e1414;--bg5:#281a1a;
+  --tx:#e4d8c0;--tx2:#9a8080;--tx3:#504040;--bd:rgba(155,48,48,.3);
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:8px;
+  max-width:360px;margin:0 auto;overflow:hidden;
+  box-shadow:0 4px 28px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.03);
+  color:var(--tx);
+}
+#lodelwin #lodelhead{
+  display:flex;align-items:center;gap:10px;padding:10px 13px;
+  background:linear-gradient(160deg,#150a0a 0%,#0e0a0a 100%);
+  border-bottom:1px solid var(--bd);position:relative;
+}
+#lodelwin #lodelhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.35;
+}
+#lodelwin #lodelico{
+  width:30px;height:30px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  border-radius:50%;background:var(--abg);border:1px solid var(--abd);flex-shrink:0;
+}
+#lodelwin #lodelhdtxt{flex:1;min-width:0}
+#lodelwin #lodeltitle{font-family:var(--fh);font-size:7.5px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);opacity:.8;margin-bottom:2px}
+#lodelwin #lodelcname{font-family:var(--fh);font-size:14px;font-weight:600;color:#e4c4c4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lodelwin #lodelreg{display:flex;align-items:center;gap:5px;margin-top:2px;opacity:.5}
+#lodelwin #lodelregname{font-size:8.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--tx3)}
+#lodelwin #lodelbody{padding:12px 13px}
+#lodelwin #lodelmsg{
+  font-size:11px;color:var(--tx3);line-height:1.6;
+  padding-left:5px;border-left:2px solid rgba(155,48,48,.35);
+}
+#lodelwin #lodelmsg strong{color:var(--tx2);font-weight:600}
+#lodelwin #lodelfoot{
+  border-top:1px solid rgba(255,255,255,.04);padding:5px 13px;
+  font-family:var(--fh);font-size:7.5px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="lodelraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lodelwin">
+  <div id="lodelhead">
+    <div id="lodelico">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <line x1="3" y1="3" x2="11" y2="11" stroke="#9B3030" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="11" y1="3" x2="3" y2="11" stroke="#9B3030" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div id="lodelhdtxt">
+      <div id="lodeltitle">BOND SEVERED</div>
+      <div id="lodelcname">—</div>
+      <div id="lodelreg">
+        <div id="lodelregsigil"></div>
+        <div id="lodelregname">—</div>
+      </div>
+    </div>
+  </div>
+  <div id="lodelbody">
+    <div id="lodelmsg"></div>
+  </div>
+  <div id="lodelfoot">BOND REGISTRY · RUNETERRA</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){if(v==null)return '';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+  var rawEl=g('lodelraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?LOL_RELATION_DELETE>/gi,'').trim();
+  var d={}; try{d=JSON.parse(raw);}catch(e){}
+  var TH=(d.lang==='th');
+
+  var RC={demacia:'#4A70B0',noxus:'#9B2020',freljord:'#5FA8C8',ionia:'#9870C0',piltover:'#D4A830',zaun:'#4A8A60',shurima:'#C8A84B',ixtal:'#3A8A50',targon:'#7A8EC8',camavor:'#A83848',shadow_isles:'#2A8060',bilgewater:'#C87840',bandle:'#D4B870',void:'#8A4AC8'};
+  var regionKey=(d.region||'').toLowerCase().replace(/\s+/g,'_');
+  var rc=RC[regionKey]||'#808090';
+
+  function sigilSm(r,c){
+    var p={
+      demacia:'<polygon points="8,1 13,6 13,14 3,14 3,6" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      noxus:'<polygon points="8,2 14,14 2,14" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      freljord:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      ionia:'<circle cx="8" cy="5" r="3" fill="'+c+'"/><circle cx="8" cy="11" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      piltover:'<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      zaun:'<rect x="5" y="2" width="6" height="9" rx="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="4" y1="13" x2="12" y2="13" stroke="'+c+'" stroke-width="1.2"/>',
+      shurima:'<circle cx="8" cy="8" r="6" fill="none" stroke="'+c+'" stroke-width="1"/><polygon points="8,2 9.5,6.5 14,6.5 10.5,9 11.5,13.5 8,11 4.5,13.5 5.5,9 2,6.5 6.5,6.5" fill="'+c+'" opacity=".7"/>',
+      ixtal:'<circle cx="8" cy="8" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><ellipse cx="8" cy="4" rx="2" ry="3" fill="'+c+'" opacity=".5"/>',
+      targon:'<polygon points="8,1 13,14 3,14" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="5" r="1.5" fill="'+c+'"/>',
+      camavor:'<circle cx="8" cy="6" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="10" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/>',
+      shadow_isles:'<circle cx="8" cy="8" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="4" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/><circle cx="12" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      bilgewater:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="3" y1="5" x2="13" y2="5" stroke="'+c+'" stroke-width="1.2"/>',
+      bandle:'<rect x="4" y="7" width="8" height="7" rx="1" fill="none" stroke="'+c+'" stroke-width="1.2"/><polygon points="8,1 14,7 2,7" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      void:'<ellipse cx="8" cy="8" rx="6" ry="6" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>'
+    };
+    var def='<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="3" x2="8" y2="13" stroke="'+c+'" stroke-width="1"/><line x1="3" y1="8" x2="13" y2="8" stroke="'+c+'" stroke-width="1"/>';
+    return '<svg width="16" height="16" viewBox="0 0 16 16">'+(p[r]||def)+'</svg>';
+  }
+
+  var win=g('lodelwin'); if(!win)return;
+
+  var cn=g('lodelcname'); if(cn)cn.textContent=d.name||'—';
+  var rs=g('lodelregsigil'); if(rs)rs.innerHTML=sigilSm(regionKey,rc);
+  var rn=g('lodelregname'); if(rn)rn.textContent=d.region||'—';
+  var ft=g('lodelfoot'); if(ft)ft.textContent=TH?'ตัดสายสัมพันธ์ · รูนเทอร์รา':'BOND REGISTRY · RUNETERRA';
+
+  var msg=g('lodelmsg');
+  if(msg){
+    var nameStr='<strong>'+esc(d.name||'—')+'</strong>';
+    msg.innerHTML=TH
+      ?('ความสัมพันธ์กับ '+nameStr+' ถูกลบออกจาก tracker แล้ว')
+      :('The bond with '+nameStr+' has been severed from the tracker.');
+  }
+})();
+</script>
+</body>
+</html>

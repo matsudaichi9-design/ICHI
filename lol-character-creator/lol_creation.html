@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@400;600;700&family=Spectral:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+
+:root{
+ --acc:#C89B3C;--abg:rgba(200,155,60,.10);--abd:rgba(200,155,60,.35);--bd:rgba(200,155,60,.22);
+ --bg:#040508;--card:#090C14;--sec:#0D1220;
+ --t1:#E8D9B0;--t2:#A89870;--t3:#605840;
+ --fh:'Cinzel',serif;--fhd:'Cinzel Decorative',serif;--fb:'Spectral',Georgia,serif
+}
+.lt{--bg:#EDE5CE;--card:#F5EED8;--sec:#EAE0C4;--bd:rgba(100,70,20,.22);--t1:#1A1208;--t2:#4A3518;--t3:#8A7048}
+
+.win{
+ max-width:480px;margin:6px auto;
+ background:var(--bg);border:1px solid var(--bd);border-radius:8px;overflow:hidden;
+ color:var(--t1);font-family:var(--fb);
+ box-shadow:0 12px 40px rgba(0,0,0,.7),0 0 60px -20px var(--acc);
+ position:relative;animation:wapp .4s cubic-bezier(.22,.68,0,1.1) both
+}
+@keyframes wapp{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.win::before,.win::after{
+ content:'';position:absolute;width:14px;height:14px;
+ border-color:var(--acc);border-style:solid;opacity:.35;top:7px;z-index:3;pointer-events:none
+}
+.win::before{left:7px;border-width:1px 0 0 1px}
+.win::after{right:7px;border-width:1px 1px 0 0}
+
+/* ─── TOOLBAR ─── */
+.tbar{
+ display:flex;align-items:center;justify-content:space-between;
+ padding:5px 10px;background:rgba(0,0,0,.35);border-bottom:1px solid var(--bd)
+}
+.tbg{display:flex;gap:4px}
+.tbtn{
+ font-family:var(--fh);font-size:7.5px;letter-spacing:1.5px;
+ color:var(--acc);background:var(--abg);border:1px solid var(--abd);
+ border-radius:3px;padding:3px 8px;cursor:pointer;transition:all .2s
+}
+.tbtn:hover,.tbtn.on{background:var(--acc);color:#000;border-color:var(--acc)}
+.tbar-mid{font-family:var(--fh);font-size:8px;letter-spacing:4px;color:var(--t3)}
+
+/* ─── HEADER ─── */
+.hdr{
+ text-align:center;padding:18px 16px 14px;
+ background:linear-gradient(180deg,rgba(200,155,60,.06),transparent);
+ border-bottom:1px solid var(--bd);position:relative
+}
+.rring{width:70px;height:70px;position:relative;margin:0 auto 12px}
+.rr{position:absolute;border-radius:50%;border:1px solid var(--acc);top:50%;left:50%}
+.rr1{width:70px;height:70px;margin:-35px 0 0 -35px;opacity:.25;animation:rspin 12s linear infinite}
+.rr2{width:48px;height:48px;margin:-24px 0 0 -24px;opacity:.45;border-style:dashed;animation:rspin 7s linear infinite reverse}
+.rr3{width:28px;height:28px;margin:-14px 0 0 -14px;opacity:.65;animation:rspin 4s linear infinite}
+.rhx{
+ position:absolute;top:50%;left:50%;width:14px;height:14px;margin:-7px 0 0 -7px;
+ background:var(--acc);
+ clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);
+ animation:rhp 2.5s ease-in-out infinite
+}
+@keyframes rspin{to{transform:rotate(360deg)}}
+@keyframes rhp{0%,100%{opacity:.5}50%{opacity:1;filter:drop-shadow(0 0 6px var(--acc))}}
+.hdr-sup{font-family:var(--fh);font-size:7px;letter-spacing:4px;color:var(--acc);opacity:.6;margin-bottom:5px}
+.hdr-main{font-family:var(--fhd);font-size:15px;color:var(--t1);letter-spacing:2px;line-height:1.2}
+.hdr-sub{font-size:9.5px;color:var(--t3);letter-spacing:3px;margin-top:3px;font-family:var(--fh)}
+.hdr-region{
+ display:inline-block;margin-top:9px;
+ font-family:var(--fh);font-size:8px;letter-spacing:2px;
+ color:var(--acc);border:1px solid var(--abd);
+ border-radius:20px;padding:2px 14px;background:var(--abg);transition:all .4s
+}
+
+/* ─── TABS ─── */
+.tabs{display:flex;border-bottom:1px solid var(--bd);background:rgba(0,0,0,.2)}
+.stab{
+ flex:1;text-align:center;padding:8px 3px;
+ font-family:var(--fh);font-size:8px;letter-spacing:.8px;
+ color:var(--t3);cursor:pointer;transition:all .2s;
+ border-bottom:2px solid transparent
+}
+.stab:hover{color:var(--t2);background:var(--abg)}
+.stab.on{color:var(--acc);border-bottom-color:var(--acc);background:var(--abg)}
+.stab .tn{font-size:6.5px;display:block;opacity:.55;margin-bottom:1px}
+
+/* ─── PANES ─── */
+.spane{display:none;padding:13px 13px 10px;animation:pfade .2s ease}
+.spane.on{display:block}
+@keyframes pfade{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── FORM ─── */
+.frow{margin-bottom:9px}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:9px}
+.flbl{
+ font-family:var(--fh);font-size:7.5px;letter-spacing:1.5px;
+ color:var(--t3);text-transform:uppercase;margin-bottom:4px;display:block
+}
+.finp,.fsel,.farea{
+ width:100%;background:var(--card);border:1px solid var(--bd);
+ border-radius:4px;color:var(--t1);font-family:var(--fb);font-size:13px;
+ padding:7px 9px;outline:none;transition:border-color .2s
+}
+.finp:focus,.fsel:focus,.farea:focus{border-color:var(--acc)}
+.fsel{
+ appearance:none;-webkit-appearance:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23C89B3C'/%3E%3C/svg%3E");
+ background-repeat:no-repeat;background-position:right 8px center;padding-right:26px;cursor:pointer
+}
+.fsel option{background:#090C14}
+.farea{resize:vertical;min-height:56px;line-height:1.5}
+
+/* lore blurb */
+.loreblurb{
+ margin-top:5px;padding:7px 10px;
+ background:var(--sec);border:1px solid var(--bd);border-left:2px solid var(--acc);
+ border-radius:0 4px 4px 0;font-size:11.5px;color:var(--t2);
+ font-style:italic;line-height:1.5;display:none
+}
+.loreblurb.vis{display:block}
+
+/* custom panel */
+.cpnl{
+ margin-top:5px;padding:8px;background:var(--sec);
+ border:1px solid var(--bd);border-radius:4px;display:none
+}
+.cpnl.vis{display:block}
+
+/* ─── SECTION HEADER ─── */
+.sh{
+ font-family:var(--fh);font-size:8px;letter-spacing:2.5px;color:var(--t3);
+ text-transform:uppercase;margin:12px 0 8px;padding-bottom:5px;
+ border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px
+}
+.sh::before{content:'◆';font-size:5.5px;color:var(--acc);opacity:.7}
+.sh-note{font-size:7px;font-weight:normal;opacity:.6;text-transform:none;letter-spacing:.5px;margin-left:auto}
+.ctog{
+ font-size:8.5px;font-family:var(--fh);letter-spacing:.8px;color:var(--acc);
+ cursor:pointer;opacity:.65;margin-left:4px;transition:opacity .2s
+}
+.ctog:hover{opacity:1}
+
+/* ─── RUNE GRID ─── */
+.rune-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
+.rb{
+ display:flex;flex-direction:column;align-items:center;
+ padding:10px 6px 8px;background:var(--card);border:1px solid var(--bd);
+ border-radius:6px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden
+}
+.rb::after{
+ content:'';position:absolute;inset:0;opacity:0;
+ background:radial-gradient(circle at center,var(--acc),transparent 70%);
+ transition:opacity .25s
+}
+.rb:hover{border-color:var(--abd)}
+.rb.sel{border-color:var(--acc);background:var(--abg)}
+.rb.sel::after{opacity:.07}
+.rsym{font-size:19px;margin-bottom:4px;z-index:1;position:relative}
+.rname{font-family:var(--fh);font-size:7.5px;letter-spacing:.8px;color:var(--t2);text-align:center;z-index:1;position:relative}
+.rb.sel .rname{color:var(--acc)}
+.rnote{font-size:8px;color:var(--t3);text-align:center;font-style:italic;margin-top:1px;z-index:1;position:relative}
+.rune-ctr{
+ text-align:center;font-family:var(--fh);font-size:8px;letter-spacing:1.5px;
+ color:var(--t3);margin-bottom:8px
+}
+.rune-ctr b{color:var(--acc)}
+
+/* ─── STAT TICKS ─── */
+.stat-row{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.stat-nm{font-family:var(--fh);font-size:8px;letter-spacing:.8px;color:var(--t2);min-width:82px;flex-shrink:0}
+.ticks{display:flex;gap:2px;flex:1}
+.tick{
+ flex:1;height:7px;background:var(--sec);border:1px solid var(--bd);
+ border-radius:1px;cursor:pointer;transition:background .12s
+}
+.tick.on{background:var(--acc)}
+.tick.on.hi{background:var(--t1);box-shadow:0 0 5px var(--acc)}
+.stat-v{font-family:var(--fh);font-size:10px;color:var(--acc);min-width:16px;text-align:right}
+
+/* ─── PILLS ─── */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.pill{
+ font-size:11px;padding:3px 10px;background:var(--card);
+ border:1px solid var(--bd);border-radius:12px;cursor:pointer;color:var(--t2);transition:all .2s
+}
+.pill:hover{border-color:var(--abd);color:var(--t1)}
+.pill.sel{background:var(--abg);border-color:var(--acc);color:var(--acc)}
+
+/* ─── FOOTER ─── */
+.ftr{
+ padding:11px 13px;border-top:1px solid var(--bd);
+ background:rgba(0,0,0,.28);display:flex;gap:8px;align-items:center
+}
+.btn-main{
+ flex:1;padding:9px;font-family:var(--fh);font-size:10px;letter-spacing:2.5px;
+ color:#000;background:var(--acc);border:none;border-radius:4px;
+ cursor:pointer;font-weight:700;transition:all .2s
+}
+.btn-main:hover{filter:brightness(1.15);box-shadow:0 0 18px var(--acc)}
+.btn-sec{
+ padding:9px 12px;font-family:var(--fh);font-size:8.5px;letter-spacing:1.5px;
+ color:var(--t3);background:var(--card);border:1px solid var(--bd);
+ border-radius:4px;cursor:pointer;transition:all .2s
+}
+.btn-sec:hover{color:var(--t2);border-color:var(--abd)}
+
+.shake{animation:shk .3s ease}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+</style>
+</head>
+<body>
+<div class="win" id="win">
+
+<!-- TOOLBAR -->
+<div class="tbar">
+ <div class="tbg">
+  <button class="tbtn on" id="btn_dark" onclick="LOL.th('dark')">DARK</button>
+  <button class="tbtn" id="btn_light" onclick="LOL.th('light')">LIGHT</button>
+ </div>
+ <div class="tbar-mid">RUNETERRA</div>
+ <div class="tbg">
+  <button class="tbtn on" id="btn_en" onclick="LOL.ln('en')">EN</button>
+  <button class="tbtn" id="btn_th" onclick="LOL.ln('th')">TH</button>
+ </div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+ <div class="rring">
+  <div class="rr rr1"></div>
+  <div class="rr rr2"></div>
+  <div class="rr rr3"></div>
+  <div class="rhx"></div>
+ </div>
+ <div class="hdr-sup" id="hdr_sup">CHAMPION CREATION</div>
+ <div class="hdr-main" id="hdr_main">RUNETERRA</div>
+ <div class="hdr-sub" id="hdr_sub">FORGE YOUR LEGEND</div>
+ <div class="hdr-region" id="hdr_region">SELECT YOUR REGION</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+ <div class="stab on" onclick="LOL.tb(0)"><span class="tn">I</span><span id="t0">ORIGIN</span></div>
+ <div class="stab" onclick="LOL.tb(1)"><span class="tn">II</span><span id="t1">BLOOD</span></div>
+ <div class="stab" onclick="LOL.tb(2)"><span class="tn">III</span><span id="t2">RUNE</span></div>
+ <div class="stab" onclick="LOL.tb(3)"><span class="tn">IV</span><span id="t3">PATH</span></div>
+ <div class="stab" onclick="LOL.tb(4)"><span class="tn">V</span><span id="t4">LEGEND</span></div>
+</div>
+
+<!-- ═══ I: ORIGIN ═══ -->
+<div class="spane on" id="pane0">
+ <div class="frow">
+  <label class="flbl" id="l_region">Region of Origin</label>
+  <select class="fsel" id="s_region" onchange="LOL.onRegion()">
+   <option value="">— Select Region —</option>
+   <optgroup label="─ Northern Continent ─">
+    <option value="demacia">Demacia</option>
+    <option value="noxus">Noxus</option>
+    <option value="freljord">Freljord</option>
+    <option value="ionia">Ionia</option>
+    <option value="piltover">Piltover</option>
+    <option value="zaun">Zaun</option>
+   </optgroup>
+   <optgroup label="─ Southern Lands ─">
+    <option value="shurima">Shurima</option>
+    <option value="ixtal">Ixtal</option>
+    <option value="targon">Mount Targon</option>
+    <option value="camavor">Camavor</option>
+   </optgroup>
+   <optgroup label="─ Beyond ─">
+    <option value="shadow_isles">Shadow Isles</option>
+    <option value="bilgewater">Bilgewater</option>
+    <option value="bandle">Bandle City</option>
+    <option value="void">The Void</option>
+    <option value="wanderer">Wanderer / No Fixed Origin</option>
+   </optgroup>
+  </select>
+  <div class="loreblurb" id="region_lore"></div>
+ </div>
+ <div class="frow2">
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_birthplace">Birthplace</label>
+   <input class="finp" id="s_birthplace" type="text" placeholder="City / village..."/>
+  </div>
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_era">Era</label>
+   <select class="fsel" id="s_era">
+    <option value="">— Select —</option>
+    <option value="ancient">Ancient / Pre-Ruination</option>
+    <option value="ruination">Age of Ruination</option>
+    <option value="present">Present Day</option>
+    <option value="arcane">Arcane Era (Future)</option>
+   </select>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_heritage">Heritage / Lineage</label>
+  <input class="finp" id="s_heritage" type="text" placeholder="Noble house, tribe, clan, bloodline..."/>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_faction">Faction Allegiance</label>
+  <select class="fsel" id="s_faction">
+   <option value="">— None / Independent —</option>
+   <optgroup label="─ Institutions ─">
+    <option value="mage_seekers">Mage Seekers (Demacia)</option>
+    <option value="silver_hand">Silver Hand (Demacia)</option>
+    <option value="noxian_military">Noxian Military</option>
+    <option value="black_rose">Black Rose (Noxus)</option>
+    <option value="winter_claw">Winter's Claw (Freljord)</option>
+    <option value="frostguard">Frostguard (Freljord)</option>
+    <option value="kinkou">Kinkou Order (Ionia)</option>
+    <option value="order_shadow">Order of Shadow (Ionia)</option>
+    <option value="piltover_enforcers">Piltover Enforcers</option>
+    <option value="chem_barons">Chem-Barons (Zaun)</option>
+    <option value="ascended_host">Ascended Host (Shurima)</option>
+    <option value="void_cult">Void Cult</option>
+    <option value="harrowing">Harrowed (Shadow Isles)</option>
+    <option value="aspect_blessed">Aspect-Blessed (Targon)</option>
+    <option value="pirate_fleet">Pirate Fleet (Bilgewater)</option>
+   </optgroup>
+   <option value="freelance">Freelance / Mercenary</option>
+   <option value="custom">Custom...</option>
+  </select>
+  <div class="cpnl" id="cpnl_faction">
+   <input class="finp" id="s_faction_c" type="text" placeholder="Custom faction..."/>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ II: BLOOD ═══ -->
+<div class="spane" id="pane1">
+ <div class="frow">
+  <label class="flbl" id="l_species">Species / Race</label>
+  <select class="fsel" id="s_species">
+   <option value="">— Select Species —</option>
+   <optgroup label="─ Mortal ─">
+    <option value="human">Human</option>
+    <option value="yordle">Yordle</option>
+    <option value="vastaya">Vastaya</option>
+    <option value="brackern">Brackern</option>
+   </optgroup>
+   <optgroup label="─ Transcendent ─">
+    <option value="ascended">Ascended (Shuriman)</option>
+    <option value="darkin">Darkin (Fallen Ascended)</option>
+    <option value="aspect">Aspect-Chosen</option>
+    <option value="celestial">Celestial Being</option>
+   </optgroup>
+   <optgroup label="─ Undying ─">
+    <option value="revenant">Revenant (Undead)</option>
+    <option value="harrowed">Harrowed</option>
+    <option value="specter">Specter / Shade</option>
+   </optgroup>
+   <optgroup label="─ Other ─">
+    <option value="voidborn">Voidborn</option>
+    <option value="spirit">Spirit / Construct</option>
+    <option value="half_blood">Half-Blood</option>
+    <option value="custom">Custom...</option>
+   </optgroup>
+  </select>
+  <div class="cpnl" id="cpnl_species">
+   <input class="finp" id="s_species_c" type="text" placeholder="Custom species..."/>
+  </div>
+  <div class="loreblurb" id="species_lore"></div>
+ </div>
+ <div class="frow2">
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_gender">Gender</label>
+   <select class="fsel" id="s_gender">
+    <option value="">— Select —</option>
+    <option value="male">Male</option>
+    <option value="female">Female</option>
+    <option value="nonbinary">Non-binary / Fluid</option>
+    <option value="ageless">Ageless / Genderless</option>
+    <option value="custom">Custom...</option>
+   </select>
+  </div>
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_age">Age</label>
+   <input class="finp" id="s_age" type="text" placeholder="Apparent / true..."/>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_appearance">Appearance</label>
+  <textarea class="farea" id="s_appearance" rows="3" placeholder="Height, build, hair, eyes, distinctive marks..."></textarea>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_background">Personal Background</label>
+  <textarea class="farea" id="s_background" rows="3" placeholder="Origin story, defining moments, motivation..."></textarea>
+ </div>
+</div>
+
+<!-- ═══ III: RUNE ═══ -->
+<div class="spane" id="pane2">
+ <div class="sh"><span id="sh_aff">Rune Affinities</span><span class="sh-note" id="sh_aff_note">— select up to 3</span></div>
+ <div class="rune-ctr" id="rune_ctr">Selected: <b id="rune_cnt">0</b> / 3</div>
+ <div class="rune-grid" id="rune_grid"></div>
+
+ <div class="sh"><span id="sh_msrc">Magic Source</span></div>
+ <div class="frow2">
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_magic_type">Type of Magic</label>
+   <select class="fsel" id="s_magic_type">
+    <option value="">— None —</option>
+    <option value="runic">Runic Magic</option>
+    <option value="celestial">Celestial / Aspect</option>
+    <option value="spirit">Spirit Magic (Ionian)</option>
+    <option value="void_magic">Void Corruption</option>
+    <option value="arcane">Arcane / Hextech</option>
+    <option value="shadow">Shadow / Black Mist</option>
+    <option value="shuriman">Shuriman Sun Disc</option>
+    <option value="elemental">Elemental (Ixtal)</option>
+    <option value="hemomancy">Blood / Hemomancy</option>
+    <option value="nature">Nature / Druidic</option>
+    <option value="custom">Custom...</option>
+   </select>
+   <div class="cpnl" id="cpnl_magic">
+    <input class="finp" id="s_magic_c" type="text" placeholder="Custom magic..."/>
+   </div>
+  </div>
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_magic_rank">Rank</label>
+   <select class="fsel" id="s_magic_rank">
+    <option value="">— Select —</option>
+    <option value="none">None</option>
+    <option value="spark">Spark (trace)</option>
+    <option value="adept">Adept</option>
+    <option value="proficient">Proficient</option>
+    <option value="gifted">Gifted</option>
+    <option value="champion">Champion-tier</option>
+    <option value="legend">Legendary</option>
+    <option value="ascended">Ascended / Divine</option>
+   </select>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_magic_origin">Power Origin</label>
+  <select class="fsel" id="s_magic_origin">
+   <option value="">— Select —</option>
+   <option value="innate">Innate / Born with it</option>
+   <option value="trained">Trained / Studied</option>
+   <option value="granted">Granted (Aspect, Darkin…)</option>
+   <option value="cursed">Cursed / Accidental</option>
+   <option value="artifact">Via Artifact / Item</option>
+   <option value="transformed">Transformation (Ascension…)</option>
+  </select>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_magic_desc">Manifestation</label>
+  <textarea class="farea" id="s_magic_desc" rows="2" placeholder="Colour, sensation, visual signature of your power..."></textarea>
+ </div>
+</div>
+
+<!-- ═══ IV: PATH ═══ -->
+<div class="spane" id="pane3">
+ <div class="frow2">
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_role">Champion Role</label>
+   <select class="fsel" id="s_role" onchange="LOL.onRole()">
+    <option value="">— Select —</option>
+    <option value="fighter">Fighter (Bruiser)</option>
+    <option value="juggernaut">Juggernaut</option>
+    <option value="tank">Tank / Vanguard</option>
+    <option value="assassin">Assassin</option>
+    <option value="mage">Mage</option>
+    <option value="marksman">Marksman</option>
+    <option value="support">Support / Enchanter</option>
+    <option value="specialist">Specialist</option>
+   </select>
+  </div>
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_fight_style">Fighting Style</label>
+   <select class="fsel" id="s_fight_style">
+    <option value="">— Select —</option>
+    <option value="berserker">Berserker</option>
+    <option value="duelist">Duelist</option>
+    <option value="tactician">Tactician</option>
+    <option value="arcane_warrior">Arcane Warrior</option>
+    <option value="ranged_hunter">Ranged Hunter</option>
+    <option value="shadow_striker">Shadow Striker</option>
+    <option value="guardian">Guardian / Protector</option>
+    <option value="invoker">Invoker / Caster</option>
+    <option value="summoner">Summoner</option>
+   </select>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_weapon">Primary Weapon</label>
+  <select class="fsel" id="s_weapon">
+   <option value="">— Select —</option>
+   <option value="greatsword">Greatsword</option>
+   <option value="sword_shield">Sword & Shield</option>
+   <option value="dual_blades">Dual Blades</option>
+   <option value="spear">Spear / Halberd</option>
+   <option value="bow">Bow / Crossbow</option>
+   <option value="gun">Firearm / Hextech Gun</option>
+   <option value="staff">Staff / Wand</option>
+   <option value="gauntlets">Gauntlets / Fists</option>
+   <option value="scythe">Scythe / Axe</option>
+   <option value="claws">Claws / Natural Weapons</option>
+   <option value="chains">Chains / Whip</option>
+   <option value="unarmed">Unarmed (magic channeler)</option>
+   <option value="custom">Custom...</option>
+  </select>
+  <div class="cpnl" id="cpnl_weapon">
+   <input class="finp" id="s_weapon_c" type="text" placeholder="Custom weapon..."/>
+  </div>
+ </div>
+
+ <div class="sh"><span id="sh_ab">Signature Abilities</span><span class="ctog" id="ctog_sk" onclick="LOL.tc('sk')">[+ custom]</span></div>
+ <div class="pills" id="role_pills"></div>
+ <div class="cpnl" id="cpnl_sk">
+  <div style="display:flex;gap:6px;margin-bottom:6px">
+   <input class="finp" id="s_sk_inp" type="text" placeholder="Custom ability name..." style="flex:1"/>
+   <button class="tbtn" onclick="LOL.add()" style="font-size:9px;white-space:nowrap;padding:4px 10px">+ ADD</button>
+  </div>
+  <div class="pills" id="custom_sk_list"></div>
+ </div>
+
+ <div class="sh"><span id="sh_goal">Motivation</span></div>
+ <div class="frow">
+  <label class="flbl" id="l_goal">Primary Goal</label>
+  <select class="fsel" id="s_goal">
+   <option value="">— Select —</option>
+   <option value="power">Absolute Power / Dominance</option>
+   <option value="revenge">Revenge</option>
+   <option value="protection">Protection of the Innocent</option>
+   <option value="knowledge">Knowledge / Discovery</option>
+   <option value="freedom">Freedom / Liberation</option>
+   <option value="glory">Glory / Immortality in Legend</option>
+   <option value="peace">Peace / Restoration</option>
+   <option value="survival">Survival</option>
+   <option value="duty">Duty / Honour</option>
+   <option value="custom">Custom...</option>
+  </select>
+  <div class="cpnl" id="cpnl_goal">
+   <input class="finp" id="s_goal_c" type="text" placeholder="Custom goal..."/>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_personality">Personality</label>
+  <textarea class="farea" id="s_personality" rows="2" placeholder="Demeanor, core traits, quirks..."></textarea>
+ </div>
+</div>
+
+<!-- ═══ V: LEGEND ═══ -->
+<div class="spane" id="pane4">
+ <div class="frow2">
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_name">Champion Name</label>
+   <input class="finp" id="s_name" type="text" placeholder="True name..."/>
+  </div>
+  <div class="frow" style="margin:0">
+   <label class="flbl" id="l_title">Title / Epithet</label>
+   <input class="finp" id="s_title" type="text" placeholder="e.g. The Undying Light"/>
+  </div>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_alias">Known Aliases</label>
+  <input class="finp" id="s_alias" type="text" placeholder="Street name, nom de guerre..."/>
+ </div>
+
+ <div class="sh"><span id="sh_stats">Champion Parameters</span><span class="sh-note" id="sh_stats_note">— click ticks to set</span></div>
+ <div id="stat_block"></div>
+
+ <div class="sh"><span id="sh_fate">Fate & Prophecy</span></div>
+ <div class="frow">
+  <label class="flbl" id="l_destiny">Destiny / Narrative Role</label>
+  <select class="fsel" id="s_destiny">
+   <option value="">— Select —</option>
+   <option value="chosen">The Chosen One</option>
+   <option value="fallen_hero">Fallen Hero</option>
+   <option value="grey">Grey Morality Champion</option>
+   <option value="antagonist">Antagonist / Villain</option>
+   <option value="wild_card">Wild Card</option>
+   <option value="mentor">Mentor / Guide</option>
+   <option value="redeemed">Seeking Redemption</option>
+   <option value="conqueror">Conqueror / Tyrant</option>
+   <option value="unknown">Fate Unknown</option>
+  </select>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_quote">Champion Quote</label>
+  <textarea class="farea" id="s_quote" rows="2" placeholder="A defining line — what do they say in battle?"></textarea>
+ </div>
+ <div class="frow">
+  <label class="flbl" id="l_extra">Additional Notes</label>
+  <textarea class="farea" id="s_extra" rows="2" placeholder="Lore hooks, secrets, unique traits..."></textarea>
+ </div>
+</div>
+
+<!-- FOOTER -->
+<div class="ftr">
+ <button class="btn-sec" id="btn_reset" onclick="LOL.reset()">RESET</button>
+ <button class="btn-main" id="btn_confirm" onclick="LOL.send()">⟐ CONFIRM LEGEND</button>
+</div>
+
+</div><!-- .win -->
+
+<script>
+var LOL=(function(){
+'use strict';
+
+/* ── STATE ── */
+var S={th:'dark',ln:'en',runes:[],skills:[],stats:{str:5,agi:5,int:5,wil:5,arc:5,res:5}};
+
+/* ── REGION DATA ── */
+var RD={
+ demacia:   {name:'Demacia',      col:'#4A70B0',lore:'A militaristic kingdom built on anti-magic ideals, where mages live in fear of the Mage Seekers. Honour and law above all else.'},
+ noxus:     {name:'Noxus',        col:'#9B2020',lore:'A powerful empire that values strength above all. Conquest, ambition, and brutal efficiency define its people. Only the strong survive.'},
+ freljord:  {name:'Freljord',     col:'#5FA8C8',lore:'A harsh, frozen tundra ruled by rival tribes. Ancient ice magic and the shadow of the Watchers from the Void hang over all.'},
+ ionia:     {name:'Ionia',        col:'#9870C0',lore:'A spiritual archipelago in harmony with the Spirit Realm, scarred by Noxian invasion and torn between pacifism and radical extremism.'},
+ piltover:  {name:'Piltover',     col:'#D4A830',lore:'The City of Progress — Hextech innovation, clockwork wonders, and breathtaking inequality masked behind golden towers.'},
+ zaun:      {name:'Zaun',         col:'#4A8A60',lore:'Piltover\'s chemtech-choked undercity: desperate resilience, innovation born of necessity, and the forgotten people who keep the city running.'},
+ shurima:   {name:'Shurima',      col:'#C8A84B',lore:'An ancient desert empire recently resurrected — home of the Sun Disc, Ascended god-warriors, and secrets buried beneath the sand.'},
+ ixtal:     {name:'Ixtal',        col:'#3A8A50',lore:'A hidden jungle empire preserving elemental magic. Ixlatal sorcery commands earth, fire, water, and wind in perfect concert.'},
+ targon:    {name:'Mount Targon', col:'#7A8EC8',lore:'A celestial peak where Aspects descend to claim mortal vessels. The summit grants godlike power — and costs the self.'},
+ camavor:   {name:'Camavor',      col:'#A83848',lore:'A fallen empire of blood — birthplace of Viego and hemomancy, now mostly legend, ruin, and the memory of a king\'s grief.'},
+ shadow_isles:{name:'Shadow Isles',col:'#2A6050',lore:'Cursed islands drowned in the Black Mist, where the Ruination turned all life into undying harrowed servants of sorrow.'},
+ bilgewater:{name:'Bilgewater',   col:'#C87840',lore:'A lawless port of pirates, sea monsters, and myth. Fortune and death are dealt in equal measure on the Serpent Isles.'},
+ bandle:    {name:'Bandle City',  col:'#D4B870',lore:'The Yordle homeland — existing slightly outside normal reality, whimsical and warm but strangely inaccessible to outsiders.'},
+ void:      {name:'The Void',     col:'#8A4AC8',lore:'A dimension of alien Watchers seeking to consume all of Runeterra. Voidborn are their instruments — hunger given terrible form.'},
+ wanderer:  {name:'Wanderer',     col:'#C89B3C',lore:'No fixed homeland. Every road is yours and none of them claim you. Your past is your own to reveal.'}
+};
+
+/* ── SPECIES LORE ── */
+var SL={
+ human:'The most common inhabitants of Runeterra — adaptable, ambitious, and capable of both great heroism and terrible cruelty.',
+ yordle:'Magical creatures from Bandle City — small, resilient, innately spirit-touched. Often mistaken for children; far older than they appear.',
+ vastaya:'Half-human, half-animal beings with deep connections to magical leylines. Diverse in form and culture, increasingly endangered.',
+ ascended:'Mortals transformed by the Shuriman Sun Disc into god-like beings — immortal, powerful, and burdened with a purpose beyond mortality.',
+ darkin:'Fallen Ascended corrupted by centuries of unending war. Their spirits now inhabit weapons, seeking hosts to possess and consume.',
+ aspect:'Mortals chosen by Targon\'s Aspects to serve as celestial vessels. The power is immense; the identity may not survive intact.',
+ revenant:'The dead who refused — or were refused — true death. Bound to the mortal plane by grief, duty, or the Black Mist\'s hunger.',
+ voidborn:'Creatures from the Void: alien, unknowable, utterly inhuman. Most are pure hunger given a terrible shape.',
+ half_blood:'Mixed heritage at the intersection of two worlds. The gifts and burdens of both lineages walk with you always.',
+ spirit:'A being of pure energy, magic, or constructed purpose — not born but shaped. Perception of the world is fundamentally different.',
+ brackern:'Ancient crystalline scorpions housing vast memories. Near-extinct, each one carries the dreams of thousands of lost souls.',
+ harrowed:'Claimed by the Black Mist but not yet fully gone. Somewhere between living and dead, still fighting the pull of the Ruined King.'
+};
+
+/* ── RUNE AFFINITIES ── */
+var RUNES=[
+ {id:'precision', sym:'⚔',name:['Precision','ความแม่นยำ'],     note:'Combat excellence'},
+ {id:'domination',sym:'🩸',name:['Domination','การครอบงำ'],    note:'Swift elimination'},
+ {id:'sorcery',   sym:'✦', name:['Sorcery','เวทมนตร์'],        note:'Empowered magic'},
+ {id:'resolve',   sym:'🛡', name:['Resolve','ความอดทน'],        note:'Unbreakable will'},
+ {id:'inspiration',sym:'⚙',name:['Inspiration','แรงบันดาลใจ'], note:'Boundary-breaking'},
+ {id:'corruption', sym:'☠', name:['Corruption','การทุจริต'],    note:'Void / Shadow taint'},
+ {id:'celestial',  sym:'★', name:['Celestial','เทวา'],          note:"Targon's blessing"},
+ {id:'spirit',     sym:'🌿',name:['Spirit','วิญญาณ'],           note:'Nature & soul'},
+ {id:'runic',      sym:'◈', name:['Runic','รูนิก'],             note:'Ancient sigils'}
+];
+
+/* ── ROLE ABILITY SUGGESTIONS ── */
+var ROLE_AB={
+ fighter:  ['Battle Cry','Juggernaut Strike','Blood Rush','Iron Will','Vengeance'],
+ juggernaut:['Colossus Slam','Unstoppable','Iron Skin','Tremor Strike','War Cry'],
+ tank:     ['Bulwark','Guardian Shield','Rallying Cry','Taunt','Fortress Stance'],
+ assassin: ['Shadow Step','Backstab','Death Mark','Smoke Bomb','Silent Execution'],
+ mage:     ['Arcane Surge','Runic Barrage','Mana Weave','Rift Burst','Spellwall'],
+ marksman: ['Focused Shot','Eagle Eye','Rain of Arrows','Explosive Round','Snipe'],
+ support:  ['Healing Aura','Binding Light','Cleanse','Ward','Rallying Presence'],
+ specialist:['Adaptive Form','Terrain Advantage','Unique Technique','Wild Card','Entropy']
+};
+
+/* ── STATS ── */
+var STATS=[
+ ['str','Strength',  'ความแข็งแกร่ง'],
+ ['agi','Agility',   'ความว่องไว'],
+ ['int','Intellect', 'สติปัญญา'],
+ ['wil','Will',      'เจตจำนง'],
+ ['arc','Arcane',    'พลังเวท'],
+ ['res','Resilience','ความอดทน']
+];
+
+/* ── LABELS ── */
+var L={
+ sup:    ['CHAMPION CREATION','การสร้างแชมเปี้ยน'],
+ main:   ['RUNETERRA','รูนเทอร์รา'],
+ sub:    ['FORGE YOUR LEGEND','สร้างตำนานของคุณ'],
+ noReg:  ['SELECT YOUR REGION','เลือกภูมิภาค'],
+ t0:['ORIGIN','ต้นกำเนิด'],t1:['BLOOD','สายเลือด'],t2:['RUNE','รูน'],t3:['PATH','เส้นทาง'],t4:['LEGEND','ตำนาน'],
+ l_region:   ['Region of Origin','ภูมิภาคต้นกำเนิด'],
+ l_birthplace:['Birthplace','สถานที่เกิด'],
+ l_era:      ['Era','ยุคสมัย'],
+ l_heritage: ['Heritage / Lineage','มรดก / สายตระกูล'],
+ l_faction:  ['Faction Allegiance','สังกัด'],
+ l_species:  ['Species / Race','สายพันธุ์'],
+ l_gender:   ['Gender','เพศ'],
+ l_age:      ['Age','อายุ'],
+ l_appearance:['Appearance','รูปลักษณ์'],
+ l_background:['Personal Background','ภูมิหลัง'],
+ l_magic_type:['Type of Magic','ประเภทเวทมนตร์'],
+ l_magic_rank:['Rank','ระดับ'],
+ l_magic_origin:['Power Origin','ที่มาของพลัง'],
+ l_magic_desc:['Manifestation','การแสดงออกของพลัง'],
+ l_role:      ['Champion Role','บทบาท'],
+ l_fight_style:['Fighting Style','รูปแบบการต่อสู้'],
+ l_weapon:   ['Primary Weapon','อาวุธหลัก'],
+ l_goal:     ['Primary Goal','เป้าหมายหลัก'],
+ l_personality:['Personality','บุคลิกภาพ'],
+ l_name:     ['Champion Name','ชื่อแชมเปี้ยน'],
+ l_title:    ['Title / Epithet','ฉายา'],
+ l_alias:    ['Known Aliases','ชื่อแฝง'],
+ l_destiny:  ['Destiny / Role','โชคชะตา'],
+ l_quote:    ['Champion Quote','คำพูดประจำตัว'],
+ l_extra:    ['Additional Notes','หมายเหตุ'],
+ sh_aff:     ['Rune Affinities','ความสัมพันธ์รูน'],
+ sh_msrc:    ['Magic Source','แหล่งพลัง'],
+ sh_ab:      ['Signature Abilities','ความสามารถพิเศษ'],
+ sh_goal:    ['Motivation','แรงจูงใจ'],
+ sh_stats:   ['Champion Parameters','พารามิเตอร์'],
+ sh_fate:    ['Fate & Prophecy','โชคชะตา'],
+ btn_confirm:['⟐ CONFIRM LEGEND','⟐ ยืนยันตำนาน'],
+ btn_reset:  ['RESET','รีเซ็ต'],
+ rune_sel:   ['Selected:','เลือกแล้ว:'],
+ aff_note:   ['— select up to 3','— เลือกสูงสุด 3']
+};
+
+function g(id){return document.getElementById(id);}
+function gt(k){var a=L[k];return a?a[S.ln==='th'?1:0]:k;}
+
+/* ── INIT ── */
+function init(){
+ buildRunes();
+ buildStats();
+ applyLabels();
+ // custom panel toggles
+ var selMap={
+  's_faction':'cpnl_faction','s_species':'cpnl_species',
+  's_magic_type':'cpnl_magic','s_weapon':'cpnl_weapon','s_goal':'cpnl_goal'
+ };
+ Object.keys(selMap).forEach(function(sid){
+  var el=g(sid);if(!el)return;
+  el.addEventListener('change',function(){
+   toggle('cpnl',selMap[sid],this.value==='custom');
+   if(sid==='s_species'){
+    var lore=SL[this.value]||'';
+    var lb=g('species_lore');
+    lb.textContent=lore;lb.classList.toggle('vis',!!lore);
+   }
+  });
+ });
+}
+
+function toggle(type,id,show){
+ var el=g(id);if(el)el.classList.toggle('vis',show);
+}
+
+/* ── RUNE GRID ── */
+function buildRunes(){
+ var TH=S.ln==='th',grid=g('rune_grid');
+ grid.innerHTML='';
+ RUNES.forEach(function(r){
+  var b=document.createElement('div');
+  b.className='rb'+(S.runes.indexOf(r.id)>=0?' sel':'');
+  b.innerHTML='<span class="rsym">'+r.sym+'</span>'
+   +'<span class="rname">'+(TH?r.name[1]:r.name[0])+'</span>'
+   +'<span class="rnote">'+r.note+'</span>';
+  b.onclick=function(){toggleRune(r.id,b);};
+  grid.appendChild(b);
+ });
+ g('rune_cnt').textContent=S.runes.length;
+}
+
+function toggleRune(id,btn){
+ var i=S.runes.indexOf(id);
+ if(i>=0){S.runes.splice(i,1);btn.classList.remove('sel');}
+ else{
+  if(S.runes.length>=3){
+   var gd=g('rune_grid');gd.classList.add('shake');
+   setTimeout(function(){gd.classList.remove('shake');},350);return;
+  }
+  S.runes.push(id);btn.classList.add('sel');
+ }
+ g('rune_cnt').textContent=S.runes.length;
+}
+
+/* ── STATS ── */
+function buildStats(){
+ var TH=S.ln==='th',blk=g('stat_block');
+ blk.innerHTML='';
+ STATS.forEach(function(st){
+  var key=st[0],nm=TH?st[2]:st[1];
+  var row=document.createElement('div');row.className='stat-row';
+  var nd=document.createElement('div');nd.className='stat-nm';nd.textContent=nm;
+  var td=document.createElement('div');td.className='ticks';td.id='tck_'+key;
+  var vd=document.createElement('div');vd.className='stat-v';vd.id='sv_'+key;
+  for(var i=1;i<=10;i++){
+   (function(i){
+    var t=document.createElement('div');
+    t.className='tick'+(S.stats[key]>=i?' on':'')+(i>=9&&S.stats[key]>=i?' hi':'');
+    t.onclick=function(){setStat(key,i);};
+    td.appendChild(t);
+   })(i);
+  }
+  vd.textContent=S.stats[key];
+  row.appendChild(nd);row.appendChild(td);row.appendChild(vd);
+  blk.appendChild(row);
+ });
+}
+
+function setStat(key,val){
+ S.stats[key]=val;
+ var tc=g('tck_'+key).children;
+ for(var i=0;i<10;i++){tc[i].className='tick'+(val>i?' on':'')+(i>=8&&val>i?' hi':'');}
+ g('sv_'+key).textContent=val;
+}
+
+/* ── ROLE PILLS ── */
+function onRole(){
+ var role=g('s_role').value;
+ var ab=ROLE_AB[role]||[];
+ var el=g('role_pills');
+ el.innerHTML='';
+ ab.forEach(function(a){
+  var p=document.createElement('div');p.className='pill';
+  p.textContent=a;
+  p.onclick=function(){
+   p.classList.toggle('sel');
+   var idx=S.skills.indexOf(a);
+   if(idx>=0)S.skills.splice(idx,1);
+   else S.skills.push(a);
+  };
+  el.appendChild(p);
+ });
+}
+
+/* ── CUSTOM ABILITIES ── */
+function add(){
+ var inp=g('s_sk_inp'),v=inp.value.trim();
+ if(!v)return;
+ if(S.skills.indexOf(v)<0)S.skills.push(v);
+ inp.value='';
+ renderCustomAb();
+}
+
+function renderCustomAb(){
+ var el=g('custom_sk_list');el.innerHTML='';
+ S.skills.forEach(function(item,i){
+  var p=document.createElement('div');p.className='pill sel';
+  p.textContent=item+' ×';
+  p.onclick=function(){S.skills.splice(i,1);renderCustomAb();};
+  el.appendChild(p);
+ });
+}
+
+/* ── LABELS ── */
+function applyLabels(){
+ g('hdr_sup').textContent=gt('sup');
+ g('hdr_main').textContent=gt('main');
+ g('hdr_sub').textContent=gt('sub');
+ ['t0','t1','t2','t3','t4'].forEach(function(k){
+  var el=g(k);if(el)el.textContent=gt(k);
+ });
+ ['l_region','l_birthplace','l_era','l_heritage','l_faction',
+  'l_species','l_gender','l_age','l_appearance','l_background',
+  'l_magic_type','l_magic_rank','l_magic_origin','l_magic_desc',
+  'l_role','l_fight_style','l_weapon','l_goal','l_personality',
+  'l_name','l_title','l_alias','l_destiny','l_quote','l_extra'
+ ].forEach(function(k){var el=g(k);if(el)el.textContent=gt(k);});
+ g('sh_aff').textContent=gt('sh_aff');
+ g('sh_aff_note').textContent=gt('aff_note');
+ g('sh_msrc').textContent=gt('sh_msrc');
+ g('sh_ab').textContent=gt('sh_ab');
+ g('sh_goal').textContent=gt('sh_goal');
+ g('sh_stats').textContent=gt('sh_stats');
+ g('sh_stats_note').textContent='— '+(S.ln==='th'?'คลิกเพื่อตั้งค่า':'click ticks to set');
+ g('sh_fate').textContent=gt('sh_fate');
+ g('rune_ctr').innerHTML=gt('rune_sel')+' <b id="rune_cnt">'+S.runes.length+'</b> / 3';
+ g('btn_confirm').textContent=gt('btn_confirm');
+ g('btn_reset').textContent=gt('btn_reset');
+ buildRunes();
+ buildStats();
+}
+
+/* ── TABS ── */
+function tb(i){
+ document.querySelectorAll('.spane').forEach(function(p,j){p.classList.toggle('on',j===i);});
+ document.querySelectorAll('.stab').forEach(function(t,j){t.classList.toggle('on',j===i);});
+}
+
+/* ── THEME ── */
+function th(m){
+ S.th=m;g('win').classList.toggle('lt',m==='light');
+ g('btn_dark').classList.toggle('on',m==='dark');
+ g('btn_light').classList.toggle('on',m==='light');
+}
+
+/* ── LANGUAGE ── */
+function ln(m){
+ S.ln=m;
+ g('btn_en').classList.toggle('on',m==='en');
+ g('btn_th').classList.toggle('on',m==='th');
+ applyLabels();
+ onRole();
+}
+
+/* ── REGION CHANGE ── */
+function onRegion(){
+ var val=g('s_region').value,r=RD[val];
+ var loreEl=g('region_lore'),badge=g('hdr_region');
+ if(r){
+  loreEl.textContent=r.lore;loreEl.classList.add('vis');
+  badge.textContent=r.name.toUpperCase();
+  var c=r.col.replace('#',''),win=g('win');
+  var ri=parseInt(c.slice(0,2),16),gi=parseInt(c.slice(2,4),16),bi=parseInt(c.slice(4,6),16);
+  win.style.setProperty('--acc',r.col);
+  win.style.setProperty('--abg','rgba('+ri+','+gi+','+bi+',.10)');
+  win.style.setProperty('--abd','rgba('+ri+','+gi+','+bi+',.38)');
+  win.style.setProperty('--bd','rgba('+ri+','+gi+','+bi+',.22)');
+ } else {
+  loreEl.classList.remove('vis');
+  badge.textContent=gt('noReg');
+  var w=g('win');
+  w.style.setProperty('--acc','#C89B3C');
+  w.style.setProperty('--abg','rgba(200,155,60,.10)');
+  w.style.setProperty('--abd','rgba(200,155,60,.38)');
+  w.style.setProperty('--bd','rgba(200,155,60,.22)');
+ }
+}
+
+/* ── CUSTOM PANEL ── */
+function tc(key){
+ var el=g('cpnl_'+key);if(el)el.classList.toggle('vis');
+}
+
+/* ── RESET ── */
+function reset(){
+ S.runes=[];S.skills=[];S.stats={str:5,agi:5,int:5,wil:5,arc:5,res:5};
+ document.querySelectorAll('.finp,.fsel,.farea').forEach(function(el){
+  if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';
+ });
+ document.querySelectorAll('.cpnl,.loreblurb').forEach(function(el){el.classList.remove('vis');});
+ g('role_pills').innerHTML='';
+ g('custom_sk_list').innerHTML='';
+ onRegion();buildRunes();buildStats();tb(0);
+}
+
+/* ── SEND ── */
+function send(){
+ var v=function(id){var el=g(id);return el?el.value.trim():'';};
+ var cv=function(sid,cid){return v(sid)==='custom'?v(cid):v(sid);};
+
+ // collect selected role pills
+ var rolePills=[];
+ document.querySelectorAll('#role_pills .pill.sel').forEach(function(p){
+  rolePills.push(p.textContent);
+ });
+ var allSkills=rolePills.concat(S.skills.filter(function(s){return rolePills.indexOf(s)<0;}));
+
+ var out={
+  lang:S.ln,
+  name:v('s_name'),title:v('s_title'),alias:v('s_alias'),
+  quote:v('s_quote'),
+  region:v('s_region'),birthplace:v('s_birthplace'),
+  era:v('s_era'),heritage:v('s_heritage'),
+  faction:cv('s_faction','s_faction_c'),
+  species:cv('s_species','s_species_c'),
+  gender:v('s_gender'),age:v('s_age'),
+  appearance:v('s_appearance'),background:v('s_background'),
+  rune_affinities:S.runes,
+  magic_type:cv('s_magic_type','s_magic_c'),
+  magic_rank:v('s_magic_rank'),
+  magic_origin:v('s_magic_origin'),
+  magic_manifestation:v('s_magic_desc'),
+  role:v('s_role'),fight_style:v('s_fight_style'),
+  weapon:cv('s_weapon','s_weapon_c'),
+  abilities:allSkills,
+  goal:cv('s_goal','s_goal_c'),
+  personality:v('s_personality'),
+  destiny:v('s_destiny'),
+  extra:v('s_extra'),
+  stats:S.stats
+ };
+
+ var txt='<'+'LOL_CONFIRM>'+JSON.stringify(out,null,2)+'<'+'/LOL_CONFIRM>';
+ setTimeout(function(){
+  try{
+   var w=window.parent||window;
+   var ta=w.document.getElementById('send_textarea')||w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+   if(ta){
+    var d=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
+    if(d&&d.set)d.set.call(ta,txt);else ta.value=txt;
+    ta.dispatchEvent(new Event('input',{bubbles:true}));
+    setTimeout(function(){
+     try{
+      var sb=w.document.getElementById('send_but');
+      if(sb)sb.click();
+      else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
+     }catch(e){}
+    },150);
+    return;
+   }
+  }catch(e){}
+  try{navigator.clipboard.writeText(txt);}catch(e){}
+ },450);
+}
+
+return{init:init,th:th,ln:ln,tb:tb,tc:tc,add:add,send:send,reset:reset,onRegion:onRegion,onRole:onRole};
+})();
+
+window.addEventListener('DOMContentLoaded',LOL.init);
+</script>
+</body>
+</html>

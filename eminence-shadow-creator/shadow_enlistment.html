@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',serif;font-size:14px}
+:root{
+  --ac:#A32638;--ac-rgb:163,38,56;
+  --sv:#B9BCC8;--tx:#E9E6EC;--tx2:#8B8894;--mu:#403A44;
+  --bg:#07060A;--pan:#0F0D13;--pan2:#17131C;--pan3:#1F1A26;
+  --bd:rgba(163,38,56,.32);--bd2:rgba(255,255,255,.05);
+  --fd:'Black Ops One',sans-serif;--fth:'Noto Serif Thai',serif;
+}
+#sewrap{max-width:520px;margin:16px auto;position:relative}
+#sewrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:8px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.45),0 0 26px 2px rgba(var(--ac-rgb),.28);
+  animation:seaura 3.6s ease-in-out infinite}
+@keyframes seaura{0%,100%{opacity:.65}50%{opacity:1}}
+#se{position:relative;z-index:1;background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:8px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.85);animation:sei .35s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes sei{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+#se-smoke{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;opacity:.5}
+.se-blob{position:absolute;border-radius:50%;filter:blur(30px);background:radial-gradient(circle,rgba(var(--ac-rgb),.16),transparent 70%);
+  animation:sedrift 22s ease-in-out infinite}
+.se-blob:nth-child(1){width:220px;height:220px;top:-60px;left:-60px;animation-delay:0s}
+.se-blob:nth-child(2){width:180px;height:180px;bottom:-50px;right:-40px;animation-delay:-8s;background:radial-gradient(circle,rgba(20,16,26,.5),transparent 70%)}
+.se-blob:nth-child(3){width:160px;height:160px;top:40%;left:60%;animation-delay:-15s}
+@keyframes sedrift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(24px,-18px) scale(1.12)}}
+
+#se-stamp{position:absolute;top:54px;right:-56px;z-index:2;pointer-events:none;
+  transform:rotate(34deg);font-family:var(--fd);font-size:12px;letter-spacing:3px;color:rgba(var(--ac-rgb),.4);
+  border:2px solid rgba(var(--ac-rgb),.4);padding:4px 60px;text-transform:uppercase;white-space:nowrap}
+
+#se-lang{position:absolute;top:12px;right:13px;z-index:4;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#se-lang b{font-family:var(--fd);font-size:7px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer}
+#se-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#4a0f16);box-shadow:0 0 8px -2px var(--ac)}
+
+#se-head{position:relative;z-index:1;padding:24px 26px 6px;text-align:center}
+#se-eyebrow{font-family:var(--fd);font-size:8px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #se-eyebrow{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:1px}
+#se-title{font-family:var(--fd);font-size:19px;letter-spacing:2px;margin-top:9px;color:var(--tx);
+  text-shadow:0 0 18px rgba(var(--ac-rgb),.55);text-transform:uppercase}
+[lang-mode="th"] #se-title{font-family:'Noto Serif Thai',serif;font-size:17px;letter-spacing:.3px;font-weight:700}
+#se-subtitle{font-size:11px;font-style:italic;color:var(--tx2);margin-top:6px}
+[lang-mode="th"] #se-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+#setabs{display:flex;margin:16px 22px 0;border-bottom:1px solid var(--bd2);position:relative;z-index:1;overflow-x:auto}
+#setabs::-webkit-scrollbar{display:none}
+.setab{flex:1;min-width:76px;text-align:center;padding:0 2px 9px;cursor:pointer;position:relative}
+.setab span{font-family:var(--fd);font-size:8px;letter-spacing:.8px;color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] .setab span{font-family:'Noto Serif Thai',serif;font-size:9.6px;letter-spacing:0}
+.setab.on span{color:var(--ac)}
+.setab::after{content:'';position:absolute;left:20%;right:20%;bottom:-1px;height:2px;background:var(--ac);
+  transform:scaleX(0);transition:transform .25s;box-shadow:0 0 8px -1px var(--ac)}
+.setab.on::after{transform:scaleX(1)}
+
+.sepanel{display:none;padding:20px 26px 6px;position:relative;z-index:1}
+.sepanel.on{display:block}
+.se-scroll{max-height:320px;overflow-y:auto;padding-right:2px}
+
+.se-field{margin-bottom:15px}
+.se-label{font-family:var(--fd);font-size:8.5px;letter-spacing:1.6px;color:var(--sv);text-transform:uppercase;margin-bottom:6px;display:block}
+[lang-mode="th"] .se-label{font-family:'Noto Serif Thai',serif;font-size:10px;letter-spacing:.2px}
+.se-input,.se-textarea{width:100%;background:rgba(0,0,0,.32);border:1px solid var(--bd2);border-radius:4px;
+  padding:9px 11px;color:var(--tx);font-family:'EB Garamond','Noto Serif Thai',serif;font-size:13.5px;
+  transition:border-color .2s,box-shadow .2s}
+[lang-mode="th"] .se-input,[lang-mode="th"] .se-textarea{font-family:'Noto Serif Thai',serif}
+.se-input:focus,.se-textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 2px rgba(var(--ac-rgb),.18)}
+.se-textarea{resize:vertical;min-height:52px;line-height:1.55}
+.se-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+#se-greek{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.se-glyph{aspect-ratio:1;border-radius:50%;border:1.3px solid var(--bd2);background:rgba(0,0,0,.3);
+  display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:17px;color:var(--tx2);
+  cursor:pointer;transition:all .18s;position:relative}
+.se-glyph:hover{border-color:rgba(var(--ac-rgb),.5);color:var(--tx)}
+.se-glyph.on{border-color:var(--ac);color:#fff;background:radial-gradient(circle at 35% 30%,rgba(var(--ac-rgb),.4),rgba(var(--ac-rgb),.12));
+  box-shadow:0 0 14px -2px var(--ac)}
+.se-glyph small{position:absolute;bottom:3px;font-family:'EB Garamond',serif;font-size:6.5px;letter-spacing:.3px;color:inherit;opacity:.8;text-transform:uppercase}
+
+.se-pills{display:flex;flex-wrap:wrap;gap:7px}
+.se-pill{padding:6px 13px;border-radius:99px;border:1px solid var(--bd2);background:rgba(0,0,0,.28);
+  color:var(--tx2);font-size:11.5px;cursor:pointer;transition:all .18s}
+[lang-mode="th"] .se-pill{font-family:'Noto Serif Thai',serif}
+.se-pill:hover{border-color:rgba(var(--ac-rgb),.5)}
+.se-pill.on{border-color:var(--ac);color:#fff;background:rgba(var(--ac-rgb),.22);box-shadow:0 0 10px -3px var(--ac)}
+
+#se-swatches{display:flex;gap:8px;flex-wrap:wrap}
+.se-sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.se-sw.on{border-color:#fff;box-shadow:0 0 10px -1px currentColor,0 0 0 2px var(--bg)}
+
+/* repeatable rows */
+.se-rrow{position:relative;background:rgba(0,0,0,.22);border:1px solid var(--bd2);border-radius:5px;
+  padding:10px 34px 10px 11px;margin-bottom:9px}
+.se-rrow .se-input,.se-rrow .se-textarea{margin-bottom:7px}
+.se-rrow .se-input:last-child,.se-rrow .se-textarea:last-child{margin-bottom:0}
+.se-rdel{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:1px solid var(--bd2);
+  background:rgba(0,0,0,.3);color:var(--tx2);cursor:pointer;font-size:12px;line-height:1;display:flex;
+  align-items:center;justify-content:center;transition:all .15s}
+.se-rdel:hover{border-color:var(--ac);color:var(--ac)}
+.se-add{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;border:1px dashed rgba(var(--ac-rgb),.5);
+  background:rgba(var(--ac-rgb),.06);color:var(--ac);font-family:var(--fd);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer;transition:all .18s}
+[lang-mode="th"] .se-add{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+.se-add:hover{background:rgba(var(--ac-rgb),.14)}
+.se-empty-hint{font-size:10.5px;font-style:italic;color:var(--mu);margin-bottom:9px}
+[lang-mode="th"] .se-empty-hint{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+/* trait tag chips */
+#se-trait-input-row{display:flex;gap:8px;margin-bottom:9px}
+#se-trait-input-row .se-input{flex:1}
+.se-tagbtn{flex-shrink:0;padding:0 16px;border-radius:4px;border:1px solid var(--ac);background:rgba(var(--ac-rgb),.16);
+  color:var(--ac);font-family:var(--fd);font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer}
+[lang-mode="th"] .se-tagbtn{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+#se-trait-chips{display:flex;flex-wrap:wrap;gap:7px}
+.se-chip{display:inline-flex;align-items:center;gap:7px;padding:5px 8px 5px 12px;border-radius:99px;
+  background:rgba(var(--ac-rgb),.14);border:1px solid rgba(var(--ac-rgb),.4);color:var(--tx);font-size:11.5px}
+[lang-mode="th"] .se-chip{font-family:'Noto Serif Thai',serif}
+.se-chip b{cursor:pointer;color:var(--tx2);font-weight:400}
+.se-chip b:hover{color:var(--ac)}
+
+.se-nav{display:flex;justify-content:space-between;padding:18px 26px 22px;position:relative;z-index:1}
+.se-nb{font-family:var(--fd);font-size:9.5px;letter-spacing:1.2px;padding:9px 18px;border-radius:4px;cursor:pointer;
+  text-transform:uppercase;transition:all .18s;border:1px solid var(--bd2);color:var(--tx2);background:transparent}
+[lang-mode="th"] .se-nb{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:.2px}
+.se-nb.primary{background:linear-gradient(135deg,var(--ac),#5a0f18);border-color:var(--ac);color:#fff;
+  box-shadow:0 4px 16px -4px var(--ac)}
+.se-nb:hover{border-color:var(--ac)}
+.se-nb[disabled]{opacity:.35;pointer-events:none}
+
+#se-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--pan3);border:1px solid var(--ac);border-radius:6px;padding:10px 18px;font-size:12px;color:var(--tx);
+  transition:all .3s;pointer-events:none;z-index:99;font-family:'EB Garamond','Noto Serif Thai',serif}
+#se-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="sewrap"><div id="se">
+  <div id="se-smoke"><div class="se-blob"></div><div class="se-blob"></div><div class="se-blob"></div></div>
+  <div id="se-stamp">SHADOW GARDEN</div>
+  <div id="se-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="se-head">
+    <div id="se-eyebrow" data-en="CLASSIFIED &#8212; EYES ONLY" data-th="เอกสารลับ &#8212; เฉพาะผู้มีสิทธิ์เท่านั้น">CLASSIFIED &#8212; EYES ONLY</div>
+    <div id="se-title" data-en="SHADOW GARDEN ENLISTMENT" data-th="ใบสมัครเข้าสวนเงา">SHADOW GARDEN ENLISTMENT</div>
+    <div id="se-subtitle" data-en="Every legend needs a name it can hide behind." data-th="ทุกตำนานล้วนต้องการชื่อไว้ซ่อนตัว">Every legend needs a name it can hide behind.</div>
+  </div>
+
+  <div id="setabs">
+    <div class="setab on" data-t="t1"><span data-en="Identity" data-th="ตัวตน">Identity</span></div>
+    <div class="setab" data-t="t2"><span data-en="Codename" data-th="นามรหัส">Codename</span></div>
+    <div class="setab" data-t="t3"><span data-en="Abilities" data-th="ความสามารถ">Abilities</span></div>
+    <div class="setab" data-t="t4"><span data-en="Gear &amp; Traits" data-th="อุปกรณ์และนิสัย">Gear &amp; Traits</span></div>
+    <div class="setab" data-t="t5"><span data-en="Legend" data-th="ตำนาน">Legend</span></div>
+  </div>
+
+  <!-- TAB 1: IDENTITY -->
+  <div class="sepanel on" data-p="t1">
+    <div class="se-field">
+      <label class="se-label" data-en="True Name" data-th="ชื่อจริง">True Name</label>
+      <input class="se-input" id="f-name" type="text" data-pen="Enter your character's real name" data-pth="กรอกชื่อจริงของตัวละคร" placeholder="Enter your character's real name">
+    </div>
+    <div class="se-row2">
+      <div class="se-field">
+        <label class="se-label" data-en="Age" data-th="อายุ">Age</label>
+        <input class="se-input" id="f-age" type="text" data-pen="e.g. 17" data-pth="เช่น 17" placeholder="e.g. 17">
+      </div>
+      <div class="se-field">
+        <label class="se-label" data-en="Public Persona" data-th="ตัวตนสาธารณะ">Public Persona</label>
+        <input class="se-input" id="f-persona" type="text" data-pen="Their mundane cover role" data-pth="บทบาทธรรมดาที่ใช้กำบัง" placeholder="Their mundane cover role">
+      </div>
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="Appearance" data-th="รูปลักษณ์">Appearance</label>
+      <textarea class="se-textarea" id="f-appearance" data-pen="Hair, eyes, build, notable features..." data-pth="ทรงผม สีตา รูปร่าง จุดเด่น..." placeholder="Hair, eyes, build, notable features..."></textarea>
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="Race / Species" data-th="เผ่าพันธุ์">Race / Species</label>
+      <div class="se-pills" id="se-race"></div>
+    </div>
+    <div class="se-field" id="se-clan-field" style="display:none">
+      <label class="se-label" data-en="Clan" data-th="เผ่า">Clan</label>
+      <input class="se-input" id="f-clan" type="text" data-pen="e.g. Wolf Clan, Golden Leopard Clan" data-pth="เช่น เผ่าหมาป่า, เผ่าเสือดาวทอง" placeholder="e.g. Wolf Clan, Golden Leopard Clan">
+    </div>
+  </div>
+
+  <!-- TAB 2: CODENAME -->
+  <div class="sepanel" data-p="t2">
+    <div class="se-field">
+      <label class="se-label" data-en="Designation Type" data-th="ประเภทนามรหัส">Designation Type</label>
+      <div class="se-pills" id="se-desig-type">
+        <div class="se-pill on" data-v="greek" data-en="Greek Letter" data-th="ตัวอักษรกรีก">Greek Letter</div>
+        <div class="se-pill" data-v="numeric" data-en="Numeric Designation" data-th="รหัสตัวเลข">Numeric Designation</div>
+      </div>
+    </div>
+    <div class="se-field" id="se-greek-field">
+      <label class="se-label" data-en="Select a Letter (Θ and beyond — the Seven Shadows' seats are already claimed)" data-th="เลือกตัวอักษร (ตั้งแต่ Θ เป็นต้นไป &#8212; ตำแหน่งเจ็ดเงามีเจ้าของแล้ว)">Select a Letter</label>
+      <div id="se-greek"></div>
+    </div>
+    <div class="se-field" id="se-numeric-field" style="display:none">
+      <label class="se-label" data-en="Choose a Number (Shadow Garden has grown large enough that later recruits are numbered rather than lettered — e.g. 559, 664, 665, 666, 712)" data-th="เลือกหมายเลข (สวนเงาขยายใหญ่ขึ้นจนสมาชิกรุ่นหลังใช้หมายเลขแทนตัวอักษร &#8212; เช่น 559, 664, 665, 666, 712)">Choose a Number</label>
+      <input class="se-input" id="f-numeric" type="text" data-pen="e.g. 713" data-pth="เช่น 713" placeholder="e.g. 713">
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="Specialty" data-th="ความถนัด">Specialty</label>
+      <div class="se-pills" id="se-specialty"></div>
+    </div>
+  </div>
+
+  <!-- TAB 3: ABILITIES (repeatable) -->
+  <div class="sepanel" data-p="t3">
+    <div class="se-field">
+      <label class="se-label" data-en="Abilities — add as many as this character actually has" data-th="ความสามารถ &#8212; เพิ่มได้เท่าที่ตัวละครมีจริง">Abilities</label>
+      <div class="se-scroll" id="se-ability-list"></div>
+      <div class="se-add" id="se-ability-add" data-en="+ Add Ability" data-th="+ เพิ่มความสามารถ">+ Add Ability</div>
+    </div>
+  </div>
+
+  <!-- TAB 4: GEAR & TRAITS -->
+  <div class="sepanel" data-p="t4">
+    <div class="se-field">
+      <label class="se-label" data-en="Gear &amp; Equipment" data-th="อุปกรณ์และของประจำตัว">Gear &amp; Equipment</label>
+      <div class="se-scroll" id="se-gear-list"></div>
+      <div class="se-add" id="se-gear-add" data-en="+ Add Gear" data-th="+ เพิ่มอุปกรณ์">+ Add Gear</div>
+    </div>
+    <div class="se-field" style="margin-top:18px">
+      <label class="se-label" data-en="Traits &amp; Quirks" data-th="นิสัยและลักษณะเฉพาะ">Traits &amp; Quirks</label>
+      <div id="se-trait-input-row">
+        <input class="se-input" id="f-trait-input" type="text" data-pen="Type a trait and press Add..." data-pth="พิมพ์ลักษณะนิสัยแล้วกด เพิ่ม..." placeholder="Type a trait and press Add...">
+        <div class="se-tagbtn" id="se-trait-add" data-en="Add" data-th="เพิ่ม">Add</div>
+      </div>
+      <div id="se-trait-chips"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: LEGEND -->
+  <div class="sepanel" data-p="t5">
+    <div class="se-field">
+      <label class="se-label" data-en="How Were They Found? (most every operative was personally rescued by Shadow from something dire)" data-th="พวกเขาถูกพบได้อย่างไร (สมาชิกเกือบทุกคนถูก Shadow ช่วยชีวิตจากสถานการณ์ร้ายแรงด้วยตัวเอง)">How Were They Found?</label>
+      <textarea class="se-textarea" id="f-recruitment" data-pen="The circumstances of their rescue and recruitment..." data-pth="สถานการณ์ตอนที่ถูกช่วยเหลือและรับเข้าสวนเงา..." placeholder="The circumstances of their rescue and recruitment..."></textarea>
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="The Legend (their exaggerated, half-believed origin)" data-th="ตำนาน (เรื่องราวกำเนิดสุดเว่อร์ที่พวกเขาเชื่อครึ่งไม่เชื่อครึ่ง)">The Legend</label>
+      <textarea class="se-textarea" id="f-legend" data-pen="The dramatic story they tell about themselves..." data-pth="เรื่องราวสุดดราม่าที่พวกเขาเล่าเกี่ยวกับตัวเอง..." placeholder="The dramatic story they tell about themselves..." style="min-height:70px"></textarea>
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="What Do They Actually Want?" data-th="สิ่งที่พวกเขาต้องการจริงๆ">What Do They Actually Want?</label>
+      <input class="se-input" id="f-motive" type="text" data-pen="Their real, unspoken motive" data-pth="แรงจูงใจที่แท้จริงที่ไม่เคยพูดออกมา" placeholder="Their real, unspoken motive">
+    </div>
+    <div class="se-field">
+      <label class="se-label" data-en="Sigil Color" data-th="สีประจำตัว">Sigil Color</label>
+      <div id="se-swatches"></div>
+    </div>
+    <div class="se-field" style="margin-top:18px">
+      <label class="se-label" data-en="Anything Else? (custom fields)" data-th="ข้อมูลอื่นๆ (กำหนดเอง)">Anything Else?</label>
+      <div class="se-scroll" id="se-extra-list"></div>
+      <div class="se-add" id="se-extra-add" data-en="+ Add Field" data-th="+ เพิ่มข้อมูล">+ Add Field</div>
+    </div>
+  </div>
+
+  <div class="se-nav">
+    <div class="se-nb" id="se-back" data-en="Back" data-th="ย้อนกลับ" disabled>Back</div>
+    <div class="se-nb primary" id="se-next" data-en="Next" data-th="ถัดไป">Next</div>
+  </div>
+</div></div>
+<div id="se-toast"></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var TABS=['t1','t2','t3','t4','t5'];
+var curIdx=0;
+
+var GREEK=[['Θ','Theta'],['Ι','Iota'],['Κ','Kappa'],['Λ','Lambda'],['Μ','Mu'],
+           ['Ν','Nu'],['Ξ','Xi'],['Ο','Omicron'],['Π','Pi'],['Ρ','Rho']];
+var selectedGreek=null;
+g('se-greek').innerHTML=GREEK.map(function(x,i){
+  return '<div class="se-glyph" data-i="'+i+'">'+x[0]+'<small>'+x[1]+'</small></div>';
+}).join('');
+qa('.se-glyph').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('.se-glyph').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedGreek=GREEK[parseInt(el.getAttribute('data-i'))];
+  });
+});
+
+/* designation type: greek letter vs numeric (both attested for Numbers-tier operatives) */
+var desigType='greek';
+qa('#se-desig-type .se-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#se-desig-type .se-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    desigType=el.getAttribute('data-v');
+    g('se-greek-field').style.display=(desigType==='greek')?'block':'none';
+    g('se-numeric-field').style.display=(desigType==='numeric')?'block':'none';
+  });
+});
+
+var RACES=[
+  ['Human','มนุษย์'],['Elf','เอลฟ์'],['Beastkin','บีสต์คิน'],['Vampire','แวมไพร์'],['Other','อื่นๆ']
+];
+var selectedRace=null;
+g('se-race').innerHTML=RACES.map(function(x,i){
+  return '<div class="se-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#se-race .se-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#se-race .se-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedRace=RACES[parseInt(el.getAttribute('data-i'))];
+    g('se-clan-field').style.display=(selectedRace[0]==='Beastkin')?'block':'none';
+  });
+});
+
+var SPECIALTIES=[
+  ['Combat & Swordsmanship','การต่อสู้และดาบ'],['Precision Magic & Infiltration','เวทมนตร์ละเอียดและการแทรกซึม'],
+  ['Business & Finance','ธุรกิจและการเงิน'],['Intelligence & Research','ข่าวกรองและการวิจัย'],
+  ['Exploration & Espionage','การสำรวจและจารกรรม'],['Engineering & R&D','วิศวกรรมและการวิจัยพัฒนา'],
+  ['Investigation','การสืบสวน'],['Other','อื่นๆ']
+];
+var selectedSpecialty=null;
+g('se-specialty').innerHTML=SPECIALTIES.map(function(x,i){
+  return '<div class="se-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#se-specialty .se-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#se-specialty .se-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedSpecialty=SPECIALTIES[parseInt(el.getAttribute('data-i'))];
+  });
+});
+
+var SWATCHES=['#A32638','#7C1F8A','#1F6E8C','#2E7D4F','#B98A1F','#5A5A66','#C94A8C'];
+var selectedColor=SWATCHES[0];
+g('se-swatches').innerHTML=SWATCHES.map(function(c,i){
+  return '<div class="se-sw'+(i===0?' on':'')+'" data-c="'+c+'" style="background:'+c+';color:'+c+'"></div>';
+}).join('');
+qa('.se-sw').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('.se-sw').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedColor=el.getAttribute('data-c');
+  });
+});
+
+/* ---- generic repeatable two-field row group (name + description) ---- */
+function makeRowGroup(listId, addBtnId, nameEn, namePh, descEn, descPh, namePhTh, descPhTh){
+  var list=g(listId);
+  function addRow(nameVal,descVal){
+    var row=document.createElement('div');
+    row.className='se-rrow';
+    row.innerHTML='<input class="se-input rr-name" type="text" placeholder="'+(L==='th'?namePhTh:namePh)+'" value="'+(nameVal||'').replace(/"/g,'&quot;')+'">'+
+      '<textarea class="se-textarea rr-desc" placeholder="'+(L==='th'?descPhTh:descPh)+'">'+(descVal||'')+'</textarea>'+
+      '<div class="se-rdel">&times;</div>';
+    row.querySelector('.se-rdel').addEventListener('click',function(){row.remove()});
+    list.appendChild(row);
+  }
+  g(addBtnId).addEventListener('click',function(){addRow('','')});
+  return {addRow:addRow, list:list};
+}
+var abilityGroup=makeRowGroup('se-ability-list','se-ability-add',
+  'Ability name','Ability name','What does it do?','What does it do?','ชื่อความสามารถ','ทำอะไรได้บ้าง?');
+var gearGroup=makeRowGroup('se-gear-list','se-gear-add',
+  'Item name','Item name','What is it / what does it do?','What is it / what does it do?','ชื่อไอเทม','คืออะไร/ทำอะไรได้บ้าง?');
+abilityGroup.addRow('','');
+gearGroup.addRow('','');
+
+/* ---- trait chips ---- */
+var traits=[];
+function renderTraits(){
+  g('se-trait-chips').innerHTML=traits.map(function(t,i){
+    return '<span class="se-chip">'+t+'<b data-i="'+i+'">&times;</b></span>';
+  }).join('');
+  qa('#se-trait-chips b').forEach(function(b){
+    b.addEventListener('click',function(){traits.splice(parseInt(b.getAttribute('data-i')),1);renderTraits();});
+  });
+}
+function addTrait(){
+  var v=g('f-trait-input').value.trim();
+  if(v){traits.push(v);g('f-trait-input').value='';renderTraits();}
+}
+g('se-trait-add').addEventListener('click',addTrait);
+g('f-trait-input').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();addTrait();}});
+
+/* ---- generic repeatable label/value row group ---- */
+var extraList=g('se-extra-list');
+function addExtraRow(labelVal,valueVal){
+  var row=document.createElement('div');
+  row.className='se-rrow';
+  row.innerHTML='<input class="se-input rr-label" type="text" placeholder="'+(L==='th'?'ชื่อหัวข้อ':'Field label')+'" value="'+(labelVal||'').replace(/"/g,'&quot;')+'">'+
+    '<input class="se-input rr-value" type="text" placeholder="'+(L==='th'?'รายละเอียด':'Field value')+'" value="'+(valueVal||'').replace(/"/g,'&quot;')+'">'+
+    '<div class="se-rdel">&times;</div>';
+  row.querySelector('.se-rdel').addEventListener('click',function(){row.remove()});
+  extraList.appendChild(row);
+}
+g('se-extra-add').addEventListener('click',function(){addExtraRow('','')});
+
+/* TABS */
+qa('.setab').forEach(function(t){
+  t.addEventListener('click',function(){go(t.getAttribute('data-t'))});
+});
+function go(target){
+  curIdx=TABS.indexOf(target);
+  qa('.setab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===target)});
+  qa('.sepanel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-p')===target)});
+  g('se-back').toggleAttribute('disabled',curIdx===0);
+  g('se-next').textContent=(curIdx===TABS.length-1)?(L==='th'?'ยืนยันการสมัคร':'Submit Enlistment'):(L==='th'?'ถัดไป':'Next');
+}
+g('se-back').addEventListener('click',function(){if(curIdx>0)go(TABS[curIdx-1])});
+g('se-next').addEventListener('click',function(){
+  if(curIdx<TABS.length-1){go(TABS[curIdx+1])}
+  else{submit()}
+});
+
+function toast(msg){
+  var el=g('se-toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show')},2600);
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  qa('[data-pen]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-pth'):el.getAttribute('data-pen');
+    if(v!=null)el.setAttribute('placeholder',v);
+  });
+  go(TABS[curIdx]);
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+function sendToST(text){
+  try{
+    var doc=(window.parent&&window.parent.document)?window.parent.document:document;
+    var ta=doc.querySelector('#send_textarea')||doc.querySelector('textarea');
+    if(ta){
+      var setter=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set;
+      setter.call(ta,text);
+      ta.dispatchEvent(new Event('input',{bubbles:true}));
+      setTimeout(function(){
+        var btn=doc.querySelector('#send_but');
+        if(btn){btn.click();}
+        else{
+          ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true}));
+        }
+      },120);
+      return true;
+    }
+  }catch(e){}
+  try{navigator.clipboard.writeText(text)}catch(e2){}
+  return false;
+}
+
+function readRows(listEl){
+  return qa('.se-rrow',listEl).map(function(row){
+    return {name:row.querySelector('.rr-name').value.trim(),description:row.querySelector('.rr-desc').value.trim()};
+  }).filter(function(x){return x.name||x.description});
+}
+function readExtraRows(){
+  return qa('.se-rrow',extraList).map(function(row){
+    return {label:row.querySelector('.rr-label').value.trim(),value:row.querySelector('.rr-value').value.trim()};
+  }).filter(function(x){return x.label||x.value});
+}
+
+function submit(){
+  var name=g('f-name').value.trim();
+  if(!name){toast(L==='th'?'กรุณากรอกชื่อจริง':'Please enter a true name');go('t1');return;}
+
+  var codename,codenameGlyph;
+  if(desigType==='greek'){
+    if(!selectedGreek){toast(L==='th'?'กรุณาเลือกนามรหัส':'Please select a codename designation');go('t2');return;}
+    codename=selectedGreek[1];
+    codenameGlyph=selectedGreek[0];
+  }else{
+    var num=g('f-numeric').value.trim();
+    if(!num){toast(L==='th'?'กรุณาระบุหมายเลข':'Please enter a numeric designation');go('t2');return;}
+    codename=num;
+    codenameGlyph=num;
+  }
+
+  var data={
+    charColor:selectedColor,
+    name:name,
+    age:g('f-age').value.trim(),
+    persona:g('f-persona').value.trim(),
+    appearance:g('f-appearance').value.trim(),
+    race:selectedRace?selectedRace[0]:'',
+    clan:(selectedRace&&selectedRace[0]==='Beastkin')?g('f-clan').value.trim():'',
+    designationType:desigType,
+    codename:codename,
+    codenameGlyph:codenameGlyph,
+    specialty:selectedSpecialty?selectedSpecialty[0]:'',
+    abilities:readRows(abilityGroup.list),
+    gear:readRows(gearGroup.list),
+    traits:traits.slice(),
+    recruitment:g('f-recruitment').value.trim(),
+    legend:g('f-legend').value.trim(),
+    motive:g('f-motive').value.trim(),
+    extra:readExtraRows()
+  };
+  var txt='<SHADOW_DOSSIER>\n'+JSON.stringify(data)+'\n</SHADOW_DOSSIER>';
+  var ok=sendToST(txt);
+  toast(ok?(L==='th'?'ส่งใบสมัครแล้ว...':'Enlistment submitted...'):(L==='th'?'คัดลอกไปยังคลิปบอร์ดแล้ว':'Copied to clipboard'));
+}
+})();
+</script>
+</body>
+</html>

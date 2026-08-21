@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --ac:#8B5FBF;--ac-rgb:139,95,191;
+  --gold:#C0A050;--tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;--pan3:#221629;
+  --bd:rgba(192,160,80,.28);
+  --fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
+}
+@keyframes tcspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+#tcwrap{max-width:270px;margin:18px auto;perspective:900px}
+#tcwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:16px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.5),0 0 24px 2px rgba(var(--ac-rgb),.35),0 0 46px 8px rgba(var(--ac-rgb),.14);
+  animation:tcaura 3s ease-in-out infinite}
+@keyframes tcaura{0%,100%{opacity:.7}50%{opacity:1}}
+#tcwrap.complete::before{box-shadow:0 0 0 1px rgba(192,160,80,.6),0 0 30px 4px rgba(192,160,80,.5),0 0 60px 12px rgba(192,160,80,.2);
+  animation:tcauragold 1.6s ease-in-out infinite}
+@keyframes tcauragold{0%,100%{opacity:.75}50%{opacity:1}}
+#tc{position:relative;z-index:1;border-radius:16px;overflow:hidden;
+  background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1.5px solid var(--ac);
+  box-shadow:0 26px 60px rgba(0,0,0,.85),inset 0 0 0 5px var(--bg),inset 0 0 0 6px rgba(var(--ac-rgb),.5);
+  padding:16px 15px 15px;
+  animation:tcflip .6s cubic-bezier(.2,.7,.3,1.1) both;transform-style:preserve-3d}
+@keyframes tcflip{from{opacity:0;transform:rotateY(78deg) scale(.92)}to{opacity:1;transform:none}}
+#tcwrap.complete #tc{border-color:var(--gold)}
+
+#tc-burst{position:absolute;top:50%;left:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;
+  background:radial-gradient(circle,rgba(192,160,80,.9),transparent 70%);z-index:5;pointer-events:none;display:none}
+#tcwrap.complete #tc-burst{display:block;animation:tcburst 1.5s ease-out 1 both}
+@keyframes tcburst{0%{transform:scale(0);opacity:1}70%{opacity:.4}100%{transform:scale(24);opacity:0}}
+
+#tc-lang{position:absolute;top:10px;right:11px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#tc-lang b{font-family:var(--fh);font-size:7.5px;letter-spacing:.4px;padding:3px 6px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700;transition:all .2s}
+#tc-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#2A1F42);box-shadow:0 0 8px -2px var(--ac)}
+
+.tc-corner{position:absolute;width:14px;height:14px;z-index:2;opacity:.9}
+.tc-corner.tl{top:8px;left:8px}
+.tc-corner.tr{top:8px;right:8px;transform:scaleX(-1)}
+.tc-corner.bl{bottom:8px;left:8px;transform:scaleY(-1)}
+.tc-corner.br{bottom:8px;right:8px;transform:scale(-1,-1)}
+
+#tc-num{width:34px;height:34px;border-radius:50%;margin:2px auto 0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:13px;color:#fff;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.3),var(--ac) 75%);
+  border:1px solid rgba(255,255,255,.5);box-shadow:0 0 12px -1px var(--ac)}
+#tcwrap.complete #tc-num{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.35),var(--gold) 75%);box-shadow:0 0 12px -1px var(--gold)}
+
+#tc-name{font-family:var(--fh);font-size:15px;letter-spacing:1px;text-align:center;margin-top:9px;color:var(--tx);
+  line-height:1.25;text-shadow:0 0 12px -2px var(--ac)}
+[lang-mode="th"] #tc-name{font-family:var(--fth);font-size:14px;letter-spacing:.3px}
+#tcwrap.complete #tc-name{text-shadow:0 0 12px -2px var(--gold)}
+
+#tc-illus-wrap{width:118px;height:118px;margin:12px auto 0;position:relative}
+#tc-illus-ring{position:absolute;inset:0;border-radius:50%;border:1px solid rgba(var(--ac-rgb),.4);animation:tcspin 40s linear infinite}
+#tc-illus{width:100%;height:100%;border-radius:50%;overflow:hidden;position:relative;background:var(--pan);
+  border:1.5px solid var(--ac);box-shadow:0 0 18px -4px var(--ac),inset 0 0 16px -6px var(--ac)}
+#tc-illus.reversed #tc-illus-inner{transform:rotate(180deg)}
+#tc-illus-inner{position:absolute;inset:0;transition:transform .3s}
+#tc-illus-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+#tc-mandala{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+
+#tc-reversed-tag{display:none;text-align:center;margin-top:8px;font-family:var(--fh);font-size:8px;letter-spacing:2px;
+  color:var(--ac);text-transform:uppercase}
+[lang-mode="th"] #tc-reversed-tag{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:.5px}
+
+#tc-meaning{font-size:11.5px;font-style:italic;color:var(--tx2);line-height:1.55;text-align:center;
+  margin-top:11px;padding:0 4px}
+[lang-mode="th"] #tc-meaning{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+#tc-pips{display:flex;justify-content:center;gap:6px;margin-top:14px}
+.tc-pip{width:11px;height:16px;border-radius:2px;border:1px solid var(--mu);background:rgba(255,255,255,.02);position:relative}
+.tc-pip.filled{border-color:var(--ac);background:linear-gradient(160deg,rgba(var(--ac-rgb),.5),rgba(var(--ac-rgb),.15));
+  box-shadow:0 0 7px -1px var(--ac)}
+.tc-pip.current{animation:tcpippulse 1.6s ease-in-out infinite}
+@keyframes tcpippulse{0%,100%{box-shadow:0 0 7px -1px var(--ac)}50%{box-shadow:0 0 13px 0 var(--ac)}}
+#tcwrap.complete .tc-pip.filled{border-color:var(--gold);background:linear-gradient(160deg,rgba(192,160,80,.55),rgba(192,160,80,.18));
+  box-shadow:0 0 8px -1px var(--gold)}
+#tc-pip-cap{text-align:center;font-size:8px;letter-spacing:1.2px;color:var(--mu);margin-top:6px;text-transform:uppercase}
+[lang-mode="th"] #tc-pip-cap{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none;font-size:9px}
+
+#tc-complete-panel{display:none;margin-top:13px;padding-top:12px;border-top:1px solid rgba(192,160,80,.3);text-align:center}
+#tcwrap.complete #tc-complete-panel{display:block}
+#tc-complete-title{font-family:var(--fh);font-size:10px;letter-spacing:1.6px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] #tc-complete-title{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.3px}
+#tc-reward-name{font-size:12.5px;color:var(--tx);margin-top:5px;font-weight:600}
+[lang-mode="th"] #tc-reward-name{font-family:'Noto Serif Thai',serif}
+#tc-reward-desc{font-size:10.5px;color:var(--tx2);font-style:italic;margin-top:3px;line-height:1.5}
+[lang-mode="th"] #tc-reward-desc{font-family:'Noto Serif Thai',serif;font-style:normal}
+</style>
+</head>
+<body>
+<textarea id="tcraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="tcwrap"><div id="tc">
+  <div id="tc-burst"></div>
+  <div id="tc-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+  <svg class="tc-corner tl" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--gold)" opacity=".7"/></svg>
+  <svg class="tc-corner tr" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--gold)" opacity=".7"/></svg>
+  <svg class="tc-corner bl" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--gold)" opacity=".7"/></svg>
+  <svg class="tc-corner br" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="var(--gold)" opacity=".7"/></svg>
+
+  <div id="tc-num">—</div>
+  <div id="tc-name">The Unnamed Card</div>
+
+  <div id="tc-illus-wrap">
+    <div id="tc-illus-ring"></div>
+    <div id="tc-illus">
+      <div id="tc-illus-inner">
+        <img id="tc-illus-img" alt="">
+        <div id="tc-mandala"></div>
+      </div>
+    </div>
+  </div>
+  <div id="tc-reversed-tag" data-en="Reversed" data-th="กลับหัว">Reversed</div>
+
+  <div id="tc-meaning"></div>
+
+  <div id="tc-pips"></div>
+  <div id="tc-pip-cap" data-en="Cards Collected" data-th="ไพ่ที่สะสมได้">Cards Collected</div>
+
+  <div id="tc-complete-panel">
+    <div id="tc-complete-title" data-en="The Hand is Complete" data-th="ครบมือแล้ว">The Hand is Complete</div>
+    <div id="tc-reward-name"></div>
+    <div id="tc-reward-desc"></div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('tcraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var STR={unnamed:['The Unnamed Card','ไพ่ไร้นาม']};
+function t(pair){return L==='th'?pair[1]:pair[0]}
+
+function mandalaSVG(){
+  var lines='';
+  for(var i=0;i<8;i++){
+    var ang=i*45;
+    lines+='<line x1="50" y1="10" x2="50" y2="18" stroke="var(--ac)" stroke-width="1" opacity=".5" transform="rotate('+ang+' 50 50)"/>';
+  }
+  return '<svg viewBox="0 0 100 100" width="100%" height="100%">'+
+    '<circle cx="50" cy="50" r="45" stroke="var(--ac)" stroke-width=".6" opacity=".35" fill="none"/>'+
+    '<circle cx="50" cy="50" r="34" stroke="var(--ac)" stroke-width=".5" opacity=".3" fill="none"/>'+
+    lines+
+    '<path d="M50 26 L56 44 L74 50 L56 56 L50 74 L44 56 L26 50 L44 44 Z" fill="var(--ac)" opacity=".85"/>'+
+    '<circle cx="50" cy="50" r="4.5" fill="#fff" opacity=".9"/>'+
+    '<circle cx="50" cy="13" r="2.6" fill="var(--ac)" opacity=".9"/>'+
+    '</svg>';
+}
+
+function renderAll(){
+  if(d.charColor){
+    document.documentElement.style.setProperty('--ac',d.charColor);
+    var h=d.charColor.replace('#','');
+    if(h.length===6){
+      var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+      document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+    }
+  }
+
+  g('tc-num').textContent=d.cardNumber!=null&&d.cardNumber!==''?d.cardNumber:'—';
+  g('tc-name').textContent=d.cardName||t(STR.unnamed);
+  g('tc-meaning').textContent=d.meaning||'';
+
+  var illus=g('tc-illus');
+  illus.classList.toggle('reversed',!!d.reversed);
+  g('tc-reversed-tag').style.display=d.reversed?'block':'none';
+  var img=g('tc-illus-img');
+  if(d.image){img.src='https://files.catbox.moe/'+d.image;img.style.display='block';img.onerror=function(){img.style.display='none';g('tc-mandala').style.display='flex'};}
+  else{img.style.display='none';img.removeAttribute('src');}
+  g('tc-mandala').innerHTML=mandalaSVG();
+  g('tc-mandala').style.display=d.image?'none':'flex';
+  if(d.image)img.onload=function(){g('tc-mandala').style.display='none'};
+
+  var collected=Math.max(0,Math.min(5,parseInt(d.cardsCollected)||0));
+  var pipsEl=g('tc-pips');
+  var pipsHtml='';
+  for(var i=1;i<=5;i++){
+    var cls='tc-pip'+(i<=collected?' filled':'')+(i===collected?' current':'');
+    pipsHtml+='<div class="'+cls+'"></div>';
+  }
+  pipsEl.innerHTML=pipsHtml;
+
+  g('tcwrap').classList.toggle('complete',collected===5);
+  g('tc-reward-name').textContent=d.rewardName||'';
+  g('tc-reward-desc').textContent=d.rewardDescription||'';
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Cyberverse Status Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Cyberverse Status Tracker System",
+      "content": "## CYBERVERSE STATUS TRACKER SYSTEM\n\nYou are running the Cyberverse status tracking system. After EVERY response you write, append a status block on its own line with no extra text around it:\n\n<CYBER_STATUS>\n{JSON}\n</CYBER_STATUS>\n\nThe JSON must be a complete, valid status object. Never omit the block, even in short replies.\n\n---\n\n### STATUS JSON SCHEMA\n\n```json\n{\n  \"lang\": \"en\",\n  \"charColor\": \"#00F0FF\",\n  \"name\": \"Kai Mercer\",\n  \"handle\": \"Nightowl\",\n  \"age\": \"29\",\n  \"gender\": \"Male\",\n  \"role\": \"Solo\",\n  \"situation\": \"...\",\n  \"hp\": {\"cur\": 72, \"max\": 100},\n  \"stamina\": {\"cur\": 50, \"max\": 100},\n  \"conditions\": [],\n  \"injuries\": [],\n  \"cyberware\": [\n    {\n      \"name\": \"Kerenzikov\",\n      \"category\": \"Neuralware\",\n      \"tier\": \"Military Grade\",\n      \"manufacturer\": \"Zetatech\",\n      \"effect\": \"Slows perceived time during combat reactions.\",\n      \"humanityCost\": 6,\n      \"status\": \"active\"\n    }\n  ],\n  \"cyberpsychosis\": {\n    \"humanity\": {\"cur\": 34, \"max\": 50},\n    \"state\": \"strained\",\n    \"symptoms\": [\"Emotional blunting\", \"Occasional auditory static\"]\n  },\n  \"account\": {\n    \"currency\": \"€$\",\n    \"bank\": 15400,\n    \"cash\": 320,\n    \"insurance\": {\"provider\": \"Trauma Team Intl.\", \"tier\": \"Gold\", \"active\": true},\n    \"debts\": [{\"creditor\": \"Wakako Okada\", \"amount\": 2000, \"note\": \"Job advance\"}],\n    \"notes\": \"...\"\n  },\n  \"fame\": [\n    {\"faction\": \"Arasaka Corp\", \"value\": -40, \"note\": \"Sabotaged a shipment.\"}\n  ],\n  \"relationships\": [\n    {\"name\": \"Jackie\", \"status\": \"Ally\", \"note\": \"Ride-or-die partner.\"}\n  ],\n  \"mission\": {\n    \"title\": \"Ghost in the Tower\",\n    \"employer\": \"Wakako Okada\",\n    \"location\": \"Arasaka Tower, Corpo Plaza\",\n    \"desc\": \"Extract a netrunner trapped behind ICE in the tower's sublevel.\",\n    \"reward\": [\"€$5,000 upfront\", \"Cyberdeck: Tetratronic Rippler\", \"Wakako's favor\"],\n    \"deadline\": \"48 hours\",\n    \"status\": \"active\"\n  }\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `lang` | \"en\" or \"th\" — match player preference |\n| `charColor` | hex accent set at creation; never changes |\n| `cyberware` | UNLIMITED array — list every installed piece of chrome in full detail, no count cap |\n| `cyberware[].category` | groups the Cyberware tab — use: Neuralware, Cyberoptics, Cyberaudio, Cyberlimbs, Internal/Frame, Nanotech, Fashionware, or Other |\n| `cyberware[].tier` | \"Street\" \\| \"Mid-Grade\" \\| \"Premium\" \\| \"Military Grade\" \\| \"Prototype\" |\n| `cyberware[].status` | \"active\" \\| \"damaged\" \\| \"offline\" \\| \"malfunctioning\" |\n| `cyberpsychosis.state` | \"stable\" \\| \"strained\" \\| \"unstable\" \\| \"critical\" \\| \"flatlined\" — drives the always-visible neural stability strip at the bottom of the widget |\n| `account.bank` / `account.cash` | plain numbers, no currency symbol — `currency` field supplies the symbol |\n| `mission.reward` | array of strings — rewards are NOT always money; mix cash, items, favors, intel freely |\n| `relationships[].status` | \"Stranger\" \\| \"Acquaintance\" \\| \"Friend\" \\| \"Close Friend\" \\| \"Ally\" \\| \"Romantic Interest\" \\| \"Rival\" \\| \"Enemy\" \\| \"Nemesis\" |\n\n---\n\n### OUTPUT RULES\n• Copy the full JSON from the previous block and modify only changed fields.\n• Never drop any key even if its value did not change.\n• `situation` must be rewritten every response to reflect the current moment.\n• `cyberware` has no installation limit — track every piece of chrome the character has, however many that is.\n• Deduct `humanityCost` from `cyberpsychosis.humanity.cur` whenever new cyberware is installed.\n• Update `cyberpsychosis.state` and `symptoms` to reflect cumulative humanity loss and recent narrative stress, not just a fixed threshold.\n\n---\n\n### CYBERPSYCHOSIS GUIDELINES\nThe strip at the bottom of the widget is always visible regardless of which tab is open — it is the player's early-warning system.\n\n| State | Humanity range (guideline) | Narrative cues |\n|---|---|---|\n| stable | full / near-full | normal emotional range, no symptoms |\n| strained | mild loss | occasional irritability, minor disconnection |\n| unstable | moderate loss | mood swings, paranoia, blackout flashes |\n| critical | heavy loss | violent impulses, dissociation, hallucinated threats |\n| flatlined | humanity bottomed out | total psychotic break — character may go berserk or shut down emotionally; this is a major story event, not a background stat tick |\n\n`symptoms` is a short array of present-tense effects (\"Tremors in left hand\", \"Hears static under quiet sounds\") — update it alongside `state`.\n\n---\n\n### CYBERWARE GUIDELINES\n• Every implant the character has ever had installed and not removed should appear in the array — there is no cap.\n• Give each entry a real `effect` description; do not leave entries as bare names.\n• `humanityCost` is the one-time cost paid at installation, used to track cumulative humanity loss — do not re-deduct it every response.\n• Mark obsolete/destroyed cyberware `status: \"offline\"` rather than deleting it, unless it was physically removed from the body (then delete the entry).\n\n---\n\n### ACCOUNT / FAME / RELATIONSHIP / MISSION RULES\n• `account.insurance.active` should flip to `false` if premiums lapse or coverage is revoked in the story.\n• `fame` tracks standing with gangs, corporations, and city institutions — value range roughly -100 to +100.\n• `relationships` only includes named characters the player has actually interacted with — do not pre-populate.\n• `mission` holds only the SINGLE current active job. When a job ends, set `status` to \"complete\" or \"failed\" for one response (so the player sees the outcome), then clear `mission` to `null` on the next response unless a new job is immediately accepted.",
+      "constant": true,
+      "order": 89,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

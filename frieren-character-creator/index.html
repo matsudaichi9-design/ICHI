@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Sans+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --acc:#90aee0;--abg:rgba(144,174,224,.10);--abd:rgba(144,174,224,.32);
+  --fb:'EB Garamond',Georgia,serif;--fh:Cinzel,serif;--fth:'Noto Sans Thai',sans-serif
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#060810;color:#c8d0e8;font-family:var(--fb);font-size:13.5px;line-height:1.55}
+/* ─── APP SHELL ─── */
+.app{
+  max-width:520px;margin:0 auto;
+  background:linear-gradient(170deg,#0b0e22 0%,#07091a 45%,#09081c 100%);
+  border:1px solid var(--abd);border-radius:14px;overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.7),0 0 28px -12px var(--acc);
+  position:relative;min-height:520px;
+}
+/* starfield */
+.stars{position:absolute;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;border-radius:50%;background:#c8d0e8}
+/* ─── HEADER ─── */
+.hdr{
+  display:flex;align-items:center;gap:14px;padding:16px 18px 12px;
+  background:linear-gradient(180deg,rgba(144,174,224,.08),transparent);
+  border-bottom:1px solid rgba(144,174,224,.14);position:relative;z-index:1
+}
+/* magic circle */
+.mc-wrap{position:relative;flex-shrink:0;width:64px;height:64px}
+.mc{display:block}
+@keyframes spin-cw{to{transform:rotate(360deg)}}
+@keyframes spin-ccw{to{transform:rotate(-360deg)}}
+.spin-cw{transform-box:fill-box;transform-origin:center;animation:spin-cw 28s linear infinite}
+.spin-ccw{transform-box:fill-box;transform-origin:center;animation:spin-ccw 38s linear infinite}
+.mc-lbl{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:16px;font-weight:600;color:var(--acc);
+  text-shadow:0 0 12px var(--acc);pointer-events:none
+}
+.htxt{flex:1;min-width:0}
+.htitle{font-family:var(--fh);font-size:15px;font-weight:700;color:#dce4f8;letter-spacing:1.5px}
+.hsub{font-size:10px;color:#5a6890;margin-top:3px;letter-spacing:.5px;font-family:var(--fh)}
+/* ─── JOURNEY STEPS NAV ─── */
+.steps{
+  display:flex;align-items:flex-start;justify-content:center;
+  padding:14px 16px 10px;gap:0;position:relative;z-index:1;
+  border-bottom:1px solid rgba(144,174,224,.10)
+}
+.step{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-width:54px;transition:opacity .2s}
+.step:hover{opacity:.8}
+.sdot{
+  width:30px;height:30px;border-radius:50%;
+  border:1.5px solid #2a3460;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:11px;color:#3a4470;
+  transition:all .3s;background:transparent
+}
+.step.on .sdot{border-color:var(--acc);color:#060810;background:var(--acc);box-shadow:0 0 12px -3px var(--acc)}
+.step.done .sdot{border-color:var(--acc);color:var(--acc)}
+.step:hover .sdot{border-color:var(--acc);color:var(--acc)}
+.slbl{font-size:8px;color:#2a3460;font-family:var(--fh);letter-spacing:1.2px;white-space:nowrap;transition:color .3s}
+.step.on .slbl{color:var(--acc)}
+.step.done .slbl{color:#4a5880}
+.sline{width:22px;height:1px;background:linear-gradient(90deg,var(--abd),var(--abd));opacity:.28;margin-top:15px;flex-shrink:0}
+/* ─── PANELS ─── */
+.panels{padding:16px 18px 8px;position:relative;z-index:1;min-height:340px}
+.panel{display:none}
+.panel.on{display:block}
+/* section header */
+.sec{display:flex;align-items:center;gap:8px;margin:16px 0 8px}
+.sec:first-child{margin-top:0}
+.sline2{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--abd))}
+.sline2.r{background:linear-gradient(270deg,transparent,var(--abd))}
+.stitle{font-size:9px;font-family:var(--fh);letter-spacing:2px;color:var(--acc);white-space:nowrap;display:flex;align-items:center;gap:5px}
+.stitle-gem{font-size:7px;opacity:.65}
+/* ─── FORM ELEMENTS ─── */
+.row{margin-bottom:11px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:11px}
+.lbl{font-size:9.5px;font-family:var(--fh);letter-spacing:1.5px;color:#5a6890;display:block;margin-bottom:4px;text-transform:uppercase}
+input[type=text],input[type=number],select,textarea{
+  width:100%;background:#07091a;border:1px solid #141832;border-radius:7px;
+  color:#c8d0e8;font-family:var(--fb);font-size:13px;padding:8px 11px;outline:none;
+  transition:border-color .2s,box-shadow .2s
+}
+input[type=text]:focus,input[type=number]:focus,select:focus,textarea:focus{
+  border-color:var(--acc);box-shadow:0 0 0 2px var(--abg)
+}
+input[type=number]{-moz-appearance:textfield}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+textarea{resize:vertical;min-height:60px;line-height:1.5}
+select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a6890'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+/* ─── SEG BUTTONS ─── */
+.seg{display:flex;gap:4px;flex-wrap:wrap}
+.segb{flex:1;min-width:60px;text-align:center;cursor:pointer;font-size:11px;font-weight:500;color:#5a6890;padding:7px 8px;border-radius:7px;border:1px solid #141832;background:#07091a;transition:all .2s;font-family:var(--fh);letter-spacing:.5px;white-space:nowrap}
+.segb:hover{border-color:var(--abd);color:var(--acc)}
+.segb.on{color:#060810;background:var(--acc);border-color:var(--acc)}
+/* ─── AFFINITY PICKER ─── */
+.affinity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:4px}
+.aff-btn{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+  padding:9px 4px;border-radius:9px;border:1.5px solid #141832;
+  background:#07091a;cursor:pointer;transition:all .22s;
+}
+.aff-btn:hover,.aff-btn.on{border-color:var(--aff-c);background:color-mix(in srgb,var(--aff-c) 12%,transparent);box-shadow:0 0 10px -4px var(--aff-c)}
+.aff-gem{width:14px;height:14px;border-radius:50%;flex-shrink:0}
+.aff-lbl{font-size:9px;font-family:var(--fh);color:#5a6890;letter-spacing:.5px;white-space:nowrap;transition:color .2s}
+.aff-btn.on .aff-lbl{color:var(--aff-c)}
+/* ─── MANA DISPLAY ─── */
+.mana-visual{margin-top:6px;height:5px;background:#0d1028;border-radius:3px;overflow:hidden;border:1px solid #141832}
+.mana-fill{height:100%;background:linear-gradient(90deg,var(--acc),rgba(var-acc,.5));border-radius:3px;transition:width .5s}
+/* ─── SPECIALTY TOGGLE ─── */
+.spec-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.spec-btn{text-align:center;cursor:pointer;font-size:10.5px;font-family:var(--fb);color:#5a6890;padding:7px 6px;border-radius:7px;border:1px solid #141832;background:#07091a;transition:all .2s}
+.spec-btn.on{color:var(--acc);border-color:var(--abd);background:var(--abg)}
+.spec-btn:hover{border-color:var(--abd);color:#8898b8}
+/* ─── SPELL CARDS ─── */
+.spell-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px}
+.spell-card{background:#07091a;border:1px solid #141832;border-radius:8px;padding:8px 10px;cursor:pointer;transition:all .2s;position:relative}
+.spell-card:hover{border-color:#1e2440}
+.spell-card.on{border-color:var(--abd);background:var(--abg)}
+.spell-card.on::after{content:'✓';position:absolute;top:6px;right:8px;font-size:9px;color:var(--acc)}
+.spell-name{font-size:11.5px;font-weight:600;color:#b8c4e0;font-family:var(--fh);letter-spacing:.3px;padding-right:14px}
+.spell-card.on .spell-name{color:var(--acc)}
+.spell-rank{display:inline-block;font-size:8.5px;padding:1px 5px;border-radius:5px;border:1px solid #141832;color:#5a6890;margin:3px 0;font-family:var(--fh)}
+.spell-card.on .spell-rank{border-color:var(--abd);color:var(--acc)}
+.spell-type{font-size:9px;color:#3a4460}
+/* custom spell form */
+.custom-form{background:#07091a;border:1px solid #141832;border-radius:9px;padding:12px;margin-bottom:8px}
+.form-row2{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin-bottom:8px}
+.cspell-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.cspell-item{display:flex;align-items:flex-start;gap:8px;background:#0a0d1e;border:1px solid #141832;border-radius:7px;padding:9px 10px}
+.cspell-info{flex:1;min-width:0}
+.cspell-name{font-size:12px;font-weight:600;color:#b8c4e0;font-family:var(--fh);letter-spacing:.3px}
+.cspell-meta{font-size:9.5px;color:#4a5880;margin-top:2px}
+.cspell-desc{font-size:11px;color:#5a6890;margin-top:3px;font-style:italic}
+.rm-btn{font-size:10px;color:#3a4460;cursor:pointer;padding:2px 4px;border-radius:4px;border:none;background:none;flex-shrink:0;line-height:1;transition:color .2s}
+.rm-btn:hover{color:#c87070}
+/* ─── PARTY CARDS ─── */
+.party-list{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.party-card{background:#07091a;border:1px solid #141832;border-radius:8px;padding:9px 11px;display:flex;align-items:flex-start;gap:8px}
+.party-info{flex:1;min-width:0}
+.party-name{font-size:12.5px;font-weight:600;color:#b8c4e0;font-family:var(--fh);letter-spacing:.3px}
+.party-role{font-size:9.5px;color:var(--acc);margin-top:2px}
+.party-race{font-size:9.5px;color:#4a5880}
+.party-form{background:#07091a;border:1px solid #141832;border-radius:9px;padding:11px;margin-bottom:8px}
+.party-row2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+/* ─── TAG CLOUD ─── */
+.tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.tag{font-size:10px;padding:3px 10px;border-radius:11px;border:1px solid #141832;color:#5a6890;background:#07091a;display:flex;align-items:center;gap:4px}
+.tag.str{border-color:rgba(144,174,224,.3);color:#90aee0;background:rgba(144,174,224,.07)}
+.tag.wk{border-color:rgba(200,120,120,.3);color:#c87878;background:rgba(200,120,120,.07)}
+.tag-x{cursor:pointer;opacity:.5;font-size:9px;transition:opacity .2s}
+.tag-x:hover{opacity:1}
+.tag-input-row{display:flex;gap:6px}
+.tag-input-row input{flex:1}
+/* ─── BUTTONS ─── */
+.btn{font-size:11px;font-family:var(--fh);letter-spacing:.8px;padding:7px 14px;border-radius:7px;border:1px solid var(--abd);background:var(--abg);color:var(--acc);cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--acc);color:#060810}
+.btn-sm{font-size:10px;padding:5px 10px}
+.btn-ghost{border-color:#141832;background:#07091a;color:#5a6890}
+.btn-ghost:hover{border-color:#1e2840;color:#8898b8;background:#0b0e1e}
+/* ─── NAV BAR ─── */
+.nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 18px 14px;border-top:1px solid rgba(144,174,224,.10);
+  position:relative;z-index:1
+}
+.ndots{display:flex;gap:5px;align-items:center}
+.ndot{width:5px;height:5px;border-radius:50%;background:#1e2440;transition:all .3s}
+.ndot.on{background:var(--acc);box-shadow:0 0 6px var(--acc)}
+.nbtn{font-size:10.5px;font-family:var(--fh);letter-spacing:1px;padding:7px 16px;border-radius:8px;cursor:pointer;transition:all .2s}
+.nbtn.back{border:1px solid #141832;background:transparent;color:#4a5880}
+.nbtn.back:hover{border-color:#2a3460;color:#8898b8}
+.nbtn.next{border:1px solid var(--abd);background:var(--abg);color:var(--acc)}
+.nbtn.next:hover{background:var(--acc);color:#060810}
+.nbtn.submit{border:1px solid var(--abd);background:var(--abg);color:var(--acc);padding:8px 20px}
+.nbtn.submit:hover{background:var(--acc);color:#060810;box-shadow:0 0 14px -4px var(--acc)}
+/* ─── MISC ─── */
+.note{font-size:10.5px;color:#3a4460;font-style:italic;line-height:1.5;margin-top:4px}
+.empty-note{font-size:10.5px;color:#2a3450;font-style:italic;text-align:center;padding:10px}
+.hidden{display:none!important}
+/* Thai font override */
+.th,.th input,.th select,.th textarea,.th .lbl,.th .segb,.th .spec-btn,.th .slbl,.th .note{font-family:var(--fth)}
+.th .stitle,.th .htitle,.th .hsub,.th .sdot,.th .lbl,.th .aff-lbl,.th .nbtn{font-family:var(--fth)}
+</style>
+</head>
+<body>
+<textarea id="sraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div class="app" id="app">
+<div class="stars" id="stars" aria-hidden="true"></div>
+<div class="hdr">
+  <div class="mc-wrap">
+    <svg class="mc" width="64" height="64" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="29" fill="none" stroke="var(--acc)" stroke-width=".7" opacity=".3"/>
+      <circle cx="32" cy="32" r="20" fill="none" stroke="var(--acc)" stroke-width=".5" stroke-dasharray="2.5,3" opacity=".22" class="spin-cw"/>
+      <g opacity=".4">
+        <circle cx="32" cy="3" r="1.4" fill="var(--acc)"/>
+        <circle cx="32" cy="61" r="1.4" fill="var(--acc)"/>
+        <circle cx="3" cy="32" r="1.4" fill="var(--acc)"/>
+        <circle cx="61" cy="32" r="1.4" fill="var(--acc)"/>
+        <circle cx="11" cy="11" r=".8" fill="var(--acc)" opacity=".55"/>
+        <circle cx="53" cy="11" r=".8" fill="var(--acc)" opacity=".55"/>
+        <circle cx="11" cy="53" r=".8" fill="var(--acc)" opacity=".55"/>
+        <circle cx="53" cy="53" r=".8" fill="var(--acc)" opacity=".55"/>
+      </g>
+      <g class="spin-ccw" opacity=".12">
+        <line x1="32" y1="12" x2="32" y2="52" stroke="var(--acc)" stroke-width=".5"/>
+        <line x1="12" y1="32" x2="52" y2="32" stroke="var(--acc)" stroke-width=".5"/>
+        <line x1="18" y1="18" x2="46" y2="46" stroke="var(--acc)" stroke-width=".5"/>
+        <line x1="46" y1="18" x2="18" y2="46" stroke="var(--acc)" stroke-width=".5"/>
+      </g>
+      <circle cx="32" cy="32" r="11" fill="var(--abg)" stroke="var(--acc)" stroke-width=".8" opacity=".5"/>
+    </svg>
+    <div class="mc-lbl">魔</div>
+  </div>
+  <div class="htxt">
+    <div class="htitle" id="h_title">Character Genesis</div>
+    <div class="hsub">葬送のフリーレン · Sousou no Frieren</div>
+  </div>
+</div>
+
+<div class="steps" id="steps"></div>
+<div class="panels"><div id="p0" class="panel on"></div><div id="p1" class="panel"></div><div id="p2" class="panel"></div><div id="p3" class="panel"></div><div id="p4" class="panel"></div></div>
+<div class="nav-bar"><button class="nbtn back" id="nb_b">← Back</button><div class="ndots" id="ndots"></div><button class="nbtn next" id="nb_n">Next →</button></div>
+</div>
+
+<script>
+(function(){
+var TH=true; // default Thai — flip if needed from $1
+try{var pr=JSON.parse((document.getElementById('sraw').value||'').trim());if(pr&&pr.lang==='en')TH=false;}catch(e){}
+var app=document.getElementById('app');if(TH)app.classList.add('th');
+
+function rgba(h,a){h=String(h||'#90aee0').replace('#','');if(h.length===3){h=h[0]+h[0]+h[1]+h[1]+h[2]+h[2];}var n=parseInt(h,16);if(isNaN(n))n=0x90aee0;var r=(n>>16)&255,g=(n>>8)&255,b=n&255;return'rgba('+r+','+g+','+b+','+a+')';}
+function setAcc(c){app.style.setProperty('--acc',c);app.style.setProperty('--abg',rgba(c,.10));app.style.setProperty('--abd',rgba(c,.32));}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function g(id){return document.getElementById(id);}
+
+/* ─── DATA ARRAYS ─── */
+var AFFINITY=[
+  {id:'fire',n:'Fire',nt:'ไฟ',c:'#e07040'},
+  {id:'ice',n:'Ice',nt:'น้ำแข็ง',c:'#60c4ee'},
+  {id:'lightning',n:'Lightning',nt:'สายฟ้า',c:'#dcc840'},
+  {id:'wind',n:'Wind',nt:'ลม',c:'#60cc78'},
+  {id:'earth',n:'Earth',nt:'ดิน',c:'#b07848'},
+  {id:'dark',n:'Dark',nt:'มืด',c:'#9060d8'},
+  {id:'holy',n:'Holy',nt:'แสง',c:'#e8d458'},
+  {id:'null',n:'Null',nt:'ว่างเปล่า',c:'#809ac0'},
+  {id:'ancient',n:'Ancient',nt:'โบราณ',c:'#c0a0f0'}
+];
+var AFF_DEFAULT='#90aee0';
+var curAff=null;
+
+var RACE=TH?['มนุษย์','เอลฟ์','คนแคระ','เผ่าปีศาจ','วิญญาณ','ลูกครึ่ง','กึ่งมนุษย์','อื่นๆ']:['Human','Elf','Dwarf','Demon','Spirit','Half-breed','Demi-human','Other'];
+var ERA=TH?['ยุคโบราณ (สงครามปีศาจ)','ยุคปาร์ตี้วีรบุรุษ','ยุคหลังกษัตริย์ปีศาจ','ปัจจุบัน (80 ปีหลัง)','อนาคต','อื่นๆ']:['Ancient Era (Demon War)','Hero\'s Party Era','Post-Demon King Era','Present Day (80 yrs. after)','Far Future','Other'];
+var RANK=TH?['นักมนตราชั้นหนึ่ง (一級)','นักมนตราชั้นสอง (二級)','นักมนตราชั้นสาม (三級)','ไม่ได้จัดอันดับ','ระดับพิเศษ','เผ่าปีศาจ','อื่นๆ']:['First-Class Mage (一級)','Second-Class Mage (二級)','Third-Class Mage (三級)','Unranked','Special Grade','Demon','Other'];
+var AFFIL=TH?['กิลด์นักมนตรา','ราชสำนัก','สภาคริสตจักร','เผ่าปีศาจ','นักเดินทางอิสระ','หน่วยทหาร','อื่นๆ']:['Mage\'s Guild','Royal Court','Church Council','Demon Clan','Independent Wanderer','Military Unit','Other'];
+var MANA_TYPE=TH?['เชิงโจมตี','เชิงป้องกัน','สนับสนุน','วิเคราะห์','ควบคุม/ผูกมัด','พื้นที่/เชิงปริภูมิ','การรักษา','วิญญาณ','โบราณ','แปลงร่าง']:['Offensive','Defensive','Support','Analysis','Binding / Control','Spatial','Healing','Spirit','Ancient Arts','Transformation'];
+var PARTY_ROLE=TH?['นักสู้','นักมนตรา','นักบวช','นักธนู','ผู้ค้นหา','นักยุทธศาสตร์','นักรักษา','ผู้พิทักษ์','อื่นๆ']:['Fighter','Mage','Priest','Ranger','Scout','Strategist','Healer','Guardian','Other'];
+var SPELL_RANK=['E','D','C','B','A','S'];
+var SPELL_TYPE=TH?['เชิงรุก','เชิงรับ','ตรวจจับ','ควบคุม','การรักษา','เสริมพลัง','พื้นที่','วิญญาณ','โบราณ','อื่นๆ']:['Offensive','Defensive','Detection','Control','Healing','Enhancement','Spatial','Spirit','Ancient','Other'];
+
+var PRESET_SPELLS=[
+  {id:'zoltraak',n:'Zoltraak',rank:'A',type:'Offensive',nt:'โซลทราค',tt:'เชิงรุก',desc:'Standard offensive spell — concentrated mana bolt that penetrates barriers.',dt:'มนตราเชิงรุกมาตรฐาน — กระสุนมนาที่ทะลวงเกราะ'},
+  {id:'sense_mana',n:'Sense Mana',rank:'E',type:'Detection',nt:'รับรู้มนา',tt:'ตรวจจับ',desc:'Detects presence and magnitude of mana in the surroundings.',dt:'ตรวจจับการมีอยู่และขนาดของมนาในบริเวณรอบข้าง'},
+  {id:'counterspell',n:'Counterspell',rank:'B',type:'Defensive',nt:'คาถาต่อต้าน',tt:'เชิงรับ',desc:'Nullifies incoming magic before it fully activates.',dt:'ล้างมนตราที่เข้ามาก่อนที่มันจะทำงาน'},
+  {id:'mana_barrier',n:'Mana Barrier',rank:'C',type:'Defensive',nt:'เกราะมนา',tt:'เชิงรับ',desc:'Constructs a defensive barrier from compressed mana.',dt:'สร้างเกราะป้องกันจากมนาที่ถูกอัด'},
+  {id:'solid_air',n:'Solid Air',rank:'C',type:'Utility',nt:'อากาศแข็ง',tt:'อื่นๆ',desc:'Hardens surrounding air into solid projectiles or temporary structures.',dt:'ทำให้อากาศรอบข้างแข็งตัวเป็นกระสุนหรือโครงสร้างชั่วคราว'},
+  {id:'ancient_zoltraak',n:'Ancient Zoltraak',rank:'S',type:'Ancient',nt:'โซลทราคโบราณ',tt:'โบราณ',desc:'The original demonic form — overwhelmingly powerful, before humanity\'s adaptation.',dt:'รูปแบบดั้งเดิมของเผ่าปีศาจ — ทรงพลังอย่างล้นเหลือก่อนที่มนุษย์จะปรับตัว'},
+  {id:'clone',n:'Clone Spell',rank:'A',type:'Utility',nt:'คาถาโคลน',tt:'อื่นๆ',desc:'Creates a mana duplicate that perfectly mimics the caster.',dt:'สร้างสำเนามนาที่เลียนแบบผู้ร่ายได้อย่างสมบูรณ์'},
+  {id:'explosion',n:'Explosion Magic',rank:'A',type:'Offensive',nt:'มนตราระเบิด',tt:'เชิงรุก',desc:'Generates a massive explosion at a designated point.',dt:'สร้างการระเบิดครั้งใหญ่ที่จุดที่กำหนด'},
+  {id:'illusion',n:'Illusion Magic',rank:'B',type:'Utility',nt:'มนตราภาพลวง',tt:'อื่นๆ',desc:'Manifests lifelike illusions indistinguishable from reality.',dt:'สร้างภาพลวงตาที่เหมือนจริงจนแยกไม่ออก'},
+  {id:'golem',n:'Golem Construction',rank:'A',type:'Summoning',nt:'สร้างโกเล็ม',tt:'อื่นๆ',desc:'Constructs and animates a stone or mana golem.',dt:'สร้างและปลุกโกเล็มหินหรือโกเล็มมนา'},
+  {id:'binding',n:'Binding Spell',rank:'C',type:'Control',nt:'คาถาผูกมัด',tt:'ควบคุม',desc:'Restrains a target with mana threads or a binding field.',dt:'ยึดเป้าหมายด้วยเส้นมนาหรือสนามผูกมัด'},
+  {id:'terrain_survey',n:'Terrain Mana Survey',rank:'D',type:'Detection',nt:'สำรวจมนาภูมิประเทศ',tt:'ตรวจจับ',desc:'Maps mana distribution and hidden fields across wide terrain.',dt:'แผนที่การกระจายมนาและสนามซ่อนเร้นในพื้นที่กว้าง'},
+  {id:'cleanse',n:'Purification',rank:'B',type:'Holy',nt:'การชำระล้าง',tt:'การรักษา',desc:'Cleanses miasma, curses and dark mana from area or person.',dt:'ชำระล้างมิแอสมา คำสาป และมนาชั้นมืดจากพื้นที่หรือบุคคล'},
+  {id:'heal',n:'Healing Magic',rank:'C',type:'Healing',nt:'มนตราการรักษา',tt:'การรักษา',desc:'Accelerates natural recovery of wounds using mana.',dt:'เร่งการฟื้นตัวตามธรรมชาติของบาดแผลด้วยมนา'},
+  {id:'aura_detect',n:'Aura Detection',rank:'D',type:'Detection',nt:'ตรวจจับออร่า',tt:'ตรวจจับ',desc:'Identifies demons or corrupted beings by sensing their aura.',dt:'ระบุปีศาจหรือสิ่งมีชีวิตที่ถูกทำให้เสื่อมเสียโดยการรับรู้ออร่า'},
+  {id:'spatial_blade',n:'Spatial Blade',rank:'A',type:'Spatial',nt:'ใบมีดปริภูมิ',tt:'พื้นที่',desc:'Cuts through space itself — severs without touching the target.',dt:'ตัดผ่านปริภูมิเอง — ตัดโดยไม่แตะเป้าหมาย'},
+];
+
+/* preset spell checks */
+var presetChecked={};
+
+/* custom spells */
+var customSpells=[];
+
+/* party members */
+var partyMembers=[];
+
+/* tag clouds */
+var strengths=[];
+var weaknesses=[];
+
+/* specialty */
+var specOn={};
+
+/* ─── STARS DECORATION ─── */
+(function(){var s=g('stars'),h='';var pts=[[8,12,1.4,0.5],[22,86,1,0.35],[50,6,1.8,0.3],[72,90,1.2,0.4],[38,95,1,0.28],[15,68,1.6,0.4],[62,18,1,0.32],[84,44,1.2,0.35],[30,52,0.8,0.25]];pts.forEach(function(p){h+='<div class="star" style="top:'+p[0]+'%;left:'+p[1]+'%;width:'+p[2]+'px;height:'+p[2]+'px;opacity:'+p[3]+'"></div>';});s.innerHTML=h;})();
+
+/* ─── STEP NAV ─── */
+var STEPS_EN=['Origin','Magic','Grimoire','Journey','Soul'];
+var STEPS_TH=['ต้นกำเนิด','มนตรา','คัมภีร์','การเดินทาง','จิตใจ'];
+var STEP_K=['起','魔','術','旅','心'];
+var curPanel=0;var NUM_PANELS=5;
+
+function buildSteps(){
+  var h='';
+  for(var i=0;i<NUM_PANELS;i++){
+    var cls='step'+(i===curPanel?' on':(i<curPanel?' done':''));
+    h+='<div class="'+cls+'" data-p="'+i+'"><div class="sdot">'+STEP_K[i]+'</div><div class="slbl">'+(TH?STEPS_TH[i]:STEPS_EN[i])+'</div></div>';
+    if(i<NUM_PANELS-1)h+='<div class="sline"></div>';
+  }
+  g('steps').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('.step'),function(s){
+    s.addEventListener('click',function(){goTo(parseInt(s.getAttribute('data-p'),10));});});
+}
+function buildDots(){
+  var h='';for(var i=0;i<NUM_PANELS;i++){h+='<div class="ndot'+(i===curPanel?' on':'')+'" data-p="'+i+'"></div>';}
+  g('ndots').innerHTML=h;
+}
+function goTo(n){
+  if(n<0||n>=NUM_PANELS)return;
+  document.querySelectorAll('.panel').forEach(function(p,i){p.classList.toggle('on',i===n);});
+  curPanel=n;buildSteps();buildDots();
+  g('nb_b').className='nbtn back'+(n===0?' hidden':'');
+  g('nb_n').className='nbtn'+(n===NUM_PANELS-1?' submit':' next');
+  g('nb_n').textContent=n===NUM_PANELS-1?(TH?'สร้างตัวละคร →':'Generate →'):(TH?'ถัดไป →':'Next →');
+}
+g('nb_b').addEventListener('click',function(){goTo(curPanel-1);});
+g('nb_n').addEventListener('click',function(){if(curPanel===NUM_PANELS-1){submitForm();}else{goTo(curPanel+1);}});
+
+/* ─── SEC HEADER HELPER ─── */
+function secH(title){return'<div class="sec"><div class="sline2"></div><div class="stitle"><span class="stitle-gem">✦</span>'+esc(title)+'</div><div class="sline2 r"></div></div>';}
+
+/* ─── ROW HELPER ─── */
+function lbl(t){return'<label class="lbl">'+esc(t)+'</label>';}
+
+/* ─── PANEL 0: ORIGIN ─── */
+(function(){
+  var h='';
+  h+=secH(TH?'ข้อมูลพื้นฐาน':'Basic Identity');
+  h+='<div class="row">'+lbl(TH?'ชื่อตัวละคร':'Character Name')+'<input type="text" id="f_name" placeholder="'+(TH?'ชื่อ...':'Name...')+'"></div>';
+  h+='<div class="row2">';
+  h+='<div>'+lbl(TH?'เผ่าพันธุ์':'Race')+'<select id="f_race">'+RACE.map(function(r){return'<option>'+esc(r)+'</option>';}).join('')+'</select></div>';
+  h+='<div>'+lbl(TH?'อายุ':'Age')+'<input type="text" id="f_age" placeholder="'+(TH?'เช่น 1028 ปี':'e.g. 1028 yrs')+'"></div>';
+  h+='</div>';
+  h+='<div class="row">'+lbl(TH?'เพศ / อัตลักษณ์':'Gender / Identity')+'<div class="seg" id="seg_gender">';
+  var gOpts=TH?['ชาย','หญิง','อื่นๆ']:['Male','Female','Other'];
+  gOpts.forEach(function(g,i){h+='<div class="segb'+(i===0?' on':'')+'" data-g="'+i+'">'+esc(g)+'</div>';});
+  h+='</div></div>';
+  h+=secH(TH?'สถานะและสังกัด':'Status & Affiliation');
+  h+='<div class="row2">';
+  h+='<div>'+lbl(TH?'ยุคสมัย':'Era')+'<select id="f_era">'+ERA.map(function(r){return'<option>'+esc(r)+'</option>';}).join('')+'</select></div>';
+  h+='<div>'+lbl(TH?'ระดับ / อันดับ':'Rank')+'<select id="f_rank">'+RANK.map(function(r){return'<option>'+esc(r)+'</option>';}).join('')+'</select></div>';
+  h+='</div>';
+  h+='<div class="row">'+lbl(TH?'สังกัด / องค์กร':'Affiliation')+'<select id="f_affil">'+AFFIL.map(function(r){return'<option>'+esc(r)+'</option>';}).join('')+'</select></div>';
+  h+='<div class="row">'+lbl(TH?'ถิ่นกำเนิด / บ้านเกิด':'Origin / Homeland')+'<input type="text" id="f_region" placeholder="'+(TH?'เมือง ภูมิภาค หรือสถานที่...':'Town, region or place...')+'"></div>';
+  g('p0').innerHTML=h;
+  Array.prototype.forEach.call(document.querySelectorAll('#seg_gender .segb'),function(b){b.addEventListener('click',function(){document.querySelectorAll('#seg_gender .segb').forEach(function(x){x.classList.remove('on');});b.classList.add('on');});});
+})();
+
+/* ─── PANEL 1: MAGIC ─── */
+(function(){
+  var h='';
+  h+=secH(TH?'ธาตุมนา':'Elemental Affinity');
+  h+='<div class="affinity-grid" id="aff_grid">';
+  AFFINITY.forEach(function(a){
+    h+='<div class="aff-btn" data-id="'+a.id+'" data-c="'+a.c+'" style="--aff-c:'+a.c+'"><div class="aff-gem" style="background:'+a.c+'"></div><div class="aff-lbl">'+esc(TH?a.nt:a.n)+'</div></div>';
+  });
+  h+='</div>';
+  h+=secH(TH?'ขนาดและพลังงานมนา':'Mana Capacity & Reserves');
+  h+='<div class="row2">';
+  h+='<div>'+lbl(TH?'ความจุมนาสูงสุด':'Mana Capacity')+'<input type="number" id="f_mana_cap" min="0" max="9999999" placeholder="0" style="width:100%"></div>';
+  h+='<div>'+lbl(TH?'ปริมาณสำรองปัจจุบัน':'Current Reserves')+'<input type="number" id="f_mana_res" min="0" max="9999999" placeholder="0" style="width:100%"></div>';
+  h+='</div>';
+  h+='<div class="mana-visual"><div class="mana-fill" id="mana_fill" style="width:0%"></div></div>';
+  h+='<div class="note" style="margin-top:6px">'+(TH?'ในจักรวาล Frieren ปริมาณมนาคือทุกอย่าง — Frieren มีมนามหาศาล ในขณะที่ Fern เน้นความแม่นยำ':'In Frieren\'s world, mana amount defines a mage — Frieren has enormous reserves while Fern excels at efficiency.')+'</div>';
+  h+=secH(TH?'ความเชี่ยวชาญพิเศษ':'Magic Specialty');
+  h+='<div class="spec-grid" id="spec_grid">';
+  MANA_TYPE.forEach(function(t,i){h+='<div class="spec-btn" data-s="'+i+'">'+esc(t)+'</div>';});
+  h+='</div>';
+  g('p1').innerHTML=h;
+
+  /* affinity picker */
+  Array.prototype.forEach.call(document.querySelectorAll('#aff_grid .aff-btn'),function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('#aff_grid .aff-btn').forEach(function(x){x.classList.remove('on');});
+      b.classList.add('on');curAff=b.getAttribute('data-c');setAcc(curAff||AFF_DEFAULT);});});
+
+  /* mana visual */
+  function updMana(){var c=parseFloat(g('f_mana_cap').value)||0;var r=parseFloat(g('f_mana_res').value)||0;var p=c>0?Math.min(100,Math.round(r/c*100)):0;g('mana_fill').style.width=p+'%';}
+  g('f_mana_cap').addEventListener('input',updMana);g('f_mana_res').addEventListener('input',updMana);
+
+  /* specialty */
+  Array.prototype.forEach.call(document.querySelectorAll('#spec_grid .spec-btn'),function(b){
+    b.addEventListener('click',function(){var i=b.getAttribute('data-s');specOn[i]=!specOn[i];b.classList.toggle('on',!!specOn[i]);});});
+})();
+
+/* ─── PANEL 2: GRIMOIRE ─── */
+function renderGrimoire(){
+  var h='';
+  h+=secH(TH?'มนตราที่รู้จัก':'Known Spells');
+  h+='<div class="spell-grid">';
+  PRESET_SPELLS.forEach(function(sp){
+    var on=!!presetChecked[sp.id];
+    h+='<div class="spell-card'+(on?' on':'')+'" data-sid="'+sp.id+'">';
+    h+='<div class="spell-name">'+esc(TH?sp.nt:sp.n)+'</div>';
+    h+='<div><span class="spell-rank">'+sp.rank+'</span> <span class="spell-type">'+esc(TH?sp.tt:sp.type)+'</span></div>';
+    h+='<div class="spell-type" style="font-style:italic;margin-top:3px;font-size:9.5px">'+esc(TH?sp.dt:sp.desc)+'</div>';
+    h+='</div>';
+  });
+  h+='</div>';
+  h+=secH(TH?'มนตราเฉพาะตัว':'Unique / Signature Spells');
+  h+='<div class="cspell-list" id="cspell_list"></div>';
+  h+='<div class="custom-form">';
+  h+='<div class="form-row2">'+lbl(TH?'ชื่อมนตรา':'Spell Name')+'<input type="text" id="cs_name" placeholder="..."><select id="cs_rank">'+SPELL_RANK.map(function(r){return'<option>'+r+'</option>';}).join('')+'</select><select id="cs_type">'+SPELL_TYPE.map(function(t){return'<option>'+esc(t)+'</option>';}).join('')+'</select></div>';
+  h+=lbl(TH?'คำอธิบาย':'Description')+'<textarea id="cs_desc" style="min-height:46px" placeholder="'+(TH?'อธิบายการทำงาน...':'How it works...')+'"></textarea>';
+  h+='<div style="margin-top:8px;display:flex;justify-content:flex-end"><button class="btn btn-sm" id="cs_add">+ '+(TH?'เพิ่มมนตรา':'Add Spell')+'</button></div>';
+  h+='</div>';
+  g('p2').innerHTML=h;
+
+  /* preset toggle */
+  Array.prototype.forEach.call(document.querySelectorAll('.spell-card'),function(c){
+    c.addEventListener('click',function(){var id=c.getAttribute('data-sid');presetChecked[id]=!presetChecked[id];c.classList.toggle('on',!!presetChecked[id]);if(presetChecked[id]){c.querySelector('::after');}});});
+
+  renderCustomSpells();
+
+  g('cs_add').addEventListener('click',function(){
+    var nm=(g('cs_name').value||'').trim();if(!nm)return;
+    customSpells.push({name:nm,rank:g('cs_rank').value,type:g('cs_type').value,desc:(g('cs_desc').value||'').trim()});
+    g('cs_name').value='';g('cs_desc').value='';renderCustomSpells();});
+}
+function renderCustomSpells(){
+  var el=g('cspell_list');if(!el)return;
+  if(!customSpells.length){el.innerHTML='<div class="empty-note">'+(TH?'ยังไม่มีมนตราเฉพาะตัว — เพิ่มด้านล่าง':'No unique spells yet — add below')+'</div>';return;}
+  el.innerHTML=customSpells.map(function(sp,i){
+    return'<div class="cspell-item"><div class="cspell-info"><div class="cspell-name">'+esc(sp.name)+'</div><div class="cspell-meta">'+esc(sp.rank)+' · '+esc(sp.type)+'</div>'+(sp.desc?'<div class="cspell-desc">'+esc(sp.desc)+'</div>':'')+' </div><button class="rm-btn" data-ri="'+i+'">✕</button></div>';}).join('');
+  Array.prototype.forEach.call(el.querySelectorAll('.rm-btn'),function(b){
+    b.addEventListener('click',function(){var i=parseInt(b.getAttribute('data-ri'),10);customSpells.splice(i,1);renderCustomSpells();});});}
+renderGrimoire();
+
+/* ─── PANEL 3: JOURNEY ─── */
+function renderJourney(){
+  var h='';
+  h+=secH(TH?'สมาชิกกลุ่ม':'Party Companions');
+  h+='<div class="party-list" id="party_list"></div>';
+  h+='<div class="party-form">';
+  h+='<div class="party-row2">'+lbl(TH?'ชื่อ':'Name')+'<input type="text" id="pm_name" placeholder="..."><div>'+lbl(TH?'บทบาท':'Role')+'<select id="pm_role">'+PARTY_ROLE.map(function(r){return'<option>'+esc(r)+'</option>';}).join('')+'</select></div></div>';
+  h+='<div class="party-row2">'+lbl(TH?'เผ่าพันธุ์':'Race')+'<input type="text" id="pm_race" placeholder="'+(TH?'เผ่าพันธุ์...':'Race...')+'"><div>'+lbl(TH?'หมายเหตุ':'Note')+'<input type="text" id="pm_note" placeholder="'+(TH?'เพิ่มเติม...':'Additional...')+'"></div></div>';
+  h+='<div style="display:flex;justify-content:flex-end"><button class="btn btn-sm" id="pm_add">+ '+(TH?'เพิ่มสมาชิก':'Add Member')+'</button></div>';
+  h+='</div>';
+  h+=secH(TH?'ภารกิจและประวัติ':'Mission & History');
+  h+='<div class="row">'+lbl(TH?'ที่ตั้งปัจจุบัน':'Current Location')+'<input type="text" id="f_loc" placeholder="'+(TH?'เมือง ดันเจี้ยน หรือพื้นที่...':'Town, dungeon or region...')+'"></div>';
+  h+='<div class="row">'+lbl(TH?'ภารกิจ / เป้าหมายปัจจุบัน':'Current Objective')+'<textarea id="f_obj" placeholder="'+(TH?'กำลังทำอะไรอยู่...':'What are you pursuing...')+'"></textarea></div>';
+  h+='<div class="row">'+lbl(TH?'ประวัติความเป็นมา':'Backstory')+'<textarea id="f_back" style="min-height:70px" placeholder="'+(TH?'ต้นกำเนิด การเดินทาง เหตุการณ์สำคัญ...':'Origins, journeys, key events...')+'"></textarea></div>';
+  h+='<div class="row">'+lbl(TH?'ความสัมพันธ์สำคัญ':'Key Relationships')+'<textarea id="f_rel" placeholder="'+(TH?'พันธมิตร คู่แข่ง ผู้พิทักษ์...':'Allies, rivals, mentors...')+'"></textarea></div>';
+  g('p3').innerHTML=h;
+  renderParty();
+  g('pm_add').addEventListener('click',function(){
+    var nm=(g('pm_name').value||'').trim();if(!nm)return;
+    partyMembers.push({name:nm,role:g('pm_role').value,race:(g('pm_race').value||'').trim(),note:(g('pm_note').value||'').trim()});
+    g('pm_name').value='';g('pm_race').value='';g('pm_note').value='';renderParty();});
+}
+function renderParty(){
+  var el=g('party_list');if(!el)return;
+  if(!partyMembers.length){el.innerHTML='<div class="empty-note">'+(TH?'ยังไม่มีสมาชิกกลุ่ม':'No party members yet')+'</div>';return;}
+  el.innerHTML=partyMembers.map(function(m,i){
+    return'<div class="party-card"><div class="party-info"><div class="party-name">'+esc(m.name)+'</div><div class="party-role">'+esc(m.role)+'</div><div class="party-race">'+esc(m.race)+(m.note?' · '+esc(m.note):'')+' </div></div><button class="rm-btn" data-ri="'+i+'">✕</button></div>';}).join('');
+  Array.prototype.forEach.call(el.querySelectorAll('.rm-btn'),function(b){
+    b.addEventListener('click',function(){var i=parseInt(b.getAttribute('data-ri'),10);partyMembers.splice(i,1);renderParty();});});}
+renderJourney();
+
+/* ─── PANEL 4: SOUL ─── */
+function renderSoul(){
+  var h='';
+  h+=secH(TH?'บุคลิกและรูปลักษณ์':'Personality & Appearance');
+  h+='<div class="row">'+lbl(TH?'บุคลิกภาพ':'Personality')+'<textarea id="f_pers" style="min-height:60px" placeholder="'+(TH?'ลักษณะนิสัย วิธีคิด การแสดงออก...':'Disposition, worldview, mannerisms...')+'"></textarea></div>';
+  h+='<div class="row">'+lbl(TH?'รูปลักษณ์ภายนอก':'Appearance')+'<textarea id="f_look" placeholder="'+(TH?'ลักษณะทางกาย เครื่องแต่งกาย สิ่งที่โดดเด่น...':'Physical traits, clothing, distinguishing marks...')+'"></textarea></div>';
+  h+=secH(TH?'เป้าหมายและแรงผลักดัน':'Goals & Drives');
+  h+='<div class="row">'+lbl(TH?'เป้าหมาย / สิ่งที่ต้องการ':'Goals & Aspirations')+'<textarea id="f_goal" placeholder="'+(TH?'สิ่งที่ค้นหา สิ่งที่ต้องการพิสูจน์ มนตราที่ต้องการรวบรวม...':'What you seek, what you strive to prove, spells you wish to collect...')+'"></textarea></div>';
+  h+=secH(TH?'จุดแข็งและจุดอ่อน':'Strengths & Weaknesses');
+  h+='<div class="row">'+lbl(TH?'จุดแข็ง':'Strengths')+'<div class="tags" id="str_tags"></div><div class="tag-input-row"><input type="text" id="str_in" placeholder="'+(TH?'เพิ่มจุดแข็ง...':'Add a strength...')+'"><button class="btn btn-sm" id="str_add">+</button></div></div>';
+  h+='<div class="row" style="margin-top:10px">'+lbl(TH?'จุดอ่อน / ข้อจำกัด':'Weaknesses / Limitations')+'<div class="tags" id="wk_tags"></div><div class="tag-input-row"><input type="text" id="wk_in" placeholder="'+(TH?'เพิ่มจุดอ่อน...':'Add a weakness...')+'"><button class="btn btn-sm btn-ghost" id="wk_add">+</button></div></div>';
+  h+=secH(TH?'บันทึกพิเศษ':'Special Notes');
+  h+='<div class="row">'+lbl(TH?'หมายเหตุ / ความลับ / อื่นๆ':'Notes / Secrets / Other')+'<textarea id="f_notes" style="min-height:52px" placeholder="'+(TH?'บันทึกอื่นๆ ที่ต้องการบอก AI...':'Anything else to convey to the AI...')+'"></textarea></div>';
+  g('p4').innerHTML=h;
+  renderTags();
+  function addTag(list,inp,cls){var v=(inp.value||'').trim();if(v){list.push(v);inp.value='';renderTags();}}
+  g('str_add').addEventListener('click',function(){addTag(strengths,g('str_in'),'str');});
+  g('wk_add').addEventListener('click',function(){addTag(weaknesses,g('wk_in'),'wk');});
+  g('str_in').addEventListener('keydown',function(e){if(e.key==='Enter'){addTag(strengths,g('str_in'),'str');}});
+  g('wk_in').addEventListener('keydown',function(e){if(e.key==='Enter'){addTag(weaknesses,g('wk_in'),'wk');}});
+}
+function renderTags(){
+  function r(list,elId,cls){
+    var el=g(elId);if(!el)return;
+    el.innerHTML=list.length?list.map(function(t,i){return'<span class="tag '+cls+'">'+esc(t)+'<span class="tag-x" data-i="'+i+'" data-c="'+cls+'">✕</span></span>';}).join(''):'';
+    Array.prototype.forEach.call(el.querySelectorAll('.tag-x'),function(b){
+      b.addEventListener('click',function(){var i=parseInt(b.getAttribute('data-i'),10);var c=b.getAttribute('data-c');if(c==='str')strengths.splice(i,1);else weaknesses.splice(i,1);renderTags();});});}
+  r(strengths,'str_tags','str');r(weaknesses,'wk_tags','wk');}
+renderSoul();
+
+/* ─── INIT NAV ─── */
+goTo(0);
+
+/* ─── SUBMIT ─── */
+function sendMsg(txt){
+  setTimeout(function(){
+    try{var w=window.parent||window;var ta=w.document.getElementById('send_textarea')||w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+      if(ta){var dd=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');if(dd&&dd.set)dd.set.call(ta,txt);else ta.value=txt;ta.dispatchEvent(new Event('input',{bubbles:true}));
+       setTimeout(function(){try{var sb=w.document.getElementById('send_but');if(sb)sb.click();else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));}catch(e){}},150);return;}}catch(e){}
+    try{navigator.clipboard.writeText(txt);}catch(e){}},200);}
+
+function submitForm(){
+  var gender_el=document.querySelector('#seg_gender .segb.on');
+  var gender=(gender_el?gender_el.textContent:'');
+  var affEl=document.querySelector('#aff_grid .aff-btn.on');
+  var affId=affEl?affEl.getAttribute('data-id'):'';
+  var affColor=affEl?affEl.getAttribute('data-c'):AFF_DEFAULT;
+  var specArr=[];MANA_TYPE.forEach(function(t,i){if(specOn[i])specArr.push(t);});
+  var knownSpells=PRESET_SPELLS.filter(function(s){return!!presetChecked[s.id];}).map(function(s){
+    return{id:s.id,name:TH?s.nt:s.n,rank:s.rank,type:TH?s.tt:s.type,desc:TH?s.dt:s.desc,preset:true};});
+  var allSpells=knownSpells.concat(customSpells.map(function(s){return{name:s.name,rank:s.rank,type:s.type,desc:s.desc,preset:false};}));
+  var data={
+    lang:TH?'th':'en',
+    theme:affColor||AFF_DEFAULT,
+    name:(g('f_name')?g('f_name').value:'').trim(),
+    race:(g('f_race')?g('f_race').value:''),
+    age:(g('f_age')?g('f_age').value:'').trim(),
+    gender:gender,
+    era:(g('f_era')?g('f_era').value:''),
+    rank:(g('f_rank')?g('f_rank').value:''),
+    affiliation:(g('f_affil')?g('f_affil').value:''),
+    origin_region:(g('f_region')?g('f_region').value:'').trim(),
+    mana_affinity:affId,
+    mana_affinity_color:affColor,
+    mana_capacity:parseFloat(g('f_mana_cap')?g('f_mana_cap').value:0)||0,
+    mana_reserves:parseFloat(g('f_mana_res')?g('f_mana_res').value:0)||0,
+    magic_specialty:specArr,
+    spells:allSpells,
+    party:partyMembers,
+    location:(g('f_loc')?g('f_loc').value:'').trim(),
+    objective:(g('f_obj')?g('f_obj').value:'').trim(),
+    backstory:(g('f_back')?g('f_back').value:'').trim(),
+    relationships:(g('f_rel')?g('f_rel').value:'').trim(),
+    personality:(g('f_pers')?g('f_pers').value:'').trim(),
+    appearance:(g('f_look')?g('f_look').value:'').trim(),
+    goals:(g('f_goal')?g('f_goal').value:'').trim(),
+    strengths:strengths,
+    weaknesses:weaknesses,
+    notes:(g('f_notes')?g('f_notes').value:'').trim()
+  };
+  var out='```json\n<FRIEREN_CHARSETUP>\n'+JSON.stringify(data,null,2)+'\n</FRIEREN_CHARSETUP>\n```';
+  sendMsg(out);
+}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Cyberpunk Edgerunners Character List",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Cyberpunk Edgerunners — Character List",
+      "content": "## CYBERPUNK: EDGERUNNERS — CHARACTER LIST\n\nReference cast from the Cyberpunk: Edgerunners anime (Night City, same continuity as Cyberpunk 2077). Use the assigned hex color when introducing these characters with the [CYBERID|catbox_code|Name|#hexcolor] header tag — `[_]` marks where the catbox image code goes.\n\n### MAIN CAST\n1. David Martinez [_] — Protagonist; former Arasaka Academy honor student turned edgerunner after his mother's death; wears his late mother's Sandevistan before upgrading to military-grade chrome; idealistic and increasingly reckless chasing power to keep pace with his crew; ultimately overloads on cyberware and dies stopping Adam Smasher. (Hex: #FF3B3B)\n2. Lucy / Lucyna Kushinada [_] — Elite netrunner; dreams of earning enough eddies to leave Night City for the orbital Crystal Palace (the moon); guarded past as a former Arasaka black-ops netrunner (Cynosure program) still hunted by the corp; David's love interest. (Hex: #00D4FF)\n\n### MAINE'S CREW (EDGERUNNERS)\n3. Maine Pierce [_] — Grizzled leader of the mercenary crew that recruits David; gruff but fiercely protective of his \"family\"; unstable relic cyberware from a past job slowly drives him toward cyberpsychosis over the series. (Hex: #8A7A5A)\n4. Dorio [_] — The crew's muscle and driver; heavily armored, no-nonsense, and loyal; takes over as leader after Maine's fall and becomes a mentor to the survivors. (Hex: #4A6B4A)\n5. Kiwi [_] — Elegant, composed netrunner and information broker within the crew; secretly plays multiple sides with hidden Arasaka connections; killed during the Embers restaurant confrontation. (Hex: #B070E0)\n6. Rebecca [_] — Small, foul-mouthed, ferociously aggressive gunslinger; Pilar's younger sister; develops feelings for David; dies protecting him in the finale. (Hex: #FF2079)\n7. Pilar [_] — Rebecca's older brother; gunner and muscle of the crew; killed early when a heist on an automated cargo convoy goes wrong. (Hex: #FF8C42)\n\n### ANTAGONISTS & CORPORATE\n8. Adam Smasher [_] — Legendary full-conversion cyborg mercenary in Arasaka's employ; nearly unkillable and a walking symbol of total cyberization; responsible, directly and indirectly, for the death of David's mother, and the primary antagonist of the finale. (Hex: #707080)\n9. Faraday [_] — Calm, calculating fixer who brokers jobs for David, Lucy, and Maine's crew; morally ambiguous, with deeper and more sinister ties to Arasaka and to Lucy's past than he lets on. (Hex: #5088D8)\n10. Anders Hellman [_] — Arasaka researcher central to Sandevistan and relic cybernetics R&D; forms an unlikely, complicated mentorship with David tied to his work; ultimately betrays him for the sake of his research and his own self-preservation. (Hex: #4A9BA8)\n\n### SUPPORTING CAST\n11. Gloria Martinez [_] — David's hardworking, protective mother; her death in a car chase caused indirectly by Adam Smasher is what sets David's entire arc into motion. (Hex: #C9A0A0)\n12. Misty / Katie Wellington [_] — Runs an esoteric tarot shop; was a close friend of Gloria's and becomes a grounding, maternal figure for David after her death; develops a tentative relationship with Maine. (Hex: #9B70C4)\n\n### WORLD NOTE\nSetting: Night City, in the same continuity as Cyberpunk 2077. Arasaka and Militech are the dominant rival megacorporations. \"Edgerunner\" is Night City slang for a mercenary/outlaw who lives on the edge of society, taking any job for eddies (the local currency). Excessive cyberware use risks cyberpsychosis — a complete, often violent break from empathy and humanity.",
+      "constant": true,
+      "order": 88,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

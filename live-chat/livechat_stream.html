@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Nunito',sans-serif}
+
+:root{
+  --bg:#1A1B2E;--bg2:#22233A;--bg3:#2A2B44;--bg4:#32334E;
+  --pk:#FF6B9D;--lv:#C9A0DC;--gd:#FFD166;--bl:#74B9FF;--gn:#26de81;
+  --rd:#FF4757;--tx:#EEEEF5;--tx2:#9898B8;--tx3:#5A5A7A;
+  --bd:rgba(255,255,255,.06);
+}
+
+#lcwin{
+  max-width:390px;margin:6px auto;background:var(--bg);
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.06);
+  animation:lci .3s ease both;
+}
+@keyframes lci{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─ HEADER ─ */
+#lc-hdr{
+  display:flex;align-items:center;gap:9px;padding:12px 15px;
+  cursor:pointer;user-select:none;
+  background:linear-gradient(135deg,#262740 0%,#1A1B2E 100%);
+  border-bottom:1px solid var(--bd);transition:background .18s;position:relative;
+}
+#lc-hdr::after{
+  content:'';position:absolute;bottom:0;left:14px;right:14px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,107,157,.35),transparent);
+}
+#lc-hdr:hover{background:linear-gradient(135deg,#2E2F4E 0%,#22233A 100%)}
+
+.lc-dot{
+  width:9px;height:9px;border-radius:50%;background:var(--rd);flex-shrink:0;
+  animation:lcdot 2s ease-in-out infinite;
+}
+.lc-dot.off{background:var(--tx3);animation:none}
+@keyframes lcdot{
+  0%{box-shadow:0 0 0 0 rgba(255,71,87,.7)}
+  60%{box-shadow:0 0 0 7px rgba(255,71,87,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,71,87,0)}
+}
+
+#lc-title{flex:1;font-size:12.5px;font-weight:800;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#lc-vw{font-size:11px;font-weight:700;color:var(--tx2);flex-shrink:0;display:flex;align-items:center;gap:3px}
+#lc-vw b{color:var(--pk)}
+.lc-badge{font-size:8px;font-weight:900;letter-spacing:1.5px;padding:2px 8px;border-radius:99px;background:var(--rd);color:#fff;flex-shrink:0}
+.lc-badge.off{background:var(--tx3)}
+#lc-chev{font-size:11px;color:var(--tx3);transition:transform .25s;flex-shrink:0}
+#lcwin.closed #lc-chev{transform:rotate(180deg)}
+
+/* ─ BODY COLLAPSE ─ */
+#lc-body{overflow:hidden;transition:max-height .35s ease;max-height:2000px}
+#lcwin.closed #lc-body{max-height:0}
+
+/* ─ TABS ─ */
+#lc-tabs{display:flex;background:var(--bg2);border-bottom:1px solid var(--bd)}
+.lc-tab{
+  flex:1;padding:9px 4px;text-align:center;cursor:pointer;
+  font-size:11px;font-weight:700;color:var(--tx3);
+  border-bottom:2px solid transparent;transition:all .18s;user-select:none;
+}
+.lc-tab:hover{color:var(--tx2);background:rgba(255,255,255,.02)}
+.lc-tab.on{color:var(--pk);border-bottom-color:var(--pk);background:rgba(255,107,157,.04)}
+
+/* ─ PANELS ─ */
+.lc-panel{display:none;padding:11px 12px 14px}
+.lc-panel.on{display:block}
+
+/* ─ SCROLLABLE ─ */
+.lc-scroll{max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:4px}
+.lc-scroll::-webkit-scrollbar{width:3px}
+.lc-scroll::-webkit-scrollbar-thumb{background:rgba(255,255,255,.07);border-radius:2px}
+
+/* ─ CHAT MESSAGES ─ */
+.lc-msg{
+  padding:6px 10px;border-radius:9px;background:var(--bg2);
+  font-size:12.5px;line-height:1.5;transition:background .12s;
+  word-break:break-word;
+}
+.lc-msg:hover{background:var(--bg3)}
+.lc-bdg{
+  font-size:8px;font-weight:900;padding:1px 5px;border-radius:99px;
+  display:inline-block;vertical-align:middle;margin-right:4px;letter-spacing:.3px;
+}
+.bdg-mod{background:rgba(39,174,96,.15);color:#2ecc71;border:1px solid rgba(39,174,96,.28)}
+.bdg-vip{background:rgba(255,209,102,.12);color:#f1c40f;border:1px solid rgba(255,209,102,.28)}
+.bdg-sub{background:rgba(201,160,220,.14);color:var(--lv);border:1px solid rgba(201,160,220,.28)}
+.bdg-mem{background:rgba(116,185,255,.12);color:var(--bl);border:1px solid rgba(116,185,255,.28)}
+.lc-uname{font-weight:900;display:inline}
+.lc-sep{color:var(--tx3)}
+.lc-text{color:var(--tx);display:inline}
+
+/* ─ DONATIONS ─ */
+.lc-don{
+  padding:10px 12px;border-radius:12px;margin-bottom:6px;
+  background:linear-gradient(135deg,rgba(255,209,102,.06) 0%,rgba(255,107,157,.06) 100%);
+  border:1px solid rgba(255,209,102,.18);
+}
+.lc-don:last-child{margin-bottom:0}
+.lc-don-row{display:flex;align-items:center;gap:8px}
+.lc-don-ico{font-size:17px;flex-shrink:0}
+.lc-don-user{font-size:13px;font-weight:900;color:var(--gd);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc-don-amt{font-size:15px;font-weight:900;color:var(--gd);flex-shrink:0;text-shadow:0 0 12px rgba(255,209,102,.4)}
+.lc-don-msg{font-size:11.5px;color:var(--tx2);margin-top:6px;line-height:1.45;border-left:2px solid rgba(255,209,102,.22);padding-left:9px}
+
+/* ─ TOP DONORS ─ */
+.lc-top{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:10px;margin-bottom:5px;
+  background:var(--bg2);border:1px solid var(--bd);transition:background .15s;
+}
+.lc-top:last-child{margin-bottom:0}
+.lc-top:hover{background:var(--bg3)}
+.lc-top.r1{border-color:rgba(255,209,102,.35);background:rgba(255,209,102,.05)}
+.lc-top.r2{border-color:rgba(192,192,220,.15);background:rgba(192,192,220,.02)}
+.lc-top.r3{border-color:rgba(205,127,50,.22);background:rgba(205,127,50,.03)}
+.lc-top-rnk{font-size:19px;flex-shrink:0;width:26px;text-align:center;line-height:1}
+.lc-top-num{font-size:14px;font-weight:900;color:var(--tx3)}
+.lc-top-user{flex:1;font-size:13px;font-weight:800;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lc-top-amt{font-size:13.5px;font-weight:900;color:var(--gd);flex-shrink:0}
+.lc-top.r1 .lc-top-amt{text-shadow:0 0 10px rgba(255,209,102,.45)}
+
+/* ─ EMPTY STATE ─ */
+.lc-empty{
+  text-align:center;padding:24px 0;
+  color:var(--tx3);font-size:11px;font-weight:700;letter-spacing:1px;
+}
+.lc-empty::before{content:'✦';display:block;font-size:20px;margin-bottom:8px;opacity:.25}
+
+/* ─ FOOTER ─ */
+#lc-foot{
+  padding:7px 15px;border-top:1px solid var(--bd);background:var(--bg2);
+  text-align:center;font-size:8.5px;font-weight:800;
+  color:var(--tx3);letter-spacing:2px;text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="lcraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lcwin">
+
+<!-- HEADER -->
+<div id="lc-hdr">
+  <div class="lc-dot" id="lcdot"></div>
+  <div id="lc-title">Stream</div>
+  <div id="lc-vw">👁 <b id="lcvc">0</b></div>
+  <div class="lc-badge" id="lcbadge">LIVE</div>
+  <div id="lc-chev">▲</div>
+</div>
+
+<div id="lc-body">
+  <!-- TABS -->
+  <div id="lc-tabs">
+    <div class="lc-tab on" data-t="chat">💬 Chat</div>
+    <div class="lc-tab" data-t="donate">💝 Donate</div>
+    <div class="lc-tab" data-t="top">🏆 Top 5</div>
+  </div>
+
+  <!-- CHAT PANEL -->
+  <div class="lc-panel on" id="lp-chat">
+    <div class="lc-scroll" id="lc-msgs"></div>
+  </div>
+
+  <!-- DONATE PANEL -->
+  <div class="lc-panel" id="lp-donate">
+    <div id="lc-dons"></div>
+  </div>
+
+  <!-- TOP PANEL -->
+  <div class="lc-panel" id="lp-top">
+    <div id="lc-tops"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div id="lc-foot">✦ live stream chat ✦</div>
+
+</div><!-- #lcwin -->
+
+<script>
+(function(){
+  function g(id){return document.getElementById(id)}
+  function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+  var raw=g('lcraw');if(!raw)return;
+  var txt=raw.value.trim();if(!txt)return;
+  var dec=document.createElement('textarea');dec.innerHTML=txt;txt=dec.value.trim();if(!txt)return;
+  var d;try{d=JSON.parse(txt)}catch(e){return}
+
+  var live=d.status==='live';
+  g('lc-title').textContent=d.title||'Stream';
+  var vc=typeof d.viewers==='number'?d.viewers.toLocaleString():String(d.viewers||0);
+  g('lcvc').textContent=vc;
+  if(!live){g('lcdot').classList.add('off');g('lcbadge').textContent='OFFLINE';g('lcbadge').classList.add('off')}
+
+  /* ── CHAT ── */
+  var msgs=d.chat||[];
+  var mEl=g('lc-msgs');
+  if(msgs.length){
+    var BDGMAP={
+      moderator:'<span class="lc-bdg bdg-mod">MOD</span>',
+      vip:'<span class="lc-bdg bdg-vip">VIP</span>',
+      subscriber:'<span class="lc-bdg bdg-sub">SUB</span>',
+      member:'<span class="lc-bdg bdg-mem">MEM</span>'
+    };
+    mEl.innerHTML=msgs.map(function(m){
+      var bdg=BDGMAP[m.badge]||'';
+      var col=esc(m.color||'#FF6B9D');
+      return '<div class="lc-msg">'+bdg+
+        '<span class="lc-uname" style="color:'+col+'">'+esc(m.user)+'</span>'+
+        '<span class="lc-sep">: </span>'+
+        '<span class="lc-text">'+esc(m.msg)+'</span>'+
+      '</div>';
+    }).join('');
+    mEl.scrollTop=mEl.scrollHeight;
+  }else{
+    mEl.innerHTML='<div class="lc-empty">No messages yet</div>';
+  }
+
+  /* ── DONATIONS ── */
+  var dons=d.donations||[];
+  var dEl=g('lc-dons');
+  if(dons.length){
+    dEl.innerHTML=dons.map(function(don){
+      var cur=esc(don.currency||'¥');
+      var amt=(+don.amount||0).toLocaleString();
+      return '<div class="lc-don">'+
+        '<div class="lc-don-row">'+
+          '<span class="lc-don-ico">💝</span>'+
+          '<span class="lc-don-user">'+esc(don.user)+'</span>'+
+          '<span class="lc-don-amt">'+cur+amt+'</span>'+
+        '</div>'+
+        (don.msg?'<div class="lc-don-msg">'+esc(don.msg)+'</div>':'')+
+      '</div>';
+    }).join('');
+  }else{
+    dEl.innerHTML='<div class="lc-empty">No donations yet</div>';
+  }
+
+  /* ── TOP DONORS ── */
+  var tops=d.top_donors||[];
+  var tEl=g('lc-tops');
+  var RNK=['🥇','🥈','🥉','🎖️','🎖️'];
+  if(tops.length){
+    tEl.innerHTML=tops.slice(0,5).map(function(t,i){
+      var cur=esc(t.currency||'¥');
+      var amt=(+t.total||0).toLocaleString();
+      var rn=i<3?'<span class="lc-top-rnk">'+RNK[i]+'</span>':'<span class="lc-top-rnk"><span class="lc-top-num">#'+(i+1)+'</span></span>';
+      return '<div class="lc-top r'+(i+1)+'">'+rn+
+        '<div class="lc-top-user">'+esc(t.user)+'</div>'+
+        '<div class="lc-top-amt">'+cur+amt+'</div>'+
+      '</div>';
+    }).join('');
+  }else{
+    tEl.innerHTML='<div class="lc-empty">No top donors yet</div>';
+  }
+
+  /* ── COLLAPSE ── */
+  g('lc-hdr').addEventListener('click',function(){g('lcwin').classList.toggle('closed')});
+
+  /* ── TABS ── */
+  g('lc-tabs').addEventListener('click',function(e){
+    var tab=e.target.closest('.lc-tab');if(!tab)return;
+    var t=tab.getAttribute('data-t');
+    document.querySelectorAll('.lc-tab').forEach(function(x){x.classList.toggle('on',x===tab)});
+    document.querySelectorAll('.lc-panel').forEach(function(p){p.classList.toggle('on',p.id==='lp-'+t)});
+  });
+})();
+</script>
+</body>
+</html>

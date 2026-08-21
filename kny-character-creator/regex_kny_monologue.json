@@ -1,0 +1,18 @@
+{
+    "id": "1cd0005a-2c80-49e0-aaba-704f2aeba671",
+    "scriptName": "KNY Monologue",
+    "findRegex": "/\\[THINK\\|(.*?)\\|(.*?)\\|([\\s\\S]*?)\\]/g",
+    "replaceString": "<link href=\"https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Shippori+Mincho:wght@500;600&family=Noto+Serif+JP:wght@500;700&family=Noto+Serif+Thai:wght@500;600&display=swap\" rel=\"stylesheet\"/><div style=\"max-width:500px;margin:9px auto 14px;font-family:'Shippori Mincho','Noto Serif JP','Noto Serif Thai','Times New Roman',serif;\"><div style=\"margin:0 0 7px 0;\"><span style=\"display:inline-flex;align-items:center;gap:5px;border:1px solid $2;border-radius:20px;padding:2px 9px;opacity:.72;\"><span style=\"color:$2;font-size:5px;line-height:1;\">◆</span><span style=\"font-size:7.5px;letter-spacing:3px;color:#7a6f88;font-family:'Shippori Mincho','Noto Serif JP',serif;\">$1 · 心の声</span><span style=\"color:$2;font-size:5px;line-height:1;\">◆</span></span></div><div style=\"position:relative;padding:11px 14px;background:rgba(6,4,14,.36);\"><div style=\"position:absolute;top:0;left:0;width:13px;height:13px;border-top:1.5px solid $2;border-left:1.5px solid $2;opacity:.55;pointer-events:none;\"></div><div style=\"position:absolute;bottom:0;right:0;width:13px;height:13px;border-bottom:1.5px solid $2;border-right:1.5px solid $2;opacity:.55;pointer-events:none;\"></div><div style=\"font-style:italic;color:#adbbd0;font-size:13.5px;line-height:1.65;\">$3</div></div></div>",
+    "trimStrings": [],
+    "placement": [
+        1,
+        2
+    ],
+    "disabled": false,
+    "markdownOnly": true,
+    "promptOnly": false,
+    "runOnEdit": true,
+    "substituteRegex": 0,
+    "minDepth": null,
+    "maxDepth": 3
+}

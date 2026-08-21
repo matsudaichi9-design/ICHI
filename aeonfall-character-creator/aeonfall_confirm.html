@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CODEX // PLAYER RECORD</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050A14;--pan:#0A1628;--pan2:#0C1F3C;
+  --az:#00CFFF;--azd:rgba(0,207,255,.12);
+  --gd:#C9993A;
+  --tx:#B8D0EC;--mu:#4A6880;--bd:rgba(0,207,255,.1);
+  --rd:#FF4560;--gr:#00E89A;
+}
+body{background:var(--bg);color:var(--tx);font-family:'Rajdhani',sans-serif;font-size:14px;line-height:1.5;min-width:280px}
+
+/* CARD */
+.card{max-width:580px;margin:0 auto;border:1px solid var(--bd);background:var(--bg)}
+
+/* HDR */
+.hdr{background:linear-gradient(135deg,#070E1D 0%,#0D2040 50%,#070E1D 100%);border-bottom:1px solid var(--bd);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.ht{font-family:'Cinzel',serif;font-size:11px;color:var(--az);letter-spacing:4px}
+.hs{font-size:9px;color:var(--mu);letter-spacing:2px}
+.dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--az);margin-right:5px;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* NAME BLOCK */
+.nm-block{padding:22px 18px 16px;background:linear-gradient(180deg,#0D2040 0%,#0A1628 100%);border-bottom:1px solid var(--bd);text-align:center;position:relative;overflow:hidden}
+.nm-block::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--az),transparent)}
+.nm-main{font-family:'Cinzel',serif;font-size:28px;font-weight:700;color:#E8F4FF;letter-spacing:2px;margin-bottom:5px;text-shadow:0 0 30px rgba(0,207,255,.25)}
+.nm-cls{font-size:13px;color:var(--gd);letter-spacing:3px;margin-bottom:8px}
+.nm-lv{font-family:'Cinzel',serif;font-size:11px;letter-spacing:2px}
+.tier-badge{display:inline-block;padding:2px 10px;border:1px solid;font-size:9px;letter-spacing:2px;margin-left:8px;vertical-align:middle}
+
+/* BADGE ROW */
+.badge-row{display:flex;border-bottom:1px solid var(--bd)}
+.badge{flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:15px}
+.badge+.badge{border-left:1px solid var(--bd)}
+.b-az{border-top:2px solid var(--az)}
+.b-gd{border-top:2px solid var(--gd)}
+.b-mu{border-top:2px solid var(--mu)}
+.b-nm{font-family:'Cinzel',serif;font-size:10px;color:var(--tx);letter-spacing:1px;margin-bottom:2px}
+.b-tr{font-size:9px;color:var(--mu);letter-spacing:1px}
+
+/* PANELS */
+.panel{border-bottom:1px solid var(--bd);padding:13px 16px}
+.pnl-h{font-size:9px;color:var(--az);letter-spacing:3px;font-weight:700;margin-bottom:10px}
+
+/* STATS */
+.sr{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.slb{width:30px;font-size:10px;font-weight:700;color:var(--mu);letter-spacing:2px}
+.ss{flex:1;display:flex;gap:2px}
+.sg{flex:1;height:11px;background:var(--pan);border:1px solid var(--bd)}
+.sg.on{background:var(--az);border-color:var(--az)}
+.sv{width:18px;text-align:right;font-size:12px;font-weight:700;color:var(--az)}
+
+/* EROSION */
+.er-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.er-lbl{font-size:9px;color:var(--mu);letter-spacing:2px;width:62px}
+.er-bar{flex:1;height:6px;background:var(--pan);border:1px solid var(--bd);overflow:hidden;position:relative}
+.er-fill{height:100%;transition:width 1.2s ease}
+.er-pct{font-size:12px;font-weight:700;width:40px;text-align:right}
+
+/* INFO GRID */
+.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px 16px;margin-top:6px}
+@media(max-width:380px){.info-grid{grid-template-columns:1fr}}
+.ig-item{}
+.ig-l{display:block;font-size:9px;color:var(--mu);letter-spacing:2px;margin-bottom:2px}
+.ig-v{font-size:13px;color:var(--tx);font-weight:500}
+
+/* THREAD */
+.thread-body{font-size:12px;color:var(--mu);line-height:1.7;border-left:2px solid var(--az);padding-left:12px;font-style:italic}
+
+/* OBJECTIVE */
+.obj-body{font-size:12px;color:var(--gd);letter-spacing:1px;border-left:2px solid var(--gd);padding-left:12px}
+
+/* FOOTER */
+.footer{padding:9px 16px;font-size:9px;color:rgba(74,104,128,.6);letter-spacing:2px;text-align:center;background:var(--pan)}
+
+/* HIDDEN STATE */
+.hidden{display:none}
+</style>
+</head>
+<body>
+<textarea id="aeonraw" style="display:none">$1</textarea>
+<div class="card hidden" id="aeoncrd"></div>
+
+<script>
+(function(){
+  var raw=document.getElementById('aeonraw');
+  if(!raw)return;
+  var txt=raw.value.trim();if(!txt)return;
+  var dec=document.createElement('textarea');dec.innerHTML=txt;txt=dec.value.trim();
+  if(!txt)return;
+  var d;try{d=JSON.parse(txt);}catch(e){return;}
+  render(d);
+})();
+
+function segs(val){
+  var h='';
+  for(var i=1;i<=10;i++){h+='<div class="sg'+(i<=val?' on':'')+'"></div>';}
+  return h;
+}
+
+function render(d){
+  var lv=d.level||1;
+  var tier=lv<100?'GREENBOUND':lv<200?'TEMPERED':lv<300?'ASCENDANT':'CROWNLESS';
+  var tierClr=lv<100?'#4CAF50':lv<200?'#2196F3':lv<300?'#CE93D8':'#FFD700';
+
+  var er=d.erosion||0;
+  var erClr=er<30?'#00E89A':er<60?'#FFB547':er<85?'#FF7A30':'#FF4560';
+
+  var stats=d.stats||{str:3,agi:3,vit:3,int:3,wil:3,fat:3};
+
+  var statRows=[
+    {lb:'STR',v:stats.str||0},
+    {lb:'AGI',v:stats.agi||0},
+    {lb:'VIT',v:stats.vit||0},
+    {lb:'INT',v:stats.int||0},
+    {lb:'WIL',v:stats.wil||0},
+    {lb:'FAT',v:stats.fat||0},
+  ].map(function(s){
+    return '<div class="sr"><span class="slb">'+s.lb+'</span><div class="ss">'+segs(s.v)+'</div><span class="sv">'+s.v+'</span></div>';
+  }).join('');
+
+  var infoItems='';
+  if(d.gender||d.age){
+    var prof=[d.gender,d.age?'Age '+d.age:''].filter(Boolean).join(' · ');
+    infoItems+='<div class="ig-item"><span class="ig-l">PROFILE</span><span class="ig-v">'+prof+'</span></div>';
+  }
+  if(d.appear){
+    infoItems+='<div class="ig-item"><span class="ig-l">APPEARANCE</span><span class="ig-v">'+d.appear+'</span></div>';
+  }
+  if(d.handle){
+    infoItems+='<div class="ig-item"><span class="ig-l">PLAYER HANDLE</span><span class="ig-v">'+d.handle+'</span></div>';
+  }
+
+  var card=document.getElementById('aeoncrd');
+  card.className='card';
+
+  card.innerHTML=
+    // HDR
+    '<div class="hdr">'+
+      '<span class="ht">AEONFALL — CODEX</span>'+
+      '<span class="hs"><span class="dot"></span>PLAYER RECORD</span>'+
+    '</div>'+
+
+    // NAME BLOCK
+    '<div class="nm-block">'+
+      '<div class="nm-main">'+(d.name||'UNKNOWN')+'</div>'+
+      '<div class="nm-cls">'+(d.classIco||'')+'&ensp;'+(d.class||'')+'</div>'+
+      '<div class="nm-lv" style="color:'+tierClr+'">'+
+        'LV. '+lv+
+        '<span class="tier-badge" style="color:'+tierClr+';border-color:'+tierClr+'">'+tier+'</span>'+
+      '</div>'+
+    '</div>'+
+
+    // BADGE ROW
+    '<div class="badge-row">'+
+      '<div class="badge b-az">'+(d.raceIco||'🎭')+'&ensp;<div><div class="b-nm">'+(d.race||'Unknown')+'</div><div class="b-tr">'+(d.raceTr||'—')+'</div></div></div>'+
+      '<div class="badge b-gd">'+(d.classIco||'📖')+'&ensp;<div><div class="b-nm">'+(d.class||'Unknown')+'</div><div class="b-tr">'+(d.classPt||'—').split('/')[0].trim()+'</div></div></div>'+
+      '<div class="badge b-mu">⚑&ensp;<div><div class="b-nm">'+(d.faction||'Unaffiliated')+'</div><div class="b-tr">ALLEGIANCE</div></div></div>'+
+    '</div>'+
+
+    // ATTRIBUTES
+    '<div class="panel">'+
+      '<div class="pnl-h">ATTRIBUTES</div>'+
+      statRows+
+    '</div>'+
+
+    // SOUL STATUS
+    '<div class="panel">'+
+      '<div class="pnl-h">SOUL STATUS</div>'+
+      '<div class="er-row">'+
+        '<span class="er-lbl">EROSION</span>'+
+        '<div class="er-bar"><div class="er-fill" style="width:'+Math.min(100,er)+'%;background:'+erClr+'"></div></div>'+
+        '<span class="er-pct" style="color:'+erClr+'">'+er+'%</span>'+
+      '</div>'+
+      '<div class="info-grid">'+
+        '<div class="ig-item"><span class="ig-l">BOUND ANCHOR</span><span class="ig-v">'+(d.anchor||'Aurelan')+'</span></div>'+
+        infoItems+
+      '</div>'+
+    '</div>'+
+
+    // THREAD
+    (d.thread?
+      '<div class="panel">'+
+        '<div class="pnl-h">THREAD</div>'+
+        '<div class="thread-body">'+(d.thread)+'</div>'+
+      '</div>':'')+
+
+    // OBJECTIVE
+    (d.objective?
+      '<div class="panel">'+
+        '<div class="pnl-h">CURRENT OBJECTIVE</div>'+
+        '<div class="obj-body">'+(d.objective)+'</div>'+
+      '</div>':'')+
+
+    // FOOTER
+    '<div class="footer">// RECORD SEALED &nbsp;·&nbsp; LOOM AUTHENTICATED &nbsp;·&nbsp; EROSION MONITORED</div>';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Anton&family=Inter:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Inter','Noto Sans Thai',sans-serif;font-size:14px}
+:root{
+  --ac:#E23636;--ac-rgb:226,54,54;--ac2:#2B6CE2;--ac2-rgb:43,108,226;
+  --ink:#0B0B0F;--paper:#F4F1E8;--tx:#EDEAF0;--tx2:#9C97A8;--mu:#4A4555;
+  --bg:#0C0A12;--pan:#15121E;--pan2:#1D1828;
+  --bd:rgba(226,54,54,.4);--bd2:rgba(255,255,255,.06);
+  --ff:'Bangers',cursive;--fa:'Anton',sans-serif;
+  --bgpattern: radial-gradient(circle,rgba(var(--ac-rgb),.5) 1px,transparent 1.4px);
+  --bgsize: 7px 7px;
+}
+[data-uni="neon"]{--ac:#2BE2D8;--ac-rgb:43,226,216;--ac2:#E22BE0;--ac2-rgb:226,43,224;}
+[data-uni="collage"]{--ac:#E2C42B;--ac-rgb:226,196,43;--ac2:#1A1A1A;--ac2-rgb:20,20,20;}
+[data-uni="watercolor"]{--ac:#E28BC4;--ac-rgb:226,139,196;--ac2:#8BB8E2;--ac2-rgb:139,184,226;}
+
+#svwrap{max-width:540px;margin:16px auto;position:relative}
+#svwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:6px;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--ac-rgb),.5),0 0 24px 2px rgba(var(--ac-rgb),.3);
+  animation:svaura 2.6s ease-in-out infinite}
+@keyframes svaura{0%,100%{opacity:.7}50%{opacity:1}}
+#sv{position:relative;z-index:1;background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:3px solid var(--ink);border-radius:6px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.85),6px 6px 0 rgba(var(--ac2-rgb),.5);
+  animation:svi .35s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes svi{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+
+#sv-halftone{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.16;
+  background-image:var(--bgpattern);background-size:var(--bgsize)}
+[data-uni="neon"] #sv-halftone{opacity:.1;background-image:
+  repeating-linear-gradient(0deg,rgba(var(--ac-rgb),.5) 0 1px,transparent 1px 26px),
+  repeating-linear-gradient(90deg,rgba(var(--ac-rgb),.5) 0 1px,transparent 1px 26px);background-size:auto}
+[data-uni="collage"] #sv-halftone{opacity:.08;background-image:
+  repeating-linear-gradient(45deg,rgba(var(--ac2-rgb),.6) 0 2px,transparent 2px 10px);background-size:auto}
+[data-uni="watercolor"] #sv-halftone{opacity:.28;background-image:
+  radial-gradient(circle at 20% 20%,rgba(var(--ac-rgb),.5),transparent 45%),
+  radial-gradient(circle at 80% 70%,rgba(var(--ac2-rgb),.45),transparent 50%);background-size:auto;filter:blur(18px)}
+
+#sv-web{position:absolute;top:-18px;right:-18px;width:110px;height:110px;z-index:1;pointer-events:none;opacity:.35}
+
+#sv-lang{position:absolute;top:10px;right:12px;z-index:4;display:flex;background:rgba(0,0,0,.5);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#sv-lang b{font-family:var(--fa);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer}
+#sv-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 0 8px -2px var(--ac)}
+
+#sv-head{position:relative;z-index:1;padding:24px 26px 6px;text-align:center}
+#sv-eyebrow{font-family:var(--fa);font-size:9px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #sv-eyebrow{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:1px}
+#sv-title{font-family:var(--ff);font-size:32px;letter-spacing:2px;margin-top:4px;color:var(--tx);
+  -webkit-text-stroke:1.5px var(--ink);text-shadow:3px 3px 0 var(--ac),6px 6px 0 var(--ac2);
+  position:relative;animation:svglitch .5s ease-out .1s both}
+[lang-mode="th"] #sv-title{font-family:'Noto Sans Thai',sans-serif;font-size:24px;font-weight:700;letter-spacing:0;
+  -webkit-text-stroke:0;text-shadow:2px 2px 0 var(--ac),4px 4px 0 var(--ac2)}
+@keyframes svglitch{
+  0%{transform:translate(-6px,2px);text-shadow:-3px 0 var(--ac2),3px 0 var(--ac),3px 3px 0 var(--ac2)}
+  20%{transform:translate(5px,-2px);text-shadow:4px 0 var(--ac),-4px 0 var(--ac2),3px 3px 0 var(--ac2)}
+  40%{transform:translate(-3px,1px);text-shadow:-2px 0 var(--ac2),2px 0 var(--ac),3px 3px 0 var(--ac2)}
+  70%{transform:translate(2px,-1px);text-shadow:2px 0 var(--ac),-2px 0 var(--ac2),3px 3px 0 var(--ac2)}
+  100%{transform:translate(0,0);text-shadow:3px 3px 0 var(--ac),6px 6px 0 var(--ac2)}
+}
+#sv-subtitle{font-size:11px;font-style:italic;color:var(--tx2);margin-top:8px}
+[lang-mode="th"] #sv-subtitle{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+
+#svtabs{display:flex;margin:16px 20px 0;border-bottom:2px solid var(--ink);position:relative;z-index:1;overflow-x:auto}
+#svtabs::-webkit-scrollbar{display:none}
+.svtab{flex:1;min-width:66px;text-align:center;padding:0 2px 9px;cursor:pointer;position:relative}
+.svtab span{font-family:var(--fa);font-size:7.5px;letter-spacing:.6px;color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] .svtab span{font-family:'Noto Sans Thai',sans-serif;font-size:9px;letter-spacing:0}
+.svtab.on span{color:var(--ac)}
+.svtab::after{content:'';position:absolute;left:15%;right:15%;bottom:-2px;height:3px;background:var(--ac);
+  transform:scaleX(0);transition:transform .25s}
+.svtab.on::after{transform:scaleX(1)}
+
+.svpanel{display:none;padding:20px 26px 6px;position:relative;z-index:1}
+.svpanel.on{display:block}
+.sv-scroll{max-height:320px;overflow-y:auto;padding-right:2px}
+
+.sv-field{margin-bottom:15px}
+.sv-label{font-family:var(--fa);font-size:8.5px;letter-spacing:1.4px;color:var(--tx2);text-transform:uppercase;margin-bottom:6px;display:block}
+[lang-mode="th"] .sv-label{font-family:'Noto Sans Thai',sans-serif;font-size:10px;letter-spacing:.2px}
+.sv-input,.sv-textarea{width:100%;background:rgba(0,0,0,.32);border:2px solid var(--bd2);border-radius:4px;
+  padding:9px 11px;color:var(--tx);font-family:'Inter','Noto Sans Thai',sans-serif;font-size:13.5px;
+  transition:border-color .2s}
+.sv-input:focus,.sv-textarea:focus{outline:none;border-color:var(--ac)}
+.sv-textarea{resize:vertical;min-height:56px;line-height:1.55}
+.sv-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+.sv-pills{display:flex;flex-wrap:wrap;gap:7px}
+.sv-pill{padding:6px 13px;border-radius:99px;border:2px solid var(--bd2);background:rgba(0,0,0,.28);
+  color:var(--tx2);font-size:11.5px;cursor:pointer;transition:all .18s}
+[lang-mode="th"] .sv-pill{font-family:'Noto Sans Thai',sans-serif}
+.sv-pill:hover{border-color:rgba(var(--ac-rgb),.6)}
+.sv-pill.on{border-color:var(--ac);color:#fff;background:rgba(var(--ac-rgb),.24)}
+
+/* universe style cards */
+#sv-uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.sv-unicard{border:2px solid var(--bd2);border-radius:5px;padding:10px;cursor:pointer;transition:all .18s;text-align:center}
+.sv-unicard.on{border-color:var(--ac);background:rgba(var(--ac-rgb),.1)}
+.sv-unicard .sw{width:100%;height:26px;border-radius:3px;margin-bottom:6px}
+.sv-unicard span{font-family:var(--fa);font-size:9px;letter-spacing:.5px;color:var(--tx);text-transform:uppercase}
+[lang-mode="th"] .sv-unicard span{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:0}
+
+#sv-swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sv-sw{width:26px;height:26px;border-radius:50%;cursor:pointer;border:2px solid var(--ink);transition:all .15s}
+.sv-sw.on{box-shadow:0 0 0 2px #fff,0 0 10px -1px currentColor}
+
+/* repeatable rows */
+.sv-rrow{position:relative;background:rgba(0,0,0,.22);border:2px solid var(--bd2);border-radius:5px;
+  padding:10px 34px 10px 11px;margin-bottom:9px}
+.sv-rrow .sv-input,.sv-rrow .sv-textarea{margin-bottom:7px}
+.sv-rrow .sv-input:last-child,.sv-rrow .sv-textarea:last-child{margin-bottom:0}
+.sv-rdel{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:2px solid var(--bd2);
+  background:rgba(0,0,0,.3);color:var(--tx2);cursor:pointer;font-size:12px;line-height:1;display:flex;
+  align-items:center;justify-content:center}
+.sv-rdel:hover{border-color:var(--ac);color:var(--ac)}
+.sv-add{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:4px;border:2px dashed rgba(var(--ac-rgb),.5);
+  background:rgba(var(--ac-rgb),.06);color:var(--ac);font-family:var(--fa);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;cursor:pointer}
+[lang-mode="th"] .sv-add{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:.2px}
+.sv-add:hover{background:rgba(var(--ac-rgb),.14)}
+
+/* canon event toggle */
+.sv-toggle-row{display:flex;gap:8px}
+.sv-toggle{flex:1;text-align:center;padding:9px;border-radius:4px;border:2px solid var(--bd2);cursor:pointer;
+  font-family:var(--fa);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--tx2)}
+[lang-mode="th"] .sv-toggle{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:.2px}
+.sv-toggle.on{border-color:var(--ac);color:#fff;background:rgba(var(--ac-rgb),.2)}
+
+.sv-nav{display:flex;justify-content:space-between;padding:18px 26px 22px;position:relative;z-index:1}
+.sv-nb{font-family:var(--fa);font-size:9.5px;letter-spacing:1.2px;padding:9px 18px;border-radius:4px;cursor:pointer;
+  text-transform:uppercase;transition:all .18s;border:2px solid var(--bd2);color:var(--tx2);background:transparent}
+[lang-mode="th"] .sv-nb{font-family:'Noto Sans Thai',sans-serif;font-size:11px;letter-spacing:.2px}
+.sv-nb.primary{background:linear-gradient(135deg,var(--ac),var(--ac2));border-color:var(--ink);color:#fff;
+  box-shadow:3px 3px 0 var(--ink)}
+.sv-nb:hover{border-color:var(--ac)}
+.sv-nb[disabled]{opacity:.35;pointer-events:none}
+
+#sv-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--pan2);border:2px solid var(--ac);border-radius:6px;padding:10px 18px;font-size:12px;color:var(--tx);
+  transition:all .3s;pointer-events:none;z-index:99}
+#sv-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div id="svwrap" data-uni="halftone"><div id="sv">
+  <div id="sv-halftone"></div>
+  <svg id="sv-web" viewBox="0 0 100 100" fill="none">
+    <circle cx="100" cy="0" r="20" stroke="var(--ac)" stroke-width=".6" opacity=".7"/>
+    <circle cx="100" cy="0" r="40" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+    <circle cx="100" cy="0" r="60" stroke="var(--ac)" stroke-width=".6" opacity=".35"/>
+    <circle cx="100" cy="0" r="80" stroke="var(--ac)" stroke-width=".6" opacity=".2"/>
+    <line x1="100" y1="0" x2="20" y2="0" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+    <line x1="100" y1="0" x2="40" y2="40" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+    <line x1="100" y1="0" x2="60" y2="70" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+    <line x1="100" y1="0" x2="90" y2="90" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+    <line x1="100" y1="0" x2="0" y2="100" stroke="var(--ac)" stroke-width=".6" opacity=".5"/>
+  </svg>
+  <div id="sv-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="sv-head">
+    <div id="sv-eyebrow" data-en="SPIDER-SOCIETY REGISTRY" data-th="ทะเบียนสมาคมสไปเดอร์">SPIDER-SOCIETY REGISTRY</div>
+    <div id="sv-title" data-en="NEW ARRIVAL" data-th="ผู้มาใหม่">NEW ARRIVAL</div>
+    <div id="sv-subtitle" data-en="Every Earth gets a Spider. This one's yours." data-th="ทุกโลกมีสไปเดอร์เป็นของตัวเอง โลกนี้เป็นของคุณ">Every Earth gets a Spider. This one's yours.</div>
+  </div>
+
+  <div id="svtabs">
+    <div class="svtab on" data-t="t1"><span data-en="Identity" data-th="ตัวตน">Identity</span></div>
+    <div class="svtab" data-t="t2"><span data-en="Home Earth" data-th="โลกบ้านเกิด">Home Earth</span></div>
+    <div class="svtab" data-t="t3"><span data-en="Powers" data-th="พลัง">Powers</span></div>
+    <div class="svtab" data-t="t4"><span data-en="Costume" data-th="ชุด">Costume</span></div>
+    <div class="svtab" data-t="t5"><span data-en="Ties" data-th="ความสัมพันธ์">Ties</span></div>
+    <div class="svtab" data-t="t6"><span data-en="Canon" data-th="แคนอน">Canon</span></div>
+  </div>
+
+  <!-- TAB 1: IDENTITY -->
+  <div class="svpanel on" data-p="t1">
+    <div class="sv-field">
+      <label class="sv-label" data-en="Real Name" data-th="ชื่อจริง">Real Name</label>
+      <input class="sv-input" id="f-name" type="text" data-pen="Their civilian name" data-pth="ชื่อในชีวิตประจำวัน" placeholder="Their civilian name">
+    </div>
+    <div class="sv-row2">
+      <div class="sv-field">
+        <label class="sv-label" data-en="Age" data-th="อายุ">Age</label>
+        <input class="sv-input" id="f-age" type="text" data-pen="e.g. 16" data-pth="เช่น 16" placeholder="e.g. 16">
+      </div>
+      <div class="sv-field">
+        <label class="sv-label" data-en="Everyday Life" data-th="ชีวิตประจำวัน">Everyday Life</label>
+        <input class="sv-input" id="f-persona" type="text" data-pen="School, job, home life..." data-pth="โรงเรียน งาน ชีวิตที่บ้าน..." placeholder="School, job, home life...">
+      </div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Appearance" data-th="รูปลักษณ์">Appearance</label>
+      <textarea class="sv-textarea" id="f-appearance" data-pen="Hair, style, notable features..." data-pth="ทรงผม สไตล์การแต่งตัว จุดเด่น..." placeholder="Hair, style, notable features..."></textarea>
+    </div>
+  </div>
+
+  <!-- TAB 2: HOME EARTH -->
+  <div class="svpanel" data-p="t2">
+    <div class="sv-field">
+      <label class="sv-label" data-en="Earth Designator" data-th="รหัสโลก">Earth Designator</label>
+      <input class="sv-input" id="f-earth" type="text" data-pen="e.g. Earth-1610b" data-pth="เช่น Earth-1610b" placeholder="e.g. Earth-1610b">
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Universe Visual Style (changes this form's whole look)" data-th="สไตล์ภาพของโลกนี้ (จะเปลี่ยนหน้าตาฟอร์มทั้งหมด)">Universe Visual Style</label>
+      <div id="sv-uni-grid"></div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="About This Earth" data-th="เกี่ยวกับโลกนี้">About This Earth</label>
+      <textarea class="sv-textarea" id="f-unidesc" data-pen="What makes this dimension distinct..." data-pth="อะไรที่ทำให้มิตินี้แตกต่าง..." placeholder="What makes this dimension distinct..."></textarea>
+    </div>
+  </div>
+
+  <!-- TAB 3: POWERS -->
+  <div class="svpanel" data-p="t3">
+    <div class="sv-field">
+      <label class="sv-label" data-en="Origin Story" data-th="ที่มาของพลัง">Origin Story</label>
+      <textarea class="sv-textarea" id="f-origin" data-pen="How did they get their powers?" data-pth="พวกเขาได้พลังมาอย่างไร?" placeholder="How did they get their powers?"></textarea>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Standard Powers" data-th="พลังพื้นฐาน">Standard Powers</label>
+      <div class="sv-pills" id="sv-stdpowers"></div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Unique Powers (like Miles' venom strike) — add as many as they have" data-th="พลังเฉพาะตัว (แบบ venom strike ของ Miles) &#8212; เพิ่มได้เท่าที่มี">Unique Powers</label>
+      <div class="sv-scroll" id="sv-power-list"></div>
+      <div class="sv-add" id="sv-power-add" data-en="+ Add Power" data-th="+ เพิ่มพลัง">+ Add Power</div>
+    </div>
+  </div>
+
+  <!-- TAB 4: COSTUME -->
+  <div class="svpanel" data-p="t4">
+    <div class="sv-field">
+      <label class="sv-label" data-en="Costume Description" data-th="รายละเอียดชุด">Costume Description</label>
+      <textarea class="sv-textarea" id="f-costume" data-pen="Colors, design, homemade or high-tech..." data-pth="สี ดีไซน์ ทำเองหรือไฮเทค..." placeholder="Colors, design, homemade or high-tech..."></textarea>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Gear &amp; Gadgets — add as many as they carry" data-th="อุปกรณ์ &#8212; เพิ่มได้เท่าที่พกติดตัว">Gear &amp; Gadgets</label>
+      <div class="sv-scroll" id="sv-gear-list"></div>
+      <div class="sv-add" id="sv-gear-add" data-en="+ Add Gear" data-th="+ เพิ่มอุปกรณ์">+ Add Gear</div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Sigil Color" data-th="สีประจำตัว">Sigil Color</label>
+      <div id="sv-swatches"></div>
+    </div>
+  </div>
+
+  <!-- TAB 5: TIES -->
+  <div class="svpanel" data-p="t5">
+    <div class="sv-field">
+      <label class="sv-label" data-en="People Who Matter — add as many as needed" data-th="คนสำคัญในชีวิต &#8212; เพิ่มได้ตามต้องการ">People Who Matter</label>
+      <div class="sv-scroll" id="sv-tie-list"></div>
+      <div class="sv-add" id="sv-tie-add" data-en="+ Add Person" data-th="+ เพิ่มบุคคล">+ Add Person</div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Spider-Society Standing" data-th="สถานะกับ Spider-Society">Spider-Society Standing</label>
+      <div class="sv-pills" id="sv-standing"></div>
+    </div>
+  </div>
+
+  <!-- TAB 6: CANON EVENT -->
+  <div class="svpanel" data-p="t6">
+    <div class="sv-field">
+      <label class="sv-label" data-en="Their Canon Event (the fixed tragedy the Society won't let anyone touch)" data-th="Canon Event ของพวกเขา (โศกนาฏกรรมตายตัวที่สมาคมห้ามยุ่ง)">Their Canon Event</label>
+      <textarea class="sv-textarea" id="f-canon" data-pen="Describe the tragedy — or leave blank if unknown/unwritten..." data-pth="อธิบายโศกนาฏกรรม &#8212; หรือเว้นว่างไว้ถ้ายังไม่รู้/ยังไม่เขียน..." placeholder="Describe the tragedy — or leave blank if unknown/unwritten..."></textarea>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Has It Happened Yet?" data-th="เกิดขึ้นแล้วหรือยัง?">Has It Happened Yet?</label>
+      <div class="sv-toggle-row">
+        <div class="sv-toggle" data-v="looming" data-en="Still Looming" data-th="ยังไม่เกิด">Still Looming</div>
+        <div class="sv-toggle" data-v="happened" data-en="Already Happened" data-th="เกิดขึ้นแล้ว">Already Happened</div>
+        <div class="sv-toggle on" data-v="unknown" data-en="Unwritten" data-th="ยังไม่กำหนด">Unwritten</div>
+      </div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Voice / Catchphrase" data-th="น้ำเสียง / คำพูดติดปาก">Voice / Catchphrase</label>
+      <input class="sv-input" id="f-voice" type="text" data-pen="A line that sounds like them" data-pth="ประโยคที่ฟังแล้วเป็นพวกเขา" placeholder="A line that sounds like them">
+    </div>
+  </div>
+
+  <div class="sv-nav">
+    <div class="sv-nb" id="sv-back" data-en="Back" data-th="ย้อนกลับ" disabled>Back</div>
+    <div class="sv-nb primary" id="sv-next" data-en="Next" data-th="ถัดไป">Next</div>
+  </div>
+</div></div>
+<div id="sv-toast"></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var TABS=['t1','t2','t3','t4','t5','t6'];
+var curIdx=0;
+
+var UNIVERSES=[
+  {id:'halftone',en:'Halftone Classic',th:'คอมิกฮาล์ฟโทน',sw:'linear-gradient(135deg,#E23636,#2B6CE2)'},
+  {id:'neon',en:'Neon 2099',th:'นีออน 2099',sw:'linear-gradient(135deg,#2BE2D8,#E22BE0)'},
+  {id:'collage',en:'Punk Collage',th:'ปะติดพังก์',sw:'linear-gradient(135deg,#E2C42B,#1A1A1A)'},
+  {id:'watercolor',en:'Watercolor',th:'สีน้ำ',sw:'linear-gradient(135deg,#E28BC4,#8BB8E2)'}
+];
+var selectedUni='halftone';
+g('sv-uni-grid').innerHTML=UNIVERSES.map(function(u){
+  return '<div class="sv-unicard'+(u.id==='halftone'?' on':'')+'" data-i="'+u.id+'"><div class="sw" style="background:'+u.sw+'"></div><span data-en="'+u.en+'" data-th="'+u.th+'">'+u.en+'</span></div>';
+}).join('');
+qa('.sv-unicard').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('.sv-unicard').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedUni=el.getAttribute('data-i');
+    g('svwrap').setAttribute('data-uni',selectedUni);
+  });
+});
+
+var STDPOWERS=[
+  ['Wall-Crawling','ปีนกำแพง'],['Web-Slinging','ยิงใยแมงมุม'],['Spider-Sense','สัมผัสแมงมุม'],
+  ['Enhanced Strength','พลังเสริม'],['Enhanced Agility','ความคล่องแคล่วเสริม'],['Impact Webbing','ใยดูดซับแรงกระแทก']
+];
+var selStdPowers={};
+g('sv-stdpowers').innerHTML=STDPOWERS.map(function(x,i){
+  return '<div class="sv-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#sv-stdpowers .sv-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    var i=el.getAttribute('data-i');
+    el.classList.toggle('on');
+    selStdPowers[i]=el.classList.contains('on');
+  });
+});
+
+var STANDING=[['Member','สมาชิก'],['Independent','อิสระ'],['Unknown to the Society','สมาคมยังไม่รู้จัก']];
+var selectedStanding=null;
+g('sv-standing').innerHTML=STANDING.map(function(x,i){
+  return '<div class="sv-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#sv-standing .sv-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#sv-standing .sv-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedStanding=STANDING[parseInt(el.getAttribute('data-i'))];
+  });
+});
+
+var SWATCHES=['#E23636','#2B6CE2','#2BE2D8','#E22BE0','#E2C42B','#E28BC4','#7AE23A'];
+var selectedColor=SWATCHES[0];
+g('sv-swatches').innerHTML=SWATCHES.map(function(c,i){
+  return '<div class="sv-sw'+(i===0?' on':'')+'" data-c="'+c+'" style="background:'+c+';color:'+c+'"></div>';
+}).join('');
+qa('.sv-sw').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('.sv-sw').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedColor=el.getAttribute('data-c');
+  });
+});
+
+var canonState='unknown';
+qa('.sv-toggle').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('.sv-toggle').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    canonState=el.getAttribute('data-v');
+  });
+});
+
+/* generic repeatable two-field row group */
+function makeRowGroup(listId, addBtnId, namePh, descPh, namePhTh, descPhTh){
+  var list=g(listId);
+  function addRow(nameVal,descVal){
+    var row=document.createElement('div');
+    row.className='sv-rrow';
+    row.innerHTML='<input class="sv-input rr-name" type="text" placeholder="'+(L==='th'?namePhTh:namePh)+'" value="'+(nameVal||'').replace(/"/g,'&quot;')+'">'+
+      '<textarea class="sv-textarea rr-desc" placeholder="'+(L==='th'?descPhTh:descPh)+'">'+(descVal||'')+'</textarea>'+
+      '<div class="sv-rdel">&times;</div>';
+    row.querySelector('.sv-rdel').addEventListener('click',function(){row.remove()});
+    list.appendChild(row);
+  }
+  g(addBtnId).addEventListener('click',function(){addRow('','')});
+  return {addRow:addRow, list:list};
+}
+var powerGroup=makeRowGroup('sv-power-list','sv-power-add','Power name','What does it do?','ชื่อพลัง','ทำอะไรได้บ้าง?');
+var gearGroup=makeRowGroup('sv-gear-list','sv-gear-add','Item name','What is it / does?','ชื่ออุปกรณ์','คืออะไร/ทำอะไร?');
+powerGroup.addRow('','');
+gearGroup.addRow('','');
+
+/* ties: name + relationship */
+var tieList=g('sv-tie-list');
+function addTieRow(nameVal,relVal){
+  var row=document.createElement('div');
+  row.className='sv-rrow';
+  row.innerHTML='<input class="sv-input rr-name" type="text" placeholder="'+(L==='th'?'ชื่อ':'Name')+'" value="'+(nameVal||'').replace(/"/g,'&quot;')+'">'+
+    '<input class="sv-input rr-desc" type="text" placeholder="'+(L==='th'?'ความสัมพันธ์':'Relationship')+'" value="'+(relVal||'').replace(/"/g,'&quot;')+'">'+
+    '<div class="sv-rdel">&times;</div>';
+  row.querySelector('.sv-rdel').addEventListener('click',function(){row.remove()});
+  tieList.appendChild(row);
+}
+g('sv-tie-add').addEventListener('click',function(){addTieRow('','')});
+addTieRow('','');
+
+/* TABS */
+qa('.svtab').forEach(function(t){
+  t.addEventListener('click',function(){go(t.getAttribute('data-t'))});
+});
+function go(target){
+  curIdx=TABS.indexOf(target);
+  qa('.svtab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===target)});
+  qa('.svpanel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-p')===target)});
+  g('sv-back').toggleAttribute('disabled',curIdx===0);
+  g('sv-next').textContent=(curIdx===TABS.length-1)?(L==='th'?'ยืนยันตัวละคร':'Confirm Character'):(L==='th'?'ถัดไป':'Next');
+}
+g('sv-back').addEventListener('click',function(){if(curIdx>0)go(TABS[curIdx-1])});
+g('sv-next').addEventListener('click',function(){
+  if(curIdx<TABS.length-1){go(TABS[curIdx+1])}
+  else{submit()}
+});
+
+function toast(msg){
+  var el=g('sv-toast');el.textContent=msg;el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show')},2600);
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  qa('[data-pen]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-pth'):el.getAttribute('data-pen');
+    if(v!=null)el.setAttribute('placeholder',v);
+  });
+  go(TABS[curIdx]);
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+function sendToST(text){
+  try{
+    var doc=(window.parent&&window.parent.document)?window.parent.document:document;
+    var ta=doc.querySelector('#send_textarea')||doc.querySelector('textarea');
+    if(ta){
+      var setter=Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype,'value').set;
+      setter.call(ta,text);
+      ta.dispatchEvent(new Event('input',{bubbles:true}));
+      setTimeout(function(){
+        var btn=doc.querySelector('#send_but');
+        if(btn){btn.click();}
+        else{
+          ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',code:'Enter',keyCode:13,which:13,bubbles:true}));
+        }
+      },120);
+      return true;
+    }
+  }catch(e){}
+  try{navigator.clipboard.writeText(text)}catch(e2){}
+  return false;
+}
+
+function readRows(listEl){
+  return qa('.sv-rrow',listEl).map(function(row){
+    return {name:row.querySelector('.rr-name').value.trim(),description:row.querySelector('.rr-desc').value.trim()};
+  }).filter(function(x){return x.name||x.description});
+}
+function readTies(){
+  return qa('.sv-rrow',tieList).map(function(row){
+    return {name:row.querySelector('.rr-name').value.trim(),relationship:row.querySelector('.rr-desc').value.trim()};
+  }).filter(function(x){return x.name||x.relationship});
+}
+
+function submit(){
+  var name=g('f-name').value.trim();
+  if(!name){toast(L==='th'?'กรุณากรอกชื่อจริง':'Please enter a real name');go('t1');return;}
+
+  var stdPowersOut=STDPOWERS.filter(function(x,i){return selStdPowers[i]}).map(function(x){return x[0]});
+
+  var data={
+    charColor:selectedColor,
+    name:name,
+    age:g('f-age').value.trim(),
+    persona:g('f-persona').value.trim(),
+    appearance:g('f-appearance').value.trim(),
+    earthDesignator:g('f-earth').value.trim(),
+    universeStyle:selectedUni,
+    universeDescription:g('f-unidesc').value.trim(),
+    originStory:g('f-origin').value.trim(),
+    standardPowers:stdPowersOut,
+    uniquePowers:readRows(powerGroup.list),
+    costume:g('f-costume').value.trim(),
+    gear:readRows(gearGroup.list),
+    connections:readTies(),
+    standing:selectedStanding?selectedStanding[0]:'',
+    canonEvent:g('f-canon').value.trim(),
+    canonEventStatus:canonState,
+    voice:g('f-voice').value.trim()
+  };
+  var txt='<SPIDERVERSE_DOSSIER>\n'+JSON.stringify(data)+'\n</SPIDERVERSE_DOSSIER>';
+  var ok=sendToST(txt);
+  toast(ok?(L==='th'?'ส่งข้อมูลตัวละครแล้ว...':'Character sent across the Verse...'):(L==='th'?'คัดลอกไปยังคลิปบอร์ดแล้ว':'Copied to clipboard'));
+}
+})();
+</script>
+</body>
+</html>

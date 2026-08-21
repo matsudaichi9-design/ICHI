@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<title>LoL Relationship Tracker</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Segoe UI',system-ui,sans-serif;font-size:13px}
+#lolrelwin{
+  --acc:#C89B3C;--abg:rgba(200,155,60,.12);--abd:rgba(200,155,60,.28);
+  --bg:#07090d;--bg2:#0c0f16;--bg3:#12151e;--bg4:#1a1e28;--bg5:#222638;
+  --tx:#e4d8c0;--tx2:#9a9080;--tx3:#505048;--bd:rgba(200,155,60,.25);
+  --fh:Cinzel,'Palatino Linotype',Georgia,serif;
+  background:var(--bg);border:1px solid var(--bd);border-radius:10px;
+  max-width:520px;margin:0 auto;overflow:hidden;
+  box-shadow:0 8px 48px rgba(0,0,0,.85),inset 0 1px 0 rgba(255,255,255,.04);
+  color:var(--tx);
+}
+#lolrelwin #lolrelhead{
+  display:flex;align-items:center;gap:10px;padding:11px 14px;
+  background:linear-gradient(160deg,#0f1220 0%,#0a0d14 55%,#0d1018 100%);
+  border-bottom:1px solid var(--bd);cursor:pointer;user-select:none;position:relative;
+}
+#lolrelwin #lolrelhead::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:.35;
+}
+#lolrelwin #lolrelsigil{width:32px;height:32px;flex-shrink:0;filter:drop-shadow(0 0 6px var(--acc))}
+#lolrelwin #lolrelhdtxt{flex:1;min-width:0}
+#lolrelwin #lolreltitle{font-family:var(--fh);font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--acc);opacity:.75;margin-bottom:2px}
+#lolrelwin #lolrelnm{font-family:var(--fh);font-size:15px;font-weight:600;color:#f0e8d4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lolrelwin #lolrelcount{font-family:var(--fh);font-size:9px;letter-spacing:1.5px;padding:3px 9px;border-radius:99px;background:var(--abg);border:1px solid var(--abd);color:var(--acc);flex-shrink:0}
+#lolrelwin #lolrelchev{font-size:14px;color:var(--tx3);transition:transform .3s;flex-shrink:0}
+#lolrelwin.closed #lolrelchev{transform:rotate(180deg)}
+#lolrelwin #lolrelbody{max-height:4000px;overflow:hidden;transition:max-height .45s ease}
+#lolrelwin.closed #lolrelbody{max-height:0}
+#lolrelwin #lolrellist{padding:12px 13px;display:flex;flex-direction:column;gap:8px}
+#lolrelwin .lolrel-card{
+  background:var(--bg3);border:1px solid var(--bg4);border-radius:6px;
+  overflow:hidden;border-left:3px solid var(--tx3);transition:border-left-color .3s,box-shadow .2s;
+}
+#lolrelwin .lolrel-card:hover{box-shadow:0 2px 14px rgba(0,0,0,.4)}
+#lolrelwin .lolrel-view{padding:10px 12px}
+#lolrelwin .lolrel-top{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+#lolrelwin .lolrel-cicon{
+  width:30px;height:30px;flex-shrink:0;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.1);background:var(--bg4);
+}
+#lolrelwin .lolrel-cinfo{flex:1;min-width:0}
+#lolrelwin .lolrel-cname{font-family:var(--fh);font-size:12.5px;font-weight:600;color:var(--tx);letter-spacing:.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lolrelwin .lolrel-cregion{font-size:9px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
+#lolrelwin .lolrel-status{
+  font-family:var(--fh);font-size:9px;letter-spacing:.5px;
+  padding:3px 9px;border-radius:99px;border:1px solid rgba(255,255,255,.12);
+  color:var(--tx2);white-space:nowrap;flex-shrink:0;
+}
+#lolrelwin .lolrel-lvlbadge{flex-shrink:0;text-align:center;min-width:50px}
+#lolrelwin .lolrel-lvlnum{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--acc)}
+#lolrelwin .lolrel-lvllbl{font-size:7.5px;color:var(--tx3);letter-spacing:.5px;white-space:nowrap}
+#lolrelwin .lolrel-acts{display:flex;gap:5px;flex-shrink:0}
+#lolrelwin .lolrel-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+#lolrelwin .lolrel-bar-track{
+  flex:1;height:7px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;
+}
+#lolrelwin .lolrel-bar-fill{height:100%;border-radius:4px;transition:width .5s ease}
+#lolrelwin .lolrel-score-num{font-family:var(--fh);font-size:9px;color:var(--tx3);min-width:42px;text-align:right;flex-shrink:0}
+#lolrelwin .lolrel-pips{display:flex;gap:3px;margin-bottom:8px}
+#lolrelwin .lolrel-pip{flex:1;height:4px;border-radius:2px;background:var(--bg5);transition:background .3s}
+#lolrelwin .lolrel-pip.on{background:var(--acc)}
+#lolrelwin .lolrel-note{font-size:10.5px;color:var(--tx3);line-height:1.55;font-style:italic;padding-top:6px;border-top:1px solid var(--bg4)}
+#lolrelwin .lolrel-btn{
+  font-family:var(--fh);font-size:8px;letter-spacing:1px;
+  padding:4px 8px;border-radius:4px;cursor:pointer;transition:all .15s;
+}
+#lolrelwin .lolrel-btn-edit{background:rgba(200,155,60,.1);border:1px solid rgba(200,155,60,.3);color:var(--acc)}
+#lolrelwin .lolrel-btn-edit:hover{background:rgba(200,155,60,.25);border-color:var(--acc)}
+#lolrelwin .lolrel-btn-del{background:rgba(180,50,50,.1);border:1px solid rgba(180,50,50,.3);color:#c07070}
+#lolrelwin .lolrel-btn-del:hover{background:rgba(180,50,50,.25)}
+#lolrelwin .lolrel-edit{display:none;padding:12px 13px;background:var(--bg4);border-top:1px solid var(--bg5)}
+#lolrelwin .lolrel-edit.on{display:block}
+#lolrelwin .lolrel-edit-row{margin-bottom:10px}
+#lolrelwin .lolrel-edit-lbl{font-family:var(--fh);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tx3);margin-bottom:5px}
+#lolrelwin .lolrel-edit-flex{display:flex;align-items:center;gap:9px}
+#lolrelwin .lolrel-range{
+  -webkit-appearance:none;width:100%;height:5px;
+  background:var(--bg5);border-radius:3px;outline:none;cursor:pointer;border:none;
+}
+#lolrelwin .lolrel-range::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;border-radius:50%;
+  background:var(--acc);cursor:pointer;border:2px solid var(--bg);
+  box-shadow:0 0 5px rgba(200,155,60,.5);
+}
+#lolrelwin .lolrel-range-val{font-family:var(--fh);font-size:11px;font-weight:700;color:var(--acc);min-width:26px;text-align:center}
+#lolrelwin .lolrel-inp{
+  width:100%;background:var(--bg3);border:1px solid var(--bg5);border-radius:4px;
+  color:var(--tx);padding:7px 10px;font-family:inherit;font-size:12px;
+  outline:none;transition:border-color .2s;
+}
+#lolrelwin .lolrel-inp:focus{border-color:var(--acc)}
+#lolrelwin .lolrel-inp::placeholder{color:var(--tx3)}
+#lolrelwin .lolrel-edit-btns{display:flex;gap:7px;margin-top:12px}
+#lolrelwin .lolrel-btn-save{
+  flex:1;padding:8px;font-family:var(--fh);font-size:9px;letter-spacing:2px;
+  font-weight:700;cursor:pointer;border:none;border-radius:4px;
+  background:linear-gradient(135deg,var(--acc),#e8c860);color:#07090d;
+  transition:opacity .2s;
+}
+#lolrelwin .lolrel-btn-save:hover{opacity:.85}
+#lolrelwin .lolrel-btn-cancel{
+  padding:8px 14px;font-family:var(--fh);font-size:9px;letter-spacing:1px;
+  cursor:pointer;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);
+  color:var(--tx3);border-radius:4px;transition:background .15s;
+}
+#lolrelwin .lolrel-btn-cancel:hover{background:rgba(255,255,255,.08)}
+#lolrelwin .lolrel-empty{
+  text-align:center;padding:32px 0;color:var(--tx3);
+  font-size:10px;letter-spacing:2px;font-family:var(--fh);text-transform:uppercase;
+}
+#lolrelwin .lolrel-empty::before{content:'◈';display:block;font-size:22px;margin-bottom:10px;opacity:.2}
+#lolrelwin #lolrelfoot{
+  border-top:1px solid rgba(255,255,255,.05);padding:7px 14px;
+  font-family:var(--fh);font-size:8px;color:var(--tx3);
+  text-align:center;letter-spacing:2px;background:var(--bg2);text-transform:uppercase;
+}
+</style>
+</head>
+<body>
+<textarea id="lolrelraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="lolrelwin">
+  <div id="lolrelhead">
+    <svg id="lolrelsigil" width="32" height="32" viewBox="0 0 28 28"></svg>
+    <div id="lolrelhdtxt">
+      <div id="lolreltitle">RELATIONSHIP TRACKER</div>
+      <div id="lolrelnm">—</div>
+    </div>
+    <div id="lolrelcount">0 Champions</div>
+    <div id="lolrelchev">▲</div>
+  </div>
+  <div id="lolrelbody">
+    <div id="lolrellist"></div>
+  </div>
+  <div id="lolrelfoot">RUNETERRA BONDS</div>
+</div>
+<script>
+(function(){
+  function g(id){return document.getElementById(id);}
+  function esc(v){
+    if(v==null)return '';
+    return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  var rawEl=g('lolrelraw'); if(!rawEl)return;
+  var raw=(rawEl.value||'').replace(/<\/?LOL_RELATION>/gi,'').trim();
+  var d={}; try{d=JSON.parse(raw);}catch(e){}
+  var TH=(d.lang==='th');
+  var relations=Array.isArray(d.relations)?d.relations:[];
+
+  var RC={
+    demacia:'#4A70B0',noxus:'#9B2020',freljord:'#5FA8C8',ionia:'#9870C0',
+    piltover:'#D4A830',zaun:'#4A8A60',shurima:'#C8A84B',ixtal:'#3A8A50',
+    targon:'#7A8EC8',camavor:'#A83848',shadow_isles:'#2A8060',
+    bilgewater:'#C87840',bandle:'#D4B870',void:'#8A4AC8'
+  };
+  var acc=d.theme_color||RC[d.region]||'#C89B3C';
+
+  function hexRgb(h){
+    var s=String(h||'').replace('#','');
+    if(s.length===3)s=s[0]+s[0]+s[1]+s[1]+s[2]+s[2];
+    var n=parseInt(s,16)||0; if(!n)n=0xC89B3C;
+    return ((n>>16)&255)+','+((n>>8)&255)+','+(n&255);
+  }
+
+  var win=g('lolrelwin'); if(!win)return;
+  var rgb=hexRgb(acc);
+  win.style.setProperty('--acc',acc);
+  win.style.setProperty('--abg','rgba('+rgb+',.12)');
+  win.style.setProperty('--abd','rgba('+rgb+',.28)');
+  win.style.setProperty('--bd','rgba('+rgb+',.25)');
+
+  function sigilPath(r){
+    var c=acc;
+    var p={
+      demacia:'<polygon points="14,2 22,10 22,24 6,24 6,10" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="14" y1="2" x2="14" y2="24" stroke="'+c+'" stroke-width="1"/><line x1="6" y1="14" x2="22" y2="14" stroke="'+c+'" stroke-width="1"/>',
+      noxus:'<polygon points="14,3 24,25 4,25" fill="none" stroke="'+c+'" stroke-width="1.5"/><polygon points="14,10 20,22 8,22" fill="'+c+'" opacity=".3"/>',
+      freljord:'<line x1="14" y1="2" x2="14" y2="26" stroke="'+c+'" stroke-width="1.5"/><line x1="2" y1="14" x2="26" y2="14" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="'+c+'"/>',
+      ionia:'<circle cx="14" cy="10" r="4" fill="'+c+'"/><circle cx="14" cy="18" r="4" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="9" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      piltover:'<circle cx="14" cy="14" r="9" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="3" fill="'+c+'"/>',
+      zaun:'<rect x="9" y="3" width="10" height="14" rx="5" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="8" y1="22" x2="20" y2="22" stroke="'+c+'" stroke-width="1.5"/>',
+      shurima:'<circle cx="14" cy="14" r="9" fill="none" stroke="'+c+'" stroke-width="1"/><polygon points="14,5 16.5,11.5 23,11.5 17.5,15.5 19.5,22 14,18 8.5,22 10.5,15.5 5,11.5 11.5,11.5" fill="'+c+'" opacity=".6"/>',
+      ixtal:'<circle cx="14" cy="14" r="6" fill="none" stroke="'+c+'" stroke-width="1.5"/><ellipse cx="14" cy="7" rx="3" ry="5" fill="'+c+'" opacity=".5"/><ellipse cx="7" cy="14" rx="5" ry="3" fill="'+c+'" opacity=".5"/>',
+      targon:'<polygon points="14,2 22,24 6,24" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="8" r="2.5" fill="'+c+'"/>',
+      camavor:'<circle cx="14" cy="11" r="7" fill="none" stroke="'+c+'" stroke-width="1.5"/><line x1="14" y1="18" x2="14" y2="26" stroke="'+c+'" stroke-width="1.5"/>',
+      shadow_isles:'<circle cx="14" cy="14" r="5" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="7" cy="9" r="2.5" fill="none" stroke="'+c+'" stroke-width="1"/><circle cx="21" cy="9" r="2.5" fill="none" stroke="'+c+'" stroke-width="1"/><circle cx="14" cy="22" r="2.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      bilgewater:'<line x1="14" y1="3" x2="14" y2="25" stroke="'+c+'" stroke-width="1.5"/><line x1="6" y1="10" x2="22" y2="10" stroke="'+c+'" stroke-width="1.5"/>',
+      bandle:'<rect x="8" y="12" width="12" height="12" rx="2" fill="none" stroke="'+c+'" stroke-width="1.2"/><polygon points="14,2 24,12 4,12" fill="none" stroke="'+c+'" stroke-width="1.5"/>',
+      void:'<ellipse cx="14" cy="14" rx="10" ry="10" fill="none" stroke="'+c+'" stroke-width="1.5"/><circle cx="14" cy="14" r="2.5" fill="'+c+'"/>'
+    };
+    var def='<circle cx="14" cy="14" r="9" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="14" y1="5" x2="14" y2="23" stroke="'+c+'" stroke-width="1"/><line x1="5" y1="14" x2="23" y2="14" stroke="'+c+'" stroke-width="1"/>';
+    return p[r]||def;
+  }
+
+  function sigilSm(r){
+    var c=RC[r]||acc;
+    var p={
+      demacia:'<polygon points="8,1 13,6 13,14 3,14 3,6" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      noxus:'<polygon points="8,2 14,14 2,14" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      freljord:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="1" y1="8" x2="15" y2="8" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      ionia:'<circle cx="8" cy="5" r="3" fill="'+c+'"/><circle cx="8" cy="11" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      piltover:'<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>',
+      zaun:'<rect x="5" y="2" width="6" height="9" rx="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="4" y1="13" x2="12" y2="13" stroke="'+c+'" stroke-width="1.2"/>',
+      shurima:'<circle cx="8" cy="8" r="6" fill="none" stroke="'+c+'" stroke-width="1"/><polygon points="8,2 9.5,6.5 14,6.5 10.5,9 11.5,13.5 8,11 4.5,13.5 5.5,9 2,6.5 6.5,6.5" fill="'+c+'" opacity=".7"/>',
+      ixtal:'<circle cx="8" cy="8" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><ellipse cx="8" cy="4" rx="2" ry="3" fill="'+c+'" opacity=".5"/>',
+      targon:'<polygon points="8,1 13,14 3,14" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="5" r="1.5" fill="'+c+'"/>',
+      camavor:'<circle cx="8" cy="6" r="4" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="10" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/>',
+      shadow_isles:'<circle cx="8" cy="8" r="3" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="4" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/><circle cx="12" cy="5" r="1.5" fill="none" stroke="'+c+'" stroke-width="1"/>',
+      bilgewater:'<line x1="8" y1="1" x2="8" y2="15" stroke="'+c+'" stroke-width="1.2"/><line x1="3" y1="5" x2="13" y2="5" stroke="'+c+'" stroke-width="1.2"/>',
+      bandle:'<rect x="4" y="7" width="8" height="7" rx="1" fill="none" stroke="'+c+'" stroke-width="1.2"/><polygon points="8,1 14,7 2,7" fill="none" stroke="'+c+'" stroke-width="1.2"/>',
+      void:'<ellipse cx="8" cy="8" rx="6" ry="6" fill="none" stroke="'+c+'" stroke-width="1.2"/><circle cx="8" cy="8" r="2" fill="'+c+'"/>'
+    };
+    var def='<circle cx="8" cy="8" r="5" fill="none" stroke="'+c+'" stroke-width="1.2"/><line x1="8" y1="3" x2="8" y2="13" stroke="'+c+'" stroke-width="1"/><line x1="3" y1="8" x2="13" y2="8" stroke="'+c+'" stroke-width="1"/>';
+    return '<svg width="16" height="16" viewBox="0 0 16 16">'+(p[r]||def)+'</svg>';
+  }
+
+  function scoreColor(s){
+    if(s>=90)return '#ffd700';
+    if(s>=70)return '#50d870';
+    if(s>=50)return '#50a860';
+    if(s>=30)return '#c89030';
+    return '#707080';
+  }
+
+  function lvlInfo(l){
+    var en=['Unknown','Stranger','Acquaintance','Acquaintance','Friend','Friend','Close Friend','Close Friend','Trusted','Bonded','Soulbound'];
+    var th=['ไม่ทราบ','คนแปลกหน้า','คนรู้จัก','คนรู้จัก','เพื่อน','เพื่อน','เพื่อนสนิท','เพื่อนสนิท','ไว้วางใจ','ผูกพัน','สายสัมพันธ์'];
+    var i=Math.max(0,Math.min(10,l||0));
+    return TH?th[i]:en[i];
+  }
+
+  function statusColor(status){
+    var s=(status||'').toLowerCase();
+    if(/enemy|foe|hostile|ศัตรู|คู่แค้น/.test(s))return '#d04848';
+    if(/rival|adversary|คู่แข่ง|คู่ปรับ/.test(s))return '#c87030';
+    if(/ally|friend|companion|partner|สหาย|เพื่อน/.test(s))return '#50a860';
+    if(/lover|love|beloved|darling|คนรัก|ที่รัก/.test(s))return '#d060b0';
+    if(/mentor|master|teacher|อาจารย์|ครู/.test(s))return '#c89030';
+    return '#808090';
+  }
+
+  function buildCard(rel){
+    var sc=Math.max(0,Math.min(100,rel.score||0));
+    var lv=Math.max(0,Math.min(10,rel.level||0));
+    var sclr=scoreColor(sc);
+    var stclr=statusColor(rel.status||'');
+    var pips='';
+    for(var i=1;i<=10;i++){pips+='<div class="lolrel-pip'+(i<=lv?' on':'')+'"></div>';}
+    var regionKey=(rel.region||'').toLowerCase().replace(/\s+/g,'_');
+    var noteHtml=rel.note?('<div class="lolrel-note">'+esc(rel.note)+'</div>'):'';
+    return '<div class="lolrel-card" data-rid="'+esc(String(rel.id))+'" style="border-left-color:'+sclr+'">'+
+      '<div class="lolrel-view">'+
+        '<div class="lolrel-top">'+
+          '<div class="lolrel-cicon">'+sigilSm(regionKey)+'</div>'+
+          '<div class="lolrel-cinfo">'+
+            '<div class="lolrel-cname">'+esc(rel.name||'—')+'</div>'+
+            '<div class="lolrel-cregion">'+esc(rel.region||'—')+'</div>'+
+          '</div>'+
+          '<div class="lolrel-status" style="border-color:'+stclr+'44;color:'+stclr+'">'+esc(rel.status||'—')+'</div>'+
+          '<div class="lolrel-lvlbadge">'+
+            '<div class="lolrel-lvlnum">Lv.'+lv+'</div>'+
+            '<div class="lolrel-lvllbl">'+esc(lvlInfo(lv))+'</div>'+
+          '</div>'+
+          '<div class="lolrel-acts">'+
+            '<button class="lolrel-btn lolrel-btn-edit">EDIT</button>'+
+            '<button class="lolrel-btn lolrel-btn-del">DEL</button>'+
+          '</div>'+
+        '</div>'+
+        '<div class="lolrel-bar-row">'+
+          '<div class="lolrel-bar-track">'+
+            '<div class="lolrel-bar-fill" style="width:'+sc+'%;background:'+sclr+';box-shadow:0 0 8px '+sclr+'88"></div>'+
+          '</div>'+
+          '<div class="lolrel-score-num">'+sc+' / 100</div>'+
+        '</div>'+
+        '<div class="lolrel-pips">'+pips+'</div>'+
+        noteHtml+
+      '</div>'+
+      '<div class="lolrel-edit">'+
+        '<div class="lolrel-edit-row">'+
+          '<div class="lolrel-edit-lbl">'+(TH?'คะแนนความสัมพันธ์ (0-100)':'Score (0–100)')+'</div>'+
+          '<div class="lolrel-edit-flex">'+
+            '<input type="range" class="lolrel-range lolrel-inp-score" min="0" max="100" value="'+sc+'">'+
+            '<span class="lolrel-range-val lolrel-scval">'+sc+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="lolrel-edit-row">'+
+          '<div class="lolrel-edit-lbl">'+(TH?'ระดับความสัมพันธ์ (0-10)':'Level (0–10)')+'</div>'+
+          '<div class="lolrel-edit-flex">'+
+            '<input type="range" class="lolrel-range lolrel-inp-lvl" min="0" max="10" value="'+lv+'">'+
+            '<span class="lolrel-range-val lolrel-lvval">'+lv+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="lolrel-edit-row">'+
+          '<div class="lolrel-edit-lbl">'+(TH?'สถานะความสัมพันธ์':'Status')+'</div>'+
+          '<input type="text" class="lolrel-inp lolrel-inp-status" value="'+esc(rel.status||'')+'" placeholder="'+(TH?'เช่น: พันธมิตร, คู่แค้น, คนรัก':'e.g. Ally, Rival, Lover')+'">'+
+        '</div>'+
+        '<div class="lolrel-edit-row">'+
+          '<div class="lolrel-edit-lbl">'+(TH?'บันทึก':'Note')+'</div>'+
+          '<input type="text" class="lolrel-inp lolrel-inp-note" value="'+esc(rel.note||'')+'" placeholder="'+(TH?'บันทึกสั้นๆ...':'Short note about this relationship...')+'">'+
+        '</div>'+
+        '<div class="lolrel-edit-btns">'+
+          '<button class="lolrel-btn-save">'+(TH?'◆ บันทึกการเปลี่ยนแปลง':'◆ SAVE CHANGES')+'</button>'+
+          '<button class="lolrel-btn-cancel">'+(TH?'ยกเลิก':'CANCEL')+'</button>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+  }
+
+  function build(){
+    var sg=g('lolrelsigil');
+    if(sg)sg.innerHTML=sigilPath(d.region);
+    var nm=g('lolrelnm');
+    if(nm)nm.textContent=d.character||'—';
+    var ct=g('lolrelcount');
+    if(ct)ct.textContent=relations.length+(TH?' แชมเปี้ยน':(' Champion'+(relations.length!==1?'s':'')));
+    var ft=g('lolrelfoot');
+    if(ft)ft.textContent=TH?'ระบบสายสัมพันธ์ — รูนเทอร์รา':'RUNETERRA BONDS';
+    var list=g('lolrellist');
+    if(!list)return;
+    if(!relations.length){
+      list.innerHTML='<div class="lolrel-empty">'+(TH?'ยังไม่มีความสัมพันธ์บันทึกไว้':'No relationships recorded yet')+'</div>';
+      return;
+    }
+    list.innerHTML=relations.map(buildCard).join('');
+  }
+
+  build();
+
+  function sendToChat(txt){
+    setTimeout(function(){
+      try{
+        var w=window.parent||window;
+        var ta=w.document.getElementById('send_textarea')||w.document.querySelector('#textareaAutosize,textarea.chat-input,textarea');
+        if(ta){
+          var dd=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
+          if(dd&&dd.set)dd.set.call(ta,txt);else ta.value=txt;
+          ta.dispatchEvent(new Event('input',{bubbles:true}));
+          setTimeout(function(){
+            try{
+              var sb=w.document.getElementById('send_but');
+              if(sb)sb.click();
+              else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
+            }catch(e){}
+          },150);
+          return;
+        }
+      }catch(e){}
+      try{navigator.clipboard.writeText(txt);}catch(e){}
+    },450);
+  }
+
+  var hd=g('lolrelhead');
+  if(hd)hd.addEventListener('click',function(){g('lolrelwin').classList.toggle('closed');});
+
+  var list=g('lolrellist');
+  if(list){
+    list.addEventListener('click',function(e){
+      var card=e.target.closest('.lolrel-card'); if(!card)return;
+      var rid=card.getAttribute('data-rid');
+
+      if(e.target.classList.contains('lolrel-btn-edit')){
+        var ed=card.querySelector('.lolrel-edit');
+        if(ed)ed.classList.toggle('on');
+        return;
+      }
+      if(e.target.classList.contains('lolrel-btn-cancel')){
+        var ed2=card.querySelector('.lolrel-edit');
+        if(ed2)ed2.classList.remove('on');
+        return;
+      }
+      if(e.target.classList.contains('lolrel-btn-save')){
+        var sc=parseInt(card.querySelector('.lolrel-inp-score').value)||0;
+        var lv=parseInt(card.querySelector('.lolrel-inp-lvl').value)||0;
+        var st=card.querySelector('.lolrel-inp-status').value||'';
+        var nt=card.querySelector('.lolrel-inp-note').value||'';
+        var relName='';var relRegion='';
+        for(var i=0;i<relations.length;i++){if(String(relations[i].id)===String(rid)){relName=relations[i].name||'';relRegion=relations[i].region||'';break;}}
+        sendToChat('<'+'LOL_RELATION_EDIT>'+JSON.stringify({id:parseInt(rid),name:relName,region:relRegion,score:sc,level:lv,status:st,note:nt,theme_color:acc,lang:TH?'th':'en'})+'<'+'/LOL_RELATION_EDIT>');
+        var ed3=card.querySelector('.lolrel-edit');
+        if(ed3)ed3.classList.remove('on');
+        return;
+      }
+      if(e.target.classList.contains('lolrel-btn-del')){
+        var relName2='';var relRegion2='';
+        for(var j=0;j<relations.length;j++){if(String(relations[j].id)===String(rid)){relName2=relations[j].name||'';relRegion2=relations[j].region||'';break;}}
+        var msg=TH?('ลบความสัมพันธ์กับ '+relName2+'?'):('Remove relationship with '+relName2+'?');
+        if(confirm(msg)){
+          sendToChat('<'+'LOL_RELATION_DELETE>'+JSON.stringify({id:parseInt(rid),name:relName2,region:relRegion2,theme_color:acc,lang:TH?'th':'en'})+'<'+'/LOL_RELATION_DELETE>');
+        }
+        return;
+      }
+    });
+
+    list.addEventListener('input',function(e){
+      var card=e.target.closest('.lolrel-card'); if(!card)return;
+      if(e.target.classList.contains('lolrel-inp-score')){
+        var d2=card.querySelector('.lolrel-scval');
+        if(d2)d2.textContent=e.target.value;
+      }
+      if(e.target.classList.contains('lolrel-inp-lvl')){
+        var d3=card.querySelector('.lolrel-lvval');
+        if(d3)d3.textContent=e.target.value;
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>

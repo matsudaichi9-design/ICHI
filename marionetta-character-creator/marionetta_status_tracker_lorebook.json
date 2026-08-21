@@ -1,0 +1,39 @@
+{
+  "name": "Marionetta User Status Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Marionetta User Status Tracker System",
+      "content": "## MARIONETTA USER STATUS TRACKER SYSTEM\n\nYou are running the Marionetta status tracker for {{user}}. After EVERY response you write, append a status block on its own line with no extra text around it:\n\n<MARIONETTA_STATUS>\n{JSON}\n</MARIONETTA_STATUS>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies. This tracker is inventory-heavy — track every item {{user}} is carrying in detail, not just a summary.\n\n---\n\n### STATUS JSON SCHEMA\n\n```json\n{\n  \"hp\": {\"cur\": 72, \"max\": 100},\n  \"stamina\": {\"cur\": 45, \"max\": 100},\n  \"conditions\": [\"Bruised ribs\", \"Cold\", \"Slightly damp\"],\n  \"purse\": {\"amount\": 340, \"currency\": \"coin\"},\n  \"details\": [\n    \"Hem of the coat is torn from last night's escape.\",\n    \"Smells faintly of greasepaint and rain.\",\n    \"A fresh ink stain marks the left hand.\"\n  ],\n  \"onPerson\": [\n    {\"name\": \"Illusionist's Coat\", \"condition\": \"worn\", \"desc\": \"Deep pockets sewn with hidden compartments.\"}\n  ],\n  \"trunk\": [\n    {\"category\": \"Tools of the Trade\", \"name\": \"Marked Cards\", \"qty\": 1, \"desc\": \"Weighted just enough to cheat an honest game.\"},\n    {\"category\": \"Provisions\", \"name\": \"Wisteria-laced tea\", \"qty\": 3, \"desc\": \"A gift from a sympathetic apothecary.\"},\n    {\"category\": \"Keepsakes\", \"name\": \"Mother's locket\", \"qty\": 1, \"desc\": \"Empty. The photo inside was lost years ago.\"},\n    {\"category\": \"Documents\", \"name\": \"Forged travel papers\", \"qty\": 1, \"desc\": \"Good enough to pass a cursory checkpoint glance.\"}\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `hp` / `stamina` | plain `{cur, max}` vitals |\n| `conditions` | current ailments/afflictions — [] when fine |\n| `purse` | current coin on hand; `currency` is free text (default \"coin\") |\n| `details` | UNLIMITED array of small present-state facts — appearance quirks, stains, smells, minor injuries not worth a full \"condition\", anything that makes the moment feel lived-in. Rewrite this list often; drop stale details and add new ones as the scene changes |\n| `onPerson` | items actively worn or equipped — clothing, a weapon in hand, a prop mid-use. `condition`: \"pristine\" \\| \"worn\" \\| \"damaged\" \\| \"broken\" |\n| `trunk` | UNLIMITED array — everything packed away and not currently worn/held. No cap on item count — track everything {{user}} plausibly owns and carries |\n| `trunk[].category` | groups the Trunk section — use whatever categories fit the story (e.g. \"Tools of the Trade\", \"Provisions\", \"Keepsakes\", \"Documents\", \"Miscellany\"); consistent naming keeps items grouped together |\n| `trunk[].qty` | defaults to 1 if omitted |\n\n---\n\n### OUTPUT RULES\n• Copy the full JSON from the previous block and modify only what changed.\n• Never drop an item from `trunk` or `onPerson` unless it was actually used up, given away, lost, or stolen in the story.\n• When {{user}} acquires something new — however small — add it to `trunk` (or `onPerson` if worn/wielded immediately). Do not wait to be asked.\n• `details` should feel like marginalia, not a status readout — short, specific, sensory. 2-4 entries is typical; refresh them as time passes.\n• Move an item between `onPerson` and `trunk` when {{user}} puts it on/away or draws/holsters it.",
+      "constant": true,
+      "order": 89,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

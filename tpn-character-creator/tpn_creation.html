@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent}
+
+.win{
+  max-width:480px;margin:6px auto;
+  background:#ece4cc;border:1px solid rgba(28,20,8,.2);border-radius:2px;
+  color:#1c1408;font-family:'Courier Prime','Courier New',monospace;
+  box-shadow:2px 3px 14px rgba(28,20,8,.24),0 0 0 1px rgba(28,20,8,.06);
+  position:relative;animation:wapp .4s ease both;
+  background-image:
+    radial-gradient(ellipse at 15% 6%,rgba(210,190,140,.2) 0%,transparent 50%),
+    radial-gradient(ellipse at 88% 95%,rgba(160,140,90,.12) 0%,transparent 45%)
+}
+@keyframes wapp{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* Folded corner */
+.win::before{
+  content:'';position:absolute;top:0;right:0;width:0;height:0;z-index:3;pointer-events:none;
+  border-style:solid;border-width:0 20px 20px 0;border-color:transparent #d4c9a8 transparent transparent
+}
+
+/* ── TOOLBAR ── */
+.tbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:5px 10px;background:rgba(28,20,8,.04);border-bottom:1px solid rgba(28,20,8,.1)
+}
+.tbg{display:flex;gap:4px}
+.tbtn{
+  font-family:'Special Elite','Courier New',monospace;font-size:8px;letter-spacing:1px;
+  color:#5c4a28;background:rgba(28,20,8,.06);border:1px solid rgba(28,20,8,.18);
+  border-radius:1px;padding:3px 8px;cursor:pointer;transition:all .15s;
+  box-shadow:0 2px 0 rgba(28,20,8,.15)
+}
+.tbtn:hover{color:#1c1408;border-color:rgba(28,20,8,.35)}
+.tbtn.on{background:#1c1408;color:#ece4cc;border-color:#1c1408;box-shadow:0 1px 0 rgba(28,20,8,.35)}
+.tbar-mid{font-family:'Special Elite','Courier New',monospace;font-size:7.5px;letter-spacing:3px;color:#9c8060}
+
+/* ── HEADER ── */
+.hdr{
+  text-align:center;padding:18px 16px 14px;border-bottom:1px solid rgba(28,20,8,.12);position:relative
+}
+.hdr::after{
+  content:'';position:absolute;bottom:0;left:14%;right:14%;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(28,20,8,.18),transparent)
+}
+
+/* Eye seal */
+.hseal{width:60px;height:60px;margin:0 auto 12px;position:relative}
+.hseal svg{width:100%;height:100%;animation:sealp 4s ease-in-out infinite}
+@keyframes sealp{0%,100%{opacity:.75}50%{opacity:1}}
+
+.htag{font-family:'Special Elite',monospace;font-size:7px;letter-spacing:4px;color:#9c8060;margin-bottom:5px;text-transform:uppercase}
+.htitle{font-family:'Special Elite',monospace;font-size:15px;color:#1c1408;letter-spacing:2px;line-height:1.2;margin-bottom:2px}
+.hsub{font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:3px;color:#9c8060;margin-bottom:9px}
+
+/* ID stamp display */
+.hid-wrap{
+  display:inline-block;padding:3px 16px;
+  border:1px solid rgba(139,26,26,.35);border-radius:1px;background:#f2ebd4;
+  font-family:'Special Elite',monospace;font-size:13px;letter-spacing:4px;color:#8B1A1A;
+  min-width:90px;transition:all .2s
+}
+
+/* ── TABS ── */
+.tabs{display:flex;border-bottom:1px solid rgba(28,20,8,.12);background:rgba(28,20,8,.03)}
+.stab{
+  flex:1;text-align:center;padding:7px 2px;
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:.5px;
+  color:#9c8060;cursor:pointer;transition:all .15s;border-bottom:2px solid transparent;user-select:none
+}
+.stab:hover{color:#5c4a28;background:rgba(28,20,8,.04)}
+.stab.on{color:#1c1408;border-bottom-color:#1c1408;background:rgba(28,20,8,.05)}
+.stab .tn{font-size:5.5px;display:block;opacity:.45;margin-bottom:1px}
+
+/* ── PANES ── */
+.spane{display:none;padding:13px 13px 10px;animation:pfade .2s ease}
+.spane.on{display:block}
+@keyframes pfade{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── FORM ── */
+.frow{margin-bottom:9px}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:9px}
+.flbl{
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:1.5px;
+  color:#9c8060;text-transform:uppercase;margin-bottom:4px;display:block
+}
+.finp,.fsel,.farea{
+  width:100%;background:#f2ebd4;border:1px solid rgba(28,20,8,.18);
+  border-radius:1px;color:#1c1408;font-family:'Courier Prime','Courier New',monospace;
+  font-size:13px;padding:6px 9px;outline:none;transition:border-color .15s
+}
+.finp:focus,.fsel:focus,.farea:focus{border-color:#1c1408;background:#f5eedb}
+.fsel{
+  appearance:none;-webkit-appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235c4a28'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 8px center;padding-right:26px;cursor:pointer;
+  background-color:#f2ebd4
+}
+.fsel option{background:#f2ebd4;color:#1c1408}
+.fsel optgroup{background:#f2ebd4;color:#9c8060}
+.farea{resize:vertical;min-height:56px;line-height:1.55}
+
+/* Info blurb */
+.infoblurb{
+  margin-top:5px;padding:6px 10px;
+  background:#f5eedb;border:1px solid rgba(28,20,8,.12);border-left:2px solid #8B1A1A;
+  font-size:11px;color:#5c4a28;font-style:italic;line-height:1.55;display:none
+}
+.infoblurb.vis{display:block}
+
+/* Custom panel */
+.cpnl{
+  margin-top:5px;padding:8px;background:#f5eedb;
+  border:1px solid rgba(28,20,8,.12);border-radius:1px;display:none
+}
+.cpnl.vis{display:block}
+
+/* ── SECTION HEADER ── */
+.sh{
+  font-family:'Special Elite',monospace;font-size:7.5px;letter-spacing:2.5px;color:#9c8060;
+  text-transform:uppercase;margin:12px 0 8px;padding-bottom:4px;
+  border-bottom:1px dashed rgba(28,20,8,.15);display:flex;align-items:center;gap:6px
+}
+.sh::before{content:'—';font-size:8px;color:#8B1A1A;opacity:.55}
+.sh-note{font-size:7px;font-weight:normal;text-transform:none;letter-spacing:.5px;margin-left:auto;opacity:.55}
+.ctog{
+  font-size:8px;font-family:'Special Elite',monospace;color:#8B1A1A;
+  cursor:pointer;opacity:.55;margin-left:4px;transition:opacity .15s
+}
+.ctog:hover{opacity:1}
+
+/* ── STAT TICKS ── */
+.stat-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.stat-nm{font-family:'Special Elite',monospace;font-size:8px;letter-spacing:.7px;color:#5c4a28;min-width:94px;flex-shrink:0}
+.ticks{display:flex;gap:2px;flex:1}
+.tick{
+  flex:1;height:8px;background:#f2ebd4;border:1px solid rgba(28,20,8,.2);
+  border-radius:0;cursor:pointer;transition:background .1s
+}
+.tick.on{background:#5c4a28;border-color:#5c4a28}
+.tick.on.hi{background:#1c1408;border-color:#1c1408}
+.stat-v{font-family:'Special Elite',monospace;font-size:10px;color:#8B1A1A;min-width:16px;text-align:right}
+
+/* ── PILLS ── */
+.pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.pill{
+  font-size:11px;padding:3px 10px;background:#f2ebd4;
+  border:1px solid rgba(28,20,8,.18);border-radius:1px;
+  cursor:pointer;color:#5c4a28;transition:all .15s;
+  font-family:'Courier Prime',monospace
+}
+.pill:hover{border-color:rgba(28,20,8,.38);color:#1c1408}
+.pill.sel{background:#1c1408;border-color:#1c1408;color:#ece4cc}
+
+/* ── FOOTER ── */
+.ftr{
+  padding:11px 13px;border-top:1px solid rgba(28,20,8,.12);
+  background:rgba(28,20,8,.03);display:flex;gap:8px;align-items:center
+}
+.btn-main{
+  flex:1;padding:9px;font-family:'Special Elite',monospace;font-size:10px;letter-spacing:2px;
+  color:#ece4cc;background:#1c1408;border:1px solid #1c1408;border-radius:1px;
+  cursor:pointer;transition:all .12s;box-shadow:0 3px 0 rgba(28,20,8,.4)
+}
+.btn-main:hover{background:#2c2418;box-shadow:0 2px 0 rgba(28,20,8,.4);transform:translateY(1px)}
+.btn-main:active{box-shadow:0 0 0;transform:translateY(3px)}
+.btn-sec{
+  padding:9px 12px;font-family:'Special Elite',monospace;font-size:8px;letter-spacing:1.5px;
+  color:#9c8060;background:#f2ebd4;border:1px solid rgba(28,20,8,.18);
+  border-radius:1px;cursor:pointer;transition:all .12s;box-shadow:0 2px 0 rgba(28,20,8,.15)
+}
+.btn-sec:hover{color:#5c4a28;border-color:rgba(28,20,8,.35);box-shadow:0 1px 0 rgba(28,20,8,.15);transform:translateY(1px)}
+
+.shake{animation:shk .3s ease}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+</style>
+</head>
+<body>
+<div class="win" id="win">
+
+<!-- TOOLBAR -->
+<div class="tbar">
+  <div class="tbg">
+    <button class="tbtn on" id="btn_en" onclick="TPN.ln('en')">EN</button>
+    <button class="tbtn" id="btn_th" onclick="TPN.ln('th')">TH</button>
+  </div>
+  <div class="tbar-mid" id="tbar_mid">— PROMISED NEVERLAND —</div>
+  <div class="tbg">
+    <button class="tbtn" id="btn_reset_tb" onclick="TPN.reset()" style="letter-spacing:.5px">CLEAR</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hseal">
+    <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="27" stroke="#1c1408" stroke-width="1" opacity=".22"/>
+      <circle cx="30" cy="30" r="23" stroke="#1c1408" stroke-width=".5" stroke-dasharray="2 3" opacity=".18"/>
+      <path d="M10 30 Q20 15 30 15 Q40 15 50 30 Q40 45 30 45 Q20 45 10 30Z" stroke="#1c1408" stroke-width="1.2" fill="none" opacity=".65"/>
+      <circle cx="30" cy="30" r="8.5" stroke="#1c1408" stroke-width="1" fill="none" opacity=".8"/>
+      <circle cx="30" cy="30" r="4" fill="#1c1408" opacity=".75"/>
+      <circle cx="32.2" cy="27.8" r="1.3" fill="#ece4cc" opacity=".55"/>
+      <line x1="22" y1="19" x2="20" y2="14" stroke="#1c1408" stroke-width=".7" opacity=".3"/>
+      <line x1="26" y1="16" x2="25" y2="11" stroke="#1c1408" stroke-width=".7" opacity=".3"/>
+      <line x1="30" y1="15" x2="30" y2="10" stroke="#1c1408" stroke-width=".7" opacity=".3"/>
+      <line x1="34" y1="16" x2="35" y2="11" stroke="#1c1408" stroke-width=".7" opacity=".3"/>
+      <line x1="38" y1="19" x2="40" y2="14" stroke="#1c1408" stroke-width=".7" opacity=".3"/>
+    </svg>
+  </div>
+  <div class="htag" id="htag">GRACE FIELD HOUSE — CASE FILE</div>
+  <div class="htitle" id="htitle">THE PROMISED NEVERLAND</div>
+  <div class="hsub" id="hsub">CHARACTER REGISTRATION</div>
+  <div class="hid-wrap" id="hid_display">— — — — —</div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="stab on" onclick="TPN.tb(0)"><span class="tn">I</span><span id="t0">IDENTITY</span></div>
+  <div class="stab" onclick="TPN.tb(1)"><span class="tn">II</span><span id="t1">PROFILE</span></div>
+  <div class="stab" onclick="TPN.tb(2)"><span class="tn">III</span><span id="t2">SCORES</span></div>
+  <div class="stab" onclick="TPN.tb(3)"><span class="tn">IV</span><span id="t3">SKILLS</span></div>
+  <div class="stab" onclick="TPN.tb(4)"><span class="tn">V</span><span id="t4">DOSSIER</span></div>
+</div>
+
+<!-- ═══ I: IDENTITY ═══ -->
+<div class="spane on" id="pane0">
+  <div class="frow2">
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_idnum">Registration No.</label>
+      <input class="finp" id="s_idnum" type="text" placeholder="e.g. 63194" oninput="TPN.onIdNum()"/>
+    </div>
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_name">Full Name</label>
+      <input class="finp" id="s_name" type="text" placeholder="First name..."/>
+    </div>
+  </div>
+  <div class="frow2">
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_gender">Gender</label>
+      <select class="fsel" id="s_gender">
+        <option value="">— Select —</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Non-binary">Non-binary</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+    </div>
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_age">Age</label>
+      <input class="finp" id="s_age" type="text" placeholder="e.g. 11"/>
+    </div>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_house">Farm / House of Origin</label>
+    <select class="fsel" id="s_house">
+      <option value="">— Select —</option>
+      <optgroup label="─ Grace Field Network ─">
+        <option value="Grace Field House (B06-32)">Grace Field House (B06-32)</option>
+        <option value="Grand Valley Farm">Grand Valley Farm</option>
+        <option value="Goodwill Ridge Farm">Goodwill Ridge Farm</option>
+        <option value="Glory Bell">Glory Bell</option>
+      </optgroup>
+      <optgroup label="─ Special Facilities ─">
+        <option value="Lambda 7214 (Research Facility)">Lambda 7214 (Research Facility)</option>
+        <option value="Goldy Pond (Hunting Ground)">Goldy Pond (Hunting Ground)</option>
+      </optgroup>
+      <optgroup label="─ Outside the System ─">
+        <option value="Free Range (No Farm)">Free Range (No Farm)</option>
+        <option value="Demon World (Outside Farms)">Demon World (Outside Farms)</option>
+        <option value="Human World (Beyond the Walls)">Human World (Beyond the Walls)</option>
+        <option value="custom">Custom...</option>
+      </optgroup>
+    </select>
+    <div class="cpnl" id="cpnl_house">
+      <input class="finp" id="s_house_c" type="text" placeholder="Custom farm / location..."/>
+    </div>
+    <div class="infoblurb" id="house_info"></div>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_appearance">Physical Appearance</label>
+    <textarea class="farea" id="s_appearance" rows="3" placeholder="Hair, eyes, height, build, distinguishing marks..."></textarea>
+  </div>
+</div>
+
+<!-- ═══ II: PROFILE ═══ -->
+<div class="spane" id="pane1">
+  <div class="frow">
+    <label class="flbl" id="l_role">Role / Identity</label>
+    <select class="fsel" id="s_role">
+      <option value="">— Select —</option>
+      <optgroup label="─ Children ─">
+        <option value="Orphan (Standard Cattle)">Orphan (Standard Cattle)</option>
+        <option value="Orphan (Premium Quality)">Orphan (Premium Quality)</option>
+        <option value="Escaped Child">Escaped Child</option>
+        <option value="Lambda Test Subject">Lambda Test Subject</option>
+      </optgroup>
+      <optgroup label="─ Adults ─">
+        <option value="House Mama">House Mama</option>
+        <option value="Ratri Clan Member">Ratri Clan Member</option>
+        <option value="Human Ally (Outside)">Human Ally (Outside)</option>
+        <option value="Minerva Contact">Minerva Contact</option>
+      </optgroup>
+      <optgroup label="─ Demons ─">
+        <option value="Demon (Standard)">Demon (Standard)</option>
+        <option value="Demon (Noble)">Demon (Noble)</option>
+        <option value="Demon (Ancient / Archaic)">Demon (Ancient / Archaic)</option>
+        <option value="custom">Custom...</option>
+      </optgroup>
+    </select>
+    <div class="cpnl" id="cpnl_role">
+      <input class="finp" id="s_role_c" type="text" placeholder="Custom role..."/>
+    </div>
+    <div class="infoblurb" id="role_info"></div>
+  </div>
+  <div class="frow2">
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_alliance">Alliance / Group</label>
+      <select class="fsel" id="s_alliance">
+        <option value="">— Independent —</option>
+        <option value="Grace Field Group (Emma's)">Grace Field Group</option>
+        <option value="Norman's Lambda Group">Norman's Lambda Group</option>
+        <option value="Goldy Pond Survivors">Goldy Pond Survivors</option>
+        <option value="Mujika &amp; Sonju">Mujika &amp; Sonju</option>
+        <option value="Ratri Clan Forces">Ratri Clan Forces</option>
+        <option value="Imperial Household (Demons)">Imperial Household</option>
+        <option value="Minerva Network">Minerva Network</option>
+        <option value="Free / No Allegiance">Free / No Allegiance</option>
+        <option value="custom">Custom...</option>
+      </select>
+    </div>
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_status">Current Status</label>
+      <select class="fsel" id="s_status">
+        <option value="">— Unknown —</option>
+        <option value="Active (In Farm)">Active (In Farm)</option>
+        <option value="Escaped">Escaped</option>
+        <option value="On the Run">On the Run</option>
+        <option value="In Hiding">In Hiding</option>
+        <option value="Recaptured">Recaptured</option>
+        <option value="Deceased">Deceased</option>
+        <option value="Unknown">Unknown</option>
+      </select>
+    </div>
+  </div>
+  <div class="cpnl" id="cpnl_alliance">
+    <input class="finp" id="s_alliance_c" type="text" placeholder="Custom group name..."/>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_background">Background / History</label>
+    <textarea class="farea" id="s_background" rows="4" placeholder="Origin story, defining moments, what shaped them..."></textarea>
+  </div>
+</div>
+
+<!-- ═══ III: SCORES ═══ -->
+<div class="spane" id="pane2">
+  <div class="sh"><span id="sh_scores">Assessment Results</span><span class="sh-note" id="sh_scores_note">— click ticks to set</span></div>
+  <div id="stat_block"></div>
+  <div class="sh"><span id="sh_rank">Academic Standing</span></div>
+  <div class="frow2">
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_rank">Rank Among Peers</label>
+      <select class="fsel" id="s_rank">
+        <option value="">— Select —</option>
+        <option value="Top 3 (Elite)">Top 3 — Elite</option>
+        <option value="Top 10">Top 10</option>
+        <option value="Above Average">Above Average</option>
+        <option value="Average">Average</option>
+        <option value="Below Average">Below Average</option>
+        <option value="Last Place">Last Place</option>
+        <option value="N/A">N/A (Not a child)</option>
+      </select>
+    </div>
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_years">Years at Farm</label>
+      <input class="finp" id="s_years" type="text" placeholder="e.g. 6 years"/>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ IV: SKILLS ═══ -->
+<div class="spane" id="pane3">
+  <div class="sh"><span id="sh_sk">Capabilities &amp; Traits</span><span class="ctog" id="ctog_sk" onclick="TPN.tc('sk')">[+ custom]</span></div>
+  <div class="pills" id="skill_pills"></div>
+  <div class="cpnl" id="cpnl_sk">
+    <div style="display:flex;gap:6px;margin-bottom:6px">
+      <input class="finp" id="s_sk_inp" type="text" placeholder="Custom skill / trait..." style="flex:1"/>
+      <button class="tbtn" onclick="TPN.add()" style="font-size:9px;white-space:nowrap;padding:4px 10px">+ ADD</button>
+    </div>
+    <div class="pills" id="custom_sk_list"></div>
+  </div>
+  <div class="sh"><span id="sh_goal">Driving Motivation</span></div>
+  <div class="frow">
+    <label class="flbl" id="l_goal">Primary Goal</label>
+    <select class="fsel" id="s_goal">
+      <option value="">— Select —</option>
+      <option value="Escape the Farm">Escape the Farm</option>
+      <option value="Save All Children">Save All Children</option>
+      <option value="Reach the Human World">Reach the Human World</option>
+      <option value="Find William Minerva's Shelter">Find Minerva's Shelter</option>
+      <option value="Destroy the Farm System">Destroy the Farm System</option>
+      <option value="Survive at Any Cost">Survive at Any Cost</option>
+      <option value="Protect Those I Love">Protect Those I Love</option>
+      <option value="Seek Revenge">Seek Revenge</option>
+      <option value="Understand the Demon World">Understand the Demon World</option>
+      <option value="Change the Promise Between Worlds">Change the Promise</option>
+      <option value="custom">Custom...</option>
+    </select>
+    <div class="cpnl" id="cpnl_goal">
+      <input class="finp" id="s_goal_c" type="text" placeholder="Custom motivation..."/>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ V: DOSSIER ═══ -->
+<div class="spane" id="pane4">
+  <div class="frow2">
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_alias">Known Alias</label>
+      <input class="finp" id="s_alias" type="text" placeholder="Nickname, code name..."/>
+    </div>
+    <div class="frow" style="margin:0">
+      <label class="flbl" id="l_fate">Narrative Fate</label>
+      <select class="fsel" id="s_fate">
+        <option value="">— Unknown —</option>
+        <option value="The One Who Saves">The One Who Saves</option>
+        <option value="The Strategist">The Strategist</option>
+        <option value="The Sacrifice">The Sacrifice</option>
+        <option value="The Betrayer (Redeemed)">The Betrayer (Redeemed)</option>
+        <option value="The Survivor">The Survivor</option>
+        <option value="The Avenger">The Avenger</option>
+        <option value="The Bridge (Human &amp; Demon)">The Bridge</option>
+        <option value="The Lost One">The Lost One</option>
+        <option value="Fate Unknown">Fate Unknown</option>
+      </select>
+    </div>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_personality">Personality</label>
+    <textarea class="farea" id="s_personality" rows="2" placeholder="Demeanor, core traits, how they act under pressure..."></textarea>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_quote">Their Words</label>
+    <textarea class="farea" id="s_quote" rows="2" placeholder="A line that defines who they are..."></textarea>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_secret">Hidden Truth</label>
+    <textarea class="farea" id="s_secret" rows="2" placeholder="What they hide, what they fear, what only the reader knows..."></textarea>
+  </div>
+  <div class="frow">
+    <label class="flbl" id="l_extra">Additional Notes</label>
+    <textarea class="farea" id="s_extra" rows="2" placeholder="Lore hooks, relationships, unique traits..."></textarea>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="ftr">
+  <button class="btn-sec" id="btn_reset" onclick="TPN.reset()">CLEAR</button>
+  <button class="btn-main" id="btn_confirm" onclick="TPN.send()">✦ SUBMIT DOSSIER</button>
+</div>
+
+</div><!-- .win -->
+
+<script>
+var TPN=(function(){
+'use strict';
+
+/* ── STATE ── */
+var S={ln:'en',skills:[],stats:{int:5,phy:5,agi:5,wil:5,team:5,stl:5}};
+
+/* ── HOUSE LORE ── */
+var HI={
+  'Grace Field House (B06-32)':'The most prestigious farm. Produces premium-quality brains nurtured by meticulous education and care. Home of Emma (63194), Norman (22194), and Ray (81194). Mama Isabella maintained the illusion of family with iron discipline.',
+  'Lambda 7214 (Research Facility)':'A covert facility where children were fed demon flesh to artificially inflate brain quality. Survivors carry secret tattoos and heightened physical abilities — alongside a hidden, ticking cost.',
+  'Goldy Pond (Hunting Ground)':'An isolated enclosure where noble demons hunted children for sport. The children who survived its horrors became the fiercest warriors in the escape movement.',
+  'Free Range (No Farm)':'Raised entirely outside the farm system — in the human world beyond the walls, or surviving wild in the demon world. They never knew the life of a "cattle child."',
+  'Demon World (Outside Farms)':'Born and living in the demon world beyond the farms — shaped by ancient laws, hierarchies, and secrets that most humans will never witness.'
+};
+
+/* ── ROLE LORE ── */
+var RI={
+  'Orphan (Standard Cattle)':'Raised without knowing their fate — fed, educated, cared for until "adoption." Most never learn the truth. The perfect childhood, built on a perfect lie.',
+  'Orphan (Premium Quality)':'High-IQ children reserved for demon connoisseurs. Their exceptional minds make their brains the rarest delicacy. Emma, Norman, and Ray were all marked as this. The highest prize, and the first targets.',
+  'Escaped Child':'They shattered the illusion and chose to run. Every hour outside the walls is borrowed. Every breath is defiance.',
+  'Lambda Test Subject':'Subjected to experimental enhancement via demon flesh consumption. Faster. Sharper. Stronger. But carrying a biological timer that no one yet knows how to stop.',
+  'House Mama':'Former cattle who accepted a bargain — become the caretaker, extend their own life, and deliver the next generation to their fate. A gilded cage, built with their own hands.',
+  'Demon (Ancient / Archaic)':'Ancient demons who discovered a path to sustain their form without consuming humans. Revered as heretics by demon society, treated as legend. Mujika walks this road.',
+  'Ratri Clan Member)':'Heirs to the ancient Promise between worlds. Bound by blood and duty — or by fear — to maintain the barrier between humans and demons. Not all of them chose this.'
+};
+
+/* ── SKILL LIST ── */
+var SKILLS=[
+  'Escape Planning','Trap Setting','Information Gathering',
+  'Combat','Stealth & Concealment','Weapons Handling',
+  'Leadership','Teamwork','Persuasion',
+  'Photographic Memory','Strategic Thinking','Advanced Mathematics',
+  'Disguise / Acting','Medical Treatment','Engineering & Mechanics',
+  'Tracking','Runic Knowledge','Animal Empathy',
+  'Cooking','Scouting','Forgery / Deception'
+];
+
+/* ── STATS ── */
+var STATS=[
+  ['int','Intelligence','สติปัญญา'],
+  ['phy','Physical','ความแข็งแกร่ง'],
+  ['agi','Agility','ความว่องไว'],
+  ['wil','Willpower','เจตจำนง'],
+  ['team','Teamwork','การทำงานเป็นทีม'],
+  ['stl','Stealth','การซ่อนตัว']
+];
+
+/* ── LABELS ── */
+var L={
+  tbar_mid:['— PROMISED NEVERLAND —','— สวรรค์ที่ไม่เคยสัญญา —'],
+  htag:['GRACE FIELD HOUSE — CASE FILE','เกรซ ฟิลด์ เฮาส์ — แฟ้มคดี'],
+  htitle:['THE PROMISED NEVERLAND','เดอะ โพรมิสด์ เนฟเวอร์แลนด์'],
+  hsub:['CHARACTER REGISTRATION','ลงทะเบียนตัวละคร'],
+  t0:['IDENTITY','ตัวตน'],t1:['PROFILE','โปรไฟล์'],t2:['SCORES','คะแนน'],
+  t3:['SKILLS','ทักษะ'],t4:['DOSSIER','แฟ้ม'],
+  l_idnum:['Registration No.','หมายเลขทะเบียน'],
+  l_name:['Full Name','ชื่อ'],
+  l_gender:['Gender','เพศ'],
+  l_age:['Age','อายุ'],
+  l_house:['Farm / House of Origin','ฟาร์ม / บ้านต้นกำเนิด'],
+  l_appearance:['Physical Appearance','รูปลักษณ์'],
+  l_role:['Role / Identity','บทบาท / อัตลักษณ์'],
+  l_alliance:['Alliance / Group','กลุ่มพันธมิตร'],
+  l_status:['Current Status','สถานะปัจจุบัน'],
+  l_background:['Background / History','ภูมิหลัง / ประวัติ'],
+  sh_scores:['Assessment Results','ผลการประเมิน'],
+  sh_scores_note:['— click ticks to set','— คลิกเพื่อตั้งค่า'],
+  sh_rank:['Academic Standing','ลำดับวิชาการ'],
+  l_rank:['Rank Among Peers','ลำดับในกลุ่ม'],
+  l_years:['Years at Farm','ปีที่อยู่ในฟาร์ม'],
+  sh_sk:['Capabilities & Traits','ความสามารถ & บุคลิก'],
+  sh_goal:['Driving Motivation','แรงขับเคลื่อน'],
+  l_goal:['Primary Goal','เป้าหมายหลัก'],
+  l_alias:['Known Alias','ชื่อแฝง'],
+  l_fate:['Narrative Fate','ชะตากรรม'],
+  l_personality:['Personality','บุคลิกภาพ'],
+  l_quote:['Their Words','คำพูดประจำตัว'],
+  l_secret:['Hidden Truth','ความจริงที่ซ่อนอยู่'],
+  l_extra:['Additional Notes','หมายเหตุ'],
+  btn_confirm:['✦ SUBMIT DOSSIER','✦ ส่งแฟ้มข้อมูล'],
+  btn_reset:['CLEAR','ล้างข้อมูล']
+};
+
+function g(id){return document.getElementById(id);}
+function gt(k){var a=L[k];return a?a[S.ln==='th'?1:0]:k;}
+
+/* ── INIT ── */
+function init(){
+  buildSkills();
+  buildStats();
+  applyLabels();
+
+  var selCustom={s_house:'cpnl_house',s_role:'cpnl_role',s_alliance:'cpnl_alliance',s_goal:'cpnl_goal'};
+  Object.keys(selCustom).forEach(function(sid){
+    var el=g(sid);if(!el)return;
+    el.addEventListener('change',function(){
+      var cpnl=g(selCustom[sid]);
+      if(cpnl)cpnl.classList.toggle('vis',this.value==='custom');
+      if(sid==='s_house'){
+        var ib=g('house_info'),info=HI[this.value]||'';
+        if(ib){ib.textContent=info;ib.classList.toggle('vis',!!info&&this.value!=='custom');}
+      }
+      if(sid==='s_role'){
+        var ib=g('role_info'),info=RI[this.value]||'';
+        if(ib){ib.textContent=info;ib.classList.toggle('vis',!!info&&this.value!=='custom');}
+      }
+    });
+  });
+}
+
+/* ── ID NUMBER ── */
+function onIdNum(){
+  var v=(g('s_idnum').value||'').trim();
+  var d=g('hid_display');
+  if(d)d.textContent=v||'— — — — —';
+}
+
+/* ── BUILD SKILLS ── */
+function buildSkills(){
+  var el=g('skill_pills');if(!el)return;
+  el.innerHTML='';
+  SKILLS.forEach(function(sk){
+    var p=document.createElement('div');p.className='pill';
+    p.textContent=sk;
+    p.onclick=function(){
+      p.classList.toggle('sel');
+      var i=S.skills.indexOf(sk);
+      if(i>=0)S.skills.splice(i,1);else S.skills.push(sk);
+    };
+    el.appendChild(p);
+  });
+}
+
+/* ── CUSTOM SKILLS ── */
+function add(){
+  var inp=g('s_sk_inp'),v=inp.value.trim();
+  if(!v)return;
+  if(S.skills.indexOf(v)<0)S.skills.push(v);
+  inp.value='';
+  renderCustomSk();
+}
+
+function renderCustomSk(){
+  var el=g('custom_sk_list');el.innerHTML='';
+  S.skills.filter(function(s){return SKILLS.indexOf(s)<0;}).forEach(function(item){
+    var p=document.createElement('div');p.className='pill sel';
+    p.textContent=item+' ×';
+    p.onclick=function(){var i=S.skills.indexOf(item);if(i>=0)S.skills.splice(i,1);renderCustomSk();};
+    el.appendChild(p);
+  });
+}
+
+/* ── STATS ── */
+function buildStats(){
+  var TH=S.ln==='th',blk=g('stat_block');
+  if(!blk)return;blk.innerHTML='';
+  STATS.forEach(function(st){
+    var key=st[0],nm=TH?st[2]:st[1];
+    var row=document.createElement('div');row.className='stat-row';
+    var nd=document.createElement('div');nd.className='stat-nm';nd.textContent=nm;
+    var td=document.createElement('div');td.className='ticks';td.id='tck_'+key;
+    var vd=document.createElement('div');vd.className='stat-v';vd.id='sv_'+key;
+    for(var i=1;i<=10;i++){
+      (function(i){
+        var t=document.createElement('div');
+        t.className='tick'+(S.stats[key]>=i?' on':'')+(i>=9&&S.stats[key]>=i?' hi':'');
+        t.onclick=function(){setStat(key,i);};
+        td.appendChild(t);
+      })(i);
+    }
+    vd.textContent=S.stats[key];
+    row.appendChild(nd);row.appendChild(td);row.appendChild(vd);
+    blk.appendChild(row);
+  });
+}
+
+function setStat(key,val){
+  S.stats[key]=val;
+  var tc=g('tck_'+key).children;
+  for(var i=0;i<10;i++){tc[i].className='tick'+(val>i?' on':'')+(i>=8&&val>i?' hi':'');}
+  g('sv_'+key).textContent=val;
+}
+
+/* ── LABELS ── */
+function applyLabels(){
+  ['tbar_mid','htag','htitle','hsub',
+   't0','t1','t2','t3','t4',
+   'l_idnum','l_name','l_gender','l_age','l_house','l_appearance',
+   'l_role','l_alliance','l_status','l_background',
+   'sh_scores','sh_scores_note','sh_rank','l_rank','l_years',
+   'sh_sk','sh_goal','l_goal',
+   'l_alias','l_fate','l_personality','l_quote','l_secret','l_extra'
+  ].forEach(function(k){var el=g(k);if(el)el.textContent=gt(k);});
+  g('btn_confirm').textContent=gt('btn_confirm');
+  g('btn_reset').textContent=gt('btn_reset');
+  buildStats();
+}
+
+/* ── TABS ── */
+function tb(i){
+  document.querySelectorAll('.spane').forEach(function(p,j){p.classList.toggle('on',j===i);});
+  document.querySelectorAll('.stab').forEach(function(t,j){t.classList.toggle('on',j===i);});
+}
+
+/* ── LANGUAGE ── */
+function ln(m){
+  S.ln=m;
+  g('btn_en').classList.toggle('on',m==='en');
+  g('btn_th').classList.toggle('on',m==='th');
+  applyLabels();
+}
+
+/* ── CUSTOM TOGGLE ── */
+function tc(key){var el=g('cpnl_'+key);if(el)el.classList.toggle('vis');}
+
+/* ── RESET ── */
+function reset(){
+  S.skills=[];S.stats={int:5,phy:5,agi:5,wil:5,team:5,stl:5};
+  document.querySelectorAll('.finp,.fsel,.farea').forEach(function(el){
+    if(el.tagName==='SELECT')el.selectedIndex=0;else el.value='';
+  });
+  document.querySelectorAll('.cpnl,.infoblurb').forEach(function(el){el.classList.remove('vis');});
+  document.querySelectorAll('.pill.sel').forEach(function(p){p.classList.remove('sel');});
+  g('custom_sk_list').innerHTML='';
+  g('hid_display').textContent='— — — — —';
+  buildStats();tb(0);
+}
+
+/* ── SEND ── */
+function send(){
+  var v=function(id){var el=g(id);return el?el.value.trim():'';};
+  var cv=function(sid,cid){return v(sid)==='custom'?v(cid):v(sid);};
+
+  var selPills=[];
+  document.querySelectorAll('#skill_pills .pill.sel').forEach(function(p){selPills.push(p.textContent);});
+  var allSkills=selPills.concat(S.skills.filter(function(s){return selPills.indexOf(s)<0;}));
+
+  var out={
+    lang:S.ln,
+    id_number:v('s_idnum'),
+    name:v('s_name'),
+    age:v('s_age'),
+    gender:v('s_gender'),
+    house:cv('s_house','s_house_c'),
+    appearance:v('s_appearance'),
+    role:cv('s_role','s_role_c'),
+    alliance:v('s_alliance')==='custom'?v('s_alliance_c'):v('s_alliance'),
+    status:v('s_status'),
+    background:v('s_background'),
+    stats:S.stats,
+    rank:v('s_rank'),
+    years_at_farm:v('s_years'),
+    skills:allSkills,
+    goal:cv('s_goal','s_goal_c'),
+    alias:v('s_alias'),
+    fate:v('s_fate'),
+    personality:v('s_personality'),
+    quote:v('s_quote'),
+    secret:v('s_secret'),
+    extra:v('s_extra')
+  };
+
+  var txt='<'+'TPN_CONFIRM>'+JSON.stringify(out,null,2)+'<'+'/TPN_CONFIRM>';
+  setTimeout(function(){
+    try{
+      var w=window.parent||window;
+      var ta=w.document.getElementById('send_textarea')||w.document.querySelector('textarea.chat-input,#textareaAutosize,textarea');
+      if(ta){
+        var d=Object.getOwnPropertyDescriptor(w.HTMLTextAreaElement.prototype,'value');
+        if(d&&d.set)d.set.call(ta,txt);else ta.value=txt;
+        ta.dispatchEvent(new Event('input',{bubbles:true}));
+        setTimeout(function(){
+          try{
+            var sb=w.document.getElementById('send_but');
+            if(sb)sb.click();
+            else ta.dispatchEvent(new KeyboardEvent('keydown',{key:'Enter',keyCode:13,bubbles:true}));
+          }catch(e){}
+        },150);
+        return;
+      }
+    }catch(e){}
+    try{navigator.clipboard.writeText(txt);}catch(e){}
+  },450);
+}
+
+return{init:init,ln:ln,tb:tb,tc:tc,add:add,send:send,reset:reset,onIdNum:onIdNum};
+})();
+
+window.addEventListener('DOMContentLoaded',TPN.init);
+</script>
+</body>
+</html>

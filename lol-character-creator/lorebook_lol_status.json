@@ -1,0 +1,82 @@
+{
+  "spec": "lorebook",
+  "spec_version": "3",
+  "name": "LoL Runeterra Status System",
+  "description": "Lorebook for the LoL Runeterra Status Tracker widget. Controls how the AI outputs and updates character status data.",
+  "scan_depth": 4,
+  "token_budget": 2048,
+  "recursive_scanning": false,
+  "extensions": {},
+  "entries": [
+    {
+      "id": 0,
+      "keys": ["<LOL_STATUS>", "LOL_STATUS"],
+      "secondary_keys": [],
+      "comment": "LOL_STATUS — Output Format & Tag",
+      "content": "When asked to update the character status tracker, output the full updated JSON wrapped in the tag exactly as shown — no code fences, no extra text around the tag:\n<LOL_STATUS>\n{JSON}\n</LOL_STATUS>\n\nAlways output the COMPLETE JSON every time — never partial updates. The widget replaces the entire state on each render.",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 200,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false
+    },
+    {
+      "id": 1,
+      "keys": ["<LOL_CRAFT>", "LOL_CRAFT", "crafting", "craft"],
+      "secondary_keys": [],
+      "comment": "LOL_CRAFT — Crafting Event Handler",
+      "content": "When you receive a message containing <LOL_CRAFT>{\"ingredients\":[...],\"intent\":\"...\"}</LOL_CRAFT>:\n1. Evaluate the ingredients + intent narratively. Consider the character's region, skills, and available tools.\n2. Assign a quality rating: excellent / good / ok / bad / failed.\n3. Deduct used ingredients from inventory quantities. Remove items with qty 0.\n4. If quality is not 'failed', add the crafted item to inventory or equipment as appropriate.\n5. Add a new entry to the recipes array with a unique incrementing id (never reuse deleted IDs).\n6. Output the full updated <LOL_STATUS>{...}</LOL_STATUS> block.\n7. Narrate the crafting outcome briefly in character (1-3 sentences).",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 200,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false
+    },
+    {
+      "id": 2,
+      "keys": ["<LOL_RECIPE_DELETE>", "LOL_RECIPE_DELETE"],
+      "secondary_keys": [],
+      "comment": "LOL_RECIPE_DELETE — Recipe Deletion Handler",
+      "content": "When you receive a message containing <LOL_RECIPE_DELETE>{\"recipe_id\":N,\"recipe_name\":\"...\"}</LOL_RECIPE_DELETE>:\n1. Remove the recipe with the matching recipe_id from the recipes array.\n2. Output the full updated <LOL_STATUS>{...}</LOL_STATUS> block.\n3. Confirm the deletion in one short sentence in character.",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 200,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false
+    },
+    {
+      "id": 3,
+      "keys": ["status tracker", "update status", "status update", "สถานะ", "อัพเดท"],
+      "secondary_keys": [],
+      "comment": "LOL_STATUS — JSON Schema Reference",
+      "content": "Full JSON schema for <LOL_STATUS>:\n{\n  \"lang\": \"en\",\n  \"region\": \"demacia\",\n  \"theme_color\": \"#4A70B0\",\n  \"name\": \"string\",\n  \"age\": \"string\",\n  \"gender\": \"string\",\n  \"background\": \"string\",\n  \"goal\": \"string\",\n  \"hp\": { \"cur\": 85, \"max\": 100 },\n  \"mana\": { \"cur\": 60, \"max\": 80 },\n  \"conditions\": [\"exhausted\"],\n  \"injuries\": [\"cut on right arm\"],\n  \"abilities\": [\n    { \"name\": \"string\", \"rank\": \"S|A|B|C|D\", \"desc\": \"string\" }\n  ],\n  \"inventory\": [\n    { \"name\": \"string\", \"qty\": 1, \"type\": \"Material|Consumable|Key|Catalyst|Other\", \"desc\": \"string\" }\n  ],\n  \"equipment\": [\n    { \"slot\": \"Main Hand|Off Hand|Armor|Head|Feet|Accessory\", \"name\": \"string\", \"condition\": \"pristine|good|worn|damaged|broken\", \"desc\": \"string\" }\n  ],\n  \"recipes\": [\n    { \"id\": 1, \"name\": \"string\", \"ingredients\": [\"Item ×qty\"], \"result\": \"string\", \"quality\": \"excellent|good|ok|bad|failed\", \"notes\": \"string\" }\n  ]\n}",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 190,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false
+    },
+    {
+      "id": 4,
+      "keys": ["region", "runeterra", "demacia", "noxus", "freljord", "ionia", "piltover", "zaun", "shurima", "ixtal", "targon", "camavor", "shadow isles", "bilgewater", "bandle", "void"],
+      "secondary_keys": [],
+      "comment": "LOL_STATUS — Region & Behavior Rules",
+      "content": "Valid regions and their theme colors:\ndemacia=#4A70B0, noxus=#9B2020, freljord=#5FA8C8, ionia=#9870C0, piltover=#D4A830, zaun=#4A8A60, shurima=#C8A84B, ixtal=#3A8A50, targon=#7A8EC8, camavor=#A83848, shadow_isles=#2A8060, bilgewater=#C87840, bandle=#D4B870, void=#8A4AC8.\n\nAI behavior rules:\n- conditions = status effects (poisoned, exhausted, cursed). injuries = physical wounds (broken arm, arrow wound). Keep them separate.\n- HP/Mana: update cur after combat, healing, or ability use. Never exceed max.\n- Equipment condition degrades with use: pristine → good → worn → damaged → broken.\n- Inventory quantities must be accurate — subtract consumed items, add found/crafted items.\n- Output <LOL_STATUS> whenever status changes meaningfully: after combat, crafting, finding items, healing, resting, etc.\n- If region is not set, default to wanderer with color #C89B3C.",
+      "constant": false,
+      "selective": false,
+      "insertion_order": 190,
+      "enabled": true,
+      "position": "before_char",
+      "extensions": {},
+      "use_regex": false
+    }
+  ]
+}

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&family=Chonburi&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Spectral','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --dc:#E0904A;--dc-rgb:224,144,74;
+  --gold:#C0A050;--tx:#E4DCF2;--tx2:#8F84B8;--mu:#463F6A;
+  --bg:#050206;--pan:#0F0910;--pan2:#180F1C;--pan3:#221629;
+  --bd:rgba(192,160,80,.2);--bd2:rgba(255,255,255,.04);
+  --r:10px;--r2:4px;--fh:'Cinzel Decorative',serif;--fth:'Chonburi','Noto Serif Thai',serif;
+}
+@keyframes mnspin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+#mnwrap{max-width:440px;margin:12px auto;position:relative}
+#mnwrap::before{content:'';position:absolute;inset:0;z-index:0;border-radius:var(--r);pointer-events:none;
+  box-shadow:0 0 0 1px rgba(var(--dc-rgb),.5),0 0 26px 3px rgba(var(--dc-rgb),.4),0 0 48px 9px rgba(var(--dc-rgb),.15);
+  animation:mnaura 3s ease-in-out infinite}
+@keyframes mnaura{0%,100%{opacity:.75}50%{opacity:1}}
+#mnwrap.critical::before{animation:mnauracrit 1.3s ease-in-out infinite}
+@keyframes mnauracrit{0%,100%{opacity:.65}50%{opacity:1}}
+#mn{position:relative;z-index:1;background:
+    radial-gradient(ellipse 140% 60% at 50% -10%,rgba(var(--dc-rgb),.2),transparent 60%),
+    radial-gradient(ellipse 100% 60% at 50% 108%,rgba(0,0,0,.55),transparent 60%),
+    linear-gradient(170deg,var(--pan) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:var(--r);overflow:hidden;
+  box-shadow:0 26px 76px rgba(0,0,0,.85),inset 0 0 0 1px rgba(192,160,80,.05),inset 0 0 60px rgba(0,0,0,.55);
+  animation:mni .4s cubic-bezier(.2,.8,.3,1.2) both}
+@keyframes mni{from{opacity:0;transform:translateY(-10px) scale(.97)}to{opacity:1;transform:none}}
+#mn-nebula{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.5;filter:blur(8px);
+  background:radial-gradient(ellipse 60% 42% at 50% 0%,rgba(var(--dc-rgb),.32),transparent 70%),
+    radial-gradient(ellipse 55% 40% at 15% 95%,rgba(0,0,0,.4),transparent 70%)}
+#mn::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.4px 1.4px at 12% 18%,rgba(228,220,242,.7),transparent),
+    radial-gradient(1px 1px at 28% 62%,rgba(228,220,242,.45),transparent),
+    radial-gradient(1.6px 1.6px at 46% 12%,rgba(228,220,242,.6),transparent),
+    radial-gradient(1px 1px at 63% 44%,rgba(228,220,242,.35),transparent),
+    radial-gradient(1.3px 1.3px at 78% 22%,rgba(228,220,242,.65),transparent),
+    radial-gradient(1px 1px at 88% 58%,rgba(228,220,242,.4),transparent),
+    radial-gradient(1.5px 1.5px at 20% 82%,rgba(228,220,242,.5),transparent),
+    radial-gradient(1px 1px at 55% 88%,rgba(228,220,242,.35),transparent);
+  animation:mntwinkle 5s ease-in-out infinite}
+@keyframes mntwinkle{0%,100%{opacity:.35}50%{opacity:.85}}
+.mn-ember{position:absolute;width:2.4px;height:2.4px;border-radius:50%;background:var(--dc);
+  box-shadow:0 0 7px 1.6px var(--dc);opacity:0;pointer-events:none;z-index:1;bottom:6%;animation:mnember 6s ease-in infinite}
+@keyframes mnember{0%{opacity:0;transform:translate(0,0)}8%{opacity:.9}75%{opacity:.4}100%{opacity:0;transform:translate(var(--ex,10px),-280px)}}
+.mn-corner{position:absolute;width:40px;height:40px;z-index:2;opacity:.85;pointer-events:none}
+.mn-corner.tl{top:7px;left:7px}
+.mn-corner.tr{top:7px;right:7px;transform:scaleX(-1)}
+.mn-corner.bl{bottom:7px;left:7px;transform:scaleY(-1)}
+.mn-corner.br{bottom:7px;right:7px;transform:scale(-1,-1)}
+.mn-corner path,.mn-corner circle{stroke:var(--dc)}
+.mn-corner circle{fill:var(--dc)}
+
+#mn-lang{position:absolute;top:12px;right:13px;z-index:3;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#mn-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:4px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700;transition:all .2s}
+#mn-lang b.on{color:#fff;background:linear-gradient(135deg,var(--dc),#6A2020);box-shadow:0 0 10px -2px var(--dc)}
+
+#mn-head{position:relative;z-index:1;padding:22px 24px 4px;text-align:center;cursor:pointer;user-select:none}
+#mn-eyebrow{font-family:var(--fh);font-size:9px;letter-spacing:3px;color:var(--tx2);text-transform:uppercase}
+[lang-mode="th"] #mn-eyebrow{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:1px}
+#mn-title{font-size:19px;letter-spacing:1.6px;margin-top:6px;position:relative;
+  background:linear-gradient(100deg,var(--tx) 12%,#fff 30%,var(--dc) 52%,#fff 72%,var(--tx) 88%);
+  background-size:260% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:mnshimmer 5.5s linear infinite;filter:drop-shadow(0 0 16px rgba(var(--dc-rgb),.55))}
+#mn-title[lang-mode="en"]{font-family:var(--fh)}
+#mn-title[lang-mode="th"]{font-family:var(--fth);font-size:17px;letter-spacing:.5px}
+@keyframes mnshimmer{0%{background-position:0% center}100%{background-position:260% center}}
+#mn-subtitle{font-size:10.5px;font-style:italic;color:var(--tx2);margin-top:5px}
+[lang-mode="th"] #mn-subtitle{font-family:'Noto Serif Thai',serif;font-style:normal}
+#mn-chev{position:absolute;bottom:2px;right:24px;font-size:9px;color:var(--mu);transition:transform .3s}
+#mnwrap.closed #mn-chev{transform:rotate(180deg)}
+#mnbody{max-height:1800px;overflow:hidden;transition:max-height .35s ease}
+#mnwrap.closed #mnbody{max-height:0}
+
+/* CENTERPIECE — eye sigil + danger badge */
+#mn-center{position:relative;padding:16px 24px 6px;display:flex;flex-direction:column;align-items:center}
+#mn-eye-wrap{width:76px;height:76px;position:relative}
+@keyframes mneyeglow{0%,100%{filter:drop-shadow(0 0 6px var(--dc))}50%{filter:drop-shadow(0 0 14px var(--dc))}}
+#mn-eye{width:100%;height:100%;animation:mneyeglow 2.8s ease-in-out infinite}
+#mn-iris{transform-origin:38px 38px;animation:mnspin 14s linear infinite}
+#mn-danger-badge{margin-top:12px;display:flex;flex-direction:column;align-items:center;gap:3px}
+#mn-danger-num{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--fh);font-size:22px;color:#fff;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.25),var(--dc) 70%);
+  border:1.5px solid rgba(255,255,255,.5);box-shadow:0 0 20px -1px var(--dc),0 0 36px -6px var(--dc)}
+#mn-danger-tier{font-family:var(--fh);font-size:11px;letter-spacing:2px;color:var(--dc);text-transform:uppercase;margin-top:5px}
+[lang-mode="th"] #mn-danger-tier{font-family:'Noto Serif Thai',serif;font-size:13px;letter-spacing:.3px}
+#mn-danger-lbl{font-size:8.5px;color:var(--tx2);letter-spacing:.6px;text-transform:uppercase}
+[lang-mode="th"] #mn-danger-lbl{font-family:'Noto Serif Thai',serif;text-transform:none;font-size:10px}
+
+#mn-name{font-size:18px;letter-spacing:.6px;margin-top:14px;text-align:center;color:var(--tx);font-family:var(--fh)}
+[lang-mode="th"] #mn-name{font-family:'Noto Serif Thai',serif;font-weight:700}
+#mn-class{display:inline-block;margin-top:8px;font-family:var(--fh);font-size:9px;letter-spacing:1px;
+  padding:4px 11px;border-radius:99px;color:var(--dc);background:rgba(var(--dc-rgb),.12);border:1px solid rgba(var(--dc-rgb),.4)}
+[lang-mode="th"] #mn-class{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+
+.mn-body-inner{position:relative;z-index:1;padding:16px 24px 6px}
+.mn-sec{display:flex;align-items:center;gap:8px;margin:0 0 11px}
+.mn-sec:not(:first-child){margin-top:18px}
+.mn-sec svg{flex-shrink:0}
+.mn-sec .t{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .mn-sec .t{font-family:'Noto Serif Thai',serif;font-size:11.5px;letter-spacing:.3px}
+.mn-sec .ln{flex:1;height:1px;background:linear-gradient(90deg,var(--bd),transparent)}
+.mn-note{font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;background:var(--pan2);
+  border-left:2px solid var(--dc);border-radius:0 var(--r2) var(--r2) 0;padding:10px 13px}
+[lang-mode="th"] .mn-note{font-family:'Noto Serif Thai',serif;font-style:normal}
+.mn-tags{display:flex;flex-wrap:wrap;gap:6px}
+.mn-tag{font-size:11px;color:var(--tx);background:var(--pan2);border:1px solid var(--bd);border-radius:2px;
+  padding:3px 10px;font-style:italic}
+[lang-mode="th"] .mn-tag{font-family:'Noto Serif Thai',serif;font-style:normal}
+
+/* WEAKNESS box */
+#mn-weak-box{border-radius:var(--r2);padding:12px 14px;position:relative;overflow:hidden}
+#mn-weak-box.locked{background:var(--pan2);border:1px dashed var(--bd)}
+#mn-weak-box.unlocked{background:linear-gradient(160deg,var(--pan3),var(--pan2));border:1px solid rgba(var(--dc-rgb),.5);
+  box-shadow:0 0 20px -8px var(--dc)}
+.mn-weak-head{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.mn-weak-head svg{flex-shrink:0}
+.mn-weak-head span{font-family:var(--fh);font-size:9.5px;letter-spacing:1.4px;text-transform:uppercase}
+[lang-mode="th"] .mn-weak-head span{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:.2px}
+#mn-weak-box.locked .mn-weak-head span{color:var(--mu)}
+#mn-weak-box.unlocked .mn-weak-head span{color:var(--dc)}
+#mn-weak-body{font-size:12px;color:var(--tx2);line-height:1.6;font-style:italic}
+[lang-mode="th"] #mn-weak-body{font-family:'Noto Serif Thai',serif;font-style:normal}
+#mn-weak-box.unlocked #mn-weak-body{color:var(--tx);font-style:normal}
+[lang-mode="th"] #mn-weak-box.unlocked #mn-weak-body{font-weight:500}
+#mn-hint-lbl{font-size:8.5px;letter-spacing:.8px;text-transform:uppercase;color:var(--mu);margin-top:9px;margin-bottom:4px}
+[lang-mode="th"] #mn-hint-lbl{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:0;text-transform:none}
+#mn-hint-body{font-size:11px;color:var(--tx2);font-style:italic;line-height:1.55}
+[lang-mode="th"] #mn-hint-body{font-family:'Noto Serif Thai',serif;font-style:normal}
+#mn-noquestion{font-size:20px;color:var(--mu);text-align:center;font-family:var(--fh)}
+
+#mnfoot{position:relative;z-index:1;padding:13px 24px 20px;text-align:center;font-size:9.5px;
+  letter-spacing:.6px;color:var(--mu);border-top:1px solid var(--bd2);margin-top:8px;text-transform:uppercase}
+[lang-mode="th"] #mnfoot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="mnraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="mnwrap"><div id="mn">
+  <div id="mn-nebula"></div>
+  <div class="mn-ember" style="left:16%;--ex:8px;animation-delay:0s"></div>
+  <div class="mn-ember" style="left:40%;--ex:-12px;animation-delay:1.4s"></div>
+  <div class="mn-ember" style="left:64%;--ex:14px;animation-delay:2.8s"></div>
+  <div class="mn-ember" style="left:82%;--ex:-8px;animation-delay:4.2s"></div>
+  <svg class="mn-corner tl" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="mn-corner tr" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="mn-corner bl" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+  <svg class="mn-corner br" viewBox="0 0 40 40" fill="none"><path d="M2 37 Q2 2 37 2" stroke-width="1"/><circle cx="2" cy="37" r="1.5"/></svg>
+
+  <div id="mn-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="mn-head">
+    <div id="mn-eyebrow" data-en="THE ASTRAL LEDGER" data-th="บันทึกใต้เงาดารา">THE ASTRAL LEDGER</div>
+    <div id="mn-title" lang-mode="en" data-en="THREAT DETECTED" data-th="ตรวจพบภยันตราย">THREAT DETECTED</div>
+    <div id="mn-subtitle" data-en="An Entry for the Bestiary" data-th="บันทึกลงสมุดสัตว์ประหลาด">An Entry for the Bestiary</div>
+    <div id="mn-chev">&#9650;</div>
+  </div>
+
+  <div id="mnbody">
+    <div id="mn-center">
+      <div id="mn-eye-wrap">
+        <svg id="mn-eye" viewBox="0 0 76 76" fill="none">
+          <defs><radialGradient id="mneyeg" cx="50%" cy="50%" r="60%"><stop offset="0%" stop-color="#fff"/><stop offset="55%" stop-color="var(--dc)"/><stop offset="100%" stop-color="#1a0a0a"/></radialGradient></defs>
+          <path d="M6 38 C16 18 30 9 38 9 C46 9 60 18 70 38 C60 58 46 67 38 67 C30 67 16 58 6 38 Z" stroke="var(--dc)" stroke-width="1.4" opacity=".85"/>
+          <path d="M6 38 C6 38 14 34 20 38 C14 42 6 38 6 38 Z" stroke="var(--dc)" stroke-width=".6" opacity=".4"/>
+          <path d="M70 38 C70 38 62 34 56 38 C62 42 70 38 70 38 Z" stroke="var(--dc)" stroke-width=".6" opacity=".4"/>
+          <g id="mn-iris">
+            <circle cx="38" cy="38" r="15" fill="url(#mneyeg)"/>
+            <circle cx="38" cy="38" r="15" stroke="#fff" stroke-width=".6" opacity=".5"/>
+            <circle cx="38" cy="38" r="6" fill="#0a0508"/>
+            <line x1="38" y1="23" x2="38" y2="27" stroke="#fff" stroke-width=".7" opacity=".7"/>
+            <line x1="38" y1="49" x2="38" y2="53" stroke="#fff" stroke-width=".7" opacity=".7"/>
+            <line x1="23" y1="38" x2="27" y2="38" stroke="#fff" stroke-width=".7" opacity=".7"/>
+            <line x1="49" y1="38" x2="53" y2="38" stroke="#fff" stroke-width=".7" opacity=".7"/>
+          </g>
+        </svg>
+      </div>
+      <div id="mn-danger-badge">
+        <div id="mn-danger-num">&mdash;</div>
+        <div id="mn-danger-tier">&mdash;</div>
+        <div id="mn-danger-lbl" data-en="Danger Level" data-th="ระดับความอันตราย">Danger Level</div>
+      </div>
+      <div id="mn-name">Unknown Entity</div>
+      <div id="mn-class"></div>
+    </div>
+
+    <div class="mn-body-inner">
+      <div id="desc-wrap"></div>
+      <div id="traits-wrap"></div>
+
+      <div class="mn-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t" data-en="Weakness" data-th="จุดอ่อน">Weakness</span><span class="ln"></span></div>
+      <div id="mn-weak-box" class="locked">
+        <div class="mn-weak-head" id="mn-weak-head">
+          <svg id="mn-weak-icon" width="14" height="14" viewBox="0 0 24 24" fill="none"></svg>
+          <span id="mn-weak-status" data-en="Unknown" data-th="ยังไม่ทราบ">Unknown</span>
+        </div>
+        <div id="mn-weak-body"></div>
+        <div id="hint-wrap"></div>
+      </div>
+    </div>
+
+    <div id="mnfoot" data-en="Recorded for future reference &#8212; the ledger remembers" data-th="บันทึกไว้เพื่ออ้างอิงในอนาคต &#8212; บันทึกนี้จดจำทุกสิ่ง">Recorded for future reference &#8212; the ledger remembers</div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+
+var raw=g('mnraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+var STR={
+  unknownEntity:['Unknown Entity','สิ่งมีชีวิตไม่ทราบชนิด'],
+  descHeader:['Description','รายละเอียด'],
+  traitsHeader:['Observed Traits','พฤติกรรมที่สังเกตได้'],
+  weakUnknown:['Unknown','ยังไม่ทราบ'],
+  weakDiscovered:['Discovered','ค้นพบแล้ว'],
+  hintLbl:['A Fragment of Insight','เศษเสี้ยวของความเข้าใจ'],
+  noClue:['Nothing has been discerned yet &#8212; observe closer.','ยังไม่พบเบาะแสใดๆ &#8212; ต้องสังเกตให้ใกล้ชิดกว่านี้']
+};
+function t(pair){return L==='th'?pair[1]:pair[0]}
+
+var TIERS=[
+  {max:2,color:'#F0EDE8',en:'Negligible',th:'เล็กน้อย'},
+  {max:4,color:'#EAD79A',en:'Guarded',th:'ต้องระวัง'},
+  {max:6,color:'#E0A85C',en:'Dangerous',th:'อันตราย'},
+  {max:8,color:'#C4523A',en:'Severe',th:'รุนแรง'},
+  {max:10,color:'#7A1A1E',en:'Catastrophic',th:'หายนะ'}
+];
+function tierFor(v){
+  for(var i=0;i<TIERS.length;i++){if(v<=TIERS[i].max)return TIERS[i]}
+  return TIERS[TIERS.length-1];
+}
+function lerp(a,b,f){return Math.round(a+(b-a)*f)}
+function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+function dangerColor(v){
+  v=Math.max(0,Math.min(10,v));
+  var stops=['#F0EDE8','#EAD79A','#E0A85C','#C4523A','#7A1A1E'];
+  var seg=v/10*(stops.length-1);
+  var i=Math.min(stops.length-2,Math.floor(seg));
+  var f=seg-i;
+  var c1=hx(stops[i]),c2=hx(stops[i+1]);
+  var r=lerp(c1[0],c2[0],f),gg=lerp(c1[1],c2[1],f),b=lerp(c1[2],c2[2],f);
+  return {hex:'rgb('+r+','+gg+','+b+')',rgb:r+','+gg+','+b};
+}
+
+function renderAll(){
+  var lvl=(d.dangerLevel!=null&&d.dangerLevel!=='')?parseFloat(d.dangerLevel):null;
+  var dc=dangerColor(lvl!=null?lvl:0);
+  document.documentElement.style.setProperty('--dc',dc.hex);
+  document.documentElement.style.setProperty('--dc-rgb',dc.rgb);
+  g('mnwrap').classList.toggle('critical',lvl!=null&&lvl>=9);
+
+  g('mn-name').textContent=d.monsterName||t(STR.unknownEntity);
+  g('mn-class').textContent=d.classification||'';
+  g('mn-class').style.display=d.classification?'inline-block':'none';
+
+  g('mn-danger-num').textContent=lvl!=null?lvl:'—';
+  if(lvl!=null){
+    var tier=tierFor(lvl);
+    g('mn-danger-tier').textContent=t([tier.en,tier.th]);
+  }else{
+    g('mn-danger-tier').textContent='—';
+  }
+
+  var descHtml='';
+  if(d.description){
+    descHtml='<div class="mn-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(STR.descHeader)+'</span><span class="ln"></span></div>'+
+      '<div class="mn-note">'+esc(d.description)+'</div>';
+  }
+  g('desc-wrap').innerHTML=descHtml;
+
+  var traits=d.traits||[];
+  var traitsHtml='';
+  if(traits.length){
+    traitsHtml='<div class="mn-sec"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 0 L7 5 L12 6 L7 7 L6 12 L5 7 L0 6 L5 5 Z" fill="#C0A050"/></svg><span class="t">'+t(STR.traitsHeader)+'</span><span class="ln"></span></div>'+
+      '<div class="mn-tags">'+traits.map(function(x){return '<span class="mn-tag">'+esc(x)+'</span>';}).join('')+'</div>';
+  }
+  g('traits-wrap').innerHTML=traitsHtml;
+
+  var box=g('mn-weak-box');
+  var revealed=!!d.weaknessRevealed;
+  box.className=revealed?'unlocked':'locked';
+  var icon=g('mn-weak-icon');
+  if(revealed){
+    icon.innerHTML='<path d="M6 11 V8 A6 6 0 0 1 17 6" stroke="var(--dc)" stroke-width="1.6" fill="none" stroke-linecap="round"/><rect x="4" y="11" width="16" height="10" rx="2" stroke="var(--dc)" stroke-width="1.6" fill="none"/><circle cx="12" cy="16" r="1.6" fill="var(--dc)"/>';
+    g('mn-weak-status').textContent=t(STR.weakDiscovered);
+    g('mn-weak-body').textContent=d.weakness||'';
+    g('hint-wrap').innerHTML='';
+  }else{
+    icon.innerHTML='<rect x="4" y="11" width="16" height="10" rx="2" stroke="var(--mu)" stroke-width="1.6" fill="none"/><path d="M7 11 V8 A5 5 0 0 1 17 8 V11" stroke="var(--mu)" stroke-width="1.6" fill="none"/><circle cx="12" cy="16" r="1.6" fill="var(--mu)"/>';
+    g('mn-weak-status').textContent=t(STR.weakUnknown);
+    if(d.weaknessHint){
+      g('mn-weak-body').textContent='';
+      g('hint-wrap').innerHTML='<div id="mn-hint-lbl">'+t(STR.hintLbl)+'</div><div id="mn-hint-body">'+esc(d.weaknessHint)+'</div>';
+    }else{
+      g('mn-weak-body').innerHTML='<span style="font-size:11.5px">'+t(STR.noClue)+'</span>';
+      g('hint-wrap').innerHTML='';
+    }
+  }
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(){setLang('en')});
+g('lg-th').addEventListener('click',function(){setLang('th')});
+
+renderAll();
+
+var head=g('mn-head');
+if(head)head.addEventListener('click',function(){g('mnwrap').classList.toggle('closed')});
+})();
+</script>
+</body>
+</html>

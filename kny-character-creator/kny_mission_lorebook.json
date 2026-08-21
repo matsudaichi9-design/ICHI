@@ -1,0 +1,39 @@
+{
+  "name": "KNY Mission Log",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "KNY Mission Log System",
+      "content": "## KNY MISSION SYSTEM\n\nWhen {{user}}'s Kasugai Crow delivers a mission — whether from the Wisteria House, the Corps Master, or a civilian employer — output a mission block BEFORE the narrative, on its own line:\n\n<KNY_MISSION>\n{JSON}\n</KNY_MISSION>\n\n---\n\n### MISSION JSON SCHEMA\n\n```json\n{\n  \"lang\": \"en\",\n  \"title\": \"Hunt: The Silk Road Demon\",\n  \"type\": \"Elimination\",\n  \"difficulty\": \"B\",\n  \"status\": \"active\",\n  \"location\": \"Kōfu, Yamanashi — Silk Merchant District\",\n  \"target\": \"Unnamed demon preying on traveling merchants along the old Silk Road.\",\n  \"deadline\": \"3 days\",\n  \"objectives\": [\n    {\"text\": \"Eliminate the demon\", \"required\": true, \"done\": false},\n    {\"text\": \"Protect merchant Goro and his cargo\", \"required\": true, \"done\": false},\n    {\"text\": \"Retrieve stolen goods (bonus)\", \"required\": false, \"done\": false}\n  ],\n  \"rewards\": {\n    \"money\": 3000,\n    \"items\": [\n      {\"name\": \"Wisteria Extract\", \"qty\": 2}\n    ],\n    \"fame\": [\n      {\"location\": \"Kōfu\", \"change\": 20}\n    ],\n    \"relationship\": [\n      {\"name\": \"Merchant Goro\", \"change\": 15, \"note\": \"For protecting his cargo\"}\n    ],\n    \"other\": []\n  },\n  \"constraints\": [\n    \"No civilian casualties\",\n    \"Protect merchant Goro at all costs\"\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Values / Notes |\n|---|---|\n| `lang` | \"en\" or \"th\" — match player preference |\n| `type` | \"Elimination\" \\| \"Protection\" \\| \"Investigation\" \\| \"Escort\" \\| \"Retrieval\" \\| \"Custom\" |\n| `difficulty` | \"S\" \\| \"A\" \\| \"B\" \\| \"C\" \\| \"D\" |\n| `status` | \"active\" \\| \"complete\" \\| \"failed\" |\n| `deadline` | string e.g. \"3 days\", \"Before dawn\", or null if none |\n| `objectives[].required` | true = primary (must complete); false = optional bonus |\n| `objectives[].done` | true when the objective has been fulfilled |\n| `rewards.money` | amount in ryō (integer) |\n| `rewards.fame[].change` | positive = fame gain, negative = infamy |\n| `rewards.relationship[].change` | positive or negative relationship points |\n| `constraints` | list of restrictions: no-kill, must-protect, time-limit, etc. |\n\n---\n\n### RULES\n\n**When to output the block**\n• Crow delivers a new mission → output `<KNY_MISSION>` with `\"status\": \"active\"`.\n• An objective is completed mid-scene → re-output the block with `done: true` on that objective.\n• Mission ends (success or failure) → re-output with `\"status\": \"complete\"` or `\"status\": \"failed\"`.\n\n**Difficulty guidelines**\n• S — Demon Blood Art user, Upper Moon level threat or protecting many lives at once.\n• A — Named demon, highly dangerous target, multiple threats.\n• B — Mid-tier demon with some ability, moderate stakes.\n• C — Weakened demon, straightforward hunt.\n• D — Newly manifested demon, no confirmed ability, minimal risk.\n\n**Rewards**\n• Money comes from the Wisteria House standard rate or employer offer.\n• Items are named specifically — no vague \"medicine\" entries.\n• Fame change must name the specific location.\n• Relationship rewards apply only when the mission is given by or involves a named character.\n• Constraints apply only when the mission brief explicitly states restrictions; do not invent them.",
+      "constant": true,
+      "order": 85,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "name": "KNY Character Header",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "KNY Character Header — Core Instructions",
+      "content": "## KNY CHARACTER HEADER\n\nAt the very start of your response (before any narrative or dialogue), output a character header tag when the scene focuses on a specific character.\n\n### SYNTAX\n```\n[KNY|catbox_code|Character Name|#hexcolor]\n```\n\n- `catbox_code` — filename from files.catbox.moe (e.g. `abc123.jpg`). If no image is configured, write `_` and the silhouette placeholder will appear automatically.\n- `Character Name` — full name, title optional (e.g. `Tanjiro Kamado`, `Flame Hashira · Rengoku`)\n- `#hexcolor` — accent color for the character; use faction default if not specified\n\n### FACTION ACCENT COLORS\n| Faction | Color |\n|---------|-------|\n| slayer / demon slayer | `#8B6FAE` |\n| hashira / pillar | `#C4A830` |\n| demon | `#9B2020` |\n| upper moon / upper rank | `#7A2060` |\n| lower moon / lower rank | `#9B4030` |\n| human / civilian | `#7A7860` |\n\n### WHEN TO OUTPUT\n- At the start of a response where YOU (the AI) are speaking or acting as a specific named character\n- When a scene begins and a particular character is the clear focus\n- When introducing a new character for the first time\n\n### RULES\n- Output it ONCE per response, on its own line, at the very top\n- Never repeat it mid-response\n- Do NOT output it for background/unnamed characters\n- Use the PLAYER CHARACTER's configured color if narrating from their POV\n- If the scene has no single focus character, omit the tag entirely\n\n### EXAMPLE\n```\n[KNY|abc123.jpg|Tanjiro Kamado|#8B6FAE]\n\n\"The scent of blood lingers here...\" Tanjiro's brow furrowed as he stepped into the clearing.\n```",
+      "constant": true,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "order": 92,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0,
+      "displayIndex": 0
+    }
+  }
+}
