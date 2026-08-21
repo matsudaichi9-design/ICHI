@@ -184,14 +184,21 @@ function renderAll(){
   g('about-wrap').innerHTML=aboutHtml;
 
   var originHtml='';
-  if(d.originStory){
-    originHtml=secHead('Origin','ที่มาของพลัง')+'<div class="do-note">'+esc(d.originStory)+'</div>';
+  if(d.originCategory||d.originStory){
+    originHtml=secHead('Origin','ที่มาของพลัง');
+    var originBits=[];
+    if(d.originCategory)originBits.push('<span class="do-tag">'+esc(d.originCategory)+'</span>'+(d.mechName?' <span class="do-tag">'+esc(d.mechName)+'</span>':''));
+    if(originBits.length)originHtml+='<div class="do-tags" style="margin-bottom:8px">'+originBits.join('')+'</div>';
+    if(d.originStory)originHtml+='<div class="do-note">'+esc(d.originStory)+'</div>';
   }
   g('origin-wrap').innerHTML=originHtml;
 
   var stdp=d.standardPowers||[];
   var stdHtml='';
-  if(stdp.length){
+  if(d.standardPowersAiDecide){
+    stdHtml=secHead('Standard Powers','พลังพื้นฐาน')+'<div class="do-note" style="font-style:italic">'+
+      (L==='th'?'AI จะเป็นผู้กำหนดพลังพื้นฐาน':'The AI will decide their standard powers.')+'</div>';
+  }else if(stdp.length){
     stdHtml=secHead('Standard Powers','พลังพื้นฐาน')+'<div class="do-tags">'+
       stdp.map(function(x){return '<span class="do-tag">'+esc(x)+'</span>';}).join('')+'</div>';
   }
@@ -207,8 +214,10 @@ function renderAll(){
   g('powers-wrap').innerHTML=powHtml;
 
   var costumeHtml='';
-  if(d.costume){
-    costumeHtml=secHead('Costume','ชุด')+'<div class="do-note">'+esc(d.costume)+'</div>';
+  if(d.costumeVibe||d.costume){
+    costumeHtml=secHead('Costume','ชุด');
+    if(d.costumeVibe)costumeHtml+='<div class="do-tags" style="margin-bottom:8px"><span class="do-tag">'+esc(d.costumeVibe)+'</span></div>';
+    if(d.costume)costumeHtml+='<div class="do-note">'+esc(d.costume)+'</div>';
   }
   g('costume-wrap').innerHTML=costumeHtml;
 

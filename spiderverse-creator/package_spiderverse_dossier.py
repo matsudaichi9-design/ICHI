@@ -75,9 +75,13 @@ The form submits a `<SPIDERVERSE_DOSSIER>{json}</SPIDERVERSE_DOSSIER>` block bac
   "earthDesignator": "22B",
   "universeStyle": "halftone",
   "universeDescription": "A Queens where the subway trains run on stitched-together dimensional rails.",
+  "originCategory": "Radioactive Spider Bite",
+  "mechName": "",
   "originStory": "Bitten by a spider that fell out of an Alchemax delivery crate during a blackout.",
   "standardPowers": ["Wall-Crawling", "Web-Slinging", "Spider-Sense"],
+  "standardPowersAiDecide": false,
   "uniquePowers": [{"name": "Echo Step", "description": "Leaves a half-second-delayed afterimage that can absorb one hit."}],
+  "costumeVibe": "Homemade / DIY",
   "costume": "Patchwork denim jacket over a hand-stitched black suit with paint-splatter accents.",
   "gear": [{"name": "Sketch Shooter", "description": "Web fluid mixed with ink; her webs leave visible tags."}],
   "connections": [{"name": "Mom (Elena Ortiz)", "relationship": "Single mother, doesn't know her secret"}],
@@ -91,7 +95,10 @@ The form submits a `<SPIDERVERSE_DOSSIER>{json}</SPIDERVERSE_DOSSIER>` block bac
 ### FIELD NOTES
 - `earthDesignator` follows the series' own numbering convention (e.g. "1610", "65", "928") — the dossier automatically formats it as "EARTH-####". Invent a plausible, currently-unused number rather than reusing an established one (1610, 616B, 65, 928, 138, 50101, 14512, 90214, 8311, 42 are all already claimed — see the canon notes below).
 - `universeStyle` is one of `halftone` (classic Ben-Day comic-print — Miles' Earth-1610 aesthetic), `neon` (Miguel/Earth-928's futuristic neon-grid look), `collage` (Hobie/Earth-138's punk cut-and-paste look), or `watercolor` (Gwen/Earth-65's soft pastel wash) — this genuinely re-skins the whole card's color scheme and background texture, mirroring how each universe in the films has its own distinct animation style.
-- `standardPowers` is a fixed set of common spider-abilities (Wall-Crawling, Web-Slinging, Spider-Sense, Enhanced Strength, Enhanced Agility, Impact Webbing) the player toggles on/off.
+- `originCategory` is either one of the form's presets (Radioactive Spider Bite, Genetic Modification, Mystic Arts Bond, Tech / Mech Bond, Dimensional Accident) or free custom text the player typed themselves — either way, honor it as given. A value of **"AI Decides"** means the player deliberately left this choice to you: invent a fitting origin yourself rather than treating it as unset.
+- `mechName` is only populated when `originCategory` is "Tech / Mech Bond" — it's the name of the bonded device/AI/mech-suit (mirroring Peni Parker's SP//dr). Treat this bond as a real partnership, not just a piece of equipment, the way Peni and her spider are neurally linked.
+- `standardPowers` is a fixed set of common spider-abilities (Wall-Crawling, Web-Slinging, Spider-Sense, Enhanced Strength, Enhanced Agility, Impact Webbing) the player toggles on/off. **If `standardPowersAiDecide` is true, the player deliberately left this to you** — decide which standard powers this character actually has yourself, consistently, the first time it matters in the story, rather than leaving it vague forever.
+- `costumeVibe` works the same way as `originCategory` — a preset, free custom text, or "AI Decides" (invent a costume style yourself if so).
 - `uniquePowers` is open-ended, mirroring how Miles has venom-strike and invisibility beyond the standard kit that no other Spider-Person shares — most characters should have zero to a small handful of these, not a long list.
 - `canonEventStatus` is one of `looming` (everyone knows it's coming and hasn't happened), `happened` (already occurred, in the past), or `unknown`/`unwritten` (not yet decided by the story) — this is a genuinely important story hook, not flavor text; see the note below.
 - Any array/field may be empty or absent — the dossier simply omits a section with nothing in it.

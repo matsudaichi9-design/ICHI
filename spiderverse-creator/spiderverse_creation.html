@@ -98,6 +98,17 @@ html,body{background:transparent;font-family:'Inter','Noto Sans Thai',sans-serif
 [lang-mode="th"] .sv-pill{font-family:'Noto Sans Thai',sans-serif}
 .sv-pill:hover{border-color:rgba(var(--ac-rgb),.6)}
 .sv-pill.on{border-color:var(--ac);color:#fff;background:rgba(var(--ac-rgb),.24)}
+.sv-pill.ai{border-style:dashed;font-style:italic}
+.sv-pill.dim{opacity:.35;pointer-events:none}
+
+/* preset/custom toggle */
+.sv-pc{display:inline-flex;background:rgba(0,0,0,.3);border:2px solid var(--bd2);border-radius:99px;padding:2px;gap:1px;margin-bottom:8px}
+.sv-pcb{padding:3px 11px;border-radius:99px;font-family:var(--fa);font-size:8px;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--tx2);cursor:pointer}
+[lang-mode="th"] .sv-pcb{font-family:'Noto Sans Thai',sans-serif;font-size:9.5px;letter-spacing:0}
+.sv-pcb.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff}
+.hide{display:none !important}
+.sv-subfield{margin-top:9px;padding-top:9px;border-top:1px dashed var(--bd2)}
 
 /* universe style cards */
 #sv-uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
@@ -220,8 +231,18 @@ html,body{background:transparent;font-family:'Inter','Noto Sans Thai',sans-serif
   <!-- TAB 3: POWERS -->
   <div class="svpanel" data-p="t3">
     <div class="sv-field">
-      <label class="sv-label" data-en="Origin Story" data-th="ที่มาของพลัง">Origin Story</label>
-      <textarea class="sv-textarea" id="f-origin" data-pen="How did they get their powers?" data-pth="พวกเขาได้พลังมาอย่างไร?" placeholder="How did they get their powers?"></textarea>
+      <label class="sv-label" data-en="Origin Category" data-th="ประเภทที่มาของพลัง">Origin Category</label>
+      <span class="sv-pc" data-t="origin"><span class="sv-pcb on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="sv-pcb" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span>
+      <div class="sv-pills" id="sv-origin-cat"></div>
+      <input class="sv-input hide" id="origin_cus" type="text" data-pen="Describe the origin in your own words..." data-pth="อธิบายที่มาของพลังในแบบของคุณเอง..." placeholder="Describe the origin in your own words...">
+      <div class="sv-subfield hide" id="sv-mech-field">
+        <label class="sv-label" data-en="Bonded System Name (like Peni's SP//dr)" data-th="ชื่อระบบที่เชื่อมต่อ (แบบ SP//dr ของ Peni)">Bonded System Name</label>
+        <input class="sv-input" id="f-mechname" type="text" data-pen="e.g. SP//dr, HEX-9..." data-pth="เช่น SP//dr, HEX-9..." placeholder="e.g. SP//dr, HEX-9...">
+      </div>
+    </div>
+    <div class="sv-field">
+      <label class="sv-label" data-en="Origin Details" data-th="รายละเอียดเพิ่มเติม">Origin Details</label>
+      <textarea class="sv-textarea" id="f-origin" data-pen="The specific moment, place, how it happened..." data-pth="ช่วงเวลา สถานที่ เหตุการณ์ที่เกิดขึ้นจริง..." placeholder="The specific moment, place, how it happened..."></textarea>
     </div>
     <div class="sv-field">
       <label class="sv-label" data-en="Standard Powers" data-th="พลังพื้นฐาน">Standard Powers</label>
@@ -237,8 +258,14 @@ html,body{background:transparent;font-family:'Inter','Noto Sans Thai',sans-serif
   <!-- TAB 4: COSTUME -->
   <div class="svpanel" data-p="t4">
     <div class="sv-field">
+      <label class="sv-label" data-en="Costume Vibe" data-th="สไตล์ชุด">Costume Vibe</label>
+      <span class="sv-pc" data-t="vibe"><span class="sv-pcb on" data-m="p" data-en="Preset" data-th="พรีเซ็ต">Preset</span><span class="sv-pcb" data-m="c" data-en="Custom" data-th="กำหนดเอง">Custom</span></span>
+      <div class="sv-pills" id="sv-vibe"></div>
+      <input class="sv-input hide" id="vibe_cus" type="text" data-pen="Describe the vibe in your own words..." data-pth="อธิบายสไตล์ชุดในแบบของคุณเอง..." placeholder="Describe the vibe in your own words...">
+    </div>
+    <div class="sv-field">
       <label class="sv-label" data-en="Costume Description" data-th="รายละเอียดชุด">Costume Description</label>
-      <textarea class="sv-textarea" id="f-costume" data-pen="Colors, design, homemade or high-tech..." data-pth="สี ดีไซน์ ทำเองหรือไฮเทค..." placeholder="Colors, design, homemade or high-tech..."></textarea>
+      <textarea class="sv-textarea" id="f-costume" data-pen="Colors, materials, symbols, quirks..." data-pth="สี วัสดุ สัญลักษณ์ จุดเด่น..." placeholder="Colors, materials, symbols, quirks..."></textarea>
     </div>
     <div class="sv-field">
       <label class="sv-label" data-en="Gear &amp; Gadgets — add as many as they carry" data-th="อุปกรณ์ &#8212; เพิ่มได้เท่าที่พกติดตัว">Gear &amp; Gadgets</label>
@@ -319,26 +346,87 @@ qa('.sv-unicard').forEach(function(el){
   });
 });
 
+/* preset/custom toggle — each .sv-pc group shows either its preset pill-grid or a custom text input */
+var PC_PRESET_IDS={origin:'sv-origin-cat',vibe:'sv-vibe'};
+qa('.sv-pc').forEach(function(pc){
+  var target=pc.getAttribute('data-t');
+  var presetEl=g(PC_PRESET_IDS[target]);
+  var cusEl=g(target+'_cus');
+  qa('.sv-pcb',pc).forEach(function(b){
+    b.addEventListener('click',function(){
+      qa('.sv-pcb',pc).forEach(function(x){x.classList.remove('on')});
+      b.classList.add('on');
+      var mode=b.getAttribute('data-m');
+      if(presetEl)presetEl.classList.toggle('hide',mode!=='p');
+      if(cusEl)cusEl.classList.toggle('hide',mode!=='c');
+    });
+  });
+});
+
+var ORIGINS=[
+  ['Radioactive Spider Bite','ถูกแมงมุมกัมมันตรังสีกัด'],['Genetic Modification','การดัดแปลงพันธุกรรม'],
+  ['Mystic Arts Bond','พันธะวิทยาลึกลับ'],['Tech / Mech Bond','การเชื่อมต่อเทคโนโลยี/หุ่นยนต์'],
+  ['Dimensional Accident','อุบัติเหตุมิติ'],['AI Decides','ให้ AI ตัดสินใจ']
+];
+var selectedOrigin=ORIGINS[0];
+g('sv-origin-cat').innerHTML=ORIGINS.map(function(x,i){
+  return '<div class="sv-pill'+(i===0?' on':'')+(x[0]==='AI Decides'?' ai':'')+'" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#sv-origin-cat .sv-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#sv-origin-cat .sv-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedOrigin=ORIGINS[parseInt(el.getAttribute('data-i'))];
+    g('sv-mech-field').classList.toggle('hide',selectedOrigin[0]!=='Tech / Mech Bond');
+  });
+});
+
 var STDPOWERS=[
   ['Wall-Crawling','ปีนกำแพง'],['Web-Slinging','ยิงใยแมงมุม'],['Spider-Sense','สัมผัสแมงมุม'],
   ['Enhanced Strength','พลังเสริม'],['Enhanced Agility','ความคล่องแคล่วเสริม'],['Impact Webbing','ใยดูดซับแรงกระแทก']
 ];
 var selStdPowers={};
+var stdPowersAi=false;
 g('sv-stdpowers').innerHTML=STDPOWERS.map(function(x,i){
   return '<div class="sv-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
-}).join('');
-qa('#sv-stdpowers .sv-pill').forEach(function(el){
+}).join('')+'<div class="sv-pill ai" id="sv-powers-ai" data-en="AI Decides" data-th="ให้ AI ตัดสินใจ">AI Decides</div>';
+qa('#sv-stdpowers .sv-pill:not(.ai)').forEach(function(el){
   el.addEventListener('click',function(){
     var i=el.getAttribute('data-i');
     el.classList.toggle('on');
     selStdPowers[i]=el.classList.contains('on');
   });
 });
+g('sv-powers-ai').addEventListener('click',function(){
+  stdPowersAi=!stdPowersAi;
+  g('sv-powers-ai').classList.toggle('on',stdPowersAi);
+  qa('#sv-stdpowers .sv-pill:not(.ai)').forEach(function(el){
+    el.classList.toggle('dim',stdPowersAi);
+    if(stdPowersAi){el.classList.remove('on');selStdPowers[el.getAttribute('data-i')]=false;}
+  });
+});
 
-var STANDING=[['Member','สมาชิก'],['Independent','อิสระ'],['Unknown to the Society','สมาคมยังไม่รู้จัก']];
+var VIBES=[
+  ['Homemade / DIY','ทำเอง'],['High-Tech / Engineered','ไฮเทค/วิศวกรรม'],
+  ['Elegant / Ceremonial','สง่างาม/พิธีการ'],['Battle-Worn / Practical','ลุยศึก/ใช้งานได้จริง'],
+  ['AI Decides','ให้ AI ตัดสินใจ']
+];
+var selectedVibe=null;
+g('sv-vibe').innerHTML=VIBES.map(function(x,i){
+  return '<div class="sv-pill'+(x[0]==='AI Decides'?' ai':'')+'" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+}).join('');
+qa('#sv-vibe .sv-pill').forEach(function(el){
+  el.addEventListener('click',function(){
+    qa('#sv-vibe .sv-pill').forEach(function(x){x.classList.remove('on')});
+    el.classList.add('on');
+    selectedVibe=VIBES[parseInt(el.getAttribute('data-i'))];
+  });
+});
+
+var STANDING=[['Member','สมาชิก'],['Independent','อิสระ'],['Unknown to the Society','สมาคมยังไม่รู้จัก'],['AI Decides','ให้ AI ตัดสินใจ']];
 var selectedStanding=null;
 g('sv-standing').innerHTML=STANDING.map(function(x,i){
-  return '<div class="sv-pill" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
+  return '<div class="sv-pill'+(x[0]==='AI Decides'?' ai':'')+'" data-i="'+i+'" data-en="'+x[0]+'" data-th="'+x[1]+'">'+x[0]+'</div>';
 }).join('');
 qa('#sv-standing .sv-pill').forEach(function(el){
   el.addEventListener('click',function(){
@@ -476,11 +564,19 @@ function readTies(){
   }).filter(function(x){return x.name||x.relationship});
 }
 
+function pcMode(target){
+  var on=document.querySelector('.sv-pc[data-t="'+target+'"] .sv-pcb.on');
+  return on?on.getAttribute('data-m'):'p';
+}
+
 function submit(){
   var name=g('f-name').value.trim();
   if(!name){toast(L==='th'?'กรุณากรอกชื่อจริง':'Please enter a real name');go('t1');return;}
 
   var stdPowersOut=STDPOWERS.filter(function(x,i){return selStdPowers[i]}).map(function(x){return x[0]});
+
+  var originCategory=(pcMode('origin')==='c')?g('origin_cus').value.trim():selectedOrigin[0];
+  var costumeVibe=(pcMode('vibe')==='c')?g('vibe_cus').value.trim():(selectedVibe?selectedVibe[0]:'');
 
   var data={
     charColor:selectedColor,
@@ -491,9 +587,13 @@ function submit(){
     earthDesignator:g('f-earth').value.trim(),
     universeStyle:selectedUni,
     universeDescription:g('f-unidesc').value.trim(),
+    originCategory:originCategory,
+    mechName:(originCategory==='Tech / Mech Bond')?g('f-mechname').value.trim():'',
     originStory:g('f-origin').value.trim(),
     standardPowers:stdPowersOut,
+    standardPowersAiDecide:stdPowersAi,
     uniquePowers:readRows(powerGroup.list),
+    costumeVibe:costumeVibe,
     costume:g('f-costume').value.trim(),
     gear:readRows(gearGroup.list),
     connections:readTies(),
