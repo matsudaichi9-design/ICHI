@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'Inter','Noto Sans Thai',sans-serif;font-size:13.5px}
+:root{
+  --ac:#FF3D7A;--ac-rgb:255,61,122;
+  --sac:#6FA8D8;--sac2:#4D4A63;
+  --bg:#0B0B10;--pan:#14131C;--pan2:#1C1A26;--pan3:#242230;
+  --tx:#ECEAF5;--tx2:#9490AE;--mu:#4D4A63;
+  --bd:rgba(255,255,255,.08);--bd2:rgba(255,255,255,.05);
+  --fh:'Bebas Neue',sans-serif;--fm:'Space Mono',monospace;
+}
+[lang-mode="th"]{--fh:'Noto Sans Thai',sans-serif}
+
+#wtwrap{max-width:480px;margin:12px auto;position:relative;transition:filter .3s}
+#wt{position:relative;background:linear-gradient(170deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:12px;overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.72),inset 0 0 0 1px rgba(255,255,255,.03);
+  animation:wti .3s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes wti{from{opacity:0;transform:translateY(-6px) scale(.985)}to{opacity:1;transform:none}}
+
+/* lanyard strap accent */
+#wt-strap{height:14px;background:linear-gradient(90deg,var(--sac),var(--ac));position:relative}
+#wt-strap::after{content:'';position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+  background:var(--bg);transform:translate(-50%,-50%);box-shadow:inset 0 1px 2px rgba(0,0,0,.6)}
+
+#wt-lang{position:absolute;top:19px;right:11px;z-index:4;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#wtwrap:not(.open) #wt-lang{display:none}
+#wt-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:3px 6px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#wt-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#2A1F42);box-shadow:0 0 8px -2px var(--ac)}
+
+/* COLLAPSED BAR */
+#wt-bar{display:flex;align-items:center;gap:9px;padding:11px 13px;cursor:pointer;flex-wrap:wrap}
+#wt-dateblock{flex-shrink:0;text-align:center;line-height:1;background:var(--pan3);border:1px solid var(--bd);
+  border-radius:6px;padding:4px 8px;min-width:40px}
+#wt-daynum{font-family:var(--fh);font-size:18px;color:var(--tx);font-weight:700}
+#wt-datesub{font-family:var(--fm);font-size:7px;letter-spacing:.8px;color:var(--ac);text-transform:uppercase;margin-top:1px}
+#wt-timewrap{flex-shrink:0;display:flex;align-items:center;gap:4px;font-family:var(--fm);font-size:12px;color:var(--tx2)}
+#wt-chips{display:flex;gap:5px;flex:1;min-width:0;flex-wrap:wrap}
+.wt-chip{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;background:rgba(255,255,255,.04);
+  border:1px solid var(--bd2);font-size:10px;color:var(--tx2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+[lang-mode="th"] .wt-chip{font-family:'Noto Sans Thai',sans-serif}
+#wt-chev{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd2);color:var(--mu);transition:transform .3s;margin-left:auto}
+#wtwrap.open #wt-chev{transform:rotate(180deg)}
+
+/* ticket perforation divider */
+#wt-perf{height:9px;background-image:radial-gradient(circle at 10px 0,transparent 5px,var(--pan2) 5px);
+  background-size:20px 9px;background-repeat:repeat-x;opacity:.9}
+
+#wt-panel{max-height:0;overflow:hidden;transition:max-height .35s ease}
+#wtwrap.open #wt-panel{max-height:980px}
+
+/* TABS */
+#wttabs{display:flex;background:rgba(0,0,0,.3);border-bottom:1px solid var(--bd2)}
+.wttab{flex:1;padding:9px 2px 7px;text-align:center;cursor:pointer;user-select:none}
+.wttab .ic{width:24px;height:24px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;transition:all .18s}
+.wttab span.lbl{display:block;font-family:var(--fh);font-size:7.5px;letter-spacing:.5px;color:var(--mu);text-transform:uppercase;margin-top:3px}
+[lang-mode="th"] .wttab span.lbl{font-size:9px;letter-spacing:0;text-transform:none}
+.wttab.on .ic{border-color:var(--ac);background:rgba(var(--ac-rgb),.14);box-shadow:0 0 10px -3px var(--ac)}
+.wttab.on span.lbl{color:var(--tx)}
+
+.wtpanel{display:none;padding:14px 16px 15px}
+.wtpanel.on{display:block}
+
+/* TODAY TAB */
+#wt-today-hero{display:flex;align-items:center;gap:14px;padding:12px;border:1px solid var(--bd);border-radius:9px;
+  background:radial-gradient(circle at 20% 20%,rgba(var(--ac-rgb),.12),transparent 70%)}
+#wt-today-ic{flex-shrink:0;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd)}
+#wt-today-main{flex:1;min-width:0}
+#wt-today-date{font-family:var(--fh);font-size:17px;color:var(--tx);letter-spacing:.3px}
+#wt-today-sub{font-size:11px;color:var(--tx2);margin-top:2px}
+[lang-mode="th"] #wt-today-sub{font-family:'Noto Sans Thai',sans-serif}
+#wt-today-time{font-family:var(--fm);font-size:13px;color:var(--ac);margin-top:4px}
+
+.wt-info-row{display:flex;gap:9px;margin-top:11px}
+.wt-info-card{flex:1;padding:10px;border:1px solid var(--bd);border-radius:8px;background:rgba(255,255,255,.015)}
+.wt-info-card .ic{width:22px;height:22px;margin-bottom:6px}
+.wt-info-card .k{font-family:var(--fh);font-size:8px;letter-spacing:1.2px;color:var(--sac);text-transform:uppercase}
+[lang-mode="th"] .wt-info-card .k{font-family:'Noto Sans Thai',sans-serif;font-size:9.5px;letter-spacing:.2px}
+.wt-info-card .v{font-size:12.5px;color:var(--tx);margin-top:3px;font-weight:600}
+[lang-mode="th"] .wt-info-card .v{font-family:'Noto Sans Thai',sans-serif}
+#wt-seasonnote{margin-top:11px;font-size:11.5px;color:var(--tx2);font-style:italic;line-height:1.6;padding:9px 11px;
+  border-left:2px solid var(--sac);background:rgba(255,255,255,.02)}
+[lang-mode="th"] #wt-seasonnote{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+
+/* SCHEDULE TAB */
+.wt-sub-title{font-family:var(--fh);font-size:9px;letter-spacing:1.6px;color:var(--sac);text-transform:uppercase;margin-bottom:8px}
+[lang-mode="th"] .wt-sub-title{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:.2px}
+
+#wt-legend{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:10px}
+.wt-leg-item{display:flex;align-items:center;gap:4px;font-size:9.5px;color:var(--tx2)}
+[lang-mode="th"] .wt-leg-item{font-family:'Noto Sans Thai',sans-serif}
+.wt-leg-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+
+#wt-cal-head{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:4px}
+#wt-cal-head div{text-align:center;font-family:var(--fh);font-size:8px;letter-spacing:.6px;color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] #wt-cal-head div{font-family:'Noto Sans Thai',sans-serif;font-size:9px}
+#wt-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.wt-cell{aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,.015);border:1px solid var(--bd2);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+.wt-cell.empty{background:transparent;border-color:transparent;cursor:default}
+.wt-cell .num{font-family:var(--fm);font-size:10px;color:var(--tx2)}
+.wt-cell.has .num{color:var(--tx)}
+.wt-cell .dots{display:flex;gap:2px;margin-top:2px;height:5px}
+.wt-dot{width:4px;height:4px;border-radius:50%}
+.wt-more{font-size:6px;color:var(--tx2)}
+.wt-cell.today{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac),0 0 10px -2px var(--ac)}
+.wt-cell.today .num{color:var(--ac);font-weight:700}
+.wt-cell.picked{background:rgba(var(--ac-rgb),.14)}
+
+#wt-daydetail{margin-top:10px;min-height:30px}
+.wt-dd-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--bd2)}
+.wt-dd-item:last-child{border-bottom:none}
+.wt-dd-ic{flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.wt-dd-main{flex:1;min-width:0}
+.wt-dd-title{font-size:12px;font-weight:600;color:var(--tx)}
+[lang-mode="th"] .wt-dd-title{font-family:'Noto Sans Thai',sans-serif}
+.wt-dd-venue{font-size:10px;color:var(--tx2);font-style:italic;margin-top:1px}
+[lang-mode="th"] .wt-dd-venue{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+
+#wt-sched-list{margin-top:14px}
+.wt-sl-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd2)}
+.wt-sl-item:last-child{border-bottom:none}
+.wt-sl-item.past{opacity:.45}
+.wt-sl-date{flex-shrink:0;text-align:center;width:34px}
+.wt-sl-date .d{font-family:var(--fh);font-size:15px;color:var(--tx);line-height:1}
+.wt-sl-date .m{font-family:var(--fm);font-size:7px;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px}
+.wt-sl-ic{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.wt-sl-main{flex:1;min-width:0}
+.wt-sl-title{font-size:12.5px;font-weight:600;color:var(--tx)}
+[lang-mode="th"] .wt-sl-title{font-family:'Noto Sans Thai',sans-serif}
+.wt-sl-venue{font-size:10px;color:var(--tx2);font-style:italic;margin-top:1px}
+[lang-mode="th"] .wt-sl-venue{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+.wt-sl-badge{flex-shrink:0;font-family:var(--fh);font-size:7.5px;letter-spacing:.6px;padding:2px 7px;border-radius:99px;
+  text-transform:uppercase;white-space:nowrap}
+[lang-mode="th"] .wt-sl-badge{font-family:'Noto Sans Thai',sans-serif;letter-spacing:0;text-transform:none}
+.wt-sl-badge.today{color:#fff;background:var(--ac)}
+.wt-sl-badge.future{color:var(--ac);background:rgba(var(--ac-rgb),.12);border:1px solid rgba(var(--ac-rgb),.35)}
+.wt-sl-badge.past{color:var(--tx2);background:rgba(255,255,255,.04);border:1px solid var(--bd2)}
+
+/* CAREER TAB */
+.wt-career-card{padding:12px;border:1px solid var(--bd);border-radius:9px;background:rgba(255,255,255,.015);margin-bottom:10px}
+.wt-career-card .head{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.wt-career-card .head .ic{width:22px;height:22px;flex-shrink:0}
+.wt-career-card .head .k{font-family:var(--fh);font-size:9px;letter-spacing:1.4px;color:var(--sac);text-transform:uppercase}
+[lang-mode="th"] .wt-career-card .head .k{font-family:'Noto Sans Thai',sans-serif;font-size:10.5px;letter-spacing:.2px}
+#wt-funds-val{font-family:var(--fm);font-size:22px;color:var(--tx);font-weight:700}
+
+.wt-gauge{height:8px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;position:relative}
+.wt-gauge-fill{height:100%;border-radius:99px;transition:width .4s ease}
+.wt-gauge-val{font-family:var(--fm);font-size:11px;color:var(--tx2);margin-top:5px;text-align:right}
+
+#wt-pop-tier{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:8px}
+[lang-mode="th"] #wt-pop-tier{font-family:'Noto Sans Thai',sans-serif}
+.wt-pips{display:flex;gap:4px}
+.wt-pip{flex:1;height:6px;border-radius:99px;background:rgba(255,255,255,.07)}
+.wt-pip.filled{background:linear-gradient(90deg,var(--sac),var(--ac))}
+
+.wt-aff-name{font-size:14px;font-weight:700;color:var(--tx)}
+[lang-mode="th"] .wt-aff-name{font-family:'Noto Sans Thai',sans-serif}
+.wt-aff-sub{font-size:11px;color:var(--tx2);font-style:italic;margin-top:2px}
+[lang-mode="th"] .wt-aff-sub{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+.wt-aff-pill{display:inline-block;margin-top:7px;font-size:9.5px;letter-spacing:.4px;padding:3px 9px;border-radius:99px;
+  color:var(--ac);background:rgba(var(--ac-rgb),.12);border:1px solid rgba(var(--ac-rgb),.35)}
+[lang-mode="th"] .wt-aff-pill{font-family:'Noto Sans Thai',sans-serif}
+.wt-aff-pill.muted{color:var(--tx2);background:rgba(255,255,255,.04);border-color:var(--bd2)}
+
+.wt-empty{font-size:11px;font-style:italic;color:var(--mu);padding:6px 0}
+[lang-mode="th"] .wt-empty{font-family:'Noto Sans Thai',sans-serif;font-style:normal}
+
+#wt-foot{padding:9px 16px 12px;text-align:center;font-size:8.5px;letter-spacing:.6px;color:var(--mu);
+  border-top:1px solid var(--bd2);text-transform:uppercase}
+[lang-mode="th"] #wt-foot{font-family:'Noto Sans Thai',sans-serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="wtraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="wtwrap"><div id="wt">
+  <div id="wt-strap"></div>
+  <div id="wt-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="wt-bar">
+    <div id="wt-dateblock"><div id="wt-daynum">—</div><div id="wt-datesub">—</div></div>
+    <div id="wt-timewrap"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2" stroke-linecap="round"/></svg><span id="wt-timeval">—</span></div>
+    <div id="wt-chips">
+      <div class="wt-chip" id="wt-weather-chip"></div>
+      <div class="wt-chip" id="wt-season-chip"></div>
+    </div>
+    <div id="wt-chev"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 3 L5 6.5 L8.5 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+  <div id="wt-perf"></div>
+
+  <div id="wt-panel">
+    <div id="wttabs">
+      <div class="wttab on" data-t="t1"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" stroke-linecap="round"/></svg></span><span class="lbl" data-en="Today" data-th="วันนี้">Today</span></div>
+      <div class="wttab" data-t="t2"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><rect x="3" y="4.5" width="18" height="16" rx="2"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke-linecap="round"/></svg></span><span class="lbl" data-en="Schedule" data-th="ตารางงาน">Schedule</span></div>
+      <div class="wttab" data-t="t3"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5"><path d="M4 19l5-10 4 6 3-5 4 7" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="lbl" data-en="Career" data-th="เส้นทางศิลปิน">Career</span></div>
+    </div>
+
+    <div class="wtpanel on" data-p="t1">
+      <div id="wt-today-hero">
+        <div id="wt-today-ic"></div>
+        <div id="wt-today-main">
+          <div id="wt-today-date">—</div>
+          <div id="wt-today-sub">—</div>
+          <div id="wt-today-time">—</div>
+        </div>
+      </div>
+      <div class="wt-info-row">
+        <div class="wt-info-card" id="wt-weather-card"></div>
+        <div class="wt-info-card" id="wt-season-card"></div>
+      </div>
+      <div id="wt-seasonnote" style="display:none"></div>
+    </div>
+
+    <div class="wtpanel" data-p="t2">
+      <div class="wt-sub-title" data-en="This Month" data-th="เดือนนี้">This Month</div>
+      <div id="wt-legend"></div>
+      <div id="wt-cal-head"></div>
+      <div id="wt-cal-grid"></div>
+      <div id="wt-daydetail"></div>
+      <div class="wt-sub-title" style="margin-top:16px" data-en="All Entries" data-th="รายการทั้งหมด">All Entries</div>
+      <div id="wt-sched-list"></div>
+    </div>
+
+    <div class="wtpanel" data-p="t3">
+      <div class="wt-career-card">
+        <div class="head"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sac)" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9 9.5c0-1.5 1.3-2.2 3-2.2s3 .7 3 2c0 2.6-6 1.4-6 4.2 0 1.3 1.3 2 3 2s3-.7 3-2.2" stroke-linecap="round"/></svg><span class="k" data-en="Funds" data-th="ทุนทรัพย์">Funds</span></div>
+        <div id="wt-funds-val">—</div>
+      </div>
+      <div class="wt-career-card">
+        <div class="head"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sac)" stroke-width="1.4"><path d="M3 18l4-9 4 6 3-7 4 10" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="k" data-en="Reputation" data-th="ค่าชื่อเสียง">Reputation</span></div>
+        <div class="wt-gauge"><div class="wt-gauge-fill" id="wt-rep-fill"></div></div>
+        <div class="wt-gauge-val" id="wt-rep-val">0 / 100</div>
+      </div>
+      <div class="wt-career-card">
+        <div class="head"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sac)" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 9.3l-5 4.6L17.3 21 12 17.3 6.7 21 8 13.9 3 9.3l6.4-.7Z" stroke-linejoin="round"/></svg><span class="k" data-en="Popularity" data-th="ระดับความโด่งดัง">Popularity</span></div>
+        <div id="wt-pop-tier">—</div>
+        <div class="wt-pips" id="wt-pop-pips"></div>
+      </div>
+      <div class="wt-career-card">
+        <div class="head"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sac)" stroke-width="1.4"><circle cx="12" cy="8" r="3.2"/><path d="M5 20c0-4 3-6 7-6s7 2 7 6" stroke-linecap="round"/></svg><span class="k" data-en="Band" data-th="วงที่สังกัด">Band</span></div>
+        <div id="wt-band-wrap"></div>
+      </div>
+      <div class="wt-career-card">
+        <div class="head"><svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sac)" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="1.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"/></svg><span class="k" data-en="Label" data-th="ค่ายที่สังกัด">Label</span></div>
+        <div id="wt-label-wrap"></div>
+      </div>
+    </div>
+
+    <div id="wt-foot" data-en="On The Record — Daily Call Sheet" data-th="บันทึกประจำวัน — ใบนัดงานศิลปิน">On The Record — Daily Call Sheet</div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function pad(n){return n<10?'0'+n:''+n}
+
+var L='en';
+var raw=g('wtraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function t(en,th){return L==='th'?th:en}
+function emptyMsg(en,th){return '<div class="wt-empty">'+t(en,th)+'</div>';}
+
+var MN_EN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MN_TH=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+var MFULL_EN=['January','February','March','April','May','June','July','August','September','October','November','December'];
+var MFULL_TH=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+var WD_EN=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+var WD_TH=['อา','จ','อ','พ','พฤ','ศ','ส'];
+var WDFULL_EN=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var WDFULL_TH=['วันอาทิตย์','วันจันทร์','วันอังคาร','วันพุธ','วันพฤหัสบดี','วันศุกร์','วันเสาร์'];
+
+function parseDate(ds){
+  if(!ds)return null;
+  var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(ds);
+  if(!m)return null;
+  return {y:+m[1],m:+m[2],day:+m[3]};
+}
+
+function sunSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1l2.1-2.1M17 7l2.1-2.1"/></svg>'}
+function cloudSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 10.6 4 4 0 0 0 7 18Z"/></svg>'}
+function rainSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 6.6 4 4 0 0 0 7 14Z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg>'}
+function stormSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 5.6 4 4 0 0 0 7 13Z"/><path d="M13 13l-3 5h3l-2 4"/></svg>'}
+function snowSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 5.6 4 4 0 0 0 7 13Z"/><path d="M9 18v3M12 17v4M15 18v3"/></svg>'}
+function windSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11a2.5 2.5 0 1 0-2-4M3 15h14a2.5 2.5 0 1 1-2 4"/></svg>'}
+
+var WEATHER_MAP={
+  'clear':{ic:sunSvg,en:'Clear',th:'ฟ้าใส'},'sunny':{ic:sunSvg,en:'Clear',th:'ฟ้าใส'},
+  'cloudy':{ic:cloudSvg,en:'Cloudy',th:'มีเมฆมาก'},'overcast':{ic:cloudSvg,en:'Overcast',th:'ฟ้าครึ้ม'},'partly cloudy':{ic:cloudSvg,en:'Partly Cloudy',th:'เมฆบางส่วน'},
+  'rain':{ic:rainSvg,en:'Rain',th:'ฝนตก'},'light rain':{ic:rainSvg,en:'Light Rain',th:'ฝนตกเบาๆ'},'heavy rain':{ic:rainSvg,en:'Heavy Rain',th:'ฝนตกหนัก'},'drizzle':{ic:rainSvg,en:'Drizzle',th:'ฝนปรอยๆ'},
+  'thunderstorm':{ic:stormSvg,en:'Thunderstorm',th:'ฝนฟ้าคะนอง'},'storm':{ic:stormSvg,en:'Storm',th:'พายุ'},'typhoon':{ic:stormSvg,en:'Typhoon',th:'ไต้ฝุ่น'},
+  'snow':{ic:snowSvg,en:'Snow',th:'หิมะตก'},'light snow':{ic:snowSvg,en:'Light Snow',th:'หิมะตกเบาๆ'},
+  'windy':{ic:windSvg,en:'Windy',th:'ลมแรง'},'fog':{ic:cloudSvg,en:'Fog',th:'มีหมอก'},'humid':{ic:cloudSvg,en:'Humid',th:'อากาศชื้น'}
+};
+function weatherInfo(raw){
+  var key=(raw||'').toLowerCase().trim();
+  var hit=WEATHER_MAP[key];
+  if(hit)return {ic:hit.ic(),label:t(hit.en,hit.th)};
+  return {ic:cloudSvg(),label:raw?esc(raw):t('Unknown','ไม่ทราบ')};
+}
+
+function sakuraSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3c2 1 2 3.5 0 5-2-1.5-2-4 0-5ZM12 16c2 1 2 3.5 0 5-2-1.5-2-4 0-5ZM4.5 7c2.2.3 3.3 2.4 2.5 4.4-2.3-.2-3.8-2.2-2.5-4.4ZM19.5 7c-2.2.3-3.3 2.4-2.5 4.4 2.3-.2 3.8-2.2 2.5-4.4ZM4.5 17c2.2-.3 3.3-2.4 2.5-4.4-2.3.2-3.8 2.2-2.5 4.4ZM19.5 17c-2.2-.3-3.3-2.4-2.5-4.4 2.3.2 3.8 2.2 2.5 4.4Z"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg>'}
+function sunwaveSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="9" r="3.6"/><path d="M12 2.5v2M19 9h2M3 9h2M17 4.3l1.4-1.4M5.6 4.3 4.2 2.9M3 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>'}
+function leafSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><path d="M19 5C9 5 4 11 4 19c8 0 15-5 15-14Z"/><path d="M6 18 17 6"/></svg>'}
+function snowflakeSvg(){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 2v20M4 7l16 10M20 7 4 17"/><path d="M12 2l-2 2m2-2 2 2M12 22l-2-2m2 2 2-2M4 7l2.7.3M4 7l.7-2.6M20 7l-2.7.3M20 7l-.7-2.6M4 17l2.7-.3M4 17l.7 2.6M20 17l-2.7-.3M20 17l-.7 2.6"/></svg>'}
+
+var SEASON_MAP={
+  'spring':{ic:sakuraSvg,en:'Spring',th:'ฤดูใบไม้ผลิ',ac:'#FF8FC0',ac2:'#FFC2DC'},
+  'summer':{ic:sunwaveSvg,en:'Summer',th:'ฤดูร้อน',ac:'#36C2CF',ac2:'#8FE6E0'},
+  'autumn':{ic:leafSvg,en:'Autumn',th:'ฤดูใบไม้ร่วง',ac:'#E0923C',ac2:'#F0C070'},'fall':{ic:leafSvg,en:'Autumn',th:'ฤดูใบไม้ร่วง',ac:'#E0923C',ac2:'#F0C070'},
+  'winter':{ic:snowflakeSvg,en:'Winter',th:'ฤดูหนาว',ac:'#7FB8E0',ac2:'#CDE8F5'}
+};
+function seasonInfo(raw){
+  var key=(raw||'').toLowerCase().trim();
+  var hit=SEASON_MAP[key];
+  if(hit)return {key:key,ic:hit.ic(),label:t(hit.en,hit.th),ac:hit.ac,ac2:hit.ac2};
+  return {key:'',ic:sunwaveSvg(),label:raw?esc(raw):t('Unknown','ไม่ทราบ'),ac:'#6FA8D8',ac2:'#4D4A63'};
+}
+
+var EVENT_TYPES={
+  concert:{c:'#FF3D7A',en:'Concert',th:'คอนเสิร์ต',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4M9 21h6"/></svg>'}},
+  recording:{c:'#36C2CF',en:'Recording',th:'อัดเสียง',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M3 12h3l2-6 4 12 3-9 2 3h4"/></svg>'}},
+  release:{c:'#E0B23C',en:'Release',th:'ปล่อยเพลง',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.4" fill="#fff"/></svg>'}},
+  meeting:{c:'#7A88C9',en:'Meeting',th:'นัดประชุม',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="12" rx="1.5"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>'}},
+  media:{c:'#B36FE0',en:'Media',th:'สื่อ/สัมภาษณ์',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><circle cx="12" cy="12.5" r="3.6"/><path d="M9 6l1.5-2h3L15 6"/></svg>'}},
+  other:{c:'#8F8CA3',en:'Other',th:'อื่นๆ',ic:function(){return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2l2.6 6.6L21 9.3l-5 4.6L17.3 21 12 17.3 6.7 21 8 13.9 3 9.3l6.4-.7Z"/></svg>'}}
+};
+function evType(k){return EVENT_TYPES[k]||EVENT_TYPES.other}
+
+function repColor(v){
+  v=Math.max(0,Math.min(100,parseFloat(v)||0));
+  var stops=['#6B6B78','#4F8FD6','#36C2CF','#E0B23C','#FF3D7A'];
+  function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+  function lerp(a,b,f){return Math.round(a+(b-a)*f)}
+  var seg=v/100*(stops.length-1);
+  var i=Math.min(stops.length-2,Math.floor(seg));
+  var f=seg-i;
+  var c1=hx(stops[i]),c2=hx(stops[i+1]);
+  var r=lerp(c1[0],c2[0],f),gg=lerp(c1[1],c2[1],f),b=lerp(c1[2],c2[2],f);
+  return 'rgb('+r+','+gg+','+b+')';
+}
+
+var POPULARITY_TIERS_EN=['Unknown / Underground','Rising Indie','Local Buzz','Trending Online','Regional Star','National Star','Icon'];
+var POPULARITY_TIERS_TH=['ไร้ชื่อ / วงใต้ดิน','อินดี้กำลังมา','เป็นที่พูดถึงในพื้นที่','กำลังไวรัลออนไลน์','ดาราระดับภูมิภาค','ดาราระดับประเทศ','ตำนาน'];
+function popLevel(tierText,explicitLevel){
+  if(explicitLevel)return Math.max(1,Math.min(7,parseInt(explicitLevel,10)));
+  if(!tierText)return 0;
+  var idx=POPULARITY_TIERS_EN.findIndex(function(x){return x.toLowerCase()===String(tierText).toLowerCase()});
+  return idx>=0?idx+1:0;
+}
+
+var byDate={};
+var curYear=null,curMonth=null,todayStr=null;
+window.__wtPick=pickDay;
+
+function pickDay(ds){
+  qa('.wt-cell').forEach(function(c){c.classList.toggle('picked',c.getAttribute('data-d')===ds)});
+  var evs=byDate[ds]||[];
+  var html=evs.length?evs.map(function(e){
+    var et=evType(e.type);
+    return '<div class="wt-dd-item"><div class="wt-dd-ic" style="background:'+et.c+'">'+et.ic()+'</div>'+
+      '<div class="wt-dd-main"><div class="wt-dd-title">'+esc(e.title||'')+'</div>'+(e.venue?'<div class="wt-dd-venue">'+esc(e.venue)+'</div>':'')+'</div></div>';
+  }).join(''):emptyMsg('Nothing scheduled this day.','ไม่มีกำหนดการในวันนี้');
+  g('wt-daydetail').innerHTML='<div class="wt-sub-title">'+esc(ds)+'</div>'+html;
+}
+
+function buildCalendar(){
+  if(curYear==null){g('wt-cal-head').innerHTML='';g('wt-cal-grid').innerHTML=emptyMsg('No date set yet.','ยังไม่มีการระบุวันที่');return}
+  var wd=L==='th'?WD_TH:WD_EN;
+  g('wt-cal-head').innerHTML=wd.map(function(w){return '<div>'+w+'</div>'}).join('');
+  var first=new Date(curYear,curMonth-1,1);
+  var startDow=first.getDay();
+  var daysInMonth=new Date(curYear,curMonth,0).getDate();
+  var cells='';
+  for(var i=0;i<startDow;i++)cells+='<div class="wt-cell empty"></div>';
+  for(var dnum=1;dnum<=daysInMonth;dnum++){
+    var ds=curYear+'-'+pad(curMonth)+'-'+pad(dnum);
+    var evs=byDate[ds]||[];
+    var dotsHtml=evs.slice(0,3).map(function(e){return '<span class="wt-dot" style="background:'+evType(e.type).c+'"></span>'}).join('');
+    var more=evs.length>3?'<span class="wt-more">+'+(evs.length-3)+'</span>':'';
+    var cls='wt-cell'+(ds===todayStr?' today':'')+(evs.length?' has':'');
+    cells+='<div class="'+cls+'" data-d="'+ds+'" onclick="window.__wtPick(\''+ds+'\')"><span class="num">'+dnum+'</span><span class="dots">'+dotsHtml+more+'</span></div>';
+  }
+  g('wt-cal-grid').innerHTML=cells;
+  if(todayStr&&byDate[todayStr])pickDay(todayStr);
+  else g('wt-daydetail').innerHTML='';
+}
+
+function renderAll(){
+  if(d.charColor){
+    document.documentElement.style.setProperty('--ac',d.charColor);
+    var h=d.charColor.replace('#','');
+    if(h.length===6){
+      var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+      document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+    }
+  }
+
+  var pd=parseDate(d.date);
+  var mn=L==='th'?MN_TH:MN_EN, mfull=L==='th'?MFULL_TH:MFULL_EN, wdfull=L==='th'?WDFULL_TH:WDFULL_EN;
+  todayStr=d.date||null;
+  if(pd){
+    curYear=pd.y;curMonth=pd.m;
+    var dow=new Date(pd.y,pd.m-1,pd.day).getDay();
+    g('wt-daynum').textContent=pd.day;
+    g('wt-datesub').textContent=mn[pd.m-1]+' · '+(L==='th'?WD_TH[dow]:WD_EN[dow]);
+    g('wt-today-date').textContent=wdfull[dow]+', '+pd.day+' '+mfull[pd.m-1]+' '+pd.y;
+  }else{
+    curYear=null;curMonth=null;
+    g('wt-daynum').textContent='—';g('wt-datesub').textContent='—';
+    g('wt-today-date').textContent=t('No date set yet.','ยังไม่มีการระบุวันที่');
+  }
+  g('wt-timeval').textContent=d.time||'—';
+  g('wt-today-time').textContent=d.time?('⏱ '+d.time):'';
+  g('wt-today-sub').textContent=t('Daily Report','รายงานประจำวัน');
+
+  var wi=weatherInfo(d.weather);
+  g('wt-weather-chip').innerHTML=wi.ic+'<span>'+wi.label+'</span>';
+  g('wt-today-ic').innerHTML=wi.ic.replace(/width="20" height="20"/,'width="26" height="26"');
+  g('wt-weather-card').innerHTML='<div class="k">'+t('Weather','สภาพอากาศ')+'</div><div class="v">'+wi.label+'</div>';
+
+  var si=seasonInfo(d.season);
+  document.documentElement.style.setProperty('--sac',si.ac);
+  document.documentElement.style.setProperty('--sac2',si.ac2);
+  g('wt-season-chip').innerHTML=si.ic+'<span>'+si.label+'</span>';
+  g('wt-season-card').innerHTML='<div class="k">'+t('Season','ฤดูกาล')+'</div><div class="v">'+si.label+'</div>';
+
+  if(d.seasonNote){
+    g('wt-seasonnote').style.display='block';
+    g('wt-seasonnote').textContent=d.seasonNote;
+  }else{
+    g('wt-seasonnote').style.display='none';
+  }
+
+  // Schedule — filter to current month
+  var sched=(d.schedule||[]).filter(function(e){return e&&e.date});
+  byDate={};
+  var monthItems=[];
+  sched.forEach(function(e){
+    if(!byDate[e.date])byDate[e.date]=[];
+    byDate[e.date].push(e);
+    var p=parseDate(e.date);
+    if(p&&curYear!=null&&p.y===curYear&&p.m===curMonth)monthItems.push(e);
+  });
+  buildCalendar();
+
+  var usedTypes={};
+  monthItems.forEach(function(e){usedTypes[e.type&&EVENT_TYPES[e.type]?e.type:'other']=true});
+  var legendHtml=Object.keys(usedTypes).map(function(k){
+    var et=evType(k);
+    return '<div class="wt-leg-item"><span class="wt-leg-dot" style="background:'+et.c+'"></span>'+t(et.en,et.th)+'</div>';
+  }).join('');
+  g('wt-legend').innerHTML=legendHtml;
+
+  monthItems.sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+  var mn2=L==='th'?MN_TH:MN_EN;
+  var listHtml=monthItems.length?monthItems.map(function(e){
+    var p=parseDate(e.date);
+    var status=!todayStr?'future':(e.date<todayStr?'past':(e.date===todayStr?'today':'future'));
+    var badgeLbl=status==='today'?t('Today','วันนี้'):status==='past'?t('Done','ผ่านไปแล้ว'):t('Upcoming','กำลังจะมาถึง');
+    var et=evType(e.type);
+    return '<div class="wt-sl-item '+status+'"><div class="wt-sl-date"><div class="d">'+(p?p.day:'—')+'</div><div class="m">'+(p?mn2[p.m-1]:'')+'</div></div>'+
+      '<div class="wt-sl-ic" style="background:'+et.c+'">'+et.ic()+'</div>'+
+      '<div class="wt-sl-main"><div class="wt-sl-title">'+esc(e.title||'')+'</div>'+(e.venue?'<div class="wt-sl-venue">'+esc(e.venue)+'</div>':'')+'</div>'+
+      '<div class="wt-sl-badge '+status+'">'+badgeLbl+'</div></div>';
+  }).join(''):emptyMsg('No schedule entries this month.','ยังไม่มีกำหนดการในเดือนนี้');
+  g('wt-sched-list').innerHTML=listHtml;
+
+  // Career tab
+  g('wt-funds-val').textContent=d.funds||'—';
+
+  var rep=Math.max(0,Math.min(100,parseFloat(d.reputation)||0));
+  g('wt-rep-fill').style.width=rep+'%';
+  g('wt-rep-fill').style.background=repColor(rep);
+  g('wt-rep-val').textContent=(d.reputation!=null?Math.round(rep):0)+' / 100';
+
+  var tierTxt=d.popularityTier||'';
+  g('wt-pop-tier').textContent=tierTxt||t('Not yet established','ยังไม่ถูกกำหนด');
+  var lvl=popLevel(tierTxt,d.popularityLevel);
+  var pipsHtml='';
+  for(var pi=1;pi<=7;pi++)pipsHtml+='<div class="wt-pip'+(pi<=lvl?' filled':'')+'"></div>';
+  g('wt-pop-pips').innerHTML=lvl?pipsHtml:'';
+
+  var band=d.band;
+  if(band&&band.name){
+    g('wt-band-wrap').innerHTML='<div class="wt-aff-name">'+esc(band.name)+'</div>'+
+      (band.role?'<div class="wt-aff-sub">'+esc(band.role)+'</div>':'')+
+      (band.status?'<div class="wt-aff-pill">'+esc(band.status)+'</div>':'');
+  }else{
+    g('wt-band-wrap').innerHTML='<div class="wt-aff-pill muted">'+t('Solo / Unaffiliated','เดี่ยว / ไม่มีสังกัดวง')+'</div>';
+  }
+
+  var label=d.label;
+  if(label&&label.name){
+    g('wt-label-wrap').innerHTML='<div class="wt-aff-name">'+esc(label.name)+'</div>'+
+      (label.status?'<div class="wt-aff-pill">'+esc(label.status)+'</div>':'');
+  }else{
+    g('wt-label-wrap').innerHTML='<div class="wt-aff-pill muted">'+t('Unsigned / Independent','ไม่มีสังกัดค่าย / อินดี้')+'</div>';
+  }
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(e){e.stopPropagation();setLang('en')});
+g('lg-th').addEventListener('click',function(e){e.stopPropagation();setLang('th')});
+
+g('wt-bar').addEventListener('click',function(){g('wtwrap').classList.toggle('open')});
+
+qa('.wttab').forEach(function(tb){
+  tb.addEventListener('click',function(){go(tb.getAttribute('data-t'))});
+});
+function go(target){
+  qa('.wttab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===target)});
+  qa('.wtpanel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-p')===target)});
+}
+
+renderAll();
+})();
+</script>
+</body>
+</html>

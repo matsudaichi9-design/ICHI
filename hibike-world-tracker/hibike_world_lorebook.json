@@ -1,0 +1,39 @@
+{
+  "name": "HIBIKE! — World Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "HIBIKE! World Tracker System",
+      "content": "## HIBIKE! — WORLD TRACKER (DAILY CALL SHEET)\n\nA persistent, collapsible report card for {{user}}'s current standing in the HIBIKE! music world. After EVERY response you write, append a status block on its own line with no extra text around it:\n\n<HIBIKE_WORLD>\n{JSON}\n</HIBIKE_WORLD>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies. Copy the full JSON from your previous block and change only what actually moved.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"charColor\": \"#FF3D7A\",\n  \"date\": \"2026-11-13\",\n  \"time\": \"14:30\",\n  \"weather\": \"Cloudy\",\n  \"season\": \"Autumn\",\n  \"seasonNote\": \"Maple leaves are starting to fall along the Shimokita streets; evenings are getting cold.\",\n  \"funds\": \"¥48,200\",\n  \"reputation\": 62,\n  \"popularityTier\": \"Rising Indie\",\n  \"popularityLevel\": 2,\n  \"band\": { \"name\": \"odd:hours\", \"role\": \"Vocals / Rhythm Guitar\", \"status\": \"Active\" },\n  \"label\": { \"name\": \"AMPLIFY JAPAN\", \"status\": \"Developing Artist\" },\n  \"schedule\": [\n    { \"date\": \"2026-11-15\", \"title\": \"Studio Recording Session\", \"venue\": \"UNDER//VOLT\", \"type\": \"recording\" },\n    { \"date\": \"2026-11-20\", \"title\": \"Live Set\", \"venue\": \"ECHO BASE Shibuya\", \"type\": \"concert\" },\n    { \"date\": \"2026-11-25\", \"title\": \"Single Release — \\\"Static Bloom\\\"\", \"type\": \"release\" }\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `charColor` | personal accent color for {{user}}'s artist identity; keep it stable once set |\n| `date` | **always** `YYYY-MM-DD`, required every single block — the whole card (collapsed bar, calendar month, \"today\" highlight) is driven off this one field |\n| `time` | free text, e.g. `\"14:30\"` — 24h format preferred |\n| `weather` | one of `Clear`, `Cloudy`, `Overcast`, `Partly Cloudy`, `Rain`, `Light Rain`, `Heavy Rain`, `Drizzle`, `Thunderstorm`, `Storm`, `Typhoon`, `Snow`, `Light Snow`, `Windy`, `Fog`, `Humid` (matched case-insensitively), or any custom text — a custom value is still displayed verbatim, just with a generic icon |\n| `season` | one of `Spring`, `Summer`, `Autumn`/`Fall`, `Winter` — this genuinely re-skins the card's accent color (sakura pink / summer teal / autumn amber / winter ice-blue), separate from `charColor` |\n| `seasonNote` | optional short flavor line shown under the Today tab — use it for texture (\"festival banners are going up downtown\"), not mechanics |\n| `funds` | free text, already formatted with currency symbol, e.g. `\"¥48,200\"` |\n| `reputation` | 0–100 numeric \"buzz score\" — drives a color gradient gauge (grey → blue → teal → gold → hot pink as it climbs) |\n| `popularityTier` | a named stage of fame — suggested ladder: Unknown/Underground → Rising Indie → Local Buzz → Trending Online → Regional Star → National Star → Icon. Using one of these exact names auto-fills the 7-step meter; a custom tier name is shown as text with no meter unless `popularityLevel` is also given |\n| `popularityLevel` | optional 1–7 override for the step meter, useful if `popularityTier` is custom text |\n| `band` | omit entirely, or set to `null`, if {{user}} is currently solo/unaffiliated — the card shows \"Solo / Unaffiliated\" automatically |\n| `band.status` | e.g. `Active`, `On Hiatus`, `Touring`, `Recording` |\n| `label` | omit entirely, or set to `null`, if {{user}} is unsigned — the card shows \"Unsigned / Independent\" automatically |\n| `label.status` | e.g. `Developing Artist`, `Signed`, `Shopping a Deal`, `Dropped` |\n| `schedule` | array of `{date, title, venue, type}` — `venue` is optional. `type` is one of `concert`, `recording`, `release`, `meeting`, `media`, or `other` (controls the icon/color on the calendar dot and list row). The card only displays entries that fall within `date`'s current month — past months' entries can be safely dropped once the month has turned over |\n\n---\n\n### OUTPUT RULES\n- `date` must move forward in a way consistent with the story's actual pacing — never jump the calendar arbitrarily just to reveal a new month.\n- Add a `schedule` entry the moment a concert, recording session, release date, meeting, or press event is actually established in the roleplay (booked, confirmed, scheduled) — don't wait to be asked.\n- Do not invent `reputation`, `popularityTier`, `band`, or `label` changes unless something in the actual scene justifies the shift (a show goes well, a single flops, a contract is signed, a member quits). This mirrors the world's own Continuity & Canon Priority rule: new standing is only \"confirmed\" once it has actually happened in the story, not just implied.\n- If {{user}} hasn't joined a band or signed with a label yet, omit `band`/`label` rather than inventing placeholder ones.",
+      "constant": true,
+      "order": 88,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
