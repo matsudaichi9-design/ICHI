@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',serif;font-size:14px}
+:root{
+  --rc:#5B3FA0;--rc-rgb:91,63,160;
+  --warn:#D98C2B;--gold:#C9A227;--tx:#EDE6F2;--tx2:#9C92AD;--mu:#544C63;
+  --bg:#0A0812;--pan:#120D18;--pan2:#1A1422;--pan3:#241B2E;
+  --bd:rgba(201,162,39,.2);--bd2:rgba(255,255,255,.05);
+  --fh:'Cormorant SC',serif;--fr:'Oswald','Noto Sans Thai',sans-serif;
+}
+[lang-mode="th"]{--fh:'Noto Serif Thai',serif}
+
+#rlwrap{max-width:440px;margin:12px auto;position:relative}
+#rl{position:relative;background:radial-gradient(circle at 50% 0%,rgba(var(--rc-rgb),.22),transparent 55%),
+  linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:10px;overflow:hidden;padding:20px 18px 16px;text-align:center;
+  box-shadow:0 18px 44px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.03);
+  animation:rli .35s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes rli{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+
+#rl-lang{position:absolute;top:10px;right:10px;z-index:5;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#rl-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:3px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#rl-lang b.on{color:#fff;background:linear-gradient(135deg,var(--rc),#241539);box-shadow:0 0 8px -2px var(--rc)}
+
+#rl-banner{font-family:var(--fh);font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:2px}
+[lang-mode="th"] #rl-banner{letter-spacing:.5px}
+#rl-char{font-size:12px;color:var(--tx2);margin-bottom:12px}
+[lang-mode="th"] #rl-char{font-family:'Noto Serif Thai',serif}
+#rl-char b{color:var(--tx);font-weight:600}
+
+#rl-burst{position:relative;width:180px;height:180px;margin:0 auto 8px}
+#rl-burst svg{position:absolute;inset:0;width:100%;height:100%}
+.rl-shard{animation:rlBurstIn .6s cubic-bezier(.2,.8,.3,1.15) both;transform-origin:100px 100px}
+.rl-shard:nth-of-type(1){animation-delay:0s}.rl-shard:nth-of-type(2){animation-delay:.04s}
+.rl-shard:nth-of-type(3){animation-delay:.08s}.rl-shard:nth-of-type(4){animation-delay:.12s}
+.rl-shard:nth-of-type(5){animation-delay:.16s}.rl-shard:nth-of-type(6){animation-delay:.2s}
+.rl-shard:nth-of-type(7){animation-delay:.24s}.rl-shard:nth-of-type(8){animation-delay:.28s}
+@keyframes rlBurstIn{from{opacity:0;transform:scale(.25)}to{opacity:1;transform:scale(1)}}
+.rl-crack{stroke-dasharray:40;stroke-dashoffset:40;opacity:.55;animation:rlCrack .6s ease-out .3s forwards}
+@keyframes rlCrack{to{stroke-dashoffset:0}}
+.rl-flash{animation:rlFlash .7s ease-out forwards}
+@keyframes rlFlash{0%{opacity:.9}100%{opacity:0}}
+#rl-core{animation:rlPulse 2.8s ease-in-out infinite}
+@keyframes rlPulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+
+#rl-tech{font-family:var(--fr);font-size:26px;font-weight:700;color:var(--tx);letter-spacing:1px;text-transform:uppercase;
+  line-height:1.15;text-shadow:0 0 18px rgba(var(--rc-rgb),.5)}
+[lang-mode="th"] #rl-tech{font-size:20px}
+#rl-type{font-family:var(--fh);font-size:11.5px;color:var(--gold);letter-spacing:1.5px;margin-top:3px;text-transform:uppercase}
+[lang-mode="th"] #rl-type{letter-spacing:.3px}
+#rl-scale{display:inline-block;margin-top:9px;font-size:9.5px;letter-spacing:1px;padding:3px 11px;border-radius:99px;
+  color:var(--rc);background:rgba(var(--rc-rgb),.12);border:1px solid rgba(var(--rc-rgb),.4);text-transform:uppercase}
+[lang-mode="th"] #rl-scale{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+
+.rl-section{text-align:left;margin-top:14px;padding:11px 13px;border:1px solid var(--bd2);border-radius:7px;
+  background:rgba(255,255,255,.015)}
+.rl-section.limit{border-color:rgba(217,140,43,.35);background:rgba(217,140,43,.06)}
+.rl-section .lbl{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .rl-section .lbl{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:.3px}
+.rl-section.limit .lbl{color:var(--warn)}
+.rl-section .body{font-size:13px;color:var(--tx);line-height:1.65;margin-top:5px}
+[lang-mode="th"] .rl-section .body{font-family:'Noto Serif Thai',serif}
+
+#rl-quote{margin-top:12px;font-size:13px;color:var(--tx2);font-style:italic;line-height:1.6}
+[lang-mode="th"] #rl-quote{font-style:normal;font-family:'Noto Serif Thai',serif}
+#rl-quote::before,#rl-quote::after{content:'"';color:var(--mu)}
+
+#rl-foot{margin-top:16px;padding-top:11px;border-top:1px solid var(--bd2);font-size:9px;letter-spacing:2px;
+  color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] #rl-foot{letter-spacing:.3px;font-family:'Noto Serif Thai',serif;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="rlraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="rlwrap"><div id="rl">
+  <div id="rl-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+  <div id="rl-banner" data-en="Release" data-th="ปลดปล่อยพลัง">Release</div>
+  <div id="rl-char"></div>
+
+  <div id="rl-burst"></div>
+
+  <div id="rl-tech">—</div>
+  <div id="rl-type"></div>
+  <div id="rl-scale" style="display:none"></div>
+
+  <div class="rl-section">
+    <div class="lbl" data-en="What Manifests" data-th="สิ่งที่ปรากฏขึ้น">What Manifests</div>
+    <div class="body" id="rl-desc"></div>
+  </div>
+  <div class="rl-section limit">
+    <div class="lbl" data-en="The Limit" data-th="ขีดจำกัด">The Limit</div>
+    <div class="body" id="rl-limit"></div>
+  </div>
+
+  <div id="rl-quote" style="display:none"></div>
+
+  <div id="rl-foot" data-en="Kakujo — Ionia" data-th="คาคุโจ — ไอโอเนีย">Kakujo — Ionia</div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('rlraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function t(en,th){return L==='th'?th:en}
+
+function shardPts(ang,rTip,rBase,hw){
+  var rad=ang*Math.PI/180,rad1=(ang-hw)*Math.PI/180,rad2=(ang+hw)*Math.PI/180;
+  var tx=100+Math.cos(rad)*rTip,ty=100+Math.sin(rad)*rTip;
+  var b1x=100+Math.cos(rad1)*rBase,b1y=100+Math.sin(rad1)*rBase;
+  var b2x=100+Math.cos(rad2)*rBase,b2y=100+Math.sin(rad2)*rBase;
+  return tx+','+ty+' '+b1x+','+b1y+' '+b2x+','+b2y;
+}
+
+function buildBurst(color){
+  var shards='',cracks='';
+  for(var i=0;i<8;i++){
+    var ang=i*45;
+    var rTip=(i%2===0)?82:64;
+    shards+='<polygon class="rl-shard" points="'+shardPts(ang,rTip,26,9)+'" fill="'+color+'" opacity="'+(i%2===0?.85:.55)+'"/>';
+    var cang=ang+22.5;
+    var rad=cang*Math.PI/180;
+    var x1=100+Math.cos(rad)*58,y1=100+Math.sin(rad)*58;
+    var x2=100+Math.cos(rad)*92,y2=100+Math.sin(rad)*92;
+    cracks+='<line class="rl-crack" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="var(--gold)" stroke-width="1"/>';
+  }
+  return ''+
+  '<svg viewBox="0 0 200 200">'+shards+cracks+'</svg>'+
+  '<svg viewBox="0 0 200 200">'+
+    '<defs><radialGradient id="coreg" cx="50%" cy="50%" r="60%">'+
+      '<stop offset="0%" stop-color="#fff" stop-opacity=".95"/>'+
+      '<stop offset="35%" stop-color="'+color+'"/>'+
+      '<stop offset="100%" stop-color="'+color+'" stop-opacity="0"/>'+
+    '</radialGradient></defs>'+
+    '<circle id="rl-core" cx="100" cy="100" r="30" fill="url(#coreg)"/>'+
+    '<circle cx="100" cy="100" r="30" fill="none" stroke="var(--gold)" stroke-width="1.2" opacity=".7"/>'+
+  '</svg>'+
+  '<svg viewBox="0 0 200 200"><circle class="rl-flash" cx="100" cy="100" r="95" fill="'+color+'" opacity=".35"/></svg>';
+}
+
+function renderAll(){
+  var color=d.techColor||'#5B3FA0';
+  document.documentElement.style.setProperty('--rc',color);
+  var h=color.replace('#','');
+  if(h.length===6){
+    var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+    document.documentElement.style.setProperty('--rc-rgb',r+','+gg+','+b);
+  }
+
+  g('rl-burst').innerHTML=buildBurst(color);
+
+  if(d.characterName){
+    g('rl-char').innerHTML='<b>'+esc(d.characterName)+'</b>'+t(' unleashes','ปลดปล่อยพลัง');
+  }else{
+    g('rl-char').textContent='';
+  }
+
+  g('rl-tech').textContent=d.techniqueName||t('Unnamed Technique','เทคนิคที่ไร้ชื่อ');
+  g('rl-type').textContent=d.releaseType||'';
+  if(d.scale){
+    g('rl-scale').style.display='inline-block';
+    g('rl-scale').textContent=d.scale;
+  }else{
+    g('rl-scale').style.display='none';
+  }
+
+  g('rl-desc').textContent=d.description||t('Not yet witnessed.','ยังไม่เคยมีใครพบเห็น');
+  g('rl-limit').textContent=d.limit||t('Unknown — no limit has been observed yet.','ไม่ทราบ — ยังไม่เคยเห็นขีดจำกัดนี้');
+
+  if(d.quote){
+    g('rl-quote').style.display='block';
+    g('rl-quote').textContent=d.quote;
+  }else{
+    g('rl-quote').style.display='none';
+  }
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(e){e.stopPropagation();setLang('en')});
+g('lg-th').addEventListener('click',function(e){e.stopPropagation();setLang('th')});
+
+renderAll();
+})();
+</script>
+</body>
+</html>

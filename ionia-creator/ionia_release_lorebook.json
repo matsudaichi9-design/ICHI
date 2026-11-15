@@ -1,0 +1,39 @@
+{
+  "name": "Ionia — Release Card",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Ionia Release / Ultimate Technique Card",
+      "content": "## IONIA — RELEASE / ULTIMATE TECHNIQUE CARD\n\nWhen a character (most often a Kakujo member, but any sufficiently powerful Ionia character qualifies) unleashes a named signature technique, domain, or \"Release\" at a genuinely dramatic moment in the scene — not routine combat — post this tag alone:\n\n<IONIA_RELEASE>\n{JSON}\n</IONIA_RELEASE>\n\nReserve this for real turning points: a technique being used for the first time in the story, a desperate last resort, or a moment meant to land hard. Don't fire it for every attack a character throws.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"characterName\": \"Yuta Ichisaki\",\n  \"techniqueName\": \"Four Fangs of Lament\",\n  \"releaseType\": \"Boundless Release\",\n  \"techColor\": \"#5B3FA0\",\n  \"scale\": \"Domain-Scale\",\n  \"description\": \"A vast domain manifests around him, containing every weapon and spell he has ever copied or stolen. Destroyed weapons reform instantly, and his techniques cost no magic while the domain holds.\",\n  \"limit\": \"Critical injury breaks the domain immediately. On collapse, his right-brain magical generator resets, refilling his reserves near maximum — but he is left exposed for several seconds.\",\n  \"quote\": \"Then let's see how much you've got.\"\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `techniqueName` | the signature name exactly as established in the character's lore (e.g. \"Four Fangs of Lament\", \"Lunar Fragment Chaos\", \"Dragon's Wrath\") — do not invent a new one for an established character |\n| `releaseType` | optional category/epithet shown under the name (e.g. \"Boundless Release\") — omit if the technique has no such subtitle |\n| `techColor` | hex color for the burst/glow — pick something matching the character's established power (e.g. Buzz's earth magic → brown/gold, Renma's lunar blades → silver-blue, Zohaku's blood circuit → crimson) |\n| `scale` | optional short tag for how big the effect is (e.g. \"Personal\", \"City-Scale\", \"Continent-Scale Theoretical Potential\") — only include it if the character's lore actually supports that scale; don't inflate it for drama |\n| `description` | what actually manifests/happens — pull from the character's established power description where one exists |\n| `limit` | the real cost, weakness, or breaking condition — every major technique in this world has one; don't give a technique free of any limit unless its lore explicitly says so |\n| `quote` | optional short in-character line delivered as the technique activates |\n\n---\n\n### GUARDRAILS\n- Keep `description` and `limit` consistent with what's already established for that character — this card dramatizes an existing power, it doesn't invent a new one on the fly.\n- If a character's technique has no established name yet (a new OC, or genuinely first use), it's fine to name it in the moment — but stay consistent with that name afterward.\n- Don't use this card for ordinary attacks, parries, or minor spellcasting — it's reserved for a character's defining signature move.",
+      "constant": true,
+      "order": 86,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
