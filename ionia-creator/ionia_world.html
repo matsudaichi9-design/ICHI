@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',serif;font-size:13.5px}
+:root{
+  --ac:#B8732E;--ac-rgb:184,115,46;
+  --gold:#C9A227;--tx:#EADFCF;--tx2:#9C8E78;--mu:#564C3E;
+  --bg:#0E0B08;--pan:#171210;--pan2:#1F1814;--pan3:#2A201A;
+  --bd:rgba(201,162,39,.2);--bd2:rgba(255,255,255,.05);
+  --fh:'Cormorant SC',serif;
+}
+[lang-mode="th"]{--fh:'Noto Serif Thai',serif}
+
+#wwrap{max-width:480px;margin:12px auto;position:relative}
+#w{position:relative;background:linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:11px;overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,.78),inset 0 0 0 1px rgba(255,255,255,.03);
+  animation:wi .32s cubic-bezier(.2,.8,.3,1.15) both}
+@keyframes wi{from{opacity:0;transform:translateY(-6px) scale(.985)}to{opacity:1;transform:none}}
+#w::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;z-index:2;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+#w-lang{position:absolute;top:9px;right:11px;z-index:5;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#wwrap:not(.open) #w-lang{display:none}
+#w-lang b{font-family:var(--fh);font-size:7.5px;letter-spacing:.4px;padding:3px 6px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#w-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ac),#2A1A0E);box-shadow:0 0 8px -2px var(--ac)}
+
+/* COLLAPSED BAR */
+#w-bar{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer}
+#w-locic{flex-shrink:0;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(var(--ac-rgb),.12);border:1px solid rgba(var(--ac-rgb),.4)}
+#w-loctext{flex:1;min-width:0}
+#w-locname{font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[lang-mode="th"] #w-locname{font-family:'Noto Serif Thai',serif}
+#w-locterr{font-family:var(--fh);font-size:9px;letter-spacing:1px;color:var(--gold);text-transform:uppercase;margin-top:1px}
+[lang-mode="th"] #w-locterr{letter-spacing:.2px}
+#w-danger{flex-shrink:0;display:flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;font-size:10px;
+  font-weight:600;white-space:nowrap;border:1px solid}
+#w-weatherchip{flex-shrink:0;width:22px;height:22px;display:flex;align-items:center;justify-content:center;color:var(--tx2)}
+#w-chev{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.04);border:1px solid var(--bd2);color:var(--mu);transition:transform .3s}
+#wwrap.open #w-chev{transform:rotate(180deg)}
+
+#w-panel{max-height:0;overflow:hidden;transition:max-height .35s ease}
+#wwrap.open #w-panel{max-height:1000px}
+
+/* TABS */
+#wtabs{display:flex;background:rgba(0,0,0,.3);border-top:1px solid var(--bd2);border-bottom:1px solid var(--bd2)}
+.wtab{flex:1;padding:9px 2px 7px;text-align:center;cursor:pointer;user-select:none}
+.wtab .ic{width:24px;height:24px;border-radius:50%;margin:0 auto;display:flex;align-items:center;justify-content:center;
+  border:1px solid transparent;transition:all .18s}
+.wtab span.lbl{display:block;font-family:var(--fh);font-size:7.5px;letter-spacing:.6px;color:var(--mu);text-transform:uppercase;margin-top:3px}
+[lang-mode="th"] .wtab span.lbl{font-size:9px;letter-spacing:0;text-transform:none}
+.wtab.on .ic{border-color:var(--ac);background:rgba(var(--ac-rgb),.14);box-shadow:0 0 10px -3px var(--ac)}
+.wtab.on span.lbl{color:var(--tx)}
+
+.wpanel{display:none;padding:14px 16px 15px}
+.wpanel.on{display:block}
+
+/* REALM TAB */
+#w-hero{padding:13px;border:1px solid var(--bd);border-radius:9px;
+  background:radial-gradient(circle at 20% 15%,rgba(var(--ac-rgb),.1),transparent 70%)}
+#w-hero-name{font-family:var(--fh);font-size:21px;color:var(--tx);letter-spacing:.3px;line-height:1.1}
+[lang-mode="th"] #w-hero-name{font-size:17px}
+#w-hero-terr{font-size:11px;color:var(--gold);margin-top:3px;letter-spacing:.3px}
+[lang-mode="th"] #w-hero-terr{font-family:'Noto Serif Thai',serif}
+#w-hero-date{font-size:11.5px;color:var(--tx2);font-style:italic;margin-top:7px}
+[lang-mode="th"] #w-hero-date{font-style:normal;font-family:'Noto Serif Thai',serif}
+#w-hero-cal{font-size:9.5px;color:var(--mu);margin-top:2px}
+[lang-mode="th"] #w-hero-cal{font-family:'Noto Serif Thai',serif}
+
+.w-info-row{display:flex;gap:9px;margin-top:11px}
+.w-info-card{flex:1;padding:10px;border:1px solid var(--bd);border-radius:8px;background:rgba(255,255,255,.015);text-align:center}
+.w-info-card .k{font-family:var(--fh);font-size:8px;letter-spacing:1.4px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .w-info-card .k{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:.2px}
+.w-info-card .v{font-size:13px;color:var(--tx);margin-top:4px;font-weight:600}
+[lang-mode="th"] .w-info-card .v{font-family:'Noto Serif Thai',serif}
+
+.w-danger-gauge{height:8px;border-radius:99px;background:rgba(255,255,255,.06);overflow:hidden;margin-top:6px}
+.w-danger-fill{height:100%;border-radius:99px;transition:width .4s ease}
+
+#w-note{margin-top:11px;font-size:12px;color:var(--tx2);font-style:italic;line-height:1.65;padding:9px 11px;
+  border-left:2px solid var(--ac);background:rgba(255,255,255,.02)}
+[lang-mode="th"] #w-note{font-style:normal;font-family:'Noto Serif Thai',serif}
+
+.w-sub-title{font-family:var(--fh);font-size:9px;letter-spacing:1.8px;color:var(--gold);text-transform:uppercase;margin-bottom:9px}
+[lang-mode="th"] .w-sub-title{font-family:'Noto Serif Thai',serif;font-size:10.5px;letter-spacing:.2px}
+
+/* FACTIONS TAB */
+.w-fac{padding:9px 0;border-bottom:1px solid var(--bd2)}
+.w-fac:last-child{border-bottom:none}
+.w-fac-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.w-fac-name{font-size:12.5px;font-weight:600;color:var(--tx)}
+[lang-mode="th"] .w-fac-name{font-family:'Noto Serif Thai',serif}
+.w-fac-standing{flex-shrink:0;font-size:9.5px;letter-spacing:.4px;padding:2px 8px;border-radius:99px;white-space:nowrap}
+[lang-mode="th"] .w-fac-standing{font-family:'Noto Serif Thai',serif}
+.w-fac-pips{display:flex;gap:3px;margin-top:6px}
+.w-fac-pip{flex:1;height:5px;border-radius:99px;background:rgba(255,255,255,.07)}
+.w-fac-note{font-size:10.5px;color:var(--tx2);font-style:italic;margin-top:5px;line-height:1.5}
+[lang-mode="th"] .w-fac-note{font-style:normal;font-family:'Noto Serif Thai',serif}
+
+.w-wealth-row{display:flex;gap:9px;margin-top:4px}
+.w-wealth-card{flex:1;padding:11px;border:1px solid var(--bd);border-radius:8px;background:rgba(255,255,255,.015);text-align:center}
+.w-wealth-card .ic{width:20px;height:20px;margin:0 auto 6px}
+.w-wealth-card .k{font-family:var(--fh);font-size:8px;letter-spacing:1.2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .w-wealth-card .k{font-family:'Noto Serif Thai',serif;font-size:9.5px;letter-spacing:.2px}
+.w-wealth-card .v{font-size:16px;color:var(--tx);margin-top:4px;font-weight:600}
+
+/* JOURNEY TAB */
+.w-acc{border:1px solid var(--bd2);border-radius:5px;margin-bottom:7px;overflow:hidden;background:rgba(255,255,255,.015)}
+.w-acc-head{display:flex;align-items:center;gap:9px;padding:9px 11px;cursor:pointer}
+.w-acc-head .main{flex:1;min-width:0}
+.w-acc-name{font-size:12px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+[lang-mode="th"] .w-acc-name{font-family:'Noto Serif Thai',serif}
+.w-acc-sub{font-size:10px;color:var(--tx2);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+[lang-mode="th"] .w-acc-sub{font-style:normal;font-family:'Noto Serif Thai',serif}
+.w-acc-pill{flex-shrink:0;font-size:8.5px;letter-spacing:.5px;padding:2px 7px;border-radius:99px;color:var(--gold);
+  background:rgba(201,162,39,.1);border:1px solid rgba(201,162,39,.3);text-transform:uppercase}
+[lang-mode="th"] .w-acc-pill{font-family:'Noto Serif Thai',serif;text-transform:none}
+.w-acc-chev{flex-shrink:0;width:16px;height:16px;color:var(--mu);transition:transform .25s}
+.w-acc.open .w-acc-chev{transform:rotate(180deg)}
+.w-acc-body{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.w-acc.open .w-acc-body{max-height:260px}
+.w-acc-body-inner{padding:0 11px 11px;font-size:11.5px;color:var(--tx2);line-height:1.6;font-style:italic;
+  border-top:1px solid var(--bd2);padding-top:8px;margin:0 11px 11px}
+[lang-mode="th"] .w-acc-body-inner{font-style:normal;font-family:'Noto Serif Thai',serif}
+
+.w-empty{font-size:11px;font-style:italic;color:var(--mu);padding:6px 0}
+[lang-mode="th"] .w-empty{font-style:normal;font-family:'Noto Serif Thai',serif}
+
+#w-foot{padding:9px 16px 12px;text-align:center;font-size:8.5px;letter-spacing:1px;color:var(--mu);
+  border-top:1px solid var(--bd2);text-transform:uppercase}
+[lang-mode="th"] #w-foot{font-family:'Noto Serif Thai',serif;letter-spacing:.2px;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="wraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="wwrap"><div id="w">
+  <div id="w-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+
+  <div id="w-bar">
+    <div id="w-locic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11Z"/></svg></div>
+    <div id="w-loctext">
+      <div id="w-locname">—</div>
+      <div id="w-locterr">—</div>
+    </div>
+    <div id="w-danger"></div>
+    <div id="w-weatherchip"></div>
+    <div id="w-chev"><svg width="9" height="9" viewBox="0 0 10 10" fill="none"><path d="M1.5 3 L5 6.5 L8.5 3" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <div id="w-panel">
+    <div id="wtabs">
+      <div class="wtab on" data-t="t1"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5 13 13l-4.5 2.5L11 11Z"/></svg></span><span class="lbl" data-en="Realm" data-th="อาณาเขต">Realm</span></div>
+      <div class="wtab" data-t="t2"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.4"><path d="M12 2l2.6 6.6L21 9.3l-5 4.6L17.3 21 12 17.3 6.7 21 8 13.9 3 9.3l6.4-.7Z" stroke-linejoin="round"/></svg></span><span class="lbl" data-en="Factions" data-th="กลุ่มอิทธิพล">Factions</span></div>
+      <div class="wtab" data-t="t3"><span class="ic"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.3"><path d="M3 18l4-9 4 6 3-7 4 10" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 5h9M3 9h6" stroke-linecap="round"/></svg></span><span class="lbl" data-en="Journey" data-th="เส้นทาง">Journey</span></div>
+    </div>
+
+    <div class="wpanel on" data-p="t1">
+      <div id="w-hero">
+        <div id="w-hero-name">—</div>
+        <div id="w-hero-terr">—</div>
+        <div id="w-hero-date"></div>
+        <div id="w-hero-cal"></div>
+      </div>
+      <div class="w-info-row">
+        <div class="w-info-card" id="w-danger-card">
+          <div class="k" data-en="Danger" data-th="ระดับอันตราย">Danger</div>
+          <div class="v" id="w-danger-val">—</div>
+          <div class="w-danger-gauge"><div class="w-danger-fill" id="w-danger-fill"></div></div>
+        </div>
+        <div class="w-info-card" id="w-weather-card">
+          <div class="k" data-en="Weather" data-th="สภาพอากาศ">Weather</div>
+          <div class="v" id="w-weather-val">—</div>
+        </div>
+      </div>
+      <div id="w-note" style="display:none"></div>
+    </div>
+
+    <div class="wpanel" data-p="t2">
+      <div class="w-sub-title" data-en="Standing With" data-th="สถานะกับกลุ่มอิทธิพล">Standing With</div>
+      <div id="w-factions-wrap"></div>
+      <div class="w-sub-title" style="margin-top:16px" data-en="Wealth" data-th="ทรัพย์สิน">Wealth</div>
+      <div class="w-wealth-row">
+        <div class="w-wealth-card">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M9 15.5c0-1 1.1-1.8 3-1.8s3 .6 3 1.6c0 2.2-6 1.2-6 3.6 0 1.1 1.3 1.6 3 1.6s3-.6 3-1.8M12 8v1.4M12 19.6V21" stroke-linecap="round"/></svg>
+          <div class="k" data-en="Royal Coin" data-th="เหรียญหลวง">Royal Coin</div>
+          <div class="v" id="w-royalcoin">—</div>
+        </div>
+        <div class="w-wealth-card">
+          <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.4"><rect x="4" y="7" width="16" height="11" rx="1.5"/><path d="M4 11h16M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7" stroke-linecap="round"/></svg>
+          <div class="k" data-en="Hollow Chits" data-th="ชิปตลาดใต้ดิน">Hollow Chits</div>
+          <div class="v" id="w-chits">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="wpanel" data-p="t3">
+      <div class="w-sub-title" data-en="Places Discovered" data-th="สถานที่ที่เคยไป">Places Discovered</div>
+      <div id="w-journey-wrap"></div>
+    </div>
+
+    <div id="w-foot" data-en="Ionia — Field Dispatch" data-th="ไอโอเนีย — บันทึกภาคสนาม">Ionia — Field Dispatch</div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('wraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function t(en,th){return L==='th'?th:en}
+function emptyMsg(en,th){return '<div class="w-empty">'+t(en,th)+'</div>';}
+
+function dangerColor(v){
+  v=Math.max(0,Math.min(10,parseFloat(v)||0));
+  var stops=['#E8E2D4','#D9C27A','#C98C45','#B5513A','#6B1414'];
+  function hx(h){h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]}
+  function lerp(a,b,f){return Math.round(a+(b-a)*f)}
+  var seg=v/10*(stops.length-1);
+  var i=Math.min(stops.length-2,Math.floor(seg));
+  var f=seg-i;
+  var c1=hx(stops[i]),c2=hx(stops[i+1]);
+  var r=lerp(c1[0],c2[0],f),gg=lerp(c1[1],c2[1],f),b=lerp(c1[2],c2[2],f);
+  return 'rgb('+r+','+gg+','+b+')';
+}
+
+function cloudSvg(){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 10.6 4 4 0 0 0 7 18Z"/></svg>'}
+function sunSvg(){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1l2.1-2.1M17 7l2.1-2.1"/></svg>'}
+function rainSvg(){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 14h10a4 4 0 0 0 .6-7.95A5.5 5.5 0 0 0 7.1 6.6 4 4 0 0 0 7 14Z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg>'}
+function windSvg(){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11a2.5 2.5 0 1 0-2-4M3 15h14a2.5 2.5 0 1 1-2 4"/></svg>'}
+function fogSvg(){return '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4 9h16M3 13h18M5 17h14"/></svg>'}
+
+var WEATHER_MAP={
+  'clear':{ic:sunSvg,en:'Clear',th:'ฟ้าใส'},'sunny':{ic:sunSvg,en:'Clear',th:'ฟ้าใส'},
+  'cloudy':{ic:cloudSvg,en:'Cloudy',th:'มีเมฆมาก'},'overcast':{ic:cloudSvg,en:'Overcast',th:'ฟ้าครึ้ม'},
+  'rain':{ic:rainSvg,en:'Rain',th:'ฝนตก'},'storm':{ic:rainSvg,en:'Storm',th:'พายุ'},
+  'windy':{ic:windSvg,en:'Windy',th:'ลมแรง'},'fog':{ic:fogSvg,en:'Fog',th:'มีหมอก'},'mist':{ic:fogSvg,en:'Mist',th:'หมอกบาง'}
+};
+function weatherInfo(raw){
+  var key=(raw||'').toLowerCase().trim();
+  var hit=WEATHER_MAP[key];
+  if(hit)return {ic:hit.ic(),label:t(hit.en,hit.th)};
+  return {ic:cloudSvg(),label:raw?esc(raw):t('Unknown','ไม่ทราบ')};
+}
+
+var STANDING_EN=['Hostile','Unfriendly','Neutral','Friendly','Allied'];
+var STANDING_TH=['ปรปักษ์','ไม่เป็นมิตร','เป็นกลาง','เป็นมิตร','พันธมิตร'];
+var STANDING_COLORS=['#8C2E2E','#B5513A','#8C7A4A','#5C8C4A','#C9A227'];
+function standingLevel(txt,explicit){
+  if(explicit)return Math.max(1,Math.min(5,parseInt(explicit,10)));
+  if(!txt)return 0;
+  var idx=STANDING_EN.findIndex(function(x){return x.toLowerCase()===String(txt).toLowerCase()});
+  return idx>=0?idx+1:0;
+}
+
+var accIdCounter=0;
+function accordion(name,pillText,subText,bodyText){
+  accIdCounter++;
+  var id='wacc'+accIdCounter;
+  return '<div class="w-acc" id="'+id+'">'+
+    '<div class="w-acc-head" onclick="document.getElementById(\''+id+'\').classList.toggle(\'open\')">'+
+      '<div class="main"><div class="w-acc-name">'+esc(name)+'</div>'+(subText?'<div class="w-acc-sub">'+esc(subText)+'</div>':'')+'</div>'+
+      (pillText?'<div class="w-acc-pill">'+esc(pillText)+'</div>':'')+
+      '<svg class="w-acc-chev" viewBox="0 0 10 10" fill="none"><path d="M1.5 3 L5 6.5 L8.5 3" stroke="var(--mu)" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+    '</div>'+
+    '<div class="w-acc-body"><div class="w-acc-body-inner">'+esc(bodyText||'')+'</div></div>'+
+  '</div>';
+}
+
+function renderAll(){
+  if(d.accentColor){
+    document.documentElement.style.setProperty('--ac',d.accentColor);
+    var h=d.accentColor.replace('#','');
+    if(h.length===6){
+      var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+      document.documentElement.style.setProperty('--ac-rgb',r+','+gg+','+b);
+    }
+  }
+
+  g('w-locname').textContent=d.location||t('Unknown Location','ยังไม่ทราบสถานที่');
+  g('w-locterr').textContent=d.territory||'';
+  g('w-hero-name').textContent=d.location||t('Unknown Location','ยังไม่ทราบสถานที่');
+  g('w-hero-terr').textContent=d.territory||'';
+  g('w-hero-date').textContent=d.date||'';
+  g('w-hero-cal').textContent=d.calendarSystem?(t('Reckoning: ','ปฏิทินที่ใช้: ')+d.calendarSystem):'';
+
+  var dv=d.dangerLevel!=null?Math.max(0,Math.min(10,parseFloat(d.dangerLevel))):null;
+  var dc=dv!=null?dangerColor(dv):'var(--mu)';
+  g('w-danger').innerHTML='<svg width="10" height="10" viewBox="0 0 24 24" fill="'+dc+'"><path d="M12 2l2.6 6.6L21 9.3l-5 4.6L17.3 21 12 17.3 6.7 21 8 13.9 3 9.3l6.4-.7Z"/></svg>'+(dv!=null?dv.toFixed(0)+'/10':t('—','—'));
+  g('w-danger').style.color=dc;
+  g('w-danger').style.borderColor=dc;
+  g('w-danger').style.background='transparent';
+  g('w-danger-val').textContent=dv!=null?(dv.toFixed(0)+' / 10'):'—';
+  g('w-danger-val').style.color=dc;
+  g('w-danger-fill').style.width=(dv!=null?dv*10:0)+'%';
+  g('w-danger-fill').style.background=dc;
+
+  var wi=weatherInfo(d.weather);
+  g('w-weatherchip').innerHTML=wi.ic;
+  g('w-weather-val').textContent=wi.label;
+
+  if(d.note){
+    g('w-note').style.display='block';
+    g('w-note').textContent=d.note;
+  }else{
+    g('w-note').style.display='none';
+  }
+
+  // Factions
+  var factions=d.factions||[];
+  var facHtml=factions.length?factions.map(function(f){
+    var lvl=standingLevel(f.standing,f.level);
+    var color=lvl?STANDING_COLORS[lvl-1]:'var(--mu)';
+    var pips='';
+    for(var i=1;i<=5;i++)pips+='<div class="w-fac-pip" style="'+(i<=lvl?'background:'+color:'')+'"></div>';
+    return '<div class="w-fac"><div class="w-fac-head"><div class="w-fac-name">'+esc(f.name||'')+'</div>'+
+      '<div class="w-fac-standing" style="color:'+color+';background:rgba(0,0,0,.2);border:1px solid '+color+'66">'+esc(f.standing||t('Unknown','ไม่ทราบ'))+'</div></div>'+
+      '<div class="w-fac-pips">'+pips+'</div>'+
+      (f.note?'<div class="w-fac-note">'+esc(f.note)+'</div>':'')+
+    '</div>';
+  }).join(''):emptyMsg('No factions tracked yet.','ยังไม่มีการบันทึกกลุ่มอิทธิพลใดๆ');
+  g('w-factions-wrap').innerHTML=facHtml;
+
+  g('w-royalcoin').textContent=d.royalCoin||'—';
+  g('w-chits').textContent=d.hollowChits||'—';
+
+  // Journey
+  var journey=d.journey||[];
+  var jHtml=journey.length?journey.map(function(j){
+    return accordion(j.name||'',j.territory||null,j.summary||'',j.details||j.summary||'');
+  }).join(''):emptyMsg('No places discovered yet.','ยังไม่มีสถานที่ที่ถูกค้นพบ');
+  g('w-journey-wrap').innerHTML=jHtml;
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(e){e.stopPropagation();setLang('en')});
+g('lg-th').addEventListener('click',function(e){e.stopPropagation();setLang('th')});
+
+g('w-bar').addEventListener('click',function(){g('wwrap').classList.toggle('open')});
+
+qa('.wtab').forEach(function(tb){
+  tb.addEventListener('click',function(){go(tb.getAttribute('data-t'))});
+});
+function go(target){
+  qa('.wtab').forEach(function(x){x.classList.toggle('on',x.getAttribute('data-t')===target)});
+  qa('.wpanel').forEach(function(p){p.classList.toggle('on',p.getAttribute('data-p')===target)});
+}
+
+renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Ionia — World Tracker",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Ionia World Tracker System",
+      "content": "## IONIA — WORLD TRACKER (FIELD DISPATCH)\n\nA persistent, collapsible report card tracking {{user}}'s current standing in Ionia. After EVERY response you write, append a status block on its own line with no extra text around it:\n\n<IONIA_WORLD>\n{JSON}\n</IONIA_WORLD>\n\nThe JSON must be a complete, valid object. Never omit the block, even in short replies. Copy the full JSON from your previous block and change only what actually moved.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"accentColor\": \"#B8732E\",\n  \"location\": \"The Free City of Perryn\",\n  \"territory\": \"Talos\",\n  \"dangerLevel\": 6,\n  \"weather\": \"Fog\",\n  \"date\": \"Lucis Reign Year 12, 3rd Moon, 9th Day\",\n  \"calendarSystem\": \"Britannian Court Reckoning\",\n  \"note\": \"The city gates close early this week — rumors of Royal Order inspectors in the merchant quarter.\",\n  \"royalCoin\": \"340\",\n  \"hollowChits\": \"12\",\n  \"factions\": [\n    { \"name\": \"Britannia Crown\", \"standing\": \"Wary\", \"level\": 2, \"note\": \"Noted for asking too many questions near the Ashfall Quarter.\" },\n    { \"name\": \"The Hollow Market\", \"standing\": \"Friendly\", \"level\": 4, \"note\": \"Kestrel Vane still owes a favor.\" }\n  ],\n  \"journey\": [\n    { \"name\": \"Elarien\", \"territory\": \"Virelle\", \"summary\": \"Virelle's last standing city.\", \"details\": \"A fog-wrapped river city watched by the Thornveil Wardens.\" }\n  ]\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `location` / `territory` | `territory` is one of `Talos`, `Ashkar`, `Virelle`, or a named sub-place (a city, the Southern District, Infinity Castle, the Spirit Realm, the Underworld, etc.) — whichever is actually true to the scene |\n| `dangerLevel` | 0–10, how dangerous the current location is right now — drives a white→gold→crimson gauge. This is situational (a safe city under curfew can spike; a wild border region can calm), not a fixed property of the place |\n| `date` / `calendarSystem` | Ionia has **no unified calendar** — write `date` in whatever reckoning fits where {{user}} currently is (Britannian reign-years, Corvane voyage-seasons, Ashkar oath-cycles/generations, Virelle bloom/spirit-tide markers), and name that system in `calendarSystem`. Don't invent a universal date |\n| `royalCoin` | standard currency recognized across Britannia/Talos |\n| `hollowChits` | the Hollow Market's own currency (Southern District) — distinct from royal coin on purpose; omit or leave at \"0\" if {{user}} has no dealings there |\n| `factions[].standing` | suggested ladder: `Hostile` → `Unfriendly` → `Neutral` → `Friendly` → `Allied`. Using one of these exact words auto-fills the 5-pip meter; a custom/unknown standing (e.g. \"Unknown\") just shows as text with no pips |\n| `factions[].level` | optional 1–5 override if `standing` is custom text |\n| `factions` | track whichever factions are actually relevant to the current story — suggested list: Britannia Crown, The Council of the Gilded Chair / Royal Order, Ashkar Clans, Virelle Wardens, The Hollow Market / Nine Fingers, Kakujo — don't force all of them if most haven't come up yet |\n| `journey` | array of `{name, territory, summary, details}` — add an entry the first time {{user}} actually arrives somewhere new, not when it's merely mentioned |\n\n---\n\n### OUTPUT RULES\n- `dangerLevel`, faction `standing`, and wealth totals should only change when something in the actual scene justifies it (a fight, a bribe, a broken promise, a bounty paid) — never drift them for pacing alone.\n- Add a `journey` entry the moment {{user}} actually sets foot somewhere new worth remembering.\n- Keep `date` moving forward consistent with the story's own pacing, in whatever calendar system fits the current location — don't silently switch systems without a reason (e.g. crossing from Talos into Ashkar).\n- If {{user}} hasn't interacted with a faction yet, leave it out of `factions` rather than inventing a default standing.",
+      "constant": true,
+      "order": 88,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}

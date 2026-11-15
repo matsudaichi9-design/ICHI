@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Noto+Serif+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{background:transparent;font-family:'EB Garamond','Noto Serif Thai',serif;font-size:14px}
+:root{
+  --ec:#8B1E3F;--ec-rgb:139,30,63;
+  --gold:#C9A227;--tx:#EDE3D8;--tx2:#A89A86;--mu:#5A4F44;
+  --bg:#0A0810;--pan:#120D14;--pan2:#1A131C;--pan3:#241A28;
+  --bd:rgba(201,162,39,.22);--bd2:rgba(255,255,255,.05);
+  --fh:'Cormorant SC',serif;--fth:'Noto Serif Thai',serif;
+}
+[lang-mode="th"]{--fh:'Noto Serif Thai',serif}
+
+#aewrap{max-width:440px;margin:12px auto;position:relative}
+#ae{position:relative;background:radial-gradient(circle at 50% -10%,rgba(var(--ec-rgb),.18),transparent 55%),
+  linear-gradient(175deg,var(--pan2) 0%,var(--bg) 100%);
+  border:1px solid var(--bd);border-radius:10px;overflow:hidden;padding:20px 18px 16px;text-align:center;
+  box-shadow:0 18px 44px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.03);
+  animation:aei .35s cubic-bezier(.2,.8,.3,1.1) both}
+@keyframes aei{from{opacity:0;transform:translateY(-6px) scale(.98)}to{opacity:1;transform:none}}
+
+#ae-lang{position:absolute;top:10px;right:10px;z-index:5;display:flex;background:rgba(0,0,0,.4);
+  border:1px solid var(--bd);border-radius:99px;padding:2px;gap:1px}
+#ae-lang b{font-family:var(--fh);font-size:8px;letter-spacing:.4px;padding:3px 7px;border-radius:99px;
+  color:var(--mu);cursor:pointer;font-weight:700}
+#ae-lang b.on{color:#fff;background:linear-gradient(135deg,var(--ec),#2A0F18);box-shadow:0 0 8px -2px var(--ec)}
+
+#ae-banner{font-family:var(--fh);font-size:11px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+[lang-mode="th"] #ae-banner{letter-spacing:.5px}
+
+#ae-medallion{position:relative;width:168px;height:168px;margin:0 auto 10px}
+#ae-medallion svg{position:absolute;inset:0;width:100%;height:100%}
+.ae-ring{animation:aeRingIn .7s cubic-bezier(.2,.8,.3,1.1) both}
+.ae-ring:nth-of-type(2){animation-delay:.08s}
+.ae-ring:nth-of-type(3){animation-delay:.16s}
+@keyframes aeRingIn{from{opacity:0;transform:scale(.7) rotate(-20deg);transform-origin:50% 50%}to{opacity:1;transform:scale(1) rotate(0);transform-origin:50% 50%}}
+.ae-crack{stroke-dasharray:60;stroke-dashoffset:60;animation:aeCrack .9s ease-out .25s forwards}
+@keyframes aeCrack{to{stroke-dashoffset:0}}
+.ae-flash{animation:aeFlash .7s ease-out forwards}
+@keyframes aeFlash{0%{opacity:.85}100%{opacity:0}}
+.ae-spoke{opacity:.22}
+.ae-spoke.cur{opacity:1;filter:drop-shadow(0 0 3px var(--ec))}
+#ae-iris-core{animation:aePulse 3.4s ease-in-out infinite}
+@keyframes aePulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.3)}}
+#ae-numeral-wm{font-family:var(--fh);font-weight:700;fill:rgba(255,255,255,.05)}
+
+#ae-numeral-tag{display:inline-block;margin:2px 0 6px;font-family:var(--fh);font-size:13px;letter-spacing:2px;
+  color:var(--gold);padding:2px 12px;border:1px solid var(--bd);border-radius:99px;background:rgba(201,162,39,.06)}
+#ae-title{font-family:var(--fh);font-size:24px;color:var(--tx);letter-spacing:.5px;line-height:1.15}
+[lang-mode="th"] #ae-title{font-size:19px}
+#ae-titlelocal{font-size:12px;color:var(--tx2);font-style:italic;margin-top:2px}
+[lang-mode="th"] #ae-titlelocal{font-style:normal}
+#ae-character{margin-top:10px;font-size:11.5px;color:var(--tx2);letter-spacing:.3px}
+[lang-mode="th"] #ae-character{font-family:'Noto Serif Thai',serif}
+#ae-character b{color:var(--tx);font-weight:600}
+#ae-domain-row{margin-top:4px;font-size:12.5px;color:var(--ec);font-weight:600}
+[lang-mode="th"] #ae-domain-row{font-family:'Noto Serif Thai',serif}
+
+.ae-section{text-align:left;margin-top:14px;padding:11px 13px;border:1px solid var(--bd2);border-radius:7px;
+  background:rgba(255,255,255,.015)}
+.ae-section.cost{border-color:rgba(var(--ec-rgb),.3);background:rgba(var(--ec-rgb),.05)}
+.ae-section .lbl{font-family:var(--fh);font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+[lang-mode="th"] .ae-section .lbl{font-family:'Noto Serif Thai',serif;font-size:11px;letter-spacing:.3px}
+.ae-section.cost .lbl{color:var(--ec)}
+.ae-section .body{font-size:13px;color:var(--tx);line-height:1.65;margin-top:5px}
+[lang-mode="th"] .ae-section .body{font-family:'Noto Serif Thai',serif}
+
+#ae-significance{margin-top:12px;font-size:12px;color:var(--gold);font-style:italic;line-height:1.6;
+  padding:9px 11px;border-left:2px solid var(--gold);background:rgba(201,162,39,.05);text-align:left}
+[lang-mode="th"] #ae-significance{font-style:normal;font-family:'Noto Serif Thai',serif}
+
+#ae-quote{margin-top:12px;font-size:13px;color:var(--tx2);font-style:italic;line-height:1.6}
+[lang-mode="th"] #ae-quote{font-style:normal;font-family:'Noto Serif Thai',serif}
+#ae-quote::before,#ae-quote::after{content:'"';color:var(--mu)}
+
+#ae-foot{margin-top:16px;padding-top:11px;border-top:1px solid var(--bd2);font-size:9px;letter-spacing:2px;
+  color:var(--mu);text-transform:uppercase}
+[lang-mode="th"] #ae-foot{letter-spacing:.3px;font-family:'Noto Serif Thai',serif;text-transform:none}
+</style>
+</head>
+<body>
+<textarea id="aeraw" style="display:none;position:absolute;left:-9999px">$1</textarea>
+<div id="aewrap"><div id="ae">
+  <div id="ae-lang"><b id="lg-en" class="on" data-l="en">EN</b><b id="lg-th" data-l="th">ไทย</b></div>
+  <div id="ae-banner" data-en="Arcane Eye Awakening" data-th="ดวงตามหาเวทตื่นขึ้น">Arcane Eye Awakening</div>
+
+  <div id="ae-medallion"></div>
+
+  <div id="ae-numeral-tag">—</div>
+  <div id="ae-title">—</div>
+  <div id="ae-titlelocal"></div>
+  <div id="ae-character"></div>
+  <div id="ae-domain-row"></div>
+
+  <div class="ae-section">
+    <div class="lbl" data-en="The Mark" data-th="ลักษณะที่ปรากฏ">The Mark</div>
+    <div class="body" id="ae-mark"></div>
+  </div>
+  <div class="ae-section">
+    <div class="lbl" data-en="Power" data-th="พลัง">Power</div>
+    <div class="body" id="ae-power"></div>
+  </div>
+  <div class="ae-section cost">
+    <div class="lbl" data-en="The Cost" data-th="ราคาที่ต้องจ่าย">The Cost</div>
+    <div class="body" id="ae-cost"></div>
+  </div>
+
+  <div id="ae-significance" style="display:none"></div>
+  <div id="ae-quote" style="display:none"></div>
+
+  <div id="ae-foot" data-en="One of Twelve — Ionia" data-th="หนึ่งในสิบสอง — ไอโอเนีย">One of Twelve — Ionia</div>
+</div></div>
+
+<script>
+(function(){
+function g(id){return document.getElementById(id)}
+function esc(v){if(v==null)return'';return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function qa(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+
+var L='en';
+var raw=g('aeraw');var d=null;
+if(raw&&raw.value.trim()){
+  var dec=document.createElement('textarea');dec.innerHTML=raw.value.trim();
+  try{d=JSON.parse(dec.value.trim())}catch(e){}
+}
+if(!d)d={};
+
+function t(en,th){return L==='th'?th:en}
+
+var ROMAN_POS={I:1,II:2,III:3,IV:4,V:5,VI:6,VII:7,VIII:8,IX:9,X:10,XI:11,XII:12};
+
+function buildMedallion(numeral,color){
+  var pos=ROMAN_POS[String(numeral||'').toUpperCase().trim()]||0;
+  var spokes='';
+  for(var i=1;i<=12;i++){
+    var ang=(i-1)*30-90;
+    var rad=ang*Math.PI/180;
+    var x1=84+Math.cos(rad)*46,y1=84+Math.sin(rad)*46;
+    var x2=84+Math.cos(rad)*(pos===i?70:62),y2=84+Math.sin(rad)*(pos===i?70:62);
+    spokes+='<line class="ae-spoke'+(pos===i?' cur':'')+'" x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="'+(pos===i?color:'var(--gold)')+'" stroke-width="'+(pos===i?2.4:1)+'" stroke-linecap="round"/>';
+  }
+  var html=''+
+  '<svg viewBox="0 0 168 168">'+
+    '<circle class="ae-ring" cx="84" cy="84" r="78" fill="none" stroke="var(--bd)" stroke-width="1"/>'+
+    '<circle class="ae-ring" cx="84" cy="84" r="64" fill="none" stroke="var(--gold)" stroke-width="1" stroke-dasharray="2 5" opacity=".5"/>'+
+    '<text id="ae-numeral-wm" x="84" y="100" font-size="88" text-anchor="middle">'+esc(numeral||'')+'</text>'+
+    spokes+
+    '<path class="ae-ring ae-crack" d="M84 18 L90 46 L78 58 L96 80 L70 92 L88 118 L84 150" fill="none" stroke="var(--gold)" stroke-width="1.1" opacity=".55"/>'+
+  '</svg>'+
+  '<svg viewBox="0 0 168 168">'+
+    '<defs><radialGradient id="irisg" cx="50%" cy="42%" r="60%">'+
+      '<stop offset="0%" stop-color="#fff" stop-opacity=".9"/>'+
+      '<stop offset="28%" stop-color="'+color+'"/>'+
+      '<stop offset="100%" stop-color="#050208"/>'+
+    '</radialGradient></defs>'+
+    '<circle id="ae-iris-core" cx="84" cy="84" r="40" fill="url(#irisg)" stroke="var(--gold)" stroke-width="1.4"/>'+
+    '<ellipse cx="84" cy="84" rx="7" ry="26" fill="#050208"/>'+
+  '</svg>'+
+  '<svg viewBox="0 0 168 168"><circle class="ae-flash" cx="84" cy="84" r="80" fill="'+color+'" opacity=".4"/></svg>';
+  return html;
+}
+
+function renderAll(){
+  var color=d.eyeColor||'#8B1E3F';
+  document.documentElement.style.setProperty('--ec',color);
+  var h=color.replace('#','');
+  if(h.length===6){
+    var r=parseInt(h.slice(0,2),16),gg=parseInt(h.slice(2,4),16),b=parseInt(h.slice(4,6),16);
+    document.documentElement.style.setProperty('--ec-rgb',r+','+gg+','+b);
+  }
+
+  g('ae-medallion').innerHTML=buildMedallion(d.eyeNumeral,color);
+  g('ae-numeral-tag').textContent=d.eyeNumeral?('ARCANE EYE '+d.eyeNumeral):t('UNKNOWN','ไม่ทราบลำดับ');
+  g('ae-title').textContent=d.eyeTitle||t('Unnamed Eye','ดวงตาที่ไร้ชื่อ');
+  g('ae-titlelocal').textContent=d.eyeTitleLocal||'';
+  g('ae-titlelocal').style.display=d.eyeTitleLocal?'block':'none';
+
+  if(d.characterName){
+    g('ae-character').innerHTML=t('Manifested in ','ปรากฏขึ้นในตัว ')+'<b>'+esc(d.characterName)+'</b>';
+  }else{
+    g('ae-character').textContent=t('Bearer unconfirmed','ยังไม่ยืนยันผู้ครอบครอง');
+  }
+  g('ae-domain-row').textContent=d.domain?(t('Domain: ','ขอบเขตอำนาจ: ')+d.domain):'';
+
+  g('ae-mark').textContent=d.mark||t('No visible change recorded yet.','ยังไม่มีการบันทึกลักษณะที่เปลี่ยนไป');
+  g('ae-power').textContent=d.power||t('Not yet demonstrated.','ยังไม่เคยแสดงพลังนี้');
+  g('ae-cost').textContent=d.cost||t('Unknown — no price has been observed yet.','ไม่ทราบ — ยังไม่เคยเห็นราคาที่ต้องจ่าย');
+
+  if(d.significance){
+    g('ae-significance').style.display='block';
+    g('ae-significance').textContent=d.significance;
+  }else{
+    g('ae-significance').style.display='none';
+  }
+  if(d.quote){
+    g('ae-quote').style.display='block';
+    g('ae-quote').textContent=d.quote;
+  }else{
+    g('ae-quote').style.display='none';
+  }
+}
+
+function setLang(lang){
+  L=lang;
+  document.documentElement.setAttribute('lang-mode',lang);
+  qa('#lg-en,#lg-th').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-l')===lang)});
+  qa('[data-en]').forEach(function(el){
+    var v=lang==='th'?el.getAttribute('data-th'):el.getAttribute('data-en');
+    if(v!=null)el.innerHTML=v;
+  });
+  renderAll();
+}
+g('lg-en').addEventListener('click',function(e){e.stopPropagation();setLang('en')});
+g('lg-th').addEventListener('click',function(e){e.stopPropagation();setLang('th')});
+
+renderAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+{
+  "name": "Ionia — Arcane Eye Awakening",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [],
+      "keysecondary": [],
+      "comment": "Ionia Arcane Eye Awakening Card",
+      "content": "## IONIA — ARCANE EYE AWAKENING CARD\n\nIonia's magic includes exactly Twelve Arcane Eyes: unique, living ocular anomalies that are never taught or crafted — they simply manifest in a host. When a character in the roleplay genuinely manifests or is confirmed to bear one of the Twelve for the first time in the story (NOT a rumor, NOT a guess — an actual on-screen awakening or a moment the story is establishing as real), post this tag alone:\n\n<IONIA_EYE>\n{JSON}\n</IONIA_EYE>\n\nDo not post this card speculatively or to foreshadow — only when the story has actually committed to the fact that this character now bears this Eye.\n\n---\n\n### JSON SCHEMA\n\n```json\n{\n  \"characterName\": \"Elowen Vask\",\n  \"eyeNumeral\": \"VII\",\n  \"eyeTitle\": \"Eye of Fractured Compass\",\n  \"eyeTitleLocal\": \"เนตรแห่งเข็มทิศแตกร้าว\",\n  \"eyeColor\": \"#2E7D8C\",\n  \"domain\": \"Spatial anchoring\",\n  \"mark\": \"The pupil splits into seven fine lines radiating like a cracked compass needle, faintly glowing in low light.\",\n  \"power\": \"Can anchor a location in memory and open a momentary tear back to it from anywhere in the same territory.\",\n  \"cost\": \"Each anchor drawn permanently erases one of her own long-term memories, chosen at random by the Eye.\",\n  \"significance\": \"The first confirmed bearer of this Eye since records began.\",\n  \"quote\": \"I didn't ask for this. I just wanted to go home.\"\n}\n```\n\n---\n\n### FIELD REFERENCE\n\n| Field | Notes |\n|---|---|\n| `eyeNumeral` | one of the Roman numerals `I` through `XII` — this drives which of the 12 spokes around the medallion lights up, a visual nod to \"one of twelve.\" Use the canonical numeral for the Eye actually involved (see the Twelve Arcane Eyes reference entry for the full list of domains) |\n| `eyeTitle` / `eyeTitleLocal` | the Eye's canonical name; `eyeTitleLocal` is optional (e.g. a Thai name) shown as a small subtitle |\n| `eyeColor` | a hex color for the iris/glow — pick something that matches the Eye's canonical `mark` description (e.g. silver-white fog → pale blue, blood/psychic control → deep red) |\n| `characterName` | who now bears it — omit only if the story is deliberately leaving the bearer unconfirmed |\n| `domain` / `mark` / `power` / `cost` | pull directly from the Eye's established lore where it exists; invent plausible specifics only for the two canonically-unconfirmed details if the story requires them, and stay consistent once invented |\n| `significance` | optional flavor line — use it to flag world-level weight (e.g. \"first confirmed holder since the Sundering\"), not mechanical description |\n| `quote` | optional — a short in-character line from the new bearer |\n\n---\n\n### CANON GUARDRAILS — IMPORTANT\n- Only **two** Eyes have a confirmed current holder in established canon: Shiken (Eye of Gaia, III) and Lucis Erander (Netra of Tartarus, IV). Never casually assign one of the other ten Eyes to a background character or NPC without this actually being a deliberate, significant story beat.\n- Never retroactively claim a past or rumored holder for an Eye whose holder is listed as unknown — the lore explicitly treats those as unresolved mysteries, not blanks to fill in casually.\n- If this card is used for Shiken or Lucis Erander themselves, keep `domain`/`power`/`cost` consistent with their established entries rather than inventing new mechanics.\n- Transfer mechanics are canonically mysterious (on a holder's death the Eye may transfer immediately, lie dormant for decades, or follow an unobservable process) — don't invent a tidy ritual or rule for how this new bearer got it unless the story has already shown it.",
+      "constant": true,
+      "order": 87,
+      "displayIndex": 0,
+      "vectorized": false,
+      "selective": false,
+      "selectiveLogic": 0,
+      "addMemo": false,
+      "position": 0,
+      "disable": false,
+      "excludeRecursion": false,
+      "preventRecursion": false,
+      "delayUntilRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4,
+      "group": "",
+      "groupOverride": false,
+      "groupWeight": 100,
+      "scanDepth": null,
+      "caseSensitive": null,
+      "matchWholeWords": null,
+      "useGroupScoring": false,
+      "automationId": "",
+      "role": 0,
+      "sticky": 0,
+      "cooldown": 0,
+      "delay": 0
+    }
+  }
+}
